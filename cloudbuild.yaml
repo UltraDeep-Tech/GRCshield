@@ -3,10 +3,6 @@ options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
 
 steps:
-- name: 'gcr.io/cloud-builders/npm'
-  args: ['install']
-- name: 'gcr.io/cloud-builders/npm'
-  args: ['run', 'build']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/ultradeeptech/grcshield', '.']
 - name: 'gcr.io/cloud-builders/docker'
@@ -15,6 +11,7 @@ steps:
   args: ['run', 'deploy', 'grcshield', '--image', 'gcr.io/ultradeeptech/grcshield', '--platform', 'managed', '--region', 'us-central1']
 images:
 - 'gcr.io/ultradeeptech/grcshield'
+
 
 
 
