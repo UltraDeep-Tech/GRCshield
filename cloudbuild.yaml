@@ -1,15 +1,13 @@
 steps:
-- name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'https://github.com/UltraDeep-Tech/GRCshield', '.']
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
 - name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'build']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/grcshield', '.']
+  args: ['build', '-t', 'gcr.io/ultradeeptech/grcshield', '.']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/grcshield']
+  args: ['push', 'gcr.io/ultradeeptech/grcshield']
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['run', 'deploy', 'grcshield', '--image', 'gcr.io/$PROJECT_ID/grcshield', '--platform', 'managed', '--region', 'us-central1']
+  args: ['run', 'deploy', 'grcshield', '--image', 'gcr.io/ultradeeptech/grcshield', '--platform', 'managed', '--region', 'us-central1']
 images:
-- 'gcr.io/$PROJECT_ID/grcshield'
+- 'gcr.io/ultradeeptech/grcshield'
