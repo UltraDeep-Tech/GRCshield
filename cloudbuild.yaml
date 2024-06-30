@@ -1,5 +1,6 @@
 options:
   logging: CLOUD_LOGGING_ONLY
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
 
 steps:
 - name: 'gcr.io/cloud-builders/npm'
@@ -14,4 +15,5 @@ steps:
   args: ['run', 'deploy', 'grcshield', '--image', 'gcr.io/ultradeeptech/grcshield', '--platform', 'managed', '--region', 'us-central1']
 images:
 - 'gcr.io/ultradeeptech/grcshield'
+
 
