@@ -1,6 +1,5 @@
 options:
   logging: CLOUD_LOGGING_ONLY
-  logsBucket: gs://ultradeeptech-cloudbuild-logs
 
 steps:
 - name: 'gcr.io/cloud-builders/npm'
