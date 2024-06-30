@@ -1,3 +1,7 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+  logsBucket: gs://ultradeeptech-cloudbuild-logs
+
 steps:
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
@@ -11,3 +15,4 @@ steps:
   args: ['run', 'deploy', 'grcshield', '--image', 'gcr.io/ultradeeptech/grcshield', '--platform', 'managed', '--region', 'us-central1']
 images:
 - 'gcr.io/ultradeeptech/grcshield'
+
