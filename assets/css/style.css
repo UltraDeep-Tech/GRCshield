@@ -18,7 +18,7 @@ a {
 }
 
 a:hover {
-  color: #717ff5;
+  color: #031086;
   text-decoration: none;
 }
 
@@ -292,7 +292,7 @@ h6 {
 
 .accordion-flush .accordion-body {
   padding: 0 0 15px 0;
-  color: #3e4f6f;
+  color: #031086;
   font-size: 15px;
 }
 
@@ -601,7 +601,7 @@ h6 {
   padding: 20px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #aab7cf transparent;
+  scrollbar-color: #031086 transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
   background-color: #fff;
 }
@@ -677,7 +677,7 @@ h6 {
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  color: #4154f1;
+  color: #031086;
   transition: 0.3;
   background: #f6f9ff;
   padding: 10px 15px;
@@ -687,7 +687,7 @@ h6 {
 .sidebar-nav .nav-link i {
   font-size: 16px;
   margin-right: 10px;
-  color: #4154f1;
+  color: #031086;
 }
 
 .sidebar-nav .nav-link.collapsed {
@@ -696,16 +696,16 @@ h6 {
 }
 
 .sidebar-nav .nav-link.collapsed i {
-  color: #899bbd;
+  color: #031086;
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #4154f1;
+  color: #031086;
   background: #f6f9ff;
 }
 
 .sidebar-nav .nav-link:hover i {
-  color: #4154f1;
+  color: #031086;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
@@ -743,7 +743,7 @@ h6 {
 
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active {
-  color: #4154f1;
+  color: #031086;
 }
 
 .sidebar-nav .nav-content a.active i {
