@@ -369,16 +369,31 @@ h6 {
   font-family: "Nunito", sans-serif;
 }
 
+/* Efecto de gradiente y animación para el header */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
 .header {
   transition: all 0.5s;
   z-index: 997;
   height: 60px;
-  box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
-  background-color: rgba(14, 49, 206, 0.897);
   padding-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #1c1e21 25%, #0d6efd 100%);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+  box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
+  font-family: 'Roboto', sans-serif;
   /* Toggle Sidebar Button */
   /* Search Bar */
 }
+
 
 .header .toggle-sidebar-btn {
   font-size: 32px;
@@ -597,14 +612,18 @@ h6 {
   bottom: 0;
   width: 300px;
   z-index: 996;
-  transition: all 0.3s;
+  transition: all 0.2s;
   padding: 20px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #031086 transparent;
+  scrollbar-color: #fff transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-  background-color: #fff;
-}
+  background: linear-gradient(2deg, #1c1e21 25%, #0554cc 100%);
+  background-size: 400% 400%;
+  animation: gradientAnimation 2s ease infinite;
+  box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);}
+
+
 
 @media (max-width: 1199px) {
   .sidebar {
@@ -728,7 +747,7 @@ h6 {
   align-items: center;
   font-size: 14px;
   font-weight: 600;
-  color: #012970;
+  color: #fff;
   transition: 0.3;
   padding: 10px 0 10px 40px;
   transition: 0.3s;
@@ -743,7 +762,8 @@ h6 {
 
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active {
-  color: #031086;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.103);
 }
 
 .sidebar-nav .nav-content a.active i {
