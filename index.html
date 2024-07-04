@@ -28,6 +28,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/customcharts.css" rel="stylesheet">
 </head>
 
 <body>
@@ -203,14 +204,15 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            <img src="assets/img/profile-img.jpeg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">Abraham A. Pilcer</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6>Abraham A. Pilcer</h6>
+              <span>CEO and Chief Scientist
+              </span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -409,39 +411,86 @@
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">Total Blocked Request Count and Block Rate</h5>
-<canvas id="combinedChart" style="max-height: 400px;"></canvas>
+      <canvas id="combinedChart" style="max-height: 400px;"></canvas>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-const dataTotalBlocked = {
-labels: ['Jul 10', 'Jul 11', 'Jul 12', 'Jul 13', 'Jul 14', 'Jul 15', 'Jul 16'],
-datasets: [{
-  type: 'bar',
-  label: 'Blocked Requests',
-  data: [10000, 15000, 20000, 25000, 30000, 35000, 40000],
-  backgroundColor: 'lightblue',
-}, {
-  type: 'line',
-  label: 'Block Rate',
-  data: [20, 25, 30, 35, 40, 45, 50],
-  borderColor: 'rgb(255, 99, 132)',
-  fill: false,
-}]
-};
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const ctx = document.querySelector('#combinedChart').getContext('2d');
 
-new Chart(document.querySelector('#combinedChart'), {
-type: 'bar',
-data: dataTotalBlocked,
-options: {
-  scales: {
-    y: {
-      beginAtZero: true
-    }
-  }
-}
-});
-});
-    </script>
+          // Crear gradientes
+          const gradientBar = ctx.createLinearGradient(0, 0, 0, 400);
+          gradientBar.addColorStop(0, 'rgba(0, 123, 255, 0.5)');
+          gradientBar.addColorStop(1, 'rgba(0, 123, 255, 1)');
+
+          const gradientLine = ctx.createLinearGradient(0, 0, 0, 400);
+          gradientLine.addColorStop(0, 'rgba(255, 99, 132, 0.5)');
+          gradientLine.addColorStop(1, 'rgba(255, 99, 132, 1)');
+
+          const dataTotalBlocked = {
+            labels: ['Jul 10', 'Jul 11', 'Jul 12', 'Jul 13', 'Jul 14', 'Jul 15', 'Jul 16'],
+            datasets: [{
+              type: 'bar',
+              label: 'Blocked Requests',
+              data: [10000, 15000, 20000, 25000, 30000, 35000, 40000],
+              backgroundColor: gradientBar,
+              borderColor: 'rgba(0, 123, 255, 1)',
+              borderWidth: 1,
+              borderRadius: 5,
+              shadowOffsetX: 3,
+              shadowOffsetY: 3,
+              shadowBlur: 10,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }, {
+              type: 'line',
+              label: 'Block Rate',
+              data: [20, 25, 30, 35, 40, 45, 50],
+              borderColor: gradientLine,
+              fill: false,
+              tension: 0.4,
+              borderWidth: 3,
+              pointBackgroundColor: 'white',
+              pointBorderColor: gradientLine,
+              pointBorderWidth: 2,
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              pointHoverBackgroundColor: 'white',
+              pointHoverBorderColor: gradientLine,
+              pointHoverBorderWidth: 3
+            }]
+          };
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: dataTotalBlocked,
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              },
+              plugins: {
+                legend: {
+                  labels: {
+                    color: '#333',
+                    font: {
+                      size: 14,
+                      weight: 'bold'
+                    }
+                  }
+                },
+                tooltip: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                  titleColor: '#fff',
+                  bodyColor: '#fff',
+                  borderWidth: 1,
+                  borderColor: '#333',
+                  cornerRadius: 4
+                }
+              }
+            }
+          });
+        });
+      </script>
     </div>
   </div>
 </div>

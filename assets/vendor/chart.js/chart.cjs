@@ -1,9 +1,5 @@
 /*!
- * Chart.js v4.4.3
- * https://www.chartjs.org
- * (c) 2024 Chart.js Contributors
- * Released under the MIT License
- */
+
 'use strict';
 
 var helpers_segment = require('./chunks/helpers.segment.cjs');

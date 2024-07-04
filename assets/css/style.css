@@ -19,7 +19,6 @@ a {
 
 a:hover {
   color: #031086;
-  text-decoration: none;
 }
 
 h1,
@@ -612,18 +611,28 @@ h6 {
   bottom: 0;
   width: 300px;
   z-index: 996;
-  transition: all 0.2s;
+  transition: all 0.3s ease-in-out;
   padding: 20px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #fff transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-  background: linear-gradient(2deg, #1c1e21 25%, #0554cc 100%);
+  background: linear-gradient(2deg, #1f2937 25%, #3b82f6 100%);
   background-size: 400% 400%;
-  animation: gradientAnimation 2s ease infinite;
-  box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);}
+  animation: gradientAnimation 10s ease infinite;
+}
 
-
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
 @media (max-width: 1199px) {
   .sidebar {
@@ -634,18 +643,19 @@ h6 {
 .sidebar::-webkit-scrollbar {
   width: 5px;
   height: 8px;
-  background-color: #fff;
+  background-color: #e5e7eb;
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background-color: #aab7cf;
+  background-color: #6b7280;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) {
-
   #main,
   #footer {
     margin-left: 300px;
+    transition: margin-left 0.3s ease-in-out;
   }
 }
 
@@ -656,7 +666,6 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
     margin-left: 0;
@@ -686,7 +695,7 @@ h6 {
 .sidebar-nav .nav-heading {
   font-size: 11px;
   text-transform: uppercase;
-  color: #899bbd;
+  color: #9ca3af;
   font-weight: 600;
   margin: 10px 0 5px 15px;
 }
@@ -696,9 +705,9 @@ h6 {
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  color: #031086;
-  transition: 0.3;
-  background: #f6f9ff;
+  color: #ffffff;
+  transition: background 0.3s ease, color 0.3s ease;
+  background: rgba(0, 0, 0, 0.25);
   padding: 10px 15px;
   border-radius: 4px;
 }
@@ -706,25 +715,26 @@ h6 {
 .sidebar-nav .nav-link i {
   font-size: 16px;
   margin-right: 10px;
-  color: #031086;
+  color: #ffffff;
+  transition: color 0.3s ease;
 }
 
 .sidebar-nav .nav-link.collapsed {
-  color: #012970;
-  background: #fff;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .sidebar-nav .nav-link.collapsed i {
-  color: #031086;
+  color: #ffffff;
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #031086;
-  background: #f6f9ff;
+  color: #3b82f6;
+  background: #f3f4f6;
 }
 
 .sidebar-nav .nav-link:hover i {
-  color: #031086;
+  color: #3b82f6;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
@@ -740,6 +750,7 @@ h6 {
   padding: 5px 0 0 0;
   margin: 0;
   list-style: none;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
 .sidebar-nav .nav-content a {
@@ -747,10 +758,9 @@ h6 {
   align-items: center;
   font-size: 14px;
   font-weight: 600;
-  color: #fff;
-  transition: 0.3;
+  color: #ffffff;
   padding: 10px 0 10px 40px;
-  transition: 0.3s;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .sidebar-nav .nav-content a i {
@@ -762,12 +772,12 @@ h6 {
 
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.103);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .sidebar-nav .nav-content a.active i {
-  background-color: #4154f1;
+  background-color: #3b82f6;
 }
 
 /*--------------------------------------------------------------
