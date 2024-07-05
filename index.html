@@ -35,7 +35,7 @@
   <video autoplay muted loop class="video-background">
     <source src="assets/img/compressed_dashboard_background.mp4" type="video/mp4">
   </video>
-  
+
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -1160,6 +1160,16 @@
       });
     });
   </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
+    if (!isLoggedIn) {
+      alert('You must login first');
+      window.location.href = "pages-login.html"; // Redirigir a la página de login
+    }
+  });
+</script>
 
 
   </main><!-- End #main -->
