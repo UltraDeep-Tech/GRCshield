@@ -19,7 +19,7 @@ body {
   height: 100%;
   z-index: -1;
   object-fit: cover;
-  opacity: 0.7 #000;
+  opacity: 1; /* Corrige la opacidad, debe ser solo un valor numérico */
 }
 
 .content {
@@ -27,6 +27,7 @@ body {
   z-index: 1;
   padding: 20px;
 }
+
 
 a {
   color: #1f34f5;
