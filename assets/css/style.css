@@ -1,15 +1,31 @@
-
-/*--------------------------------------------------------------
-# General
---------------------------------------------------------------*/
 :root {
   scroll-behavior: smooth;
 }
 
 body {
   font-family: "Open Sans", sans-serif;
-  background: #f6f9ff;
+  background: #fff;
   color: #444444;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  object-fit: cover;
+  opacity: 0.7 #000;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
 }
 
 a {
@@ -56,157 +72,51 @@ h6 {
   font-size: 24px;
   margin-bottom: 0;
   font-weight: 600;
-  color: #012970;
+  color: #fff;
 }
 
 /*--------------------------------------------------------------
-# Back to top button
+# Back to top button (Modern Style)
 --------------------------------------------------------------*/
 .back-to-top {
   position: fixed;
   visibility: hidden;
   opacity: 0;
-  right: 15px;
-  bottom: 15px;
+  right: 20px;
+  bottom: 20px;
   z-index: 99999;
-  background: #031086;
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
-  transition: all 0.4s;
+  background: linear-gradient(135deg, #0d1b30 25%, #043e94 100%); /* Cambia el color a un azul más claro */
+  width: 50px; /* Tamaño ligeramente más grande */
+  height: 50px;
+  border-radius: 50%; /* Botón redondo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un efecto elevado */
+  transition: opacity 0.4s, transform 0.4s; /* Transiciones suaves */
+  display: flex; /* Para centrar el icono */
+  justify-content: center;
+  align-items: center;
 }
 
 .back-to-top i {
   font-size: 24px;
   color: #fff;
-  line-height: 0;
+  transition: transform 0.2s; /* Suave animación al icono */
 }
 
 .back-to-top:hover {
-  background: #6776f4;
-  color: #fff;
+  background: #0056b3; /* Color de fondo en hover */
+  transform: translateY(-5px); /* Efecto de elevación al hacer hover */
+}
+
+.back-to-top:hover i {
+  transform: scale(1.1); /* Aumentar ligeramente el icono en hover */
 }
 
 .back-to-top.active {
   visibility: visible;
   opacity: 1;
+  transform: translateY(0); /* Asegura que el botón se vea en su posición original */
 }
 
-/*--------------------------------------------------------------
-# Override some default Bootstrap stylings
---------------------------------------------------------------*/
-/* Dropdown menus */
-.dropdown-menu {
-  border-radius: 4px;
-  padding: 10px 0;
-  animation-name: dropdown-animate;
-  animation-duration: 0.2s;
-  animation-fill-mode: both;
-  border: 0;
-  box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
-}
-
-.dropdown-menu .dropdown-header,
-.dropdown-menu .dropdown-footer {
-  text-align: center;
-  font-size: 15px;
-  padding: 10px 25px;
-}
-
-.dropdown-menu .dropdown-footer a {
-  color: #444444;
-  text-decoration: underline;
-}
-
-.dropdown-menu .dropdown-footer a:hover {
-  text-decoration: none;
-}
-
-.dropdown-menu .dropdown-divider {
-  color: #a5c5fe;
-  margin: 0;
-}
-
-.dropdown-menu .dropdown-item {
-  font-size: 14px;
-  padding: 10px 15px;
-  transition: 0.3s;
-}
-
-.dropdown-menu .dropdown-item i {
-  margin-right: 10px;
-  font-size: 18px;
-  line-height: 0;
-}
-
-.dropdown-menu .dropdown-item:hover {
-  background-color: #f6f9ff;
-}
-
-@media (min-width: 768px) {
-  .dropdown-menu-arrow::before {
-    content: "";
-    width: 13px;
-    height: 13px;
-    background: #fff;
-    position: absolute;
-    top: -7px;
-    right: 20px;
-    transform: rotate(45deg);
-    border-top: 1px solid #eaedf1;
-    border-left: 1px solid #eaedf1;
-  }
-}
-
-@keyframes dropdown-animate {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-
-  0% {
-    opacity: 0;
-  }
-}
-
-/* Light Backgrounds */
-.bg-primary-light {
-  background-color: #cfe2ff;
-  border-color: #cfe2ff;
-}
-
-.bg-secondary-light {
-  background-color: #e2e3e5;
-  border-color: #e2e3e5;
-}
-
-.bg-success-light {
-  background-color: #d1e7dd;
-  border-color: #d1e7dd;
-}
-
-.bg-danger-light {
-  background-color: #f8d7da;
-  border-color: #f8d7da;
-}
-
-.bg-warning-light {
-  background-color: #fff3cd;
-  border-color: #fff3cd;
-}
-
-.bg-info-light {
-  background-color: #cff4fc;
-  border-color: #cff4fc;
-}
-
-.bg-dark-light {
-  background-color: #d3d3d4;
-  border-color: #d3d3d4;
-}
 
 /* Card */
 .card {
@@ -262,6 +172,8 @@ h6 {
   outline: 0;
   box-shadow: none;
 }
+
+
 
 /* Accordion */
 .accordion-item {
@@ -384,7 +296,7 @@ h6 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(135deg, #1c1e21 25%, #0d6efd 100%);
+  background: linear-gradient(135deg, #0d1b30 25%, #043e94 100%);
   background-size: 400% 400%;
   animation: gradientAnimation 15s ease infinite;
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
@@ -617,7 +529,7 @@ h6 {
   scrollbar-width: thin;
   scrollbar-color: #fff transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-  background: linear-gradient(2deg, #1f2937 25%, #3b82f6 100%);
+  background: linear-gradient(135deg, #0d1b30 25%, #043e94 100%);
   background-size: 400% 400%;
   animation: gradientAnimation 10s ease infinite;
 }

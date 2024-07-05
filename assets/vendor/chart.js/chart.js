@@ -3,7 +3,6 @@ import { r as requestAnimFrame, a as resolve, e as effects, c as color, i as isO
 import '@kurkle/color';
 
 
-
 class Animator {
     constructor(){
         this._request = null;
