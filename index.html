@@ -1431,8 +1431,13 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
-    if (!isLoggedIn) {
+    const loggedIn = localStorage.getItem('loggedIn') === 'true';
+    const expiration = localStorage.getItem('expiration');
+    const now = new Date().getTime();
+
+    if (!loggedIn || now > expiration) {
+      localStorage.removeItem('loggedIn');
+      localStorage.removeItem('expiration');
       alert('You must login first');
       window.location.href = "pages-login.html"; // Redirigir a la página de login
     }

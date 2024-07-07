@@ -114,22 +114,21 @@
   <script src="assets/js/main.js"></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('login-card').style.display = 'block';
-    });
-  
-    function login(event) {
-      event.preventDefault();
-      const username = document.getElementById('yourUsername').value;
-      const password = document.getElementById('yourPassword').value;
-      if (username === "avipilcer" && password === "pilcer123") {
-        alert('Login successful');
-        // Redirigir a la página de contenido restringido
-        window.location.href = "index.html"; // Ajusta la ruta según tu estructura
-      } else {
-        alert('Invalid credentials');
-      }
+  function login(event) {
+    event.preventDefault();
+    const username = document.getElementById('yourUsername').value;
+    const password = document.getElementById('yourPassword').value;
+    if (username === "avipilcer" && password === "pilcer123") {
+      localStorage.setItem('loggedIn', 'true');
+      const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 horas
+      localStorage.setItem('expiration', expirationTime);
+      alert('Login successful');
+      // Redirigir a la página de contenido restringido
+      window.location.href = "index.html"; // Ajusta la ruta según tu estructura
+    } else {
+      alert('Invalid credentials');
     }
+  }
   </script>
   
   <video autoplay muted loop class="video-background">
