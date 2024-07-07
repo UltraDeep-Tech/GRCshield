@@ -47,12 +47,8 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
+
+    
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -299,37 +295,37 @@
           </a>
         </li>
         <li>
-          <a href="#severityDistributionByCategory">
+          <a href="#severity">
             <i class="bi bi-exclamation-triangle"></i><span>Severity Distribution by Category</span>
           </a>
         </li>
         <li>
-          <a href="#severityRateDistributionOverTimeByCategory">
+          <a href="#SeverityTime">
             <i class="bi bi-clock-history"></i><span>Severity Rate Distribution Over Time by Category</span>
           </a>
         </li>
         <li>
-          <a href="#abusiveUserDetection">
+          <a href="#totalAbusiveUsersChart">
             <i class="bi bi-person-x"></i><span>Abusive User Detection</span>
           </a>
         </li>
         <li>
-          <a href="#hallucinationDetection">
+          <a href="#hallucinationChart">
             <i class="bi bi-eye-slash"></i><span>Hallucination Detection</span>
           </a>
         </li>
         <li>
-          <a href="#biasDetection">
+          <a href="#biasPieChart">
             <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
           </a>
         </li>
         <li>
-          <a href="#promptInjectionDetection">
+          <a href="#promptInjectionChart">
             <i class="bi bi-shield-exclamation"></i><span>Prompt Injection/Jailbreak Detection</span>
           </a>
         </li>
         <li>
-          <a href="#dataExposure">
+          <a href="#dataExposureLineChart">
             <i class="bi bi-file-earmark-lock"></i><span>Data Exposure</span>
           </a>
         </li>
@@ -386,14 +382,14 @@
 <!-- Bar Chart -->
 
 <div class="col-lg-6">
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Total Blocked Request Count and Block Rate</h5>
-      <canvas id="combinedChart" style="max-height: 400px;"></canvas>
+  <div class="cardindex">
+    <div class="cardindex-body">
+      <h5 class="cardindex-title">Total Blocked Request Count and Block Rate</h5>
+      <canvas id="totalBlockedRequests" style="max-height: 400px;"></canvas>
 
       <script>
         document.addEventListener("DOMContentLoaded", () => {
-          const ctx = document.querySelector('#combinedChart').getContext('2d');
+          const ctx = document.querySelector('#totalBlockedRequests').getContext('2d');
 
           // Crear gradientes
           const gradientBar = ctx.createLinearGradient(0, 0, 0, 400);
@@ -407,21 +403,9 @@
           const dataTotalBlocked = {
             labels: ['Jul 10', 'Jul 11', 'Jul 12', 'Jul 13', 'Jul 14', 'Jul 15', 'Jul 16'],
             datasets: [{
-              type: 'bar',
-              label: 'Blocked Requests',
-              data: [10000, 15000, 20000, 25000, 30000, 35000, 40000],
-              backgroundColor: gradientBar,
-              borderColor: 'rgba(0, 123, 255, 1)',
-              borderWidth: 1,
-              borderRadius: 5,
-              shadowOffsetX: 3,
-              shadowOffsetY: 3,
-              shadowBlur: 10,
-              shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }, {
               type: 'line',
               label: 'Block Rate',
-              data: [20, 25, 30, 35, 40, 45, 50],
+              data: [1500, 10000, 8000,9000, 15000, 18000, 5000],
               borderColor: gradientLine,
               fill: false,
               tension: 0.4,
@@ -434,7 +418,20 @@
               pointHoverBackgroundColor: 'white',
               pointHoverBorderColor: gradientLine,
               pointHoverBorderWidth: 3
-            }]
+            },
+            {
+              type: 'bar',
+              label: 'Blocked Requests',
+              data: [25000, 15000, 20000,13000, 30000, 35000, 10000],
+              backgroundColor: gradientBar,
+              borderColor: 'rgba(0, 123, 255, 1)',
+              borderWidth: 1,
+              borderRadius: 5,
+              shadowOffsetX: 3,
+              shadowOffsetY: 3,
+              shadowBlur: 10,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            } ]
           };
 
           new Chart(ctx, {
@@ -443,13 +440,27 @@
             options: {
               scales: {
                 y: {
-                  beginAtZero: true
+                  beginAtZero: true,
+                  ticks: {
+                    color: '#fff'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.2)'
+                  }
+                },
+                x: {
+                  ticks: {
+                    color: '#fff'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.2)'
+                  }
                 }
               },
               plugins: {
                 legend: {
                   labels: {
-                    color: '#333',
+                    color: '#fff',
                     font: {
                       size: 14,
                       weight: 'bold'
@@ -461,7 +472,7 @@
                   titleColor: '#fff',
                   bodyColor: '#fff',
                   borderWidth: 1,
-                  borderColor: '#333',
+                  borderColor: '#fff',
                   cornerRadius: 4
                 }
               }
@@ -476,203 +487,57 @@
 
 
 
-              <!-- Pie Chart -->
-              <div class="col-lg-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Blocked Requests by Category </h5>
-                    <canvas id="pieChart" style="max-height: 240px;"></canvas>
-      
-                    <script>
-                      document.addEventListener("DOMContentLoaded", () => {
-                        new Chart(document.querySelector('#pieChart'), {
-                          type: 'pie',
-                          data: {
-                            labels: [
-                              'Violence',
-                              'Hate',
-                              'Sexual',
-                              'Self-harm',
-                              'Jailbreak'
-                            ],
-                            datasets: [{
-                              label: 'My First Dataset',
-                              data: [300, 50, 100, 20, 10],
-                              backgroundColor: [
-                                'rgb(255, 99, 132)',
-                                'rgb(54, 162, 235)',
-                                'rgb(255, 205, 86)',
-                                'purple',
-                                'red'
-                              ],
-                              hoverOffset: 4
-                            }]
-                          }
-                        });
-                      });
-                    </script>
-                  </div>
-                </div>
-              </div>
-                    <!-- End Pie CHart -->
 
-
-
-
-
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Block Rate Over Time by Category
-              </h5>
-
-              <!-- Line Chart -->
-              <canvas id="lineChart" style="max-height: 400px;"></canvas>
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  new Chart(document.querySelector('#lineChart'), {
-                    type: 'line',
-                    data: {
-                      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                      datasets: [
-                        {
-                          label: 'Violence',
-                          data: [10, 15, 20, 25, 30, 35, 40],
-                          fill: false,
-                          borderColor: 'rgb(80, 192, 192)',
-                          tension: 0.1
-                        },
-                        {
-                          label: 'Hate',
-                          data: [15, 20, 25, 30, 35, 40, 45],
-                          fill: false,
-                          borderColor: 'rgb(255, 99, 132)',
-                          tension: 0.1
-                        },
-                        {
-                          label: 'Sexual',
-                          data: [20, 25, 30, 35, 40, 45, 50],
-                          fill: false,
-                          borderColor: 'rgb(54, 162, 235)',
-                          tension: 0.1
-                        },
-                        {
-                          label: 'Self-harm',
-                          data: [25, 30, 35, 40, 45, 50, 55],
-                          fill: false,
-                          borderColor: 'rgb(54, 162, 235)',
-                          tension: 0.1
-                        },
-                        {
-                          label: 'Jailbreak',
-                          data: [35, 40, 45, 50, 55, 60, 65],
-                          fill: false,
-                          borderColor: 'rgb(255, 205, 86)',
-                          tension: 0.1
-                        }
-                      ]
-                    },
-                    options: {
-                      scales: {
-                        y: {
-                          beginAtZero: true
-                        }
-                      }
-                    }
-                  });
-                });
-              </script>
-              <!-- End Line CHart -->
-
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Severity Distribution by Category</h5>
-              <canvas id="severityDistributionChart"></canvas>
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  const dataSeverityDistribution = {
-                    labels: ['Low', 'Medium', 'High'],
-                    datasets: [
-                      { label: 'Violence', data: [100, 200, 300], backgroundColor: 'rgba(255, 99, 132, 0.2)', borderColor: 'rgb(255, 99, 132)', borderWidth: 1 },
-                      { label: 'Hate', data: [50, 150, 250], backgroundColor: 'rgba(54, 162, 235, 0.2)', borderColor: 'rgb(54, 162, 235)', borderWidth: 1 },
-                      { label: 'Sexual', data: [80, 180, 280], backgroundColor: 'rgba(255, 205, 86, 0.2)', borderColor: 'rgb(255, 205, 86)', borderWidth: 1 },
-                      { label: 'Self-harm', data: [60, 160, 260], backgroundColor: 'rgba(75, 192, 192, 0.2)', borderColor: 'rgb(75, 192, 192)', borderWidth: 1 }
-                    ]
-                  };
-    
-                  new Chart(document.querySelector('#severityDistributionChart'), {
-                    type: 'bar',
-                    data: dataSeverityDistribution,
-                    options: {
-                      scales: {
-                        y: {
-                          beginAtZero: true
-                        }
-                      }
-                    }
-                  });
-                });
-              </script>
-            </div>
-          </div>
-        </div>
-
-
-
-
-<!-- Severity Chart -->
 <div class="col-lg-6">
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Severity Rate Distribution Over Time by Category </h5>
-
-      <canvas id="Severity" style="max-height: 400px;"></canvas>
+  <div class="cardindex">
+    <div class="cardindex-body">
+      <h5 class="cardindex-title">Blocked Requests by Category</h5>
+      <canvas id="blockedRequestsByCategory" style="max-height: 240px;"></canvas>
       <script>
         document.addEventListener("DOMContentLoaded", () => {
-          new Chart(document.querySelector('#Severity'), {
-            type: 'line',
+          new Chart(document.querySelector('#blockedRequestsByCategory'), {
+            type: 'pie',
             data: {
-              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-              datasets: [
-                {
-                  label: 'Violence',
-                  data: [12, 18, 24, 30, 36, 42, 48],
-                  fill: false,
-                  borderColor: 'rgb(80, 192, 192)',
-                  tension: 0.1
-                },
-                {
-                  label: 'Hate',
-                  data: [20, 25, 30, 35, 40, 45, 50],
-                  fill: false,
-                  borderColor: 'rgb(255, 99, 132)',
-                  tension: 0.1
-                },
-                {
-                  label: 'Sexual',
-                  data: [22, 28, 34, 40, 46, 52, 58],
-                  fill: false,
-                  borderColor: 'rgb(54, 162, 235)',
-                  tension: 0.1
-                },
-                {
-                  label: 'Self-harm',
-                  data: [26, 32, 38, 44, 50, 56, 62],
-                  fill: false,
-                  borderColor: 'rgb(153, 102, 255)',
-                  tension: 0.1
-                }
-              ]
+              labels: [
+                'Violence',
+                'Hate',
+                'Sexual',
+                'Self-harm',
+                'Jailbreak'
+              ],
+              datasets: [{
+                label: 'Blocked Requests',
+                data: [300, 50, 100, 20, 10],
+                backgroundColor: [
+                  'rgba(255, 99, 132, 0.7)',
+                  'rgba(54, 162, 235, 0.7)',
+                  'rgba(75, 192, 192, 0.7)',
+                  'rgba(153, 102, 255, 0.7)',
+                  'rgba(255, 205, 86, 0.7)'
+                ],
+                borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 205, 86, 1)'
+                ],
+                borderWidth: 1
+              }]
             },
             options: {
-              scales: {
-                y: {
-                  beginAtZero: true
+              plugins: {
+                legend: {
+                  labels: {
+                    color: '#fff'
+                  }
+                },
+                tooltip: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  titleColor: '#fff',
+                  bodyColor: '#fff',
+                  borderColor: '#fff',
+                  borderWidth: 1
                 }
               }
             }
@@ -682,28 +547,280 @@
     </div>
   </div>
 </div>
-<!-- End Severity Chart -->
+<!-- End Pie Chart -->
 
+<div class="col-lg-12">
+  <div class="cardindex">
+    <div class="cardindex-body">
+      <h5 class="cardindex-title">Block Rate Over Time by Category</h5>
+      <canvas id="blockRateOverTimeByCategory" style="max-height: 400px;"></canvas>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          new Chart(document.querySelector('#blockRateOverTimeByCategory'), {
+            type: 'line',
+            data: {
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+              datasets: [
+                {
+                  label: 'Violence',
+                  data: [45, 32, 28, 15, 27, 50, 60],
+                  fill: false,
+                  borderColor: 'rgba(255, 99, 132, 0.7)',
+                  tension: 0.4
+                },
+                {
+                  label: 'Hate',
+                  data: [23, 63, 36, 39, 35, 40, 27],
+                  fill: false,
+                  borderColor: 'rgba(54, 162, 235, 0.7)',
+                  tension: 0.4
+                },
+                {
+                  label: 'Sexual',
+                  data: [57, 51, 20, 25, 55, 20, 15],
+                  fill: false,
+                  borderColor: 'rgba(75, 192, 192, 0.7)',
+                  tension: 0.4
+                },
+                {
+                  label: 'Self-harm',
+                  data: [32, 40, 10, 60, 36, 57, 35],
+                  fill: false,
+                  borderColor: 'rgba(153, 102, 255, 0.7)',
+                  tension: 0.4
+                },
+                {
+                  label: 'Jailbreak',
+                  data: [35, 20, 45, 50, 33, 44, 50],
+                  fill: false,
+                  borderColor: 'rgba(255, 205, 86, 0.7)',
+                  tension: 0.4
+                }
+              ]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: {
+                    color: '#fff'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                },
+                x: {
+                  ticks: {
+                    color: '#fff'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                }
+              },
+              plugins: {
+                legend: {
+                  labels: {
+                    color: '#fff'
+                  }
+                },
+                tooltip: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  titleColor: '#fff',
+                  bodyColor: '#fff',
+                  borderColor: '#fff',
+                  borderWidth: 1
+                }
+              }
+            }
+          });
+        });
+      </script>
+    </div>
+  </div>
+</div>
+<!-- End Line Chart -->
 
+<div class="col-lg-6">
+  <div class="cardindex">
+    <div class="cardindex-body">
+      <h5 class="cardindex-title">Severity Distribution by Category</h5>
+      <canvas id="severity"></canvas>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const dataSeverityDistribution = {
+            labels: ['Low', 'Medium', 'High'],
+            datasets: [
+              {
+                label: 'Violence',
+                data: [120, 180, 100],
+                backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+              },
+              {
+                label: 'Hate',
+                data: [90, 130, 70],
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+              },
+              {
+                label: 'Sexual',
+                data: [70, 160, 90],
+                backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+              },
+              {
+                label: 'Self-harm',
+                data: [50, 110, 80],
+                backgroundColor: 'rgba(153, 102, 255, 0.7)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
+              }
+            ]
+          };
+      
+          new Chart(document.querySelector('#severity'), {
+            type: 'bar',
+            data: dataSeverityDistribution,
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: {
+                    color: '#fff'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                },
+                x: {
+                  ticks: {
+                    color: '#fff'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                }
+              },
+              plugins: {
+                legend: {
+                  labels: {
+                    color: '#fff'
+                  }
+                },
+                tooltip: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  titleColor: '#fff',
+                  bodyColor: '#fff',
+                  borderColor: '#fff',
+                  borderWidth: 1
+                }
+              }
+            }
+          });
+        });
+      </script>
+      
+      
+    </div>
+  </div>
+</div>
+<!-- End Bar Chart -->
 
+<div class="col-lg-6">
+  <div class="cardindex">
+    <div class="cardindex-body">
+      <h5 class="cardindex-title">Severity Rate Distribution Over Time by Category</h5>
+      <canvas id="SeverityTime" style="max-height: 400px;"></canvas>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          new Chart(document.querySelector('#SeverityTime'), {
+            type: 'line',
+            data: {
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+              datasets: [
+                {
+                  label: 'Violence',
+                  data: [12, 19, 15, 22, 17, 25, 20],
+                  fill: false,
+                  borderColor: 'rgba(255, 99, 132, 0.7)',
+                  tension: 0.4
+                },
+                {
+                  label: 'Hate',
+                  data: [18, 22, 17, 28, 25, 30, 27],
+                  fill: false,
+                  borderColor: 'rgba(54, 162, 235, 0.7)',
+                  tension: 0.4
+                },
+                {
+                  label: 'Sexual',
+                  data: [14, 24, 21, 26, 29, 33, 31],
+                  fill: false,
+                  borderColor: 'rgba(75, 192, 192, 0.7)',
+                  tension: 0.4
+                },
+                {
+                  label: 'Self-harm',
+                  data: [16, 28, 25, 20, 32, 36, 34],
+                  fill: false,
+                  borderColor: 'rgba(153, 102, 255, 0.7)',
+                  tension: 0.4
+                }
+              ]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: {
+                    color: '#fff'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                },
+                x: {
+                  ticks: {
+                    color: '#fff'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                }
+              },
+              plugins: {
+                legend: {
+                  labels: {
+                    color: '#fff'
+                  }
+                },
+                tooltip: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  titleColor: '#fff',
+                  bodyColor: '#fff',
+                  borderColor: '#fff',
+                  borderWidth: 1
+                }
+              }
+            }
+          });
+        });
+      </script>
+      
+      
+    </div>
+  </div>
+</div>
+<!-- End Line Chart -->
 
-
-
- 
-
-       
-      </div>
-    </section>
-
-
-
- <!-- Abusive User Detection Section -->
- <div class="col-12">
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Abusive User Detection</h5>
-
-      <!-- Total Potential Abusive Users Over Time -->
+<div class="col-12">
+  <div class="cardindex">
+    <div class="cardindex-body">
+      <h5 class="cardindex-title">Abusive User Detection</h5>
       <div class="chart">
         <h6>Total Potential Abusive Users Over Time</h6>
         <canvas id="totalAbusiveUsersChart" style="max-height: 400px;"></canvas>
@@ -717,7 +834,7 @@
                 datasets: [{
                   label: 'Total Potential Abusive Users',
                   data: [12, 19, 3, 5, 2, 3, 7],
-                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  backgroundColor: 'rgba(75, 192, 192, 0.7)',
                   borderColor: 'rgba(75, 192, 192, 1)',
                   borderWidth: 1
                 }]
@@ -725,7 +842,35 @@
               options: {
                 scales: {
                   y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                      color: '#fff'
+                    },
+                    grid: {
+                      color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                  },
+                  x: {
+                    ticks: {
+                      color: '#fff'
+                    },
+                    grid: {
+                      color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                  }
+                },
+                plugins: {
+                  legend: {
+                    labels: {
+                      color: '#fff'
+                    }
+                  },
+                  tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    borderColor: '#fff',
+                    borderWidth: 1
                   }
                 }
               }
@@ -734,7 +879,6 @@
         </script>
       </div>
 
-      <!-- Detailed Analysis of Potentially Abusive Users -->
       <div class="table-responsive mt-4">
         <h6>Detailed Analysis of Potentially Abusive Users <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#abusiveUsersTable" aria-expanded="false" aria-controls="abusiveUsersTable"> Show info</button></h6>
         <div class="collapse" id="abusiveUsersTable">
@@ -758,10 +902,137 @@
           </table>
         </div>
       </div>
-
     </div>
   </div>
-</div><!-- End Abusive User Detection Section -->
+</div>
+<!-- End Abusive User Detection Section -->
+
+<div class="col-12">
+  <div class="cardindex">
+    <div class="cardindex-body">
+      <h5 class="cardindex-title">Hallucination Detection</h5>
+      <div class="chart">
+        <h6>Number of Hallucinations Detected Each Day</h6>
+        <canvas id="hallucinationChart" style="max-height: 400px;"></canvas>
+      </div>
+      <div class="table-responsive mt-4">
+        <h6>Details of Each Hallucination <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#hallucinationTable" aria-expanded="false" aria-controls="hallucinationTable">Show Info</button></h6>
+        <div class="collapse" id="hallucinationTable">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>User Input</th>
+                <th>AI Response</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="hallucinationData">
+              <!-- Data will be populated here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-12">
+  <div class="cardindex">
+    <div class="cardindex-body">
+      <h5 class="cardindex-title">Bias Detection</h5>
+      <div class="chart">
+        <h6>Types of Bias Detected</h6>
+        <canvas id="biasPieChart" style="max-height: 400px;"></canvas>
+      </div>
+      <div class="chart mt-4">
+        <h6>Bias Incidents Over Time</h6>
+        <canvas id="biasLineChart" style="max-height: 400px;"></canvas>
+      </div>
+      <div class="table-responsive mt-4">
+        <h6>Details of Each Bias Incident <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#biasTable" aria-expanded="false" aria-controls="biasTable">Show Info</button></h6>
+        <div class="collapse" id="biasTable">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>User Input</th>
+                <th>AI Response</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="biasData">
+              <!-- Data will be populated here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-12">
+  <div class="cardindex">
+    <div class="cardindex-body">
+      <h5 class="cardindex-title">Prompt Injection/Jailbreak Detection</h5>
+      <div class="chart">
+        <h6>Number of Prompt Injections Detected Each Day</h6>
+        <canvas id="promptInjectionChart" style="max-height: 400px;"></canvas>
+      </div>
+      <div class="table-responsive mt-4">
+        <h6>Details of Each Prompt Injection <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#promptInjectionTable" aria-expanded="false" aria-controls="promptInjectionTable">Show Info</button></h6>
+        <div class="collapse" id="promptInjectionTable">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>User Input</th>
+                <th>AI Response</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="promptInjectionData">
+              <!-- Data will be populated here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-12">
+  <div class="cardindex">
+    <div class="cardindex-body">
+      <h5 class="cardindex-title">Data Exposure (Leakage, Lineage, Observability, Privacy)</h5>
+      <div class="chart">
+        <h6>Data Exposure Incidents Over Time</h6>
+        <canvas id="dataExposureLineChart" style="max-height: 400px;"></canvas>
+      </div>
+      <div class="chart mt-4">
+        <h6>Types of Data Exposed</h6>
+        <canvas id="dataExposurePieChart" style="max-height: 400px;"></canvas>
+      </div>
+      <div class="table-responsive mt-4">
+        <h6>Details of Each Data Exposure Incident <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#dataExposureTable" aria-expanded="false" aria-controls="dataExposureTable">Show Info</button></h6>
+        <div class="collapse" id="dataExposureTable">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Data Type</th>
+                <th>User Input</th>
+                <th>AI Response</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="dataExposureData">
+              <!-- Data will be populated here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const data = [
@@ -786,380 +1057,377 @@
       `;
       tbody.appendChild(row);
     });
+
+    const hallucinationData = [
+      { userInput: 'input1', aiResponse: 'response1', date: '2023-07-01' },
+      { userInput: 'input2', aiResponse: 'response2', date: '2023-07-02' },
+    ];
+
+    const hallucinationTbody = document.getElementById('hallucinationData');
+    hallucinationData.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.userInput}</td>
+        <td>${item.aiResponse}</td>
+        <td>${item.date}</td>
+      `;
+      hallucinationTbody.appendChild(row);
+    });
+
+    const biasData = [
+      { userInput: 'input1', aiResponse: 'response1', date: '2023-07-01' },
+      { userInput: 'input2', aiResponse: 'response2', date: '2023-07-02' },
+    ];
+
+    const biasTbody = document.getElementById('biasData');
+    biasData.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.userInput}</td>
+        <td>${item.aiResponse}</td>
+        <td>${item.date}</td>
+      `;
+      biasTbody.appendChild(row);
+    });
+
+    const promptInjectionData = [
+      { userInput: 'input1', aiResponse: 'response1', date: '2023-07-01' },
+      { userInput: 'input2', aiResponse: 'response2', date: '2023-07-02' },
+    ];
+
+    const promptInjectionTbody = document.getElementById('promptInjectionData');
+    promptInjectionData.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.userInput}</td>
+        <td>${item.aiResponse}</td>
+        <td>${item.date}</td>
+      `;
+      promptInjectionTbody.appendChild(row);
+    });
+
+    const dataExposureData = [
+      { dataType: 'Personal', userInput: 'input1', aiResponse: 'response1', date: '2023-07-01' },
+      { dataType: 'Financial', userInput: 'input2', aiResponse: 'response2', date: '2023-07-02' },
+    ];
+
+    const dataExposureTbody = document.getElementById('dataExposureData');
+    dataExposureData.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.dataType}</td>
+        <td>${item.userInput}</td>
+        <td>${item.aiResponse}</td>
+        <td>${item.date}</td>
+      `;
+      dataExposureTbody.appendChild(row);
+    });
+
+    // Hallucination Chart
+    new Chart(document.querySelector('#hallucinationChart'), {
+      type: 'bar',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+          label: 'Hallucinations Detected',
+          data: [12, 19, 3, 5, 2, 3, 7],
+          backgroundColor: 'rgba(255, 99, 132, 0.7)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#fff'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#fff'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#fff'
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            borderColor: '#fff',
+            borderWidth: 1
+          }
+        }
+      }
+    });
+
+    // Bias Pie Chart
+    new Chart(document.querySelector('#biasPieChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Gender', 'Race', 'Age', 'Religion', 'Socioeconomic status', 'Nationality', 'Disability', 'Sexual orientation', 'Political affiliation'],
+        datasets: [{
+          label: 'Bias Types',
+          data: [12, 19, 3, 5, 2, 3, 7, 8, 4],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 205, 86, 0.7)',
+            'rgba(255, 159, 64, 0.7)',
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(75, 192, 192, 0.7)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 205, 86, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: '#fff'
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            borderColor: '#fff',
+            borderWidth: 1
+          }
+        }
+      }
+    });
+
+    // Bias Line Chart
+    new Chart(document.querySelector('#biasLineChart'), {
+      type: 'line',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+          label: 'Bias Incidents',
+          data: [12, 19, 3, 5, 2, 3, 7],
+          backgroundColor: 'rgba(75, 192, 192, 0.7)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+          fill: false,
+          tension: 0.4
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#fff'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#fff'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#fff'
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            borderColor: '#fff',
+            borderWidth: 1
+          }
+        }
+      }
+    });
+
+    // Prompt Injection Chart
+    new Chart(document.querySelector('#promptInjectionChart'), {
+      type: 'bar',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+          label: 'Prompt Injections Detected',
+          data: [12, 19, 3, 5, 2, 3, 7],
+          backgroundColor: 'rgba(153, 102, 255, 0.7)',
+          borderColor: 'rgba(153, 102, 255, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#fff'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#fff'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#fff'
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            borderColor: '#fff',
+            borderWidth: 1
+          }
+        }
+      }
+    });
+
+    // Data Exposure Line Chart
+    new Chart(document.querySelector('#dataExposureLineChart'), {
+      type: 'line',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+          label: 'Data Exposure Incidents',
+          data: [12, 19, 3, 5, 2, 3, 7],
+          backgroundColor: 'rgba(255, 206, 86, 0.7)',
+          borderColor: 'rgba(255, 206, 86, 1)',
+          borderWidth: 1,
+          fill: false,
+          tension: 0.4
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#fff'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#fff'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#fff'
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            borderColor: '#fff',
+            borderWidth: 1
+          }
+        }
+      }
+    });
+
+    // Data Exposure Pie Chart
+    new Chart(document.querySelector('#dataExposurePieChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Personal', 'Financial', 'Health', 'Intellectual property', 'User behavior', 'Communication', 'Location'],
+        datasets: [{
+          label: 'Data Exposure Types',
+          data: [12, 19, 3, 5, 2, 3, 7],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 205, 86, 0.7)',
+            'rgba(255, 159, 64, 0.7)',
+            'rgba(75, 192, 192, 0.7)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 205, 86, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: '#fff'
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            borderColor: '#fff',
+            borderWidth: 1
+          }
+        }
+      }
+    });
   });
 </script>
-</div>
-</div>
-
-
-
-
-
-  <!-- Hallucination Detection Section -->
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Hallucination Detection</h5>
-        <div class="chart">
-          <h6>Number of Hallucinations Detected Each Day</h6>
-          <canvas id="hallucinationChart" style="max-height: 400px;"></canvas>
-        </div>
-        <div class="table-responsive mt-4">
-          <h6>Details of Each Hallucination <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#hallucinationTable" aria-expanded="false" aria-controls="hallucinationTable">Expand/Collapse</button></h6>
-          <div class="collapse" id="hallucinationTable">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>User Input</th>
-                  <th>AI Response</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody id="hallucinationData">
-                <!-- Data will be populated here -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bias Detection Section -->
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Bias Detection</h5>
-        <div class="chart">
-          <h6>Types of Bias Detected</h6>
-          <canvas id="biasPieChart" style="max-height: 400px;"></canvas>
-        </div>
-        <div class="chart mt-4">
-          <h6>Bias Incidents Over Time</h6>
-          <canvas id="biasLineChart" style="max-height: 400px;"></canvas>
-        </div>
-        <div class="table-responsive mt-4">
-          <h6>Details of Each Bias Incident <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#biasTable" aria-expanded="false" aria-controls="biasTable">Expand/Collapse</button></h6>
-          <div class="collapse" id="biasTable">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>User Input</th>
-                  <th>AI Response</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody id="biasData">
-                <!-- Data will be populated here -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Prompt Injection/Jailbreak Detection Section -->
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Prompt Injection/Jailbreak Detection</h5>
-        <div class="chart">
-          <h6>Number of Prompt Injections Detected Each Day</h6>
-          <canvas id="promptInjectionChart" style="max-height: 400px;"></canvas>
-        </div>
-        <div class="table-responsive mt-4">
-          <h6>Details of Each Prompt Injection <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#promptInjectionTable" aria-expanded="false" aria-controls="promptInjectionTable">Expand/Collapse</button></h6>
-          <div class="collapse" id="promptInjectionTable">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>User Input</th>
-                  <th>AI Response</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody id="promptInjectionData">
-                <!-- Data will be populated here -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Data Exposure Section -->
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Data Exposure (Leakage, Lineage, Observability, Privacy)</h5>
-        <div class="chart">
-          <h6>Data Exposure Incidents Over Time</h6>
-          <canvas id="dataExposureLineChart" style="max-height: 400px;"></canvas>
-        </div>
-        <div class="chart mt-4">
-          <h6>Types of Data Exposed</h6>
-          <canvas id="dataExposurePieChart" style="max-height: 400px;"></canvas>
-        </div>
-        <div class="table-responsive mt-4">
-          <h6>Details of Each Data Exposure Incident <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#dataExposureTable" aria-expanded="false" aria-controls="dataExposureTable">Expand/Collapse</button></h6>
-          <div class="collapse" id="dataExposureTable">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Data Type</th>
-                  <th>User Input</th>
-                  <th>AI Response</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody id="dataExposureData">
-                <!-- Data will be populated here -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Hallucination Detection Data
-      const hallucinationData = [
-        { userInput: 'input1', aiResponse: 'response1', date: '2023-07-01' },
-        { userInput: 'input2', aiResponse: 'response2', date: '2023-07-02' },
-      ];
-  
-      const hallucinationTbody = document.getElementById('hallucinationData');
-      hallucinationData.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.userInput}</td>
-          <td>${item.aiResponse}</td>
-          <td>${item.date}</td>
-        `;
-        hallucinationTbody.appendChild(row);
-      });
-  
-      // Bias Detection Data
-      const biasData = [
-        { userInput: 'input1', aiResponse: 'response1', date: '2023-07-01' },
-        { userInput: 'input2', aiResponse: 'response2', date: '2023-07-02' },
-      ];
-  
-      const biasTbody = document.getElementById('biasData');
-      biasData.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.userInput}</td>
-          <td>${item.aiResponse}</td>
-          <td>${item.date}</td>
-        `;
-        biasTbody.appendChild(row);
-      });
-  
-      // Prompt Injection Data
-      const promptInjectionData = [
-        { userInput: 'input1', aiResponse: 'response1', date: '2023-07-01' },
-        { userInput: 'input2', aiResponse: 'response2', date: '2023-07-02' },
-      ];
-  
-      const promptInjectionTbody = document.getElementById('promptInjectionData');
-      promptInjectionData.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.userInput}</td>
-          <td>${item.aiResponse}</td>
-          <td>${item.date}</td>
-        `;
-        promptInjectionTbody.appendChild(row);
-      });
-  
-      // Data Exposure Data
-      const dataExposureData = [
-        { dataType: 'Personal', userInput: 'input1', aiResponse: 'response1', date: '2023-07-01' },
-        { dataType: 'Financial', userInput: 'input2', aiResponse: 'response2', date: '2023-07-02' },
-      ];
-  
-      const dataExposureTbody = document.getElementById('dataExposureData');
-      dataExposureData.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.dataType}</td>
-          <td>${item.userInput}</td>
-          <td>${item.aiResponse}</td>
-          <td>${item.date}</td>
-        `;
-        dataExposureTbody.appendChild(row);
-      });
-  
-      // Hallucination Chart
-      new Chart(document.querySelector('#hallucinationChart'), {
-        type: 'bar',
-        data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-          datasets: [{
-            label: 'Hallucinations Detected',
-            data: [12, 19, 3, 5, 2, 3, 7],
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-  
-      // Bias Pie Chart
-      new Chart(document.querySelector('#biasPieChart'), {
-        type: 'pie',
-        data: {
-          labels: ['Gender', 'Race', 'Age', 'Religion', 'Socioeconomic status', 'Nationality', 'Disability', 'Sexual orientation', 'Political affiliation'],
-          datasets: [{
-            label: 'Bias Types',
-            data: [12, 19, 3, 5, 2, 3, 7, 8, 4],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-        }
-      });
-  
-      // Bias Line Chart
-      new Chart(document.querySelector('#biasLineChart'), {
-        type: 'line',
-        data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-          datasets: [{
-            label: 'Bias Incidents',
-            data: [12, 19, 3, 5, 2, 3, 7],
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1,
-            fill: false,
-            tension: 0.1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-  
-      // Prompt Injection Chart
-      new Chart(document.querySelector('#promptInjectionChart'), {
-        type: 'bar',
-        data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-          datasets: [{
-            label: 'Prompt Injections Detected',
-            data: [12, 19, 3, 5, 2, 3, 7],
-            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-            borderColor: 'rgba(153, 102, 255, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-  
-      // Data Exposure Line Chart
-      new Chart(document.querySelector('#dataExposureLineChart'), {
-        type: 'line',
-        data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-          datasets: [{
-            label: 'Data Exposure Incidents',
-            data: [12, 19, 3, 5, 2, 3, 7],
-            backgroundColor: 'rgba(255, 206, 86, 0.2)',
-            borderColor: 'rgba(255, 206, 86, 1)',
-            borderWidth: 1,
-            fill: false,
-            tension: 0.1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-  
-      // Data Exposure Pie Chart
-      new Chart(document.querySelector('#dataExposurePieChart'), {
-        type: 'pie',
-        data: {
-          labels: ['Personal', 'Financial', 'Health', 'Intellectual property', 'User behavior', 'Communication', 'Location'],
-          datasets: [{
-            label: 'Data Exposure Types',
-            data: [12, 19, 3, 5, 2, 3, 7],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(75, 192, 192, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-              'rgba(75, 192, 192, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-        }
-      });
-    });
-  </script>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -1169,18 +1437,45 @@
       window.location.href = "pages-login.html"; // Redirigir a la página de login
     }
   });
+
+  document.querySelectorAll('.cardindex').forEach(card => {
+    card.addEventListener('click', (event) => {
+        // Verifica si el clic proviene de un elemento interactivo dentro de la tarjeta
+        if (event.target.closest('.cardindex-header, .cardindex-footer, .cardindex-body button, .cardindex-body a, .cardindex-body canvas')) {
+            return; // Si es un elemento interactivo, no hacer nada
+        }
+
+        // Alterna la clase 'expanded' en la tarjeta
+        if (!card.classList.contains('expanded')) {
+            card.classList.add('expanded');
+            setTimeout(() => {
+                window.dispatchEvent(new Event('resize')); // Redibujar gráficos
+            }, 300);
+        } else {
+            card.classList.remove('expanded');
+            setTimeout(() => {
+                window.dispatchEvent(new Event('resize')); // Redibujar gráficos
+            }, 300);
+        }
+    });
+});
+
+
+
+
 </script>
+
 
 
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
+  <footer id="footer" class="footerindex">
     <div class="copyright">
       &copy; Copyright <strong><span>GRC Shield Ultra</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
-      Designed by <a href=""></a>
+      Designed by <a href="www.ultradeeptech.com">Ultra Deep Tech</a>
     </div>
   </footer><!-- End Footer -->
 
