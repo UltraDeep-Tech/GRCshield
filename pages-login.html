@@ -86,7 +86,7 @@
               </div>
 
               <div class="credits">
-                Designed by <a href=""></a>
+                <!---- Designed by <a href=""></a>--->
               </div>
 
             </div>
@@ -115,22 +115,14 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
-      if (isLoggedIn) {
-        document.getElementById('login-card').style.display = 'none';
-        alert('Already logged in');
-        // Aquí puedes redirigir a la página de contenido restringido
-        window.location.href = "index.html"; // Ajusta la ruta según tu estructura
-      }
+      document.getElementById('login-card').style.display = 'block';
     });
-
+  
     function login(event) {
       event.preventDefault();
       const username = document.getElementById('yourUsername').value;
       const password = document.getElementById('yourPassword').value;
       if (username === "avipilcer" && password === "pilcer123") {
-        localStorage.setItem('loggedIn', 'true');
-        document.getElementById('login-card').style.display = 'none';
         alert('Login successful');
         // Redirigir a la página de contenido restringido
         window.location.href = "index.html"; // Ajusta la ruta según tu estructura
@@ -139,6 +131,7 @@
       }
     }
   </script>
+  
   <video autoplay muted loop class="video-background">
     <source src="assets/img/compressed_dashboard_background.mp4" type="video/mp4">
   </video>
