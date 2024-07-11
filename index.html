@@ -1060,9 +1060,10 @@
     });
 
     const hallucinationData = [
-      { userInput: 'input1', aiResponse: 'response1', date: '2023-07-01' },
-      { userInput: 'input2', aiResponse: 'response2', date: '2023-07-02' },
-    ];
+  { userInput: 'What is the weather like tomorrow?', aiResponse: 'The weather will be sunny with a chance of meatballs.', date: '2023-07-01' },
+  { userInput: 'Who is the president of the United States?', aiResponse: 'The president of the United States is Mickey Mouse.', date: '2023-07-02' },
+  // Añade más datos según sea necesario
+];
 
     const hallucinationTbody = document.getElementById('hallucinationData');
     hallucinationData.forEach(item => {
@@ -1076,9 +1077,13 @@
     });
 
     const biasData = [
-      { userInput: 'input1', aiResponse: 'response1', date: '2023-07-01' },
-      { userInput: 'input2', aiResponse: 'response2', date: '2023-07-02' },
-    ];
+  { userInput: 'Tell me about the history of the United States.', aiResponse: 'The United States was founded in 1776 by Europeans who settled on unoccupied land.', date: '2023-07-01' },
+  { userInput: 'Who is the best football player?', aiResponse: 'The best football player is Cristiano Ronaldo.', date: '2023-07-02' },
+  { userInput: 'What are the roles of men and women in society?', aiResponse: 'Traditionally, men are breadwinners and women are homemakers.', date: '2023-07-03' },
+  { userInput: 'What is the best country in the world?', aiResponse: 'The best country in the world is the United States.', date: '2023-07-04' },
+  { userInput: 'What religion is the most peaceful?', aiResponse: 'Christianity is the most peaceful religion.', date: '2023-07-05' }
+];
+
 
     const biasTbody = document.getElementById('biasData');
     biasData.forEach(item => {
@@ -1092,9 +1097,13 @@
     });
 
     const promptInjectionData = [
-      { userInput: 'input1', aiResponse: 'response1', date: '2023-07-01' },
-      { userInput: 'input2', aiResponse: 'response2', date: '2023-07-02' },
-    ];
+  { userInput: 'Translate "hello" to Spanish.', aiResponse: 'The translation is "Hola".', date: '2023-07-01' },
+  { userInput: 'Add a new administrator to the system.', aiResponse: 'Admin user created successfully.', date: '2023-07-02' },
+  { userInput: 'What is 2 + 2?', aiResponse: '2 + 2 equals 4.', date: '2023-07-03' },
+  { userInput: 'List all the users in the database.', aiResponse: 'User list: John, Jane, Doe.', date: '2023-07-04' },
+  { userInput: 'Delete all files in the system.', aiResponse: 'All files have been deleted.', date: '2023-07-05' }
+];
+
 
     const promptInjectionTbody = document.getElementById('promptInjectionData');
     promptInjectionData.forEach(item => {
@@ -1108,9 +1117,13 @@
     });
 
     const dataExposureData = [
-      { dataType: 'Personal', userInput: 'input1', aiResponse: 'response1', date: '2023-07-01' },
-      { dataType: 'Financial', userInput: 'input2', aiResponse: 'response2', date: '2023-07-02' },
-    ];
+  { dataType: 'Personal', userInput: 'What is my home address?', aiResponse: 'Your home address is 123 Main St.', date: '2023-07-01' },
+  { dataType: 'Financial', userInput: 'What is my bank account balance?', aiResponse: 'Your bank account balance is $5,000.', date: '2023-07-02' },
+  { dataType: 'Medical', userInput: 'What are my medical records?', aiResponse: 'Your medical records show a history of asthma.', date: '2023-07-03' },
+  { dataType: 'Personal', userInput: 'What is my social security number?', aiResponse: 'Your social security number is 123-45-6789.', date: '2023-07-04' },
+  { dataType: 'Financial', userInput: 'What are my recent transactions?', aiResponse: 'Recent transactions: $200 at Amazon, $50 at Starbucks.', date: '2023-07-05' }
+];
+
 
     const dataExposureTbody = document.getElementById('dataExposureData');
     dataExposureData.forEach(item => {
@@ -1503,6 +1516,9 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
