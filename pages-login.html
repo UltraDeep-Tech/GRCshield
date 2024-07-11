@@ -113,22 +113,35 @@
   <script src="assets/js/main.js"></script>
 
   <script>
-  function login(event) {
-    event.preventDefault();
-    const username = document.getElementById('yourUsername').value;
-    const password = document.getElementById('yourPassword').value;
-    if (username === "avipilcer" && password === "pilcer123") {
-      localStorage.setItem('loggedIn', 'true');
-      const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 horas
-      localStorage.setItem('expiration', expirationTime);
-      alert('Login successful');
-      // Redirigir a la página de contenido restringido
-      window.location.href = "index.html"; // Ajusta la ruta según tu estructura
-    } else {
-      alert('Invalid credentials');
+    function login(event) {
+      event.preventDefault();
+      const username = document.getElementById('yourUsername').value;
+      const password = document.getElementById('yourPassword').value;
+      
+      // Lista de usuarios y contraseñas válidas
+      const validUsers = [
+        { username: "avipilcer", password: "pilcer123" },
+        { username: "client", password: "client123" },
+        { username: "maxi", password: "maxi123" },
+        { username: "team", password: "team123" }
+      ];
+  
+      // Verificar si las credenciales ingresadas son válidas
+      const isValidUser = validUsers.some(user => user.username === username && user.password === password);
+  
+      if (isValidUser) {
+        localStorage.setItem('loggedIn', 'true');
+        const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 horas
+        localStorage.setItem('expiration', expirationTime);
+        alert('Login successful');
+        // Redirigir a la página de contenido restringido
+        window.location.href = "index.html"; // Ajusta la ruta según tu estructura
+      } else {
+        alert('Invalid credentials');
+      }
     }
-  }
   </script>
+  
   
   <video autoplay muted loop class="video-background">
     <source src="assets/img/compressed_dashboard_background.mp4" type="video/mp4">
