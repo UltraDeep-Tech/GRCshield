@@ -240,7 +240,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="#" onclick="signOut(event)">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -1442,7 +1442,14 @@
       alert('You must login first');
       window.location.href = "pages-login.html"; // Redirigir a la página de login
     }
-  });
+  })
+  function signOut(event) {
+    event.preventDefault();
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('expiration');
+    alert('You have been signed out.');
+    window.location.href = "pages-login.html"; // Ajusta la ruta según tu estructura
+  };
 
   document.querySelectorAll('.cardindex').forEach(card => {
     card.addEventListener('click', (event) => {
