@@ -218,3 +218,148 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
   .fondoperfil a:hover{
     color:#0d1b30 !important
   }
+
+  .cardindexscore {
+    margin-bottom: 25px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0 30px rgba(14, 100, 247, 0.603);
+    background-color: rgba(3, 10, 22, 0.911);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+  
+  .cardindexscore::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    border-radius: 5px;
+    border: 2px solid transparent;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0), rgb(9, 45, 105), rgba(0, 0, 0, 0));
+    background-clip: padding-box;
+    animation: borderAnimation 5s linear infinite;
+  }
+  
+  @keyframes borderAnimation {
+    0% {
+      border-image-source: linear-gradient(45deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
+    }
+    50% {
+      border-image-source: linear-gradient(135deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
+    }
+    100% {
+      border-image-source: linear-gradient(225deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
+    }
+  }
+  
+  .cardindex-titlescore {
+    padding: 40px 0 15px 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff !important;
+    font-family: "Poppins", sans-serif;
+    text-align: left;
+    z-index: 99;
+  }
+  
+  .cardindex-titlescore span {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold 400;
+  }
+  
+  .cardindex-bodyscore {
+    height: 65px;
+    padding: 0 20px 20px 20px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .progress-circle {
+    top:-60px;
+    right: -150px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: conic-gradient(#4caf50 0%, #ddd 0%);
+    position: relative;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    transition: background 1s ease-in-out;
+    animation: rotateCircle 5s linear infinite;
+  }
+  
+  @keyframes rotateCircle {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .progress-text {
+    top:18px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    position: absolute;
+    z-index: 99;
+  }
+  
+  .low-score {
+    background: conic-gradient(#f44336 0%, #ddd 0%);
+  }
+  
+  .mid-score {
+    background: conic-gradient(#ffeb3b 0%, #ddd 0%);
+  }
+  
+  .high-score {
+    background: conic-gradient(#4caf50 0%, #ddd 0%);
+  }
+  
+  .progress-circle::before {
+    content: '';
+    top: -60px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #000;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+  }
+  
+  .progress-circle::after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #222;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  @keyframes progressAnimation {
+    from {
+      background: conic-gradient(#4caf50 0%, #ddd 0%);
+    }
+    to {
+      background: conic-gradient(#4caf50 var(--percentage), #ddd var(--percentage));
+    }
+  }
+  
+  

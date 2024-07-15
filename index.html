@@ -366,16 +366,85 @@
 
   <main id="main" class="main">
 
+    <section class="section">
+      <div class="row">
 
-    <div class="pagetitle">
+
+    <div class="pagetitle col-lg-2">
       <h1>Dashboard</h1>
       <nav>
-        <ol class="breadcrumb">
+        <ol class="breadcrumb text-center align-items-center ">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
+
+    <div class="col-lg-10">
+      <div class="cardindexscore">
+        <div class="cardindex-bodyscore">
+          <h5 class="cardindex-titlescore">Ultra Deep Index Score:</h5>
+          <div class="progress-circle" id="progressCircle">
+            <span class="progress-text" id="progressText">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function updateProgressCircle(score) {
+    const progressCircle = document.getElementById('progressCircle');
+    const progressText = document.getElementById('progressText');
+
+    // Calculate the percentage for the conic-gradient
+    const percentage = score;
+    const gradient = `conic-gradient(#4caf50 ${percentage}%, #ddd ${percentage}%)`;
+
+    // Update the progress circle's background with animation
+    progressCircle.style.setProperty('--percentage', `${percentage}%`);
+    progressCircle.style.animation = 'progressAnimation 1s forwards';
+    progressCircle.style.background = gradient;
+
+    // Update the text inside the circle with animation
+    let currentScore = 0;
+    const increment = score / 100;
+    const interval = setInterval(() => {
+      if (currentScore >= score) {
+        clearInterval(interval);
+      } else {
+        currentScore += increment;
+        progressText.textContent = `${Math.round(currentScore)}`;
+      }
+    }, 10);
+
+    // Update the color based on the score
+    if (score <= 33) {
+      progressCircle.className = 'progress-circle low-score';
+    } else if (score <= 66) {
+      progressCircle.className = 'progress-circle mid-score';
+    } else {
+      progressCircle.className = 'progress-circle high-score';
+    }
+  }
+
+  // Example usage: Update the progress circle with a new score
+  updateProgressCircle(20); // Set initial score
+
+  // To update the score dynamically, you can call updateProgressCircle with the new score
+  // updateProgressCircle(75); // Example to update to a score of 75
+});
+
+
+
+</script>
+
+
+</div>
+    </section>
+
 
     <section class="section">
       <div class="row">
@@ -493,7 +562,7 @@
   <div class="cardindex">
     <div class="cardindex-body">
       <h5 class="cardindex-title">Blocked Requests by Category</h5>
-      <canvas id="blockedRequestsByCategory" style="max-height: 240px;"></canvas>
+      <canvas id="blockedRequestsByCategory" style="max-height:240px;"></canvas>
       <script>
         document.addEventListener("DOMContentLoaded", () => {
           new Chart(document.querySelector('#blockedRequestsByCategory'), {
