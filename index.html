@@ -384,8 +384,10 @@
       <div class="cardindexscore">
         <div class="cardindex-bodyscore">
           <h5 class="cardindex-titlescore">Ultra Deep Index Score:</h5>
-          <div class="progress-circle" id="progressCircle">
-            <span class="progress-text" id="progressText">0</span>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar">
+              <span class="progress-text" id="progressText">0</span>
+            </div>
           </div>
         </div>
       </div>
@@ -393,22 +395,18 @@
     
     
     
+    
+    
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  function updateProgressCircle(score) {
-    const progressCircle = document.getElementById('progressCircle');
+  function updateProgressBar(score) {
+    const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
 
-    // Calculate the percentage for the conic-gradient
-    const percentage = score;
-    const gradient = `conic-gradient(#4caf50 ${percentage}%, #ddd ${percentage}%)`;
+    // Update the width of the progress bar with animation
+    progressBar.style.width = `${score}%`;
 
-    // Update the progress circle's background with animation
-    progressCircle.style.setProperty('--percentage', `${percentage}%`);
-    progressCircle.style.animation = 'progressAnimation 1s forwards';
-    progressCircle.style.background = gradient;
-
-    // Update the text inside the circle with animation
+    // Update the text inside the bar with animation
     let currentScore = 0;
     const increment = score / 100;
     const interval = setInterval(() => {
@@ -422,27 +420,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update the color based on the score
     if (score <= 33) {
-      progressCircle.className = 'progress-circle low-score';
+      progressBar.className = 'progress-bar low-score';
     } else if (score <= 66) {
-      progressCircle.className = 'progress-circle mid-score';
+      progressBar.className = 'progress-bar mid-score';
     } else {
-      progressCircle.className = 'progress-circle high-score';
+      progressBar.className = 'progress-bar high-score';
     }
   }
 
-  // Example usage: Update the progress circle with a new score
-  updateProgressCircle(20); // Set initial score
+  // Example usage: Update the progress bar with a new score
+  updateProgressBar(79); // Set initial score
 
-  // To update the score dynamically, you can call updateProgressCircle with the new score
-  // updateProgressCircle(75); // Example to update to a score of 75
+  // To update the score dynamically, you can call updateProgressBar with the new score
+  // updateProgressBar(75); // Example to update to a score of 75
 });
 
 
 
 </script>
-
-
-</div>
     </section>
 
 
