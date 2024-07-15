@@ -363,6 +363,21 @@
 
 </aside><!-- End Sidebar-->
 
+<div id="preloader">
+  <img src="/assets/img/favicon.png" alt="Loading..." class="spinner-image">
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Hide the preloader
+  const preloader = document.getElementById('preloader');
+  window.addEventListener('load', function() {
+    preloader.classList.add('hidden');
+  });
+});
+
+  
+</script>
+
 
   <main id="main" class="main">
 
