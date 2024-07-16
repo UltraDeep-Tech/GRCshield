@@ -221,7 +221,6 @@ document.addEventListener('DOMContentLoaded', function() {
   //COMIENZO GRAFICO BLOCKRATEOVERTIMEBY CATEGORY
   //COMIENZO GRAFICO BLOCKRATEOVERTIMEBY CATEGORY
   
-  
   document.addEventListener("DOMContentLoaded", () => {
     new Chart(document.querySelector('#blockRateOverTimeByCategory'), {
       type: 'line',
@@ -303,6 +302,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
+  //FIN GRAFICO BLOCKRATEOVERTIMEBY CATEGORY
+  //FIN GRAFICO BLOCKRATEOVERTIMEBY CATEGORY
+  //FIN GRAFICO BLOCKRATEOVERTIMEBY CATEGORY
+
+
   document.addEventListener("DOMContentLoaded", () => {
     const dataSeverityDistribution = {
       labels: ['Low', 'Medium', 'High'],
