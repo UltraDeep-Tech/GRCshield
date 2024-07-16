@@ -233,8 +233,8 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
 
   .cardindex-titlescore {
     padding: 10px 10px 10px 0px;
-    font-size: 22px;
-    font-weight: 500;
+    font-size: 40px;
+    font-weight: 700;
     color: #fff !important;
     font-family: "Poppins", sans-serif;
     text-align: left;
@@ -243,8 +243,8 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
 
 .cardindex-titlescore span {
     color: #fff;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 30px;
+    font-weight: 700;
 }
 
 .cardindex-bodyscore {
@@ -334,7 +334,7 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
 }
 
 .high-score {
-    background: linear-gradient(90deg, rgba(44, 60, 204, 1) 0%, rgba(33, 150, 243, 1) 100%);
+    background: linear-gradient(90deg, rgb(77, 117, 61) 0%, rgb(58, 151, 30) 100%);
     box-shadow: 0 0 10px rgba(44, 60, 204, 0.7);
 }
 
