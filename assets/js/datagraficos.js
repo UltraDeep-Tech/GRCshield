@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const card = document.getElementById('cardindexscore');
           const progressText = document.getElementById('progressText');
           const shield = document.getElementById('shield');
-          const targetNumber = 70; // Ajusta esto según tu score
+          const targetNumber = 30; // Ajusta esto según tu score
           const duration = 2000; // Duración de la animación en milisegundos
       
           function setShieldColor(score) {
