@@ -332,3 +332,13 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 });
+
+ // Hide the preloader
+    // Hide the preloader
+ // Hide the preloader
+ document.addEventListener('DOMContentLoaded', function() {
+  const preloader = document.getElementById('preloader');
+  window.addEventListener('load', function() {
+    preloader.classList.add('hidden');
+  });
+});

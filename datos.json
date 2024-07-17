@@ -1,0 +1,49 @@
+{
+    "progressScore": 30,
+    "blockedRequests": {
+      "labels": ["Jul 10", "Jul 11", "Jul 12", "Jul 13", "Jul 14", "Jul 15", "Jul 16"],
+      "blockRate": [1500, 10000, 8000, 9000, 15000, 18000, 5000],
+      "blockedRequests": [25000, 15000, 20000, 13000, 30000, 35000, 10000]
+    },
+    "blockedRequestsByCategory": {
+      "labels": ["Violence", "Hate", "Sexual", "Self-harm", "Jailbreak"],
+      "data": [300, 50, 100, 20, 10]
+    },
+    "blockRateOverTimeByCategory": {
+      "labels": ["January", "February", "March", "April", "May", "June", "July"],
+      "violence": [45, 32, 28, 15, 27, 50, 60],
+      "hate": [23, 63, 36, 39, 35, 40, 27],
+      "sexual": [57, 51, 20, 25, 55, 20, 15],
+      "selfHarm": [32, 40, 10, 60, 36, 57, 35],
+      "jailbreak": [35, 20, 45, 50, 33, 44, 50]
+    },
+    "severityDistribution": {
+      "labels": ["Low", "Medium", "High"],
+      "violence": [120, 180, 100],
+      "hate": [90, 130, 70],
+      "sexual": [70, 160, 90],
+      "selfHarm": [50, 110, 80]
+    },
+    "totalAbusiveUsers": [12, 19, 3, 5, 2, 3, 7],
+    "abusiveUsersData": [
+      { "guid": "user1", "score": 95, "trend": "up", "date": "2023-07-01", "total": 100, "violence": 20, "hate": 15, "sexual": 30, "selfHarm": 10 },
+      { "guid": "user2", "score": 85, "trend": "down", "date": "2023-07-02", "total": 90, "violence": 25, "hate": 10, "sexual": 20, "selfHarm": 5 }
+    ],
+    "hallucinationData": [
+      { "userInput": "What is the weather like tomorrow?", "aiResponse": "The weather will be sunny with a chance of meatballs.", "date": "2023-07-01" },
+      { "userInput": "Who is the president of the United States?", "aiResponse": "The president of the United States is Mickey Mouse.", "date": "2023-07-02" }
+    ],
+    "biasData": [
+      { "userInput": "Tell me about the history of the United States.", "aiResponse": "The United States was founded in 1776 by Europeans who settled on unoccupied land.", "date": "2023-07-01" },
+      { "userInput": "Who is the best football player?", "aiResponse": "The best football player is Cristiano Ronaldo.", "date": "2023-07-02" }
+    ],
+    "promptInjectionData": [
+      { "userInput": "Translate 'hello' to Spanish.", "aiResponse": "The translation is 'Hola'.", "date": "2023-07-01" },
+      { "userInput": "Add a new administrator to the system.", "aiResponse": "Admin user created successfully.", "date": "2023-07-02" }
+    ],
+    "dataExposureData": [
+      { "dataType": "Personal", "userInput": "What is my home address?", "aiResponse": "Your home address is 123 Main St.", "date": "2023-07-01" },
+      { "dataType": "Financial", "userInput": "What is my bank account balance?", "aiResponse": "Your bank account balance is $5,000.", "date": "2023-07-02" }
+    ]
+  }
+  
