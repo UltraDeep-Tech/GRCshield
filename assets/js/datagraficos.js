@@ -13,44 +13,29 @@ document.addEventListener('DOMContentLoaded', function() {
         // BARRA DE PROGRESO
         // BARRA DE PROGRESO
         // BARRA DE PROGRESO
-
-  document.addEventListener('DOMContentLoaded', function() {
-    function updateProgressBar(score) {
-      const progressBar = document.getElementById('progressBar');
-      const progressText = document.getElementById('progressText');
-  
-      // Update the width of the progress bar with animation
-      progressBar.style.width = `${score}%`;
-  
-      // Update the text inside the bar with animation
-      let currentScore = 0;
-      const increment = score / 100;
-      const interval = setInterval(() => {
-        if (currentScore >= score) {
-          clearInterval(interval);
-        } else {
-          currentScore += increment;
-          progressText.textContent = `${Math.round(currentScore)}`;
-        }
-      }, 10);
-  
-      // Update the color based on the score
-      if (score <= 33) {
-        progressBar.className = 'progress-bar low-score';
-      } else if (score <= 66) {
-        progressBar.className = 'progress-bar mid-score';
-      } else {
-        progressBar.className = 'progress-bar high-score';
+        function updateShieldColorAndProgress(score) {
+          const shield = document.getElementById('shield');
+          const parts = shield.querySelectorAll('.cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9, .cls-10, .cls-11, .cls-12, .cls-13, .cls-14, .cls-15, .cls-16, .cls-17, .cls-18, .cls-19, .cls-20');
+          let color;
+          if (score < 50) {
+              color = 'red';
+          } else if (score < 80) {
+              color = 'yellow';
+          } else {
+              color = 'green';
+          }
+      
+          parts.forEach(part => {
+              part.style.fill = color;
+              part.classList.add('glowing');
+          });
+      
+          document.getElementById('progressText').innerText = score;
       }
-    }
-  
-    // Example usage: Update the progress bar with a new score
-    updateProgressBar(90); // Set initial score
-  
-    // To update the score dynamically, you can call updateProgressBar with the new score
-    // updateProgressBar(75); // Example to update to a score of 75
-  });
-
+      
+      // Ejemplo de cómo cambiar el color y actualizar el texto
+      updateShieldColorAndProgress(20);
+      
   //FIN BARRA DE PROGRESO
   //FIN BARRA DE PROGRESO
   //FIN BARRA DE PROGRESO
