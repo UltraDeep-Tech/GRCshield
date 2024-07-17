@@ -21,12 +21,13 @@ document.addEventListener('DOMContentLoaded', function() {
           const duration = 2000; // Duración de la animación en milisegundos
       
           function setShieldColor(score) {
+              shield.classList.remove('glowing-red', 'glowing-yellow', 'glowing-green');
               if (score <= 33) {
-                  shield.style.fill = 'red';
+                  shield.classList.add('glowing-red');
               } else if (score <= 66) {
-                  shield.style.fill = 'yellow';
+                  shield.classList.add('glowing-yellow');
               } else {
-                  shield.style.fill = 'green';
+                  shield.classList.add('glowing-green');
               }
           }
       

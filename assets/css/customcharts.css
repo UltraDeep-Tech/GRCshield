@@ -294,6 +294,64 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
     margin-right: 40px; /* Espaciado entre el texto y el escudo */
 }
 
+@keyframes glowing-red {
+    0% {
+        fill: red;
+        filter: drop-shadow(0 0 5px red);
+    }
+    50% {
+        fill: darkred;
+        filter: drop-shadow(0 0 20px red);
+    }
+    100% {
+        fill: red;
+        filter: drop-shadow(0 0 5px red);
+    }
+}
+
+@keyframes glowing-yellow {
+    0% {
+        fill: yellow;
+        filter: drop-shadow(0 0 5px yellow);
+    }
+    50% {
+        fill: darkgoldenrod;
+        filter: drop-shadow(0 0 20px yellow);
+    }
+    100% {
+        fill: yellow;
+        filter: drop-shadow(0 0 5px yellow);
+    }
+}
+
+@keyframes glowing-green {
+    0% {
+        fill: green;
+        filter: drop-shadow(0 0 5px green);
+    }
+    50% {
+        fill: darkgreen;
+        filter: drop-shadow(0 0 20px green);
+    }
+    100% {
+        fill: green;
+        filter: drop-shadow(0 0 5px green);
+    }
+}
+
+.glowing-red {
+    animation: glowing-red 3s infinite alternate;
+}
+
+.glowing-yellow {
+    animation: glowing-yellow 3s infinite alternate;
+}
+
+.glowing-green {
+    animation: glowing-green 3s infinite alternate;
+}
+
+
 
 
 
