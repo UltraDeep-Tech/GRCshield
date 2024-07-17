@@ -29,11 +29,11 @@ function actualizarGraficoTotalBlockedRequests(data) {
   const gradientBar = ctx.createLinearGradient(0, 0, 0, 400);
   gradientBar.addColorStop(0, 'rgba(0, 123, 255, 0.5)');
   gradientBar.addColorStop(1, 'rgba(0, 123, 255, 1)');
-  
+
   const gradientLine = ctx.createLinearGradient(0, 0, 0, 400);
   gradientLine.addColorStop(0, 'rgba(255, 99, 132, 0.5)');
   gradientLine.addColorStop(1, 'rgba(255, 99, 132, 1)');
-  
+
   const dataTotalBlocked = {
     labels: data.labels,
     datasets: [{
@@ -67,7 +67,7 @@ function actualizarGraficoTotalBlockedRequests(data) {
       shadowColor: 'rgba(0, 0, 0, 0.5)'
     }]
   };
-  
+
   new Chart(ctx, {
     type: 'bar',
     data: dataTotalBlocked,
@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       ]
     };
-  
+
     new Chart(document.querySelector('#severity'), {
       type: 'bar',
       data: dataSeverityDistribution,
