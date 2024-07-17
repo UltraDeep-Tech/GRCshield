@@ -19,9 +19,11 @@ function obtenerDatos(ruta, callback) {
   const ref = database.ref(ruta);
   ref.on('value', (snapshot) => {
     const data = snapshot.val();
+    console.log(`Datos recuperados de ${ruta}:`, data); // Añade esta línea para depuración
     callback(data);
   });
 }
+
 
 // Función para actualizar gráficos con los datos obtenidos
 function actualizarGraficoTotalBlockedRequests(data) {
