@@ -1,4 +1,123 @@
+// Configuración de Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyC9N5VF0vFrzc4PzgC3DnLDL51rLHltFdk",
+  authDomain: "ultradeeptech.firebaseapp.com",
+  databaseURL: "https://ultradeeptech-default-rtdb.firebaseio.com",
+  projectId: "ultradeeptech",
+  storageBucket: "ultradeeptech.appspot.com",
+  messagingSenderId: "934866038204",
+  appId: "1:934866038204:web:dd2b3862bf3f6ff2344fb9",
+  measurementId: "G-YHX6XTML2J"
+};
 
+// Inicializa Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+// Función para obtener datos de Firebase
+function obtenerDatos() {
+  const ref = database.ref('blocked-requests');
+  ref.on('value', (snapshot) => {
+    const data = snapshot.val();
+    actualizarGraficos(data);
+  });
+}
+
+// Función para actualizar gráficos con los datos obtenidos
+function actualizarGraficos(data) {
+  const ctx = document.querySelector('#totalBlockedRequests').getContext('2d');
+  const gradientBar = ctx.createLinearGradient(0, 0, 0, 400);
+  gradientBar.addColorStop(0, 'rgba(0, 123, 255, 0.5)');
+  gradientBar.addColorStop(1, 'rgba(0, 123, 255, 1)');
+  
+  const gradientLine = ctx.createLinearGradient(0, 0, 0, 400);
+  gradientLine.addColorStop(0, 'rgba(255, 99, 132, 0.5)');
+  gradientLine.addColorStop(1, 'rgba(255, 99, 132, 1)');
+  
+  const dataTotalBlocked = {
+    labels: data.labels,
+    datasets: [{
+      type: 'line',
+      label: 'Block Rate',
+      data: data.blockRate,
+      borderColor: gradientLine,
+      fill: false,
+      tension: 0.4,
+      borderWidth: 3,
+      pointBackgroundColor: 'white',
+      pointBorderColor: gradientLine,
+      pointBorderWidth: 2,
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      pointHoverBackgroundColor: 'white',
+      pointHoverBorderColor: gradientLine,
+      pointHoverBorderWidth: 3
+    },
+    {
+      type: 'bar',
+      label: 'Blocked Requests',
+      data: data.blockedRequests,
+      backgroundColor: gradientBar,
+      borderColor: 'rgba(0, 123, 255, 1)',
+      borderWidth: 1,
+      borderRadius: 5,
+      shadowOffsetX: 3,
+      shadowOffsetY: 3,
+      shadowBlur: 10,
+      shadowColor: 'rgba(0, 0, 0, 0.5)'
+    }]
+  };
+  
+  new Chart(ctx, {
+    type: 'bar',
+    data: dataTotalBlocked,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: '#fff'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
+          }
+        },
+        x: {
+          ticks: {
+            color: '#fff'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: '#fff',
+            font: {
+              size: 14,
+              weight: 'bold'
+            }
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          titleColor: '#fff',
+          bodyColor: '#fff',
+          borderWidth: 1,
+          borderColor: '#fff',
+          cornerRadius: 4
+        }
+      }
+    }
+  });
+}
+
+// Llamar a la función para obtener datos al cargar la página
+document.addEventListener("DOMContentLoaded", obtenerDatos);
+
+ 
  // Hide the preloader
     // Hide the preloader
  // Hide the preloader
