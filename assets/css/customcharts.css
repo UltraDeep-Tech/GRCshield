@@ -227,12 +227,32 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
     background-color: rgba(3, 10, 22, 0.911);
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
     cursor: default;
     align-content: center;
     width: auto;
     display: flex;
     justify-content: center; /* Centra el contenido horizontalmente */
+}
+
+/* Estilo expandido */
+.cardindexscore.expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    transform: translate(-50%, -50%) scale(1.5); /* Escala el contenido */
+    margin: 0;
+    border-radius: 0;
+    z-index: 1000;
+    overflow-y: auto;
+    background-color: rgba(3, 10, 22, 0.98);
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Coloca los elementos uno debajo del otro */
+    justify-content: center; /* Centra el contenido verticalmente */
+    align-items: center; /* Centra el contenido horizontalmente */
+    transition: transform 0.3s ease; /* Transición suave al expandir */
 }
 
 .cardindex-titlescore {
@@ -254,7 +274,7 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
 
 .progress-bar-container {
     width: 100px; /* Ajusta el tamaño del contenedor del escudo */
-    height: 50px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -264,62 +284,17 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
 .shield {
     width: 70%;
     height: 70%;
-    transition: fill 1s;
 }
 
 .progress-text {
-    margin-left: 20px;
+    margin-left: 10px;
     font-size: 28px; /* Ajusta el tamaño de la fuente para que se adapte a la anchura */
     font-weight: 700;
     color: #fff;
-    margin-right: 30px; /* Espaciado entre el texto y el escudo */
-    
+    margin-right: 40px; /* Espaciado entre el texto y el escudo */
 }
 
-.cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9, .cls-10, .cls-11, .cls-12, .cls-13, .cls-14, .cls-15, .cls-16, .cls-17, .cls-18, .cls-19, .cls-20 {
-    fill: #0f6bc0;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-dasharray: 0 100;
-    transition: stroke-dasharray 1s, fill 1s, stroke 1s;
-}
 
-@keyframes glowing {
-    0% {
-        stroke-width: 2;
-        filter: drop-shadow(0 0 1px currentColor);
-    }
-    50% {
-        stroke-width: 4;
-        filter: drop-shadow(0 0 1px currentColor);
-    }
-    100% {
-        stroke-width: 2;
-        filter: drop-shadow(0 0 1px currentColor);
-    }
-}
-
-.glowing {
-    animation: glowing 2s infinite;
-}
-
-@keyframes borderAnimation {
-    0% {
-        border-image-source: linear-gradient(45deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
-    }
-    25% {
-        border-image-source: linear-gradient(135deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
-    }
-    50% {
-        border-image-source: linear-gradient(225deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
-    }
-    75% {
-        border-image-source: linear-gradient(315deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
-    }
-    100% {
-        border-image-source: linear-gradient(45deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
-    }
-}
 
 
 #preloader {

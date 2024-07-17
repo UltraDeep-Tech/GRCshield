@@ -13,29 +13,69 @@ document.addEventListener('DOMContentLoaded', function() {
         // BARRA DE PROGRESO
         // BARRA DE PROGRESO
         // BARRA DE PROGRESO
-        function updateShieldColorAndProgress(score) {
+        document.addEventListener('DOMContentLoaded', function() {
+          const card = document.getElementById('cardindexscore');
+          const progressText = document.getElementById('progressText');
           const shield = document.getElementById('shield');
-          const parts = shield.querySelectorAll('.cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9, .cls-10, .cls-11, .cls-12, .cls-13, .cls-14, .cls-15, .cls-16, .cls-17, .cls-18, .cls-19, .cls-20');
-          let color;
-          if (score < 50) {
-              color = 'red';
-          } else if (score < 80) {
-              color = 'yellow';
-          } else {
-              color = 'green';
+          const targetNumber = 70; // Ajusta esto según tu score
+          const duration = 2000; // Duración de la animación en milisegundos
+      
+          function setShieldColor(score) {
+              if (score <= 33) {
+                  shield.style.fill = 'red';
+              } else if (score <= 66) {
+                  shield.style.fill = 'yellow';
+              } else {
+                  shield.style.fill = 'green';
+              }
           }
       
-          parts.forEach(part => {
-              part.style.fill = color;
-              part.classList.add('glowing');
+          function startCounter(element, target, duration) {
+              let start = 0;
+              const increment = target / (duration / 100); // Incremento por paso
+      
+              function updateCounter() {
+                  start += increment;
+                  element.textContent = Math.ceil(start);
+      
+                  if (start < target) {
+                      setTimeout(updateCounter, 100);
+                  } else {
+                      element.textContent = target; // Asegura que el número final sea exacto
+                      setShieldColor(target); // Actualiza el color del escudo basado en el score final
+                  }
+              }
+      
+              updateCounter();
+          }
+      
+          card.addEventListener('click', function(event) {
+              event.stopPropagation();
+              if (card.classList.contains('expanded')) {
+                  card.classList.remove('expanded');
+                  document.body.style.overflow = 'auto';
+              } else {
+                  card.classList.add('expanded');
+                  document.body.style.overflow = 'hidden';
+              }
+              startCounter(progressText, targetNumber, duration);
           });
       
-          document.getElementById('progressText').innerText = score;
-      }
+          document.addEventListener('click', function() {
+              if (card.classList.contains('expanded')) {
+                  card.classList.remove('expanded');
+                  document.body.style.overflow = 'auto';
+              }
+          });
       
-      // Ejemplo de cómo cambiar el color y actualizar el texto
-      updateShieldColorAndProgress(20);
+          // Ejecutar la animación al cargar la página
+          startCounter(progressText, targetNumber, duration);
+      });
       
+      
+      
+      
+
   //FIN BARRA DE PROGRESO
   //FIN BARRA DE PROGRESO
   //FIN BARRA DE PROGRESO
@@ -938,4 +978,5 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-  
+
+
