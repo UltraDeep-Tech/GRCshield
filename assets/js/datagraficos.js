@@ -711,120 +711,124 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  obtenerDatos('dataExposureData/incidentsOverTime', (data) => {
-    new Chart(document.querySelector('#dataExposureIncidentsChart'), {
-      type: 'line',
-      data: {
-        labels: data.labels,
-        datasets: [{
-          label: 'Data Exposure Incidents Over Time',
-          data: data.data,
-          backgroundColor: 'rgba(255, 206, 86, 0.7)',
-          borderColor: 'rgba(255, 206, 86, 1)',
-          borderWidth: 1,
-          fill: false,
-          tension: 0.4
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              color: '#fff'
-            },
-            grid: {
-              color: 'rgba(255, 255, 255, 0.1)'
-            }
+// Código para crear el gráfico de incidentes en el tiempo
+obtenerDatos('dataExposureData/incidentsOverTime', (data) => {
+  new Chart(document.querySelector('#dataExposureIncidentsChart'), {
+    type: 'line',
+    data: {
+      labels: data.labels,
+      datasets: [{
+        label: 'Data Exposure Incidents Over Time',
+        data: data.data,
+        backgroundColor: 'rgba(255, 206, 86, 0.7)',
+        borderColor: 'rgba(255, 206, 86, 1)',
+        borderWidth: 1,
+        fill: false,
+        tension: 0.4
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: '#fff'
           },
-          x: {
-            ticks: {
-              color: '#fff'
-            },
-            grid: {
-              color: 'rgba(255, 255, 255, 0.1)'
-            }
+          grid: {
+            color: 'rgba(255, 255, 255, 0.1)'
           }
         },
-        plugins: {
-          legend: {
-            labels: {
-              color: '#fff'
-            }
+        x: {
+          ticks: {
+            color: '#fff'
           },
-          tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            titleColor: '#fff',
-            bodyColor: '#fff',
-            borderColor: '#fff',
-            borderWidth: 1
+          grid: {
+            color: 'rgba(255, 255, 255, 0.1)'
           }
         }
-      }
-    });
-  });
-
-  obtenerDatos('dataExposureData/types', (data) => {
-    new Chart(document.querySelector('#dataExposureTypesChart'), {
-      type: 'pie',
-      data: {
-        labels: data.labels,
-        datasets: [{
-          label: 'Types of Data Exposed',
-          data: data.data,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.7)',
-            'rgba(54, 162, 235, 0.7)',
-            'rgba(75, 192, 192, 0.7)',
-            'rgba(153, 102, 255, 0.7)',
-            'rgba(255, 205, 86, 0.7)',
-            'rgba(255, 159, 64, 0.7)',
-            'rgba(75, 192, 192, 0.7)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 205, 86, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(75, 192, 192, 1)'
-          ],
-          borderWidth: 1
-        }]
       },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            labels: {
-              color: '#fff'
-            }
-          },
-          tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            titleColor: '#fff',
-            bodyColor: '#fff',
-            borderColor: '#fff',
-            borderWidth: 1
+      plugins: {
+        legend: {
+          labels: {
+            color: '#fff'
           }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          titleColor: '#fff',
+          bodyColor: '#fff',
+          borderColor: '#fff',
+          borderWidth: 1
         }
       }
-    });
-  });
-
-  obtenerDatos('dataExposureData', (data) => {
-    const dataExposureTbody = document.getElementById('dataExposureData');
-    data.details.forEach(item => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${item.incident}</td>
-        <td>${item.description}</td>
-      `;
-      dataExposureTbody.appendChild(row);
-    });
+    }
   });
 });
+
+// Código para crear el gráfico de tipos de datos expuestos
+obtenerDatos('dataExposureData/types', (data) => {
+  new Chart(document.querySelector('#dataExposureTypesChart'), {
+    type: 'pie',
+    data: {
+      labels: data.labels,
+      datasets: [{
+        label: 'Types of Data Exposed',
+        data: data.data,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.7)',
+          'rgba(54, 162, 235, 0.7)',
+          'rgba(75, 192, 192, 0.7)',
+          'rgba(153, 102, 255, 0.7)',
+          'rgba(255, 205, 86, 0.7)',
+          'rgba(255, 159, 64, 0.7)',
+          'rgba(75, 192, 192, 0.7)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 205, 86, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(75, 192, 192, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: '#fff'
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          titleColor: '#fff',
+          bodyColor: '#fff',
+          borderColor: '#fff',
+          borderWidth: 1
+        }
+      }
+    }
+  });
+});
+
+// Código para llenar la tabla con los datos expuestos
+obtenerDatos('dataExposureData', (data) => {
+  const dataExposureTbody = document.getElementById('dataExposureData');
+  data.details.forEach(item => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${item.incident}</td>
+      <td>${item.description}</td>
+    `;
+    dataExposureTbody.appendChild(row);
+  });
+});
+});
+
 
 // Verifica el estado de inicio de sesión
 document.addEventListener('DOMContentLoaded', () => {

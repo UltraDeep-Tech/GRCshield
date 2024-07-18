@@ -45,8 +45,8 @@
     "labels": ["Jul 10", "Jul 11", "Jul 12", "Jul 13", "Jul 14", "Jul 15", "Jul 16"],
     "data": [5, 3, 6, 4, 8, 2, 7],
     "details": [
-      { "type": "Weather", "description": "The weather will be sunny with a chance of meatballs." },
-      { "type": "President", "description": "The president of the United States is Mickey Mouse." }
+      { "type": "Weather", "description": "The weather will be sunny with a chance of meatballs.","date":"2023-07-01" },
+      { "type": "President", "description": "The president of the United States is Mickey Mouse.","date":"2023-07-01" }
     ]
   },
   "biasData": {
@@ -70,17 +70,27 @@
     ]
   },
   "dataExposureData": {
-    "types": {
-      "labels": ["Personal", "Financial"],
-      "data": [7, 3]
-    },
     "incidentsOverTime": {
-      "labels": ["Jul 10", "Jul 11", "Jul 12", "Jul 13", "Jul 14", "Jul 15", "Jul 16"],
-      "data": [1, 2, 3, 4, 5, 6, 2]
+      "labels": ["January", "February", "March", "April", "May", "June", "July"],
+      "data": [10, 20, 15, 25, 30, 35, 40]
+    },
+    "types": {
+      "labels": ["Personal Data", "Financial Data", "Health Data", "Intellectual Property", "Credentials", "Other"],
+      "data": [30, 25, 15, 10, 5, 15]
     },
     "details": [
-      { "incident": "Home Address", "description": "Your home address is 123 Main St." },
-      { "incident": "Bank Balance", "description": "Your bank account balance is $5,000." }
+      {
+        "incident": "Incident 1",
+        "description": "Description of incident 1"
+      },
+      {
+        "incident": "Incident 2",
+        "description": "Description of incident 2"
+      },
+      {
+        "incident": "Incident 3",
+        "description": "Description of incident 3"
+      }
     ]
   }
 }
