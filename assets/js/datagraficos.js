@@ -527,6 +527,7 @@ document.addEventListener("DOMContentLoaded", () => {
       row.innerHTML = `
         <td>${item.type}</td>
         <td>${item.description}</td>
+        <td>${item.date}</td>
       `;
       hallucinationTbody.appendChild(row);
     });
