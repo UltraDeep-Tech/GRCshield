@@ -81,15 +81,22 @@
     "details": [
       {
         "incident": "Incident 1",
-        "description": "Description of incident 1"
+        "description": "Description of incident 1",
+        "airesponse": "Description of incident 1",
+        "date":"2023-07-01"
+        
       },
       {
-        "incident": "Incident 2",
-        "description": "Description of incident 2"
+        "incident": "Incident 1",
+        "description": "Description of incident 1",
+        "airesponse": "Description of incident 1",
+        "date":"2023-07-01"
       },
       {
-        "incident": "Incident 3",
-        "description": "Description of incident 3"
+        "incident": "Incident 1",
+        "description": "Description of incident 1",
+        "airesponse": "Description of incident 1",
+        "date":"2023-07-01"
       }
     ]
   }
