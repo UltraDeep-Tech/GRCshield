@@ -241,35 +241,35 @@ document.addEventListener("DOMContentLoaded", () => {
         datasets: [
           {
             label: 'Violence',
-            data: data.violence,
+            data: data.categories.violence,
             fill: false,
             borderColor: 'rgba(255, 99, 132, 0.7)',
             tension: 0.4
           },
           {
             label: 'Hate',
-            data: data.hate,
+            data: data.categories.hate,
             fill: false,
             borderColor: 'rgba(54, 162, 235, 0.7)',
             tension: 0.4
           },
           {
             label: 'Sexual',
-            data: data.sexual,
+            data: data.categories.sexual,
             fill: false,
             borderColor: 'rgba(75, 192, 192, 0.7)',
             tension: 0.4
           },
           {
             label: 'Self-harm',
-            data: data.selfHarm,
+            data: data.categories.selfHarm,
             fill: false,
             borderColor: 'rgba(153, 102, 255, 0.7)',
             tension: 0.4
           },
           {
             label: 'Jailbreak',
-            data: data.jailbreak,
+            data: data.categories.jailbreak,
             fill: false,
             borderColor: 'rgba(255, 205, 86, 0.7)',
             tension: 0.4
@@ -323,28 +323,28 @@ document.addEventListener("DOMContentLoaded", () => {
       datasets: [
         {
           label: 'Violence',
-          data: data.violence,
+          data: data.categories.violence,
           backgroundColor: 'rgba(255, 99, 132, 0.7)',
           borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 1
         },
         {
           label: 'Hate',
-          data: data.hate,
+          data: data.categories.hate,
           backgroundColor: 'rgba(54, 162, 235, 0.7)',
           borderColor: 'rgba(54, 162, 235, 1)',
           borderWidth: 1
         },
         {
           label: 'Sexual',
-          data: data.sexual,
+          data: data.categories.sexual,
           backgroundColor: 'rgba(75, 192, 192, 0.7)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1
         },
         {
           label: 'Self-harm',
-          data: data.selfHarm,
+          data: data.categories.selfHarm,
           backgroundColor: 'rgba(153, 102, 255, 0.7)',
           borderColor: 'rgba(153, 102, 255, 1)',
           borderWidth: 1
@@ -545,10 +545,10 @@ document.addEventListener("DOMContentLoaded", () => {
     new Chart(document.querySelector('#hallucinationChart'), {
       type: 'bar',
       data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: data.labels,
         datasets: [{
           label: 'Hallucinations Detected',
-          data: Array.isArray(data) ? data.map(item => item.hallucinationsDetected) : [],
+          data: data.data,
           backgroundColor: 'rgba(255, 99, 132, 0.7)',
           borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 1
@@ -600,7 +600,7 @@ document.addEventListener("DOMContentLoaded", () => {
         labels: data.labels,
         datasets: [{
           label: 'Types of Bias Detected',
-          data: Array.isArray(data) ? data.biasCount : [],
+          data: data.biasCount,
           backgroundColor: [
             'rgba(255, 99, 132, 0.7)',
             'rgba(54, 162, 235, 0.7)',
@@ -651,10 +651,10 @@ document.addEventListener("DOMContentLoaded", () => {
     new Chart(document.querySelector('#biasIncidentsChart'), {
       type: 'line',
       data: {
-        labels: Array.isArray(data) ? data.biasIncidents.labels : [],
+        labels: data.biasIncidents.labels,
         datasets: [{
           label: 'Bias Incidents Over Time',
-          data: Array.isArray(data) ? data.biasIncidents.data : [],
+          data: data.biasIncidents.data,
           backgroundColor: 'rgba(75, 192, 192, 0.7)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1,

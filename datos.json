@@ -11,48 +11,76 @@
   },
   "blockRateOverTimeByCategory": {
     "labels": ["January", "February", "March", "April", "May", "June", "July"],
-    "violence": [45, 32, 28, 15, 27, 50, 60],
-    "hate": [23, 63, 36, 39, 35, 40, 27],
-    "sexual": [57, 51, 20, 25, 55, 20, 15],
-    "selfHarm": [32, 40, 10, 60, 36, 57, 35],
-    "jailbreak": [35, 20, 45, 50, 33, 44, 50]
+    "categories": {
+      "violence": [45, 32, 28, 15, 27, 50, 60],
+      "hate": [23, 63, 36, 39, 35, 40, 27],
+      "sexual": [57, 51, 20, 25, 55, 20, 15],
+      "selfHarm": [32, 40, 10, 60, 36, 57, 35],
+      "jailbreak": [35, 20, 45, 50, 33, 44, 50]
+    }
   },
   "severityDistribution": {
     "labels": ["Low", "Medium", "High"],
-    "violence": [120, 180, 100],
-    "hate": [90, 130, 70],
-    "sexual": [70, 160, 90],
-    "selfHarm": [50, 110, 80]
+    "categories": {
+      "violence": [120, 180, 100],
+      "hate": [90, 130, 70],
+      "sexual": [70, 160, 90],
+      "selfHarm": [50, 110, 80]
+    }
+  },
+  "severityOverTimeByCategory": {
+    "labels": ["January", "February", "March", "April", "May", "June", "July"],
+    "categories": {
+      "low": [15, 20, 10, 5, 12, 25, 20],
+      "medium": [25, 30, 20, 15, 30, 40, 35],
+      "high": [10, 15, 5, 10, 15, 20, 25]
+    }
   },
   "totalAbusiveUsers": [12, 19, 3, 5, 2, 3, 7],
   "abusiveUsersData": [
-    {"guid": "user1", "score": 95, "trend": "up", "date": "2023-07-01", "total": 100, "violence": 20, "hate": 15, "sexual": 30, "selfHarm": 10},
-    {"guid": "user2", "score": 85, "trend": "down", "date": "2023-07-02", "total": 90, "violence": 25, "hate": 10, "sexual": 20, "selfHarm": 5}
+    { "guid": "user1", "score": 95, "trend": "up", "date": "2023-07-01", "total": 100, "violence": 20, "hate": 15, "sexual": 30, "selfHarm": 10 },
+    { "guid": "user2", "score": 85, "trend": "down", "date": "2023-07-02", "total": 90, "violence": 25, "hate": 10, "sexual": 20, "selfHarm": 5 }
   ],
   "hallucinationData": {
     "labels": ["Jul 10", "Jul 11", "Jul 12", "Jul 13", "Jul 14", "Jul 15", "Jul 16"],
-    "data": [5, 7, 3, 8, 6, 4, 9]
+    "data": [5, 3, 6, 4, 8, 2, 7],
+    "details": [
+      { "type": "Weather", "description": "The weather will be sunny with a chance of meatballs." },
+      { "type": "President", "description": "The president of the United States is Mickey Mouse." }
+    ]
   },
   "biasData": {
-    "labels": ["Gender", "Race", "Age", "Religion", "Socioeconomic status", "Nationality", "Disability", "Sexual orientation", "Political affiliation"],
-    "biasCount": [5, 3, 4, 2, 1, 2, 3, 4, 5],
+    "labels": ["Bias1", "Bias2", "Bias3", "Bias4", "Bias5", "Bias6", "Bias7", "Bias8", "Bias9"],
+    "biasCount": [10, 20, 30, 15, 25, 35, 40, 22, 18],
     "biasIncidents": {
-      "labels": ["January", "February", "March", "April", "May", "June", "July"],
-      "data": [12, 19, 15, 25, 10, 20, 30]
-    }
+      "labels": ["Jul 10", "Jul 11", "Jul 12", "Jul 13", "Jul 14", "Jul 15", "Jul 16"],
+      "data": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "details": [
+      { "incident": "History", "description": "The United States was founded in 1776 by Europeans who settled on unoccupied land." },
+      { "incident": "Football", "description": "The best football player is Cristiano Ronaldo." }
+    ]
   },
   "promptInjectionData": {
     "labels": ["Jul 10", "Jul 11", "Jul 12", "Jul 13", "Jul 14", "Jul 15", "Jul 16"],
-    "data": [3, 5, 2, 6, 4, 7, 1]
+    "data": [1, 3, 2, 5, 4, 6, 2],
+    "details": [
+      { "incident": "Translate", "description": "The translation is 'Hola'." },
+      { "incident": "Admin", "description": "Admin user created successfully." }
+    ]
   },
   "dataExposureData": {
-    "incidentsOverTime": {
-      "labels": ["January", "February", "March", "April", "May", "June", "July"],
-      "data": [10, 15, 8, 12, 7, 10, 9]
-    },
     "types": {
-      "labels": ["Personal", "Financial", "Health", "Intellectual property", "User behavior", "Communication", "Location"],
-      "data": [20, 15, 10, 5, 8, 12, 10]
-    }
+      "labels": ["Personal", "Financial"],
+      "data": [7, 3]
+    },
+    "incidentsOverTime": {
+      "labels": ["Jul 10", "Jul 11", "Jul 12", "Jul 13", "Jul 14", "Jul 15", "Jul 16"],
+      "data": [1, 2, 3, 4, 5, 6, 2]
+    },
+    "details": [
+      { "incident": "Home Address", "description": "Your home address is 123 Main St." },
+      { "incident": "Bank Balance", "description": "Your bank account balance is $5,000." }
+    ]
   }
 }
