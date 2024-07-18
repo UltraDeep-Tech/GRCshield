@@ -65,8 +65,8 @@
     "labels": ["Jul 10", "Jul 11", "Jul 12", "Jul 13", "Jul 14", "Jul 15", "Jul 16"],
     "data": [1, 3, 2, 5, 4, 6, 2],
     "details": [
-      { "incident": "Translate", "description": "The translation is 'Hola'." },
-      { "incident": "Admin", "description": "Admin user created successfully." }
+      { "incident": "Translate", "description": "The translation is 'Hola'.", "date":"2023-07-01"},
+      { "incident": "Admin", "description": "Admin user created successfully.", "date":"2023-07-01" }
     ]
   },
   "dataExposureData": {
