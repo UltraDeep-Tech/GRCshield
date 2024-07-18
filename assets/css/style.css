@@ -400,6 +400,10 @@ h6 {
 
 .header-nav .nav-profile img {
   max-height: 36px;
+border-style: solid  ;
+border-width: 1px;
+border-color: #367ec2;
+animation: gradientAnimation 3s ease infinite;
 }
 
 .header-nav .nav-profile span {

@@ -1,5 +1,5 @@
 {
-  "progressScore": 30,
+  "progressScore": 50,
   "blockedRequests": {
     "labels": ["Jul 10", "Jul 11", "Jul 12", "Jul 13", "Jul 14", "Jul 15", "Jul 16"],
     "blockRate": [1500, 10000, 8000, 9000, 15000, 18000, 5000],
