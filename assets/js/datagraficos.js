@@ -397,6 +397,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+
+
+
+
 // Gráfico de usuarios abusivos potenciales
 document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('totalAbusiveUsers', (data) => {

@@ -294,6 +294,108 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
     margin-right: 40px; /* Espaciado entre el texto y el escudo */
 }
 
+/* Estilos para pantallas pequeñas */
+@media (max-width: 600px) {
+    .cardindexscore {
+        width: 100%;
+        margin-bottom: 20px;
+        box-shadow: 0px 0 20px rgba(14, 100, 247, 0.603);
+    }
+
+    .cardindexscore.expanded {
+        width: 90%;
+        height: 90%;
+        transform: translate(-50%, -50%) scale(1);
+        padding: 10px;
+    }
+
+    .cardindex-titlescore {
+        font-size: 20px;
+    }
+
+    .cardindex-bodyscore {
+        padding: 5px;
+    }
+
+    .progress-bar-container {
+        width: 80px;
+        height: 60px;
+    }
+
+    .progress-text {
+        font-size: 20px;
+        margin-right: 20px;
+    }
+}
+
+/* Estilos para pantallas medianas */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .cardindexscore {
+        width: 100%;
+        margin-bottom: 25px;
+        box-shadow: 0px 0 25px rgba(14, 100, 247, 0.603);
+    }
+
+    .cardindexscore.expanded {
+        width: 85%;
+        height: 85%;
+        transform: translate(-50%, -50%) scale(1.2);
+        padding: 15px;
+    }
+
+    .cardindex-titlescore {
+        font-size: 25px;
+    }
+
+    .cardindex-bodyscore {
+        padding: 5px;
+    }
+
+    .progress-bar-container {
+        width: 90px;
+        height: 70px;
+    }
+
+    .progress-text {
+        font-size: 25px;
+        margin-right: 30px;
+    }
+}
+
+/* Estilos para pantallas grandes */
+@media (min-width: 1025px) {
+    .cardindexscore {
+        width: 100%;
+        margin-bottom: 30px;
+        box-shadow: 0px 0 30px rgba(14, 100, 247, 0.603);
+    }
+
+    .cardindexscore.expanded {
+        width: 80%;
+        height: 80%;
+        transform: translate(-50%, -50%) scale(1.5);
+        padding: 20px;
+    }
+
+    .cardindex-titlescore {
+        font-size: 30px;
+    }
+
+    .cardindex-bodyscore {
+        padding: 10px;
+    }
+
+    .progress-bar-container {
+        width: 100px;
+        height: 80px;
+    }
+
+    .progress-text {
+        font-size: 28px;
+        margin-right: 40px;
+    }
+}
+ 
 @keyframes glowing-red {
     0% {
         fill: red;
