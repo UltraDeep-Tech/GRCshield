@@ -26,8 +26,8 @@
   },
   "totalAbusiveUsers": [12, 19, 3, 5, 2, 3, 7],
   "abusiveUsersData": [
-    { "guid": "user1", "score": 95, "trend": "up", "date": "2023-07-01", "total": 100, "violence": 20, "hate": 15, "sexual": 30, "selfHarm": 10 },
-    { "guid": "user2", "score": 85, "trend": "down", "date": "2023-07-02", "total": 90, "violence": 25, "hate": 10, "sexual": 20, "selfHarm": 5 }
+    {"guid": "user1", "score": 95, "trend": "up", "date": "2023-07-01", "total": 100, "violence": 20, "hate": 15, "sexual": 30, "selfHarm": 10},
+    {"guid": "user2", "score": 85, "trend": "down", "date": "2023-07-02", "total": 90, "violence": 25, "hate": 10, "sexual": 20, "selfHarm": 5}
   ],
   "hallucinationData": {
     "labels": ["Jul 10", "Jul 11", "Jul 12", "Jul 13", "Jul 14", "Jul 15", "Jul 16"],
