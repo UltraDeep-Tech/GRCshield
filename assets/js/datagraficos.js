@@ -1,8 +1,191 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Total Blocked Requests gráfico
-  obtenerDatos('blockedRequests', actualizarGraficoTotalBlockedRequests);
+// Configuración de Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyC9N5VF0vFrzc4PzgC3DnLDL51rLHltFdk",
+  authDomain: "ultradeeptech.firebaseapp.com",
+  databaseURL: "https://ultradeeptech-default-rtdb.firebaseio.com",
+  projectId: "ultradeeptech",
+  storageBucket: "ultradeeptech.appspot.com",
+  messagingSenderId: "934866038204",
+  appId: "1:934866038204:web:dd2b3862bf3f6ff2344fb9",
+  measurementId: "G-YHX6XTML2J"
+};
 
-  // Gráfico de bloqueos por categoría
+// Inicializa Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+// Función para obtener datos de Firebase
+function obtenerDatos(ruta, callback) {
+  const ref = database.ref(ruta);
+  ref.on('value', (snapshot) => {
+    const data = snapshot.val();
+    console.log(`Datos recuperados de ${ruta}:`, data); // Añade esta línea para depuración
+    callback(data);
+  });
+}
+
+// Función para actualizar gráficos con los datos obtenidos
+function actualizarGraficoTotalBlockedRequests(data) {
+  const ctx = document.querySelector('#totalBlockedRequests').getContext('2d');
+  const gradientBar = ctx.createLinearGradient(0, 0, 0, 400);
+  gradientBar.addColorStop(0, 'rgba(0, 123, 255, 0.5)');
+  gradientBar.addColorStop(1, 'rgba(0, 123, 255, 1)');
+
+  const gradientLine = ctx.createLinearGradient(0, 0, 0, 400);
+  gradientLine.addColorStop(0, 'rgba(255, 99, 132, 0.5)');
+  gradientLine.addColorStop(1, 'rgba(255, 99, 132, 1)');
+
+  const dataTotalBlocked = {
+    labels: data.labels,
+    datasets: [{
+      type: 'line',
+      label: 'Block Rate',
+      data: data.blockRate,
+      borderColor: gradientLine,
+      fill: false,
+      tension: 0.4,
+      borderWidth: 3,
+      pointBackgroundColor: 'white',
+      pointBorderColor: gradientLine,
+      pointBorderWidth: 2,
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      pointHoverBackgroundColor: 'white',
+      pointHoverBorderColor: gradientLine,
+      pointHoverBorderWidth: 3
+    },
+    {
+      type: 'bar',
+      label: 'Blocked Requests',
+      data: data.blockedRequests,
+      backgroundColor: gradientBar,
+      borderColor: 'rgba(0, 123, 255, 1)',
+      borderWidth: 1,
+      borderRadius: 5,
+      shadowOffsetX: 3,
+      shadowOffsetY: 3,
+      shadowBlur: 10,
+      shadowColor: 'rgba(0, 0, 0, 0.5)'
+    }]
+  };
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: dataTotalBlocked,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: '#fff'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
+          }
+        },
+        x: {
+          ticks: {
+            color: '#fff'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: '#fff',
+            font: {
+              size: 14,
+              weight: 'bold'
+            }
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          titleColor: '#fff',
+          bodyColor: '#fff',
+          borderWidth: 1,
+          borderColor: '#fff',
+          cornerRadius: 4
+        }
+      }
+    }
+  });
+}
+
+// Barra de progreso
+document.addEventListener('DOMContentLoaded', function() {
+  const card = document.getElementById('cardindexscore');
+  const progressText = document.getElementById('progressText');
+  const shield = document.getElementById('shield');
+  const duration = 2000; // Duración de la animación en milisegundos
+
+  function setShieldColor(score) {
+    shield.classList.remove('glowing-red', 'glowing-yellow', 'glowing-green');
+    if (score <= 33) {
+      shield.classList.add('glowing-red');
+    } else if (score <= 66) {
+      shield.classList.add('glowing-yellow');
+    } else {
+      shield.classList.add('glowing-green');
+    }
+  }
+
+  function startCounter(element, target, duration) {
+    let start = 0;
+    const increment = target / (duration / 100); // Incremento por paso
+
+    function updateCounter() {
+      start += increment;
+      element.textContent = Math.ceil(start);
+
+      if (start < target) {
+        setTimeout(updateCounter, 100);
+      } else {
+        element.textContent = target; // Asegura que el número final sea exacto
+        setShieldColor(target); // Actualiza el color del escudo basado en el score final
+      }
+    }
+
+    updateCounter();
+  }
+
+  card.addEventListener('click', function(event) {
+    event.stopPropagation();
+    if (card.classList.contains('expanded')) {
+      card.classList.remove('expanded');
+      document.body.style.overflow = 'auto';
+    } else {
+      card.classList.add('expanded');
+      document.body.style.overflow = 'hidden';
+    }
+    obtenerDatos('progressScore', (targetNumber) => {
+      startCounter(progressText, targetNumber, duration);
+    });
+  });
+
+  document.addEventListener('click', function() {
+    if (card.classList.contains('expanded')) {
+      card.classList.remove('expanded');
+      document.body.style.overflow = 'auto';
+    }
+  });
+
+  // Ejecutar la animación al cargar la página
+  obtenerDatos('progressScore', (targetNumber) => {
+    startCounter(progressText, targetNumber, duration);
+  });
+});
+
+// Total Blocked Requests gráfico
+document.addEventListener("DOMContentLoaded", () => {
+  obtenerDatos('blockedRequests', actualizarGraficoTotalBlockedRequests);
+});
+
+// Gráfico de bloqueos por categoría
+document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('blockedRequestsByCategory', (data) => {
     new Chart(document.querySelector('#blockedRequestsByCategory'), {
       type: 'pie',
@@ -46,8 +229,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+});
 
-  // Gráfico de tasa de bloqueos por categoría a lo largo del tiempo
+// Gráfico de tasa de bloqueos por categoría a lo largo del tiempo
+document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('blockRateOverTimeByCategory', (data) => {
     new Chart(document.querySelector('#blockRateOverTimeByCategory'), {
       type: 'line',
@@ -128,8 +313,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+});
 
-  // Gráfico de distribución de severidad
+// Gráfico de distribución de severidad
+document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('severityDistribution', (data) => {
     const dataSeverityDistribution = {
       labels: data.labels,
@@ -205,8 +392,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+});
 
-  // Gráfico de usuarios abusivos potenciales
+// Gráfico de usuarios abusivos potenciales
+document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('totalAbusiveUsers', (data) => {
     const ctx = document.getElementById('totalAbusiveUsersChart').getContext('2d');
     new Chart(ctx, {
@@ -259,20 +448,110 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Hallucination Detection gráfico
+  obtenerDatos('abusiveUsersData', (data) => {
+    if (Array.isArray(data)) {
+      const tbody = document.getElementById('abusiveUsersData');
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.guid}</td>
+          <td>${item.score}</td>
+          <td>${item.trend}</td>
+          <td>${item.date}</td>
+          <td>${item.total}</td>
+          <td>${item.violence}</td>
+          <td>${item.hate}</td>
+          <td>${item.sexual}</td>
+          <td>${item.selfHarm}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    } else {
+      console.error('abusiveUsersData no es un array:', data);
+    }
+  });
+
   obtenerDatos('hallucinationData', (data) => {
-    new Chart(document.querySelector('#hallucinationDetectionChart'), {
-      type: 'line',
+    if (Array.isArray(data)) {
+      const hallucinationTbody = document.getElementById('hallucinationData');
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.userInput}</td>
+          <td>${item.aiResponse}</td>
+          <td>${item.date}</td>
+        `;
+        hallucinationTbody.appendChild(row);
+      });
+    } else {
+      console.error('hallucinationData no es un array:', data);
+    }
+  });
+
+  obtenerDatos('biasData', (data) => {
+    if (Array.isArray(data)) {
+      const biasTbody = document.getElementById('biasData');
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.userInput}</td>
+          <td>${item.aiResponse}</td>
+          <td>${item.date}</td>
+        `;
+        biasTbody.appendChild(row);
+      });
+    } else {
+      console.error('biasData no es un array:', data);
+    }
+  });
+
+  obtenerDatos('promptInjectionData', (data) => {
+    if (Array.isArray(data)) {
+      const promptInjectionTbody = document.getElementById('promptInjectionData');
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.userInput}</td>
+          <td>${item.aiResponse}</td>
+          <td>${item.date}</td>
+        `;
+        promptInjectionTbody.appendChild(row);
+      });
+    } else {
+      console.error('promptInjectionData no es un array:', data);
+    }
+  });
+
+  obtenerDatos('dataExposureData', (data) => {
+    if (Array.isArray(data)) {
+      const dataExposureTbody = document.getElementById('dataExposureData');
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.dataType}</td>
+          <td>${item.userInput}</td>
+          <td>${item.aiResponse}</td>
+          <td>${item.date}</td>
+        `;
+        dataExposureTbody.appendChild(row);
+      });
+    } else {
+      console.error('dataExposureData no es un array:', data);
+    }
+  });
+
+  // Hallucination Chart
+  obtenerDatos('hallucinationData', (data) => {
+    new Chart(document.querySelector('#hallucinationChart'), {
+      type: 'bar',
       data: {
-        labels: data.labels,
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [{
-          label: 'Number of Hallucinations Detected',
-          data: data.data,
-          backgroundColor: 'rgba(153, 102, 255, 0.7)',
-          borderColor: 'rgba(153, 102, 255, 1)',
-          borderWidth: 1,
-          fill: false,
-          tension: 0.4
+          label: 'Hallucinations Detected',
+          data: Array.isArray(data) ? data.map(item => item.hallucinationsDetected) : [],
+          backgroundColor: 'rgba(255, 99, 132, 0.7)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
         }]
       },
       options: {
@@ -321,7 +600,7 @@ document.addEventListener("DOMContentLoaded", () => {
         labels: data.labels,
         datasets: [{
           label: 'Types of Bias Detected',
-          data: data.biasCount,
+          data: Array.isArray(data) ? data.biasCount : [],
           backgroundColor: [
             'rgba(255, 99, 132, 0.7)',
             'rgba(54, 162, 235, 0.7)',
@@ -372,10 +651,10 @@ document.addEventListener("DOMContentLoaded", () => {
     new Chart(document.querySelector('#biasIncidentsChart'), {
       type: 'line',
       data: {
-        labels: data.biasIncidents.labels,
+        labels: Array.isArray(data) ? data.biasIncidents.labels : [],
         datasets: [{
           label: 'Bias Incidents Over Time',
-          data: data.biasIncidents.data,
+          data: Array.isArray(data) ? data.biasIncidents.data : [],
           backgroundColor: 'rgba(75, 192, 192, 0.7)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1,
