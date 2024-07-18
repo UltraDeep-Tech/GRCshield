@@ -641,6 +641,7 @@ document.addEventListener("DOMContentLoaded", () => {
       row.innerHTML = `
         <td>${item.incident}</td>
         <td>${item.description}</td>
+        <td>${item.date}</td>
       `;
       biasTbody.appendChild(row);
     });

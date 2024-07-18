@@ -57,8 +57,8 @@
       "data": [1, 2, 3, 4, 5, 6, 7]
     },
     "details": [
-      { "incident": "History", "description": "The United States was founded in 1776 by Europeans who settled on unoccupied land." },
-      { "incident": "Football", "description": "The best football player is Cristiano Ronaldo." }
+      { "incident": "History", "description": "The United States was founded in 1776 by Europeans who settled on unoccupied land.","date":"2023-07-01" },
+      { "incident": "Football", "description": "The best football player is Cristiano Ronaldo." ,"date":"2023-07-01" }
     ]
   },
   "promptInjectionData": {
