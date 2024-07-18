@@ -823,6 +823,8 @@ obtenerDatos('dataExposureData', (data) => {
     row.innerHTML = `
       <td>${item.incident}</td>
       <td>${item.description}</td>
+      <td>${item.airesponse}</td>
+      <td>${item.date}</td>
     `;
     dataExposureTbody.appendChild(row);
   });
