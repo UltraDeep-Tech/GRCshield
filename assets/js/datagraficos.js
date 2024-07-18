@@ -3,8 +3,8 @@ const firebaseConfig = {
   apiKey: "AIzaSyC9N5VF0vFrzc4PzgC3DnLDL51rLHltFdk",
   authDomain: "ultradeeptech.firebaseapp.com",
   databaseURL: "https://ultradeeptech-default-rtdb.firebaseio.com",
-  projectId: "ultradeeptech",
-  storageBucket: "ultradeeptech.appspot.com",
+  projectId: "ultradech",
+  storageBucket: "ultradech.appspot.com",
   messagingSenderId: "934866038204",
   appId: "1:934866038204:web:dd2b3862bf3f6ff2344fb9",
   measurementId: "G-YHX6XTML2J"
@@ -472,76 +472,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   obtenerDatos('hallucinationData', (data) => {
-    if (Array.isArray(data)) {
-      const hallucinationTbody = document.getElementById('hallucinationData');
-      data.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.userInput}</td>
-          <td>${item.aiResponse}</td>
-          <td>${item.date}</td>
-        `;
-        hallucinationTbody.appendChild(row);
-      });
-    } else {
-      console.error('hallucinationData no es un array:', data);
-    }
-  });
-
-  obtenerDatos('biasData', (data) => {
-    if (Array.isArray(data)) {
-      const biasTbody = document.getElementById('biasData');
-      data.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.userInput}</td>
-          <td>${item.aiResponse}</td>
-          <td>${item.date}</td>
-        `;
-        biasTbody.appendChild(row);
-      });
-    } else {
-      console.error('biasData no es un array:', data);
-    }
-  });
-
-  obtenerDatos('promptInjectionData', (data) => {
-    if (Array.isArray(data)) {
-      const promptInjectionTbody = document.getElementById('promptInjectionData');
-      data.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.userInput}</td>
-          <td>${item.aiResponse}</td>
-          <td>${item.date}</td>
-        `;
-        promptInjectionTbody.appendChild(row);
-      });
-    } else {
-      console.error('promptInjectionData no es un array:', data);
-    }
-  });
-
-  obtenerDatos('dataExposureData', (data) => {
-    if (Array.isArray(data)) {
-      const dataExposureTbody = document.getElementById('dataExposureData');
-      data.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.dataType}</td>
-          <td>${item.userInput}</td>
-          <td>${item.aiResponse}</td>
-          <td>${item.date}</td>
-        `;
-        dataExposureTbody.appendChild(row);
-      });
-    } else {
-      console.error('dataExposureData no es un array:', data);
-    }
-  });
-
-  // Hallucination Chart
-  obtenerDatos('hallucinationData', (data) => {
     new Chart(document.querySelector('#hallucinationChart'), {
       type: 'bar',
       data: {
@@ -590,9 +520,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+
+    const hallucinationTbody = document.getElementById('hallucinationData');
+    data.details.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.type}</td>
+        <td>${item.description}</td>
+      `;
+      hallucinationTbody.appendChild(row);
+    });
   });
 
-  // Bias Detection gráfico de tortas
   obtenerDatos('biasData', (data) => {
     new Chart(document.querySelector('#biasTypesChart'), {
       type: 'pie',
@@ -644,10 +583,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
-  });
 
-  // Bias Incidents Over Time gráfico de líneas
-  obtenerDatos('biasData', (data) => {
     new Chart(document.querySelector('#biasIncidentsChart'), {
       type: 'line',
       data: {
@@ -698,9 +634,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+
+    const biasTbody = document.getElementById('biasData');
+    data.details.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.incident}</td>
+        <td>${item.description}</td>
+      `;
+      biasTbody.appendChild(row);
+    });
   });
 
-  // Prompt Injection Detection gráfico de líneas
   obtenerDatos('promptInjectionData', (data) => {
     new Chart(document.querySelector('#promptInjectionChart'), {
       type: 'line',
@@ -752,9 +697,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+
+    const promptInjectionTbody = document.getElementById('promptInjectionData');
+    data.details.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.incident}</td>
+        <td>${item.description}</td>
+      `;
+      promptInjectionTbody.appendChild(row);
+    });
   });
 
-  // Data Exposure Incidents Over Time gráfico de líneas
   obtenerDatos('dataExposureData/incidentsOverTime', (data) => {
     new Chart(document.querySelector('#dataExposureIncidentsChart'), {
       type: 'line',
@@ -808,7 +762,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Types of Data Exposed gráfico de tortas
   obtenerDatos('dataExposureData/types', (data) => {
     new Chart(document.querySelector('#dataExposureTypesChart'), {
       type: 'pie',
@@ -855,6 +808,18 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       }
+    });
+  });
+
+  obtenerDatos('dataExposureData', (data) => {
+    const dataExposureTbody = document.getElementById('dataExposureData');
+    data.details.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${item.incident}</td>
+        <td>${item.description}</td>
+      `;
+      dataExposureTbody.appendChild(row);
     });
   });
 });
