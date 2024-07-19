@@ -394,6 +394,90 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  obtenerDatos('severityOverTimeByCategory', (data) => {
+    new Chart(document.querySelector('#SeverityTime'), {
+      type: 'line',
+      data: {
+        labels: data.labels,
+        datasets: [
+          {
+            label: 'Violence',
+            data: data.categories.violence,
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 0.7)',
+            tension: 0.4
+          },
+          {
+            label: 'Hate',
+            data: data.categories.hate,
+            fill: false,
+            borderColor: 'rgba(54, 162, 235, 0.7)',
+            tension: 0.4
+          },
+          {
+            label: 'Sexual',
+            data: data.categories.sexual,
+            fill: false,
+            borderColor: 'rgba(75, 192, 192, 0.7)',
+            tension: 0.4
+          },
+          {
+            label: 'Self-harm',
+            data: data.categories.selfHarm,
+            fill: false,
+            borderColor: 'rgba(153, 102, 255, 0.7)',
+            tension: 0.4
+          },
+          {
+            label: 'Jailbreak',
+            data: data.categories.jailbreak,
+            fill: false,
+            borderColor: 'rgba(255, 205, 86, 0.7)',
+            tension: 0.4
+          }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#fff'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#fff'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#fff'
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            borderColor: '#fff',
+            borderWidth: 1
+          }
+        }
+      }
+    });
+  });
+});
+
+
 // Gráfico de usuarios abusivos potenciales
 document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('totalAbusiveUsers', (data) => {
