@@ -315,9 +315,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Gráfico de distribución de severidad
 document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('severityDistribution', (data) => {
+    console.log(data);
     const dataSeverityDistribution = {
       labels: data.labels,
       datasets: [
@@ -392,10 +392,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-});
 
-document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('severityOverTimeByCategory', (data) => {
+    console.log(data);
     new Chart(document.querySelector('#SeverityTime'), {
       type: 'line',
       data: {
