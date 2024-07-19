@@ -534,7 +534,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   obtenerDatos('biasData', (data) => {
-    new Chart(document.querySelector('#biasTypesChart'), {
+    new Chart(document.querySelector('#biasPieChart'), {
       type: 'pie',
       data: {
         labels: data.labels,
@@ -585,7 +585,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    new Chart(document.querySelector('#biasIncidentsChart'), {
+    new Chart(document.querySelector('#biasLineChart'), {
       type: 'line',
       data: {
         labels: data.biasIncidents.labels,
@@ -714,7 +714,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Código para crear el gráfico de incidentes en el tiempo
 obtenerDatos('dataExposureData/incidentsOverTime', (data) => {
-  new Chart(document.querySelector('#dataExposureIncidentsChart'), {
+  new Chart(document.querySelector('#dataExposureLineChart'), {
     type: 'line',
     data: {
       labels: data.labels,
@@ -768,7 +768,7 @@ obtenerDatos('dataExposureData/incidentsOverTime', (data) => {
 
 // Código para crear el gráfico de tipos de datos expuestos
 obtenerDatos('dataExposureData/types', (data) => {
-  new Chart(document.querySelector('#dataExposureTypesChart'), {
+  new Chart(document.querySelector('#dataExposurePieChart'), {
     type: 'pie',
     data: {
       labels: data.labels,
