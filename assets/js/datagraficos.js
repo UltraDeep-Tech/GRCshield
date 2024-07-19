@@ -315,9 +315,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Gráfico de distribución de severidad
 document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('severityDistribution', (data) => {
-    console.log(data);
+    console.log('severityDistribution data:', data);  // Verifica los datos
+
     const dataSeverityDistribution = {
       labels: data.labels,
       datasets: [
@@ -392,9 +394,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+});
 
+// Gráfico de severidad a lo largo del tiempo por categoría
+document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('severityOverTimeByCategory', (data) => {
-    console.log(data);
+    console.log('severityOverTimeByCategory data:', data);  // Verifica los datos
+
     new Chart(document.querySelector('#SeverityTime'), {
       type: 'line',
       data: {
@@ -475,6 +481,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
 
 
 // Gráfico de usuarios abusivos potenciales
