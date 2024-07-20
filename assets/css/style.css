@@ -122,17 +122,19 @@ h6 {
 
 /* Card */
 .card {
+  background-color: rgb(3, 14, 31);
+  color: #fff;
   margin-bottom: 30px;
   border: none;
   border-radius: 5px;
-  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  box-shadow: 0px 0 30px rgba(0, 91, 248, 0.1);
 }
 
 .card-header,
 .card-footer {
   border-color: #ebeef4;
-  background-color: #fff;
-  color: #798eb3;
+  background-color: rgb(3, 14, 31);
+  color: #ecedee;
   padding: 15px;
 }
 
@@ -140,7 +142,7 @@ h6 {
   padding: 20px 0 15px 0;
   font-size: 18px;
   font-weight: 500;
-  color: #012970;
+  color: #3780ff;
   font-family: "Poppins", sans-serif;
 }
 
@@ -157,6 +159,15 @@ h6 {
 .card-img-overlay {
   background-color: rgba(255, 255, 255, 0.6);
 }
+
+.credits {
+  color:#fff;
+}
+
+.credits a {
+  color: #1233eb;
+}
+
 
 /* Alerts */
 .alert-heading {
