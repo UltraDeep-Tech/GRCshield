@@ -614,7 +614,6 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
 }
 
 
-
 /* Estilo para el modal */
 .modal {
   display: none; /* Ocultar por defecto */
@@ -634,14 +633,16 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
   background-color: rgb(3, 14, 31);
   padding: 60px;
   border: none;
-  width: 80%;
-  max-width: 600px;
+  width: auto;
+  height: auto;
   color: #e9ecef;
   border-radius: 5px;
   text-align: center;
+  align-items: center;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+  top: 100px ;
 }
 
 .spinner-image {
