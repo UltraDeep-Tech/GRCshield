@@ -675,18 +675,33 @@
 
   <div id="loginModal" class="modal">
     <div class="modal-content">
-      <img src="/assets/img/logo.png" class="spinner-image" alt="Logo">
-      <p>You must first log in to access this feature.</p>
-      <a id="loginButton" href="/pages-login.html">Go to Login</a>
+      <img src="assets/img/logo.png" class="spinner-image" alt="Loading...">
+      <p>Your session has expired or you are not logged in. Redirecting to login page...</p>
     </div>
   </div>
-  
   
   
 
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loggedIn = localStorage.getItem('loggedIn') === 'true';
+      const expiration = localStorage.getItem('expiration');
+      const now = new Date().getTime();
+      if (!loggedIn || !expiration || now > expiration) {
+        const modal = document.getElementById("loginModal");
+        modal.style.display = "block";
+        setTimeout(() => {
+          window.location.href = 'pages-login.html';
+        }, 3000);
+      } else {
+        const modal = document.getElementById("loginModal");
+        modal.style.display = "none";
+        document.getElementById("dashboardContent").style.display = "block";
+      }
+    });
+  </script>
 </body>
 
 </html>

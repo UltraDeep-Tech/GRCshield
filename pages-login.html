@@ -28,6 +28,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/customcharts.css" rel="stylesheet">
 
 </head>
 
@@ -35,67 +36,52 @@
 
   <main>
     <div class="container">
-
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="assets/img/logo.png" alt="">
                   <span class="d-none d-lg-block">GRC Shield Ultra</span>
                 </a>
-              </div><!-- End Logo -->
-
-              <div class="card mb-3" id="login-card">
-
+              </div>
+              <div class="cardindexscore mb-3" id="login-card">
                 <div class="card-body">
-
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                    <p class="text-center small">Enter your username & password to login</p>
+                    <p class="text-center small" style="color: #fff;">Enter your username & password to login</p>
+                    <p id="loginMessage" class="text-center small" style="color: red; display: none;"></p> <!-- Mensaje de error -->
                   </div>
-
                   <form class="row g-3 needs-validation" novalidate onsubmit="login(event)">
-
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
+                      <label for="yourUsername" class="form-label" style="color: #fff;">Username</label>
                       <div class="input-group has-validation">
                         <input type="text" name="username" class="form-control" id="yourUsername" required>
                         <div class="invalid-feedback">Please enter your username.</div>
                       </div>
                     </div>
-
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
+                      <label for="yourPassword" class="form-label" style="color: #fff;">Password</label>
                       <input type="password" name="password" class="form-control" id="yourPassword" required>
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
-
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Login</button>
                     </div>
-                    <div class="col-12">
-                    </div>
+                    <div class="col-12"></div>
                   </form>
-
                 </div>
               </div>
-
               <div class="credits">
                 Designed by <a href="https://www.ultradeeptech.com/">Ultra Deep Tech</a>
               </div>
-
             </div>
           </div>
         </div>
-
       </section>
-
     </div>
-  </main><!-- End #main -->
-
+  </main>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
@@ -107,44 +93,51 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/js/datagraficos.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
-  <script>
-    function login(event) {
-      event.preventDefault();
-      const username = document.getElementById('yourUsername').value;
-      const password = document.getElementById('yourPassword').value;
-      
-      // Lista de usuarios y contraseñas válidas
-      const validUsers = [
-        { username: "avipilcer", password: "pilcer123" },
-        { username: "client", password: "client123" },
-        { username: "maxi", password: "maxi123" },
-        { username: "team", password: "team123" }
-      ];
-  
-      // Verificar si las credenciales ingresadas son válidas
-      const isValidUser = validUsers.some(user => user.username === username && user.password === password);
-  
-      if (isValidUser) {
-        localStorage.setItem('loggedIn', 'true');
-        const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 24 horas
-        localStorage.setItem('expiration', expirationTime);
-        alert('Login successful');
-        // Redirigir a la página de contenido restringido
-        window.location.href = "index.html"; // Ajusta la ruta según tu estructura
-      } else {
-        alert('Invalid credentials');
-      }
-    }
-  </script>
+
   
   
   <video autoplay muted loop class="video-background">
     <source src="assets/img/compressed_dashboard_background.mp4" type="video/mp4">
   </video>
+
+
+  <script>
+    function login(event) {
+      event.preventDefault();
+
+      const users = {
+        'avi': 'avi123',
+        'maxi': 'maxi123',
+        'client': 'client123',
+        'user': 'user123'
+      };
+
+      const username = document.getElementById('yourUsername').value;
+      const password = document.getElementById('yourPassword').value;
+      const loginMessage = document.getElementById('loginMessage');
+
+      if (users[username] && users[username] === password) {
+        localStorage.setItem('loggedIn', 'true');
+        const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000;
+        localStorage.setItem('expiration', expirationTime);
+        loginMessage.style.color = 'green';
+        loginMessage.textContent = 'Login successful! Redirecting...';
+        loginMessage.style.display = 'block';
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1000);
+      } else {
+        loginMessage.style.color = 'red';
+        loginMessage.textContent = 'Incorrect username or password. Please try again.';
+        loginMessage.style.display = 'block';
+      }
+    }
+  </script>
 
 </body>
 

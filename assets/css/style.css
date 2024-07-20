@@ -122,8 +122,8 @@ h6 {
 
 /* Card */
 .card {
-  background-color: rgb(3, 14, 31);
-  color: #fff;
+  background-color: rgba(0, 91, 248, 0.1);
+  color: #012970;
   margin-bottom: 30px;
   border: none;
   border-radius: 5px;
@@ -132,7 +132,7 @@ h6 {
 
 .card-header,
 .card-footer {
-  border-color: #ebeef4;
+  border-color: #122955;
   background-color: rgb(3, 14, 31);
   color: #ecedee;
   padding: 15px;
@@ -142,7 +142,7 @@ h6 {
   padding: 20px 0 15px 0;
   font-size: 18px;
   font-weight: 500;
-  color: #4a87d8;
+  color: #2760aa;
   font-family: "Poppins", sans-serif;
 }
 
@@ -205,18 +205,20 @@ h6 {
 
 .accordion-flush .accordion-button {
   padding: 15px 0;
-  background: none;
+  background: rgba(0, 91, 248, 0.1);
   border: 0;
 }
 
 .accordion-flush .accordion-button:not(.collapsed) {
   box-shadow: none;
+  background: rgba(0, 91, 248, 0.1);
   color: #031086;
 }
 
 .accordion-flush .accordion-body {
+  background: rgba(0, 91, 248, 0.1);
   padding: 0 0 15px 0;
-  color: #031086;
+  color: #000;
   font-size: 15px;
 }
 

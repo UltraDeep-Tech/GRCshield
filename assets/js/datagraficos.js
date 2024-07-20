@@ -1037,52 +1037,6 @@ obtenerDatos('dataExposureData', (data) => {
 });
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Obtener valores de sesión del almacenamiento local
-  const loggedIn = localStorage.getItem('loggedIn') === 'true';
-  const expiration = localStorage.getItem('expiration');
-  const now = new Date().getTime();
-
-  console.log("loggedIn:", loggedIn);
-  console.log("expiration:", expiration);
-  console.log("current time:", now);
-
-  // Verificar si la sesión es válida
-  if (!loggedIn || !expiration || now > expiration) {
-    localStorage.removeItem('loggedIn');
-    localStorage.removeItem('expiration');
-    showModal();
-  } else {
-    console.log("Session is active. Modal will not be shown.");
-    const modal = document.getElementById("loginModal");
-    if (modal) {
-      modal.style.display = 'none';
-    }
-  }
-
-  function showModal() {
-    const modal = document.getElementById("loginModal");
-    const loginButton = document.getElementById("loginButton");
-
-    if (!modal || !loginButton) {
-      console.error('Modal or login button not found in the DOM.');
-      return;
-    }
-
-    // Evitar scroll en el cuerpo cuando el modal está abierto
-    document.body.classList.add('modal-open');
-
-    modal.style.display = "flex";
-
-    loginButton.addEventListener('click', () => {
-      // Guardar estado de sesión y establecer expiración de 1 día
-      localStorage.setItem('loggedIn', 'true');
-      const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 1 día en milisegundos
-      localStorage.setItem('expiration', expirationTime);
-    });
-  }
-});
-
 function signOut(event) {
   event.preventDefault();
   localStorage.removeItem('loggedIn');
