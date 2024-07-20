@@ -19,22 +19,22 @@
     }
   },
   "severityDistribution": {
-    "labels": ["Low", "Medium", "High", "Critical"],
+    "labels": ["Low", "Medium", "High"],
     "categories": {
-      "violence": [20, 35, 30, 55, 52, 65, 60, 72, 80, 85, 88, 90],
-      "hate": [18, 28, 35, 45, 55, 57, 65, 68, 72, 77, 81, 85],
-      "sexual": [16, 30, 37, 42, 53, 61, 66, 73, 79, 82, 87, 92],
-      "selfHarm": [17, 22, 33, 48, 54, 62, 69, 75, 77, 83, 88, 94]
+      "violence": [20, 35, 30, 55],
+      "hate": [18, 28, 35, 45],
+      "sexual": [16, 30, 37, 42],
+      "selfHarm": [17, 22, 33, 48]
     }
   },
   "severityOverTimeByCategory": {
-    "labels": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "labels": [ "July", "August", "September", "October", "November", "December"],
     "categories": {
-      "violence": [12, 18, 20, 30, 28, 40, 35, 48, 50, 60, 55, 65],
-      "hate": [10, 15, 25, 28, 35, 32, 45, 50, 53, 57, 63, 70],
-      "sexual": [14, 20, 30, 33, 38, 42, 47, 55, 60, 62, 65, 71],
-      "selfHarm": [8, 16, 23, 27, 34, 37, 44, 50, 54, 59, 62, 68],
-      "jailbreak": [11, 14, 21, 25, 29, 33, 37, 45, 50, 55, 58, 64]
+      "violence": [35, 48, 50, 60, 55, 65],
+      "hate": [10, 25, 28, 57, 63, 70],
+      "sexual": [ 30, 33, 38, 62, 65, 71],
+      "selfHarm": [8, 37, 44, 59, 62, 68],
+      "jailbreak": [11, 14, 21, 50, 55, 58, 64]
     }
   },
   "totalAbusiveUsers": {
