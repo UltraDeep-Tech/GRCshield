@@ -115,6 +115,28 @@ function actualizarGraficoTotalBlockedRequests(data) {
   });
 }
 
+document.querySelectorAll('.cardindex').forEach(card => {
+  card.addEventListener('click', (event) => {
+    // Verifica si el clic proviene de un elemento interactivo dentro de la tarjeta
+    if (event.target.closest('.cardindex-header, .cardindex-footer, .cardindex-body button, .cardindex-body a, .cardindex-body canvas')) {
+      return; // Si es un elemento interactivo, no hacer nada
+    }
+
+    // Alterna la clase 'expanded' en la tarjeta
+    if (!card.classList.contains('expanded')) {
+      card.classList.add('expanded');
+      setTimeout(() => {
+        window.dispatchEvent(new Event('resize')); // Redibujar gráficos
+      }, 300);
+    } else {
+      card.classList.remove('expanded');
+      setTimeout(() => {
+        window.dispatchEvent(new Event('resize')); // Redibujar gráficos
+      }, 300);
+    }
+  });
+});
+
 // Barra de progreso
 document.addEventListener('DOMContentLoaded', function() {
   const card = document.getElementById('cardindexscore');
@@ -1037,24 +1059,4 @@ function signOut(event) {
   window.location.href = "pages-login.html"; // Ajusta la ruta según tu estructura
 }
 
-document.querySelectorAll('.cardindex').forEach(card => {
-  card.addEventListener('click', (event) => {
-    // Verifica si el clic proviene de un elemento interactivo dentro de la tarjeta
-    if (event.target.closest('.cardindex-header, .cardindex-footer, .cardindex-body button, .cardindex-body a, .cardindex-body canvas')) {
-      return; // Si es un elemento interactivo, no hacer nada
-    }
 
-    // Alterna la clase 'expanded' en la tarjeta
-    if (!card.classList.contains('expanded')) {
-      card.classList.add('expanded');
-      setTimeout(() => {
-        window.dispatchEvent(new Event('resize')); // Redibujar gráficos
-      }, 300);
-    } else {
-      card.classList.remove('expanded');
-      setTimeout(() => {
-        window.dispatchEvent(new Event('resize')); // Redibujar gráficos
-      }, 300);
-    }
-  });
-});

@@ -94,6 +94,109 @@
 }
 
 
+/* Estilo para la tabla */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #e9ecef; /* Color de texto */
+    background-color: rgba(3, 10, 22, 0.911); /* Color de fondo */
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0 30px rgba(14, 100, 247, 0.603); /* Sombra */
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+  
+  .table::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    border-radius: 5px;
+    border: 1px solid transparent;
+    border-image: linear-gradient(45deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
+    border-image-slice: 1;
+    animation: borderAnimation 5s linear infinite;
+    pointer-events: none;
+  }
+  
+  @keyframes borderAnimation {
+    0% {
+      border-image-source: linear-gradient(45deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
+    }
+    25% {
+      border-image-source: linear-gradient(135deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
+    }
+    50% {
+      border-image-source: linear-gradient(225deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
+    }
+    75% {
+      border-image-source: linear-gradient(315deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
+    }
+    100% {
+      border-image-source: linear-gradient(45deg, rgba(0, 0, 0, 0), rgba(14, 100, 247, 1), rgba(0, 0, 0, 0));
+    }
+  }
+  
+  /* Estilo para el encabezado de la tabla */
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #0d1b30; /* Color del borde del encabezado */
+    background-color: #102d5a; /* Color de fondo del encabezado */
+    text-align: center;
+    align-content: center;
+    padding: 0.75rem;
+    font-weight: bold;
+    color: #ffffff; /* Color del texto del encabezado */
+    text-transform: uppercase;
+  }
+  
+  /* Estilo para las filas de la tabla */
+  .table tbody tr {
+    border-top: 1px solid #2d2f36; /* Color del borde de las filas */
+    transition: background-color 0.5s ease-in-out, transform 0.15s ease-in-out;
+  }
+  
+  .table tbody tr:hover {
+    background: #fff; /* Color de fondo al pasar el ratón */
+    transform: scale(1.02);
+  }
+  
+  /* Estilo para las celdas de la tabla */
+  .table tbody td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #fff; /* Color del borde de las celdas */
+    color: #fff; /* Color del texto */
+    transition: color 0.5s ease-in-out;
+    background: #0d1b30;
+  }
+  
+
+  
+  /* Estilo para la tabla en dispositivos pequeños */
+  @media (max-width: 767.98px) {
+    .table-responsive {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  
+    .table-responsive > .table-bordered {
+      border: 0;
+    }
+  }
+  
+
+
+
+
+
 /*--------------------------------------------------------------
 # Footer index
 --------------------------------------------------------------*/

@@ -47,7 +47,7 @@
         "guid": "user1",
         "score": 82,
         "trend": "up",
-        "date": "2024-01-01",
+        "date": "2024-08-08",
         "total": 120,
         "violence": 20,
         "hate": 15,
@@ -58,7 +58,7 @@
         "guid": "user2",
         "score": 76,
         "trend": "down",
-        "date": "2024-02-01",
+        "date": "2024-08-09",
         "total": 95,
         "violence": 19,
         "hate": 13,
@@ -69,7 +69,7 @@
         "guid": "user3",
         "score": 90,
         "trend": "up",
-        "date": "2024-03-01",
+        "date": "2024-08-10",
         "total": 130,
         "violence": 25,
         "hate": 20,
@@ -80,7 +80,7 @@
         "guid": "user4",
         "score": 65,
         "trend": "down",
-        "date": "2024-04-01",
+        "date": "2024-08-11",
         "total": 85,
         "violence": 15,
         "hate": 10,
@@ -91,7 +91,7 @@
         "guid": "user5",
         "score": 88,
         "trend": "up",
-        "date": "2024-05-01",
+        "date": "2024-08-12",
         "total": 110,
         "violence": 23,
         "hate": 18,
@@ -102,7 +102,7 @@
         "guid": "user6",
         "score": 74,
         "trend": "down",
-        "date": "2024-06-01",
+        "date": "2024-08-13",
         "total": 92,
         "violence": 19,
         "hate": 14,
@@ -112,38 +112,38 @@
     ]
   },
   "hallucinationData": {
-    "labels": ["Incident 1", "Incident 2", "Incident 3", "Incident 4", "Incident 5", "Incident 6"],
+    "labels": ["8 Aug", "9 Aug", "10 Aug", "11 Aug", "12 Aug", "13 Aug", "14 Aug"],
     "data": [5, 14, 20, 26, 32, 38],
     "details": [
       {
         "type": "Incorrect fact",
         "description": "The AI stated that Berlin is the capital of France.",
-        "date": "2024-03-01"
+        "date": "2024-08-08"
       },
       {
         "type": "Misinformation",
         "description": "The AI claimed that humans can breathe in space without assistance.",
-        "date": "2024-03-15"
+        "date": "2024-08-09"
       },
       {
         "type": "Incorrect fact",
         "description": "The AI suggested that water boils at 50°C.",
-        "date": "2024-04-01"
+        "date": "2024-08-10"
       },
       {
         "type": "Misinformation",
         "description": "The AI stated that the Earth is flat.",
-        "date": "2024-04-15"
+        "date": "2024-08-11"
       },
       {
         "type": "Incorrect fact",
         "description": "The AI claimed that Albert Einstein invented the telephone.",
-        "date": "2024-05-01"
+        "date": "2024-08-12"
       },
       {
         "type": "Misinformation",
         "description": "The AI asserted that the Great Wall of China is visible from space.",
-        "date": "2024-05-15"
+        "date": "2024-08-13"
       }
     ]
   },
@@ -158,27 +158,27 @@
       {
         "incident": "Incident 1",
         "description": "The AI favored masculine pronouns in ambiguous contexts.",
-        "date": "2024-04-01"
+        "date": "2024-08-08"
       },
       {
         "incident": "Incident 2",
         "description": "The AI responses leaned towards a particular political party.",
-        "date": "2024-04-10"
+        "date": "2024-08-09"
       },
       {
         "incident": "Incident 3",
         "description": "The AI generated fewer positive responses for older users.",
-        "date": "2024-04-20"
+        "date": "2024-08-10"
       },
       {
         "incident": "Incident 4",
         "description": "The AI showed preference for wealthier individuals in its responses.",
-        "date": "2024-05-01"
+        "date": "2024-08-11"
       },
       {
         "incident": "Incident 5",
         "description": "The AI responses contained racial stereotypes.",
-        "date": "2024-05-10"
+        "date": "2024-08-12"
       }
     ]
   },
@@ -189,39 +189,39 @@
       {
         "incident": "Injection 1",
         "description": "User manipulated the AI to generate offensive content.",
-        "date": "2024-05-01"
+        "date": "2024-08-08"
       },
       {
         "incident": "Injection 2",
         "description": "User tricked the AI into divulging confidential information.",
-        "date": "2024-05-15"
+        "date": "2024-08-09"
       },
       {
         "incident": "Injection 3",
         "description": "User bypassed AI safety filters to create harmful content.",
-        "date": "2024-06-01"
+        "date": "2024-08-10"
       },
       {
         "incident": "Injection 4",
         "description": "User exploited the AI to produce illegal material.",
-        "date": "2024-06-15"
+        "date": "2024-08-11"
       },
       {
         "incident": "Injection 5",
         "description": "User coerced the AI into providing false information.",
-        "date": "2024-07-01"
+        "date": "2024-08-12"
       },
       {
         "incident": "Injection 6",
         "description": "User manipulated the AI to reveal security vulnerabilities.",
-        "date": "2024-07-15"
+        "date": "2024-08-13"
       }
     ]
   },
   "dataExposureData": {
     "incidentsOverTime": {
-      "labels": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-      "data": [8, 15, 22, 28, 34, 40, 45, 52, 58, 64, 69, 75]
+      "labels": ["June", "July", "August", "September", "October", "November", "December"],
+      "data": [8, 15, 22, 52, 58, 69, 75]
     },
     "types": {
       "labels": ["Personal Data", "Financial Data", "Health Data", "Business Data", "Government Data"],
@@ -232,31 +232,31 @@
         "incident": "Incident 1",
         "description": "Personal emails were inadvertently exposed.",
         "airesponse": "The AI mistakenly shared email contents.",
-        "date": "2024-06-01"
+        "date": "2024-08-08"
       },
       {
         "incident": "Incident 2",
         "description": "Credit card details were leaked.",
         "airesponse": "The AI unintentionally provided credit card information.",
-        "date": "2024-06-20"
+        "date": "2024-08-09"
       },
       {
         "incident": "Incident 3",
         "description": "Health records were exposed.",
         "airesponse": "The AI accidentally shared confidential medical information.",
-        "date": "2024-07-01"
+        "date": "2024-08-10"
       },
       {
         "incident": "Incident 4",
         "description": "Business confidential information was leaked.",
         "airesponse": "The AI mistakenly disclosed proprietary business data.",
-        "date": "2024-07-20"
+        "date": "2024-08-11"
       },
       {
         "incident": "Incident 5",
         "description": "Government documents were exposed.",
         "airesponse": "The AI inadvertently shared classified government information.",
-        "date": "2024-08-01"
+        "date": "2024-08-12"
       }
     ]
   },
