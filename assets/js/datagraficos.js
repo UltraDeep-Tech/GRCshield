@@ -179,9 +179,100 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+// Función para actualizar gráficos con los datos obtenidos
+function actualizarGraficoTotalBlockedRequests(data) {
+  const ctx = document.querySelector('#totalBlockedRequests').getContext('2d');
+  const gradientBar = ctx.createLinearGradient(0, 0, 0, 400);
+  gradientBar.addColorStop(0, 'rgba(0, 123, 255, 0.5)');
+  gradientBar.addColorStop(1, 'rgba(0, 123, 255, 1)');
+
+  const gradientLine = ctx.createLinearGradient(0, 0, 0, 400);
+  gradientLine.addColorStop(0, 'rgba(255, 99, 132, 0.5)');
+  gradientLine.addColorStop(1, 'rgba(255, 99, 132, 1)');
+
+  const dataTotalBlocked = {
+    labels: data.labels,
+    datasets: [{
+      type: 'line',
+      label: 'Block Rate',
+      data: data.blockRate,
+      borderColor: gradientLine,
+      fill: false,
+      tension: 0.4,
+      borderWidth: 3,
+      pointBackgroundColor: 'white',
+      pointBorderColor: gradientLine,
+      pointBorderWidth: 2,
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      pointHoverBackgroundColor: 'white',
+      pointHoverBorderColor: gradientLine,
+      pointHoverBorderWidth: 3
+    },
+    {
+      type: 'bar',
+      label: 'Blocked Requests',
+      data: data.blockedRequests,
+      backgroundColor: gradientBar,
+      borderColor: 'rgba(0, 123, 255, 1)',
+      borderWidth: 1,
+      borderRadius: 5,
+      shadowOffsetX: 3,
+      shadowOffsetY: 3,
+      shadowBlur: 10,
+      shadowColor: 'rgba(0, 0, 0, 0.5)'
+    }]
+  };
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: dataTotalBlocked,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: '#fff'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
+          }
+        },
+        x: {
+          ticks: {
+            color: '#fff'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: '#fff',
+            font: {
+              size: 14,
+              weight: 'bold'
+            }
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          titleColor: '#fff',
+          bodyColor: '#fff',
+          borderWidth: 1,
+          borderColor: '#fff',
+          cornerRadius: 4
+        }
+      }
+    }
+  });
+}
+
 // Total Blocked Requests gráfico
 document.addEventListener("DOMContentLoaded", () => {
-  obtenerDatos('blockedRequests', actualizarGraficoTotalBlockedRequests);
+  obtenerDatos('totalBlockedRequests', actualizarGraficoTotalBlockedRequests);
 });
 
 // Gráfico de bloqueos por categoría
@@ -484,17 +575,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-// Gráfico de usuarios abusivos potenciales
+/// Gráfico de usuarios abusivos potenciales
 document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('totalAbusiveUsers', (data) => {
     const ctx = document.getElementById('totalAbusiveUsersChart').getContext('2d');
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: data.labels,
         datasets: [{
           label: 'Total Potential Abusive Users',
-          data: data,
+          data: data.totalAbusiveUsers,
           backgroundColor: 'rgba(75, 192, 192, 0.7)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1
@@ -539,9 +630,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   obtenerDatos('abusiveUsersData', (data) => {
-    if (Array.isArray(data)) {
+    if (Array.isArray(data.data)) {
       const tbody = document.getElementById('abusiveUsersData');
-      data.forEach(item => {
+      tbody.innerHTML = ''; // Limpiar la tabla antes de agregar nuevas filas
+      data.data.forEach(item => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${item.guid}</td>
@@ -557,7 +649,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tbody.appendChild(row);
       });
     } else {
-      console.error('abusiveUsersData no es un array:', data);
+      console.error('abusiveUsersData no es un array:', data.data);
     }
   });
 

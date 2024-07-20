@@ -1,53 +1,54 @@
 {
   "totalBlockedRequests": {
-    "blockedRequests": [10, 20, 30, 40, 50],
-    "blockRate": [0.1, 0.2, 0.3, 0.4, 0.5],
-    "labels": ["January", "February", "March", "April", "May"]
+    "blockedRequests": [430, 220, 310, 500, 450, 670, 400],
+    "blockRate": [200, 90, 120, 400, 320, 200, 600],
+    "labels": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
   },
   "blockedRequestsByCategory": {
-    "data": [15, 25, 35, 45, 55],
-    "labels": ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5"]
+    "data": [20, 30, 15, 15, 20],
+    "labels": ["Violence", "Hate", "Sexual", "Self-Harm", "Jailbreak"]
   },
   "blockRateOverTimeByCategory": {
-    "labels": ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+    "labels": ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10", "Week 11", "Week 12"],
     "categories": {
-      "violence": [5, 10, 15, 20, 25],
-      "hate": [4, 9, 14, 19, 24],
-      "sexual": [3, 8, 13, 18, 23],
-      "selfHarm": [2, 7, 12, 17, 22],
-      "jailbreak": [1, 6, 11, 16, 21]
+      "violence": [3, 15, 18, 22, 30, 25, 40, 38, 50, 52, 45, 60],
+      "hate": [7, 5, 16, 21, 28, 26, 35, 37, 45, 42, 49, 55],
+      "sexual": [6, 11, 14, 25, 22, 30, 33, 42, 47, 39, 52, 57],
+      "selfHarm": [4, 12, 17, 24, 26, 32, 35, 38, 43, 48, 52, 60],
+      "jailbreak": [5, 10, 13, 20, 27, 29, 34, 37, 42, 44, 48, 54]
     }
   },
   "severityDistribution": {
-    "labels": ["Category 1", "Category 2", "Category 3", "Category 4"],
+    "labels": ["Low", "Medium", "High", "Critical"],
     "categories": {
-      "violence": [10, 20, 30, 40],
-      "hate": [15, 25, 35, 45],
-      "sexual": [20, 30, 40, 50],
-      "selfHarm": [25, 35, 45, 55]
+      "violence": [20, 35, 30, 55, 52, 65, 60, 72, 80, 85, 88, 90],
+      "hate": [18, 28, 35, 45, 55, 57, 65, 68, 72, 77, 81, 85],
+      "sexual": [16, 30, 37, 42, 53, 61, 66, 73, 79, 82, 87, 92],
+      "selfHarm": [17, 22, 33, 48, 54, 62, 69, 75, 77, 83, 88, 94]
     }
   },
   "severityOverTimeByCategory": {
-    "labels": ["January", "February", "March", "April", "May"],
+    "labels": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     "categories": {
-      "violence": [1, 2, 3, 4, 5],
-      "hate": [2, 3, 4, 5, 6],
-      "sexual": [3, 4, 5, 6, 7],
-      "selfHarm": [4, 5, 6, 7, 8],
-      "jailbreak": [5, 6, 7, 8, 9]
+      "violence": [12, 18, 20, 30, 28, 40, 35, 48, 50, 60, 55, 65],
+      "hate": [10, 15, 25, 28, 35, 32, 45, 50, 53, 57, 63, 70],
+      "sexual": [14, 20, 30, 33, 38, 42, 47, 55, 60, 62, 65, 71],
+      "selfHarm": [8, 16, 23, 27, 34, 37, 44, 50, 54, 59, 62, 68],
+      "jailbreak": [11, 14, 21, 25, 29, 33, 37, 45, 50, 55, 58, 64]
     }
   },
   "totalAbusiveUsers": {
-    "totalAbusiveUsers": [5, 10, 15, 20, 25, 30, 35]
+    "totalAbusiveUsers": [5, 14, 20, 25, 30, 40, 35, 48, 45, 56, 62, 65],
+    "labels": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
   },
   "abusiveUsersData": {
     "data": [
       {
         "guid": "user1",
-        "score": 80,
+        "score": 82,
         "trend": "up",
         "date": "2024-01-01",
-        "total": 100,
+        "total": 120,
         "violence": 20,
         "hate": 15,
         "sexual": 10,
@@ -55,91 +56,209 @@
       },
       {
         "guid": "user2",
-        "score": 75,
+        "score": 76,
         "trend": "down",
-        "date": "2024-01-02",
-        "total": 90,
-        "violence": 18,
-        "hate": 12,
-        "sexual": 9,
+        "date": "2024-02-01",
+        "total": 95,
+        "violence": 19,
+        "hate": 13,
+        "sexual": 8,
         "selfHarm": 6
+      },
+      {
+        "guid": "user3",
+        "score": 90,
+        "trend": "up",
+        "date": "2024-03-01",
+        "total": 130,
+        "violence": 25,
+        "hate": 20,
+        "sexual": 12,
+        "selfHarm": 8
+      },
+      {
+        "guid": "user4",
+        "score": 65,
+        "trend": "down",
+        "date": "2024-04-01",
+        "total": 85,
+        "violence": 15,
+        "hate": 10,
+        "sexual": 7,
+        "selfHarm": 4
+      },
+      {
+        "guid": "user5",
+        "score": 88,
+        "trend": "up",
+        "date": "2024-05-01",
+        "total": 110,
+        "violence": 23,
+        "hate": 18,
+        "sexual": 15,
+        "selfHarm": 10
+      },
+      {
+        "guid": "user6",
+        "score": 74,
+        "trend": "down",
+        "date": "2024-06-01",
+        "total": 92,
+        "violence": 19,
+        "hate": 14,
+        "sexual": 9,
+        "selfHarm": 8
       }
     ]
   },
   "hallucinationData": {
-    "labels": ["Incident 1", "Incident 2", "Incident 3"],
-    "data": [5, 10, 15],
+    "labels": ["Incident 1", "Incident 2", "Incident 3", "Incident 4", "Incident 5", "Incident 6"],
+    "data": [5, 14, 20, 26, 32, 38],
     "details": [
       {
-        "type": "Type 1",
-        "description": "Description 1",
-        "date": "2024-01-01"
+        "type": "Incorrect fact",
+        "description": "The AI stated that Berlin is the capital of France.",
+        "date": "2024-03-01"
       },
       {
-        "type": "Type 2",
-        "description": "Description 2",
-        "date": "2024-01-02"
+        "type": "Misinformation",
+        "description": "The AI claimed that humans can breathe in space without assistance.",
+        "date": "2024-03-15"
+      },
+      {
+        "type": "Incorrect fact",
+        "description": "The AI suggested that water boils at 50°C.",
+        "date": "2024-04-01"
+      },
+      {
+        "type": "Misinformation",
+        "description": "The AI stated that the Earth is flat.",
+        "date": "2024-04-15"
+      },
+      {
+        "type": "Incorrect fact",
+        "description": "The AI claimed that Albert Einstein invented the telephone.",
+        "date": "2024-05-01"
+      },
+      {
+        "type": "Misinformation",
+        "description": "The AI asserted that the Great Wall of China is visible from space.",
+        "date": "2024-05-15"
       }
     ]
   },
   "biasData": {
-    "labels": ["Bias 1", "Bias 2", "Bias 3"],
-    "biasCount": [10, 20, 30],
+    "labels": ["Gender Bias", "Racial Bias", "Political Bias", "Age Bias", "Socioeconomic Bias"],
+    "biasCount": [13, 20, 25, 17, 30],
     "biasIncidents": {
-      "labels": ["Day 1", "Day 2", "Day 3"],
-      "data": [1, 2, 3]
+      "labels": ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"],
+      "data": [4, 5, 7, 8, 6]
     },
     "details": [
       {
         "incident": "Incident 1",
-        "description": "Description 1",
-        "date": "2024-01-01"
+        "description": "The AI favored masculine pronouns in ambiguous contexts.",
+        "date": "2024-04-01"
       },
       {
         "incident": "Incident 2",
-        "description": "Description 2",
-        "date": "2024-01-02"
+        "description": "The AI responses leaned towards a particular political party.",
+        "date": "2024-04-10"
+      },
+      {
+        "incident": "Incident 3",
+        "description": "The AI generated fewer positive responses for older users.",
+        "date": "2024-04-20"
+      },
+      {
+        "incident": "Incident 4",
+        "description": "The AI showed preference for wealthier individuals in its responses.",
+        "date": "2024-05-01"
+      },
+      {
+        "incident": "Incident 5",
+        "description": "The AI responses contained racial stereotypes.",
+        "date": "2024-05-10"
       }
     ]
   },
   "promptInjectionData": {
-    "labels": ["Day 1", "Day 2", "Day 3"],
-    "data": [1, 2, 3],
+    "labels": ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6"],
+    "data": [2, 5, 7, 6, 9, 8],
     "details": [
       {
         "incident": "Injection 1",
-        "description": "Description 1",
-        "date": "2024-01-01"
+        "description": "User manipulated the AI to generate offensive content.",
+        "date": "2024-05-01"
       },
       {
         "incident": "Injection 2",
-        "description": "Description 2",
-        "date": "2024-01-02"
+        "description": "User tricked the AI into divulging confidential information.",
+        "date": "2024-05-15"
+      },
+      {
+        "incident": "Injection 3",
+        "description": "User bypassed AI safety filters to create harmful content.",
+        "date": "2024-06-01"
+      },
+      {
+        "incident": "Injection 4",
+        "description": "User exploited the AI to produce illegal material.",
+        "date": "2024-06-15"
+      },
+      {
+        "incident": "Injection 5",
+        "description": "User coerced the AI into providing false information.",
+        "date": "2024-07-01"
+      },
+      {
+        "incident": "Injection 6",
+        "description": "User manipulated the AI to reveal security vulnerabilities.",
+        "date": "2024-07-15"
       }
     ]
   },
   "dataExposureData": {
     "incidentsOverTime": {
-      "labels": ["January", "February", "March"],
-      "data": [5, 10, 15]
+      "labels": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      "data": [8, 15, 22, 28, 34, 40, 45, 52, 58, 64, 69, 75]
     },
     "types": {
-      "labels": ["Type 1", "Type 2", "Type 3"],
-      "data": [10, 20, 30]
+      "labels": ["Personal Data", "Financial Data", "Health Data", "Business Data", "Government Data"],
+      "data": [14, 22, 36, 48, 59]
     },
     "details": [
       {
         "incident": "Incident 1",
-        "description": "Description 1",
-        "airesponse": "Response 1",
-        "date": "2024-01-01"
+        "description": "Personal emails were inadvertently exposed.",
+        "airesponse": "The AI mistakenly shared email contents.",
+        "date": "2024-06-01"
       },
       {
         "incident": "Incident 2",
-        "description": "Description 2",
-        "airesponse": "Response 2",
-        "date": "2024-01-02"
+        "description": "Credit card details were leaked.",
+        "airesponse": "The AI unintentionally provided credit card information.",
+        "date": "2024-06-20"
+      },
+      {
+        "incident": "Incident 3",
+        "description": "Health records were exposed.",
+        "airesponse": "The AI accidentally shared confidential medical information.",
+        "date": "2024-07-01"
+      },
+      {
+        "incident": "Incident 4",
+        "description": "Business confidential information was leaked.",
+        "airesponse": "The AI mistakenly disclosed proprietary business data.",
+        "date": "2024-07-20"
+      },
+      {
+        "incident": "Incident 5",
+        "description": "Government documents were exposed.",
+        "airesponse": "The AI inadvertently shared classified government information.",
+        "date": "2024-08-01"
       }
     ]
-  }
+  },
+  "progressScore": 85
 }
