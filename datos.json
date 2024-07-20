@@ -113,7 +113,7 @@
   },
   "hallucinationData": {
     "labels": ["8 Aug", "9 Aug", "10 Aug", "11 Aug", "12 Aug", "13 Aug", "14 Aug"],
-    "data": [5, 14, 20, 26, 32, 38],
+    "data": [5, 14, 20, 26, 32, 38, 30],
     "details": [
       {
         "type": "Incorrect fact",

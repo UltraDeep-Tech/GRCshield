@@ -1046,8 +1046,29 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!loggedIn || now > expiration) {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('expiration');
-    alert('You must login first');
-    window.location.href = "pages-login.html"; // Redirigir a la página de login
+    showModal();
+  }
+
+  function showModal() {
+    const modal = document.getElementById("loginModal");
+    const span = document.getElementsByClassName("close")[0];
+    const loginButton = document.getElementById("loginButton");
+
+    modal.style.display = "flex";
+
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    loginButton.onclick = function() {
+      window.location.href = "pages-login.html";
+    }
   }
 });
 
@@ -1058,5 +1079,6 @@ function signOut(event) {
   alert('You have been signed out.');
   window.location.href = "pages-login.html"; // Ajusta la ruta según tu estructura
 }
+
 
 
