@@ -567,7 +567,7 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background-color: #000;
+    background-color: rgb(3, 14, 31);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -622,7 +622,7 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
 
 /* Estilo para el modal */
 .modal {
-    display: none;
+    display: none; /* Ocultar por defecto */
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -639,7 +639,7 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
     background-color: rgb(3, 14, 31);
     padding: 60px;
     border: none;
-    width: 100%;
+    width: 80%;
     max-width: 600px;
     color: #e9ecef;
     border-radius: 5px;
@@ -746,9 +746,16 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
     width: 150px; /* Hacer el botón más corto */
     margin: 20px auto; /* Centrar el botón */
     display: block;
+    text-decoration: none;
+    text-align: center;
   }
   
   #loginButton:hover {
     background-color: #0056b3;
+  }
+  
+  /* Deshabilitar scroll en body cuando el modal está abierto */
+  body.modal-open {
+    overflow: hidden;
   }
   
