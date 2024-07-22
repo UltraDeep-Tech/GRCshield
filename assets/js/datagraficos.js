@@ -17,8 +17,11 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const database = firebase.database();
 
+console.log("Configuración de Firebase inicializada.");
+
 // Función para iniciar sesión
 function signIn(email, password) {
+  console.log("Intentando iniciar sesión...");
   auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -33,6 +36,7 @@ function signIn(email, password) {
 // Autenticar con las credenciales del archivo .env
 const email = process.env.FIREBASE_EMAIL;
 const password = process.env.FIREBASE_PASSWORD;
+console.log("Credenciales obtenidas del archivo .env. Iniciando sesión...");
 signIn(email, password);
 
 // Función para obtener datos de Firebase
@@ -48,6 +52,16 @@ function obtenerDatos(ruta, callback) {
   } else {
     console.error('Usuario no autenticado');
   }
+}
+
+// Llamar a esta función después de la autenticación
+function iniciarOperaciones() {
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log("Documento cargado. Iniciando operaciones.");
+    obtenerDatos('totalBlockedRequests', actualizarGraficoTotalBlockedRequests);
+    obtenerDatos('blockedRequestsByCategory', actualizarGraficoBlockedRequestsByCategory);
+    // Añade aquí más llamadas a obtenerDatos según sea necesario
+  });
 }
 
 // Función para actualizar gráficos con los datos obtenidos
