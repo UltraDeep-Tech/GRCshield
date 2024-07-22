@@ -412,7 +412,10 @@ document.addEventListener("DOMContentLoaded", () => {
         plugins: {
           legend: {
             labels: {
-              color: '#fff'
+              color: '#fff',
+              usePointStyle: true,
+              boxWidth: 50,
+              borderRadius: 10,
             }
           },
           tooltip: {
