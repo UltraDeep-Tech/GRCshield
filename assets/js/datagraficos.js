@@ -415,7 +415,7 @@ document.addEventListener("DOMContentLoaded", () => {
               color: '#fff',
               usePointStyle: true,
               boxWidth: 50,
-              borderRadius: 10,
+              borderRadius: 20,
             }
           },
           tooltip: {
