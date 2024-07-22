@@ -38,6 +38,7 @@ signIn(email, password);
 // Función para obtener datos de Firebase
 function obtenerDatos(ruta, callback) {
   if (auth.currentUser) {
+    console.log(`Intentando acceder a la ruta: ${ruta}`);
     const ref = database.ref(ruta);
     ref.on('value', (snapshot) => {
       const data = snapshot.val();
