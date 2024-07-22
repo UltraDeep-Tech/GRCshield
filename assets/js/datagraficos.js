@@ -49,15 +49,6 @@ function obtenerDatos(ruta, callback) {
   }
 }
 
-// Llamar a esta función después de la autenticación
-function iniciarOperaciones() {
-  document.addEventListener("DOMContentLoaded", () => {
-    obtenerDatos('totalBlockedRequests', actualizarGraficoTotalBlockedRequests);
-    obtenerDatos('blockedRequestsByCategory', actualizarGraficoBlockedRequestsByCategory);
-    // Añade aquí más llamadas a obtenerDatos según sea necesario
-  });
-}
-
 // Función para actualizar gráficos con los datos obtenidos
 function actualizarGraficoTotalBlockedRequests(data) {
   const ctx = document.querySelector('#totalBlockedRequests').getContext('2d');
