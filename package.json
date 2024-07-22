@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "dotenv": "^16.4.5",
-    "firebase": "^10.12.3"
+    "firebase": "^10.12.4"
   },
   "devDependencies": {
     "dotenv-webpack": "^8.1.0"
