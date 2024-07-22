@@ -14,53 +14,15 @@ const firebaseConfig = {
 
 // Inicializa Firebase
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
 const database = firebase.database();
-
-console.log("Configuración de Firebase inicializada.");
-
-// Función para iniciar sesión
-function signIn(email, password) {
-  console.log("Intentando iniciar sesión...");
-  auth.signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log('Usuario autenticado:', user);
-      iniciarOperaciones();
-    })
-    .catch((error) => {
-      console.error('Error al iniciar sesión:', error);
-    });
-}
-
-// Autenticar con las credenciales del archivo .env
-const email = process.env.FIREBASE_EMAIL;
-const password = process.env.FIREBASE_PASSWORD;
-console.log("Credenciales obtenidas del archivo .env. Iniciando sesión...");
-signIn(email, password);
 
 // Función para obtener datos de Firebase
 function obtenerDatos(ruta, callback) {
-  if (auth.currentUser) {
-    console.log(`Intentando acceder a la ruta: ${ruta}`);
-    const ref = database.ref(ruta);
-    ref.on('value', (snapshot) => {
-      const data = snapshot.val();
-      console.log(`Datos recuperados de ${ruta}:`, data);
-      callback(data);
-    });
-  } else {
-    console.error('Usuario no autenticado');
-  }
-}
-
-// Llamar a esta función después de la autenticación
-function iniciarOperaciones() {
-  document.addEventListener("DOMContentLoaded", () => {
-    console.log("Documento cargado. Iniciando operaciones.");
-    obtenerDatos('totalBlockedRequests', actualizarGraficoTotalBlockedRequests);
-    obtenerDatos('blockedRequestsByCategory', actualizarGraficoBlockedRequestsByCategory);
-    // Añade aquí más llamadas a obtenerDatos según sea necesario
+  const ref = database.ref(ruta);
+  ref.on('value', (snapshot) => {
+    const data = snapshot.val();
+    console.log(`Datos recuperados de ${ruta}:`, data); // Añade esta línea para depuración
+    callback(data);
   });
 }
 
