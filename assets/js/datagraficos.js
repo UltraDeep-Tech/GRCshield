@@ -1,14 +1,13 @@
-require('dotenv').config();
-
+// Configuración de Firebase
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
+  apiKey: "AIzaSyC9N5VF0vFrzc4PzgC3DnLDL51rLHltFdk",
+  authDomain: "ultradeeptech.firebaseapp.com",
+  databaseURL: "https://ultradeeptech-default-rtdb.firebaseio.com",
+  projectId: "ultradech",
+  storageBucket: "ultradech.appspot.com",
+  messagingSenderId: "934866038204",
+  appId: "1:934866038204:web:dd2b3862bf3f6ff2344fb9",
+  measurementId: "G-YHX6XTML2J"
 };
 
 // Inicializa Firebase
