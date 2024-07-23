@@ -24,7 +24,6 @@ function obtenerDatos(ruta, callback) {
   });
 }
 
-
 document.querySelectorAll('.cardindex').forEach(card => {
   card.addEventListener('click', (event) => {
     // Verifica si el clic proviene de un elemento interactivo dentro de la tarjeta
@@ -48,6 +47,7 @@ document.querySelectorAll('.cardindex').forEach(card => {
 });
 
 // Barra de progreso
+
 document.addEventListener('DOMContentLoaded', function() {
   const card = document.getElementById('cardindexscore');
   const progressText = document.getElementById('progressText');
@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+
 // Función para actualizar gráficos con los datos obtenidos
 function actualizarGraficoTotalBlockedRequests(data) {
   const ctx = document.querySelector('#totalBlockedRequests').getContext('2d');
@@ -119,7 +120,7 @@ function actualizarGraficoTotalBlockedRequests(data) {
   gradientBar.addColorStop(1, 'rgba(0, 123, 255, 1)');
 
   const gradientLine = ctx.createLinearGradient(0, 0, 0, 400);
-  gradientLine.addColorStop(0, 'rgba(255, 99, 132, 0.5)');
+  gradientLine.addColorStop(0, 'rgba(255, 99, 132, 0.7)');
   gradientLine.addColorStop(1, 'rgba(255, 99, 132, 1)');
 
   const dataTotalBlocked = {
@@ -139,7 +140,7 @@ function actualizarGraficoTotalBlockedRequests(data) {
       pointHoverRadius: 7,
       pointHoverBackgroundColor: 'white',
       pointHoverBorderColor: gradientLine,
-      pointHoverBorderWidth: 3
+      pointHoverBorderWidth: 3,
     },
     {
       type: 'bar',
@@ -147,12 +148,12 @@ function actualizarGraficoTotalBlockedRequests(data) {
       data: data.blockedRequests,
       backgroundColor: gradientBar,
       borderColor: 'rgba(0, 123, 255, 1)',
-      borderWidth: 1,
-      borderRadius: 5,
+      borderWidth: 3,
+      borderRadius: 15,
       shadowOffsetX: 3,
       shadowOffsetY: 3,
       shadowBlur: 10,
-      shadowColor: 'rgba(0, 0, 0, 0.5)'
+      shadowColor: ' srgba(0, 0, 0, 1)'
     }]
   };
 
@@ -183,9 +184,11 @@ function actualizarGraficoTotalBlockedRequests(data) {
         legend: {
           labels: {
             color: '#fff',
+            usePointStyle: true ,
+            pointStyle: 'circle',
+            borderRadius: 2,
             font: {
-              size: 14,
-              weight: 'bold'
+              size: 14
             }
           }
         },
@@ -361,28 +364,32 @@ document.addEventListener("DOMContentLoaded", () => {
           data: data.categories.violence,
           backgroundColor: 'rgba(255, 99, 132, 0.7)',
           borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
+          borderWidth: 1,
+          borderRadius:10
         },
         {
           label: 'Hate',
           data: data.categories.hate,
           backgroundColor: 'rgba(54, 162, 235, 0.7)',
           borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1
+          borderWidth: 1,
+          borderRadius:10     
         },
         {
           label: 'Sexual',
           data: data.categories.sexual,
           backgroundColor: 'rgba(75, 192, 192, 0.7)',
           borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
+          borderWidth: 1,
+          borderRadius:10
         },
         {
           label: 'Self-harm',
           data: data.categories.selfHarm,
           backgroundColor: 'rgba(153, 102, 255, 0.7)',
           borderColor: 'rgba(153, 102, 255, 1)',
-          borderWidth: 1
+          borderWidth: 1,
+          borderRadius:10
         }
       ]
     };
@@ -413,7 +420,10 @@ document.addEventListener("DOMContentLoaded", () => {
         plugins: {
           legend: {
             labels: {
-              color: '#fff'
+              color: '#fff',
+              usePointStyle: true ,
+              pointStyle: 'circle',
+              borderRadius: 2,
             }
           },
           tooltip: {
@@ -499,6 +509,9 @@ document.addEventListener("DOMContentLoaded", () => {
         plugins: {
           legend: {
             labels: {
+              usePointStyle: true ,
+              pointStyle: 'circle',
+              borderRadius: 2,
               color: '#fff'
             }
           },
@@ -528,9 +541,11 @@ document.addEventListener("DOMContentLoaded", () => {
         datasets: [{
           label: 'Total Potential Abusive Users',
           data: data.totalAbusiveUsers,
-          backgroundColor: 'rgba(75, 192, 192, 0.7)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
+          backgroundColor: 'rgba(75, 192, 500, 0.5)',
+          borderColor: 'rgba(75, 192, 500, 1)',
+          borderWidth: 2,
+          borderRadius: 15,
+          shadowColor: 10
         }]
       },
       options: {
@@ -556,7 +571,10 @@ document.addEventListener("DOMContentLoaded", () => {
         plugins: {
           legend: {
             labels: {
-              color: '#fff'
+              color: '#fff',
+              usePointStyle: true ,
+              pointStyle: 'circle',
+              borderRadius: 2
             }
           },
           tooltip: {
@@ -605,7 +623,8 @@ document.addEventListener("DOMContentLoaded", () => {
           data: data.data,
           backgroundColor: 'rgba(255, 99, 132, 0.7)',
           borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
+          borderWidth: 3,
+          borderRadius: 15
         }]
       },
       options: {
@@ -631,8 +650,10 @@ document.addEventListener("DOMContentLoaded", () => {
         plugins: {
           legend: {
             labels: {
-              color: '#fff'
-            }
+              color: '#fff',
+              usePointStyle: true ,
+              pointStyle: 'circle',
+              borderRadius: 2,            }
           },
           tooltip: {
             backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -695,8 +716,10 @@ document.addEventListener("DOMContentLoaded", () => {
         plugins: {
           legend: {
             labels: {
-              color: '#fff'
-            }
+              color: '#fff',
+              usePointStyle: true ,
+              pointStyle: 'circle',
+              borderRadius: 2,            }
           },
           tooltip: {
             backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -746,7 +769,10 @@ document.addEventListener("DOMContentLoaded", () => {
         plugins: {
           legend: {
             labels: {
-              color: '#fff'
+              color: '#fff',
+              usePointStyle: true ,
+              pointStyle: 'circle',
+              borderRadius: 2,            
             }
           },
           tooltip: {
@@ -810,8 +836,10 @@ document.addEventListener("DOMContentLoaded", () => {
         plugins: {
           legend: {
             labels: {
-              color: '#fff'
-            }
+              color: '#fff',
+              usePointStyle: true ,
+              pointStyle: 'circle',
+              borderRadius: 2,            }
           },
           tooltip: {
             backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -875,8 +903,10 @@ obtenerDatos('dataExposureData/incidentsOverTime', (data) => {
       plugins: {
         legend: {
           labels: {
-            color: '#fff'
-          }
+            color: '#fff',
+            usePointStyle: true ,
+            pointStyle: 'circle',
+            borderRadius: 2,          }
         },
         tooltip: {
           backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -925,8 +955,10 @@ obtenerDatos('dataExposureData/types', (data) => {
       plugins: {
         legend: {
           labels: {
-            color: '#fff'
-          }
+            color: '#fff',
+            usePointStyle: true ,
+            pointStyle: 'circle',
+            borderRadius: 2,          }
         },
         tooltip: {
           backgroundColor: 'rgba(0, 0, 0, 0.8)',
