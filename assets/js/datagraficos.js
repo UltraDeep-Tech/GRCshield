@@ -1,28 +1,31 @@
-// Configuración de Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyC9N5VF0vFrzc4PzgC3DnLDL51rLHltFdk",
-  authDomain: "ultradeeptech.firebaseapp.com",
-  databaseURL: "https://ultradeeptech-default-rtdb.firebaseio.com",
-  projectId: "ultradech",
-  storageBucket: "ultradech.appspot.com",
-  messagingSenderId: "934866038204",
-  appId: "1:934866038204:web:dd2b3862bf3f6ff2344fb9",
-  measurementId: "G-YHX6XTML2J"
-};
-
-// Inicializa Firebase
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-
-// Función para obtener datos de Firebase
+// Función para obtener datos del backend Flask
 function obtenerDatos(ruta, callback) {
-  const ref = database.ref(ruta);
-  ref.on('value', (snapshot) => {
-    const data = snapshot.val();
-    console.log(`Datos recuperados de ${ruta}:`, data); // Añade esta línea para depuración
-    callback(data);
-  });
+  if (!ruta || ruta.trim() === "") {
+    console.error('Ruta no válida:', ruta);
+    return;
+  }
+
+  console.log(`Solicitando datos desde la ruta: ${ruta}`);
+  fetch(`https://api-grcshield.ultradeep.tech/data/${ruta}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(`Datos recuperados de ${ruta}:`, data);
+      callback(data);
+    })
+    .catch(error => console.error('Error fetching data:', error));
 }
+
+// Ejemplo de llamada para obtener datos de la raíz
+obtenerDatos('/', function(data) {
+  console.log('Datos desde la raíz:', data);
+  // Aquí puedes procesar los datos y actualizar tus gráficos
+});
+
 
 document.querySelectorAll('.cardindex').forEach(card => {
   card.addEventListener('click', (event) => {
