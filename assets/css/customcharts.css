@@ -688,7 +688,7 @@ body.modal-open {
   overflow: hidden;
 }
 
-
-.form-check-label {
-  color: #fff;
-}
+  .form-check-label {
+    color: #fff;
+    text-shadow: 0 0 5px #000;
+  }
