@@ -10,8 +10,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/logo.png" rel="icon">
-  <link href="assets/img/logo.png" rel="apple-touch-icon">
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/favicon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -27,8 +27,9 @@
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
   
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
-  <link href="assets/css/customcharts.css" rel="stylesheet">
+  <link id="darkmode-base" href="assets/css/style.css" rel="stylesheet">
+  <link id="darkmode-item" href="assets/css/customcharts.css" rel="stylesheet">
+  <link id="lightmode" href="assets/css/lightmode.css" rel="stylesheet" disabled>
 
 
   <!-- Firebase JS SDK -->
@@ -49,7 +50,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
+        <img src="assets/img/favicon.png" alt="" class="logoheader">
         <span class="d-none d-lg-block">GRC Shield Ultra</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -57,7 +58,13 @@
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
+        <label class="form-check-label bi bi-sun me-1" for="flexSwitchCheckChecked"></label>
 
+        <div class="form-check form-switch me-4">
+          
+          <label class="form-check-label" for="flexSwitchCheckChecked">Hack Mode</label>
+          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+        </div>
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
               <i class="bi bi-bell"></i>
@@ -73,60 +80,60 @@
                   <hr class="dropdown-divider">
               </li>
       
-              <li class="notification-item">
-                  <i class="bi bi-exclamation-circle text-warning"></i>
-                  <div>
-                      <h4>Content Update</h4>
-                      <p>The main page content has been updated.</p>
-                      <p>30 min. ago</p>
-                  </div>
-              </li>
-      
-              <li>
-                  <hr class="dropdown-divider">
-              </li>
-      
-              <li class="notification-item">
-                  <i class="bi bi-x-circle text-danger"></i>
-                  <div>
-                      <h4>Loading Error</h4>
-                      <p>There was an error loading the resources.</p>
-                      <p>1 hr. ago</p>
-                  </div>
-              </li>
-      
-              <li>
-                  <hr class="dropdown-divider">
-              </li>
-      
-              <li class="notification-item">
-                  <i class="bi bi-check-circle text-success"></i>
-                  <div>
-                      <h4>New Article Published</h4>
-                      <p>A new blog article has been published.</p>
-                      <p>2 hrs. ago</p>
-                  </div>
-              </li>
-      
-              <li>
-                  <hr class="dropdown-divider">
-              </li>
-      
-              <li class="notification-item">
-                  <i class="bi bi-info-circle text-primary"></i>
-                  <div>
-                      <h4>Event Reminder</h4>
-                      <p>Remember to attend the launch event tomorrow.</p>
-                      <p>4 hrs. ago</p>
-                  </div>
-              </li>
-      
-              <li>
-                  <hr class="dropdown-divider">
-              </li>
-              <li class="dropdown-footer text-center">
-                  <a href="#">Show all notifications</a>
-              </li>
+<li class="notification-item">
+  <i class="bi bi-exclamation-circle text-warning"></i>
+  <div>
+    <h4>Increased Blocked Requests</h4>
+    <p>Spike in blocked requests detected in the last hour.</p>
+    <p>30 min. ago</p>
+  </div>
+</li>
+
+<li>
+  <hr class="dropdown-divider">
+</li>
+
+<li class="notification-item">
+  <i class="bi bi-x-circle text-danger"></i>
+  <div>
+    <h4>New Abusive User Detected</h4>
+    <p>User GUID 1234 flagged for potential abusive behavior.</p>
+    <p>1 hr. ago</p>
+  </div>
+</li>
+
+<li>
+  <hr class="dropdown-divider">
+</li>
+
+<li class="notification-item">
+  <i class="bi bi-check-circle text-success"></i>
+  <div>
+    <h4>Hallucination Detection Update</h4>
+    <p>New algorithm for hallucination detection deployed.</p>
+    <p>2 hrs. ago</p>
+  </div>
+</li>
+
+<li>
+  <hr class="dropdown-divider">
+</li>
+
+<li class="notification-item">
+  <i class="bi bi-info-circle text-primary"></i>
+  <div>
+    <h4>Weekly Report Available</h4>
+    <p>The GRC Shield Ultra weekly summary is ready for review.</p>
+    <p>4 hrs. ago</p>
+  </div>
+</li>
+
+<li>
+  <hr class="dropdown-divider">
+</li>
+<li class="dropdown-footer text-center">
+  <a href="#">Show all notifications</a>
+</li>
           </ul><!-- End Notification Dropdown Items -->
       </li><!-- End Notification Nav -->
       
@@ -360,7 +367,7 @@
 
   </ul>
   <div class="sidebar-bg-container">
-    <img src="/assets/img/logo.png" class="sidebar-bg">
+    <img src="/assets/img/prueba.png" class="sidebar-bg">
   </div>
 
 </aside><!-- End Sidebar-->
@@ -657,6 +664,7 @@
   </div>
 </div>
 
+</section>
   </main><!-- End #main -->
 
     <!-- Vendor JS Files -->
@@ -704,6 +712,54 @@
       }
     });
   </script>
+
+<script>
+  const toggleSwitch = document.getElementById('flexSwitchCheckChecked');
+  const lightModeLink = document.getElementById('lightmode');
+  const darkModeBaseLink = document.getElementById('darkmode-base');
+  const darkModeItemLink = document.getElementById('darkmode-item');
+  const body = document.body;
+
+  // Verificar el tema guardado en localStorage
+  const currentTheme = localStorage.getItem('theme');
+  if (currentTheme) {
+    if (currentTheme === 'dark-mode') {
+      lightModeLink.disabled = true;
+      darkModeBaseLink.disabled = false;
+      darkModeItemLink.disabled = false;
+      toggleSwitch.checked = true;
+    } else {
+      lightModeLink.disabled = false;
+      darkModeBaseLink.disabled = true;
+      darkModeItemLink.disabled = true;
+      toggleSwitch.checked = false;
+    }
+    body.classList.add(currentTheme);
+  } else {
+    // Por defecto, activamos el modo oscuro
+    lightModeLink.disabled = true;
+    darkModeBaseLink.disabled = false;
+    darkModeItemLink.disabled = false;
+    toggleSwitch.checked = true;
+    localStorage.setItem('theme', 'dark-mode');
+  }
+
+  toggleSwitch.addEventListener('change', () => {
+    if (toggleSwitch.checked) {
+      body.classList.add('dark-mode');
+      lightModeLink.disabled = true;
+      darkModeBaseLink.disabled = false;
+      darkModeItemLink.disabled = false;
+      localStorage.setItem('theme', 'dark-mode');
+    } else {
+      body.classList.remove('dark-mode');
+      lightModeLink.disabled = false;
+      darkModeBaseLink.disabled = true;
+      darkModeItemLink.disabled = true;
+      localStorage.setItem('theme', 'light-mode');
+    }
+  });
+</script>
 </body>
 
 </html>

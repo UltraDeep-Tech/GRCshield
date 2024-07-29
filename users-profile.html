@@ -29,8 +29,9 @@
 
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
-</head>
+  <link id="darkmode-base" href="assets/css/style.css" rel="stylesheet">
+  <link id="darkmode-item" href="assets/css/customcharts.css" rel="stylesheet">
+  <link id="lightmode" href="assets/css/lightmode.css" rel="stylesheet" disabled></head>
 
 <body>
 
@@ -663,6 +664,54 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    const toggleSwitch = document.getElementById('flexSwitchCheckChecked');
+    const lightModeLink = document.getElementById('lightmode');
+    const darkModeBaseLink = document.getElementById('darkmode-base');
+    const darkModeItemLink = document.getElementById('darkmode-item');
+    const body = document.body;
+  
+    // Verificar el tema guardado en localStorage
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+      if (currentTheme === 'dark-mode') {
+        lightModeLink.disabled = true;
+        darkModeBaseLink.disabled = false;
+        darkModeItemLink.disabled = false;
+        toggleSwitch.checked = true;
+      } else {
+        lightModeLink.disabled = false;
+        darkModeBaseLink.disabled = true;
+        darkModeItemLink.disabled = true;
+        toggleSwitch.checked = false;
+      }
+      body.classList.add(currentTheme);
+    } else {
+      // Por defecto, activamos el modo oscuro
+      lightModeLink.disabled = true;
+      darkModeBaseLink.disabled = false;
+      darkModeItemLink.disabled = false;
+      toggleSwitch.checked = true;
+      localStorage.setItem('theme', 'dark-mode');
+    }
+  
+    toggleSwitch.addEventListener('change', () => {
+      if (toggleSwitch.checked) {
+        body.classList.add('dark-mode');
+        lightModeLink.disabled = true;
+        darkModeBaseLink.disabled = false;
+        darkModeItemLink.disabled = false;
+        localStorage.setItem('theme', 'dark-mode');
+      } else {
+        body.classList.remove('dark-mode');
+        lightModeLink.disabled = false;
+        darkModeBaseLink.disabled = true;
+        darkModeItemLink.disabled = true;
+        localStorage.setItem('theme', 'light-mode');
+      }
+    });
+  </script>
 
 </body>
 

@@ -27,32 +27,11 @@ obtenerDatos('/', function(data) {
 });
 
 
-document.querySelectorAll('.cardindex').forEach(card => {
-  card.addEventListener('click', (event) => {
-    // Verifica si el clic proviene de un elemento interactivo dentro de la tarjeta
-    if (event.target.closest('.cardindex-header, .cardindex-footer, .cardindex-body button, .cardindex-body a, .cardindex-body canvas')) {
-      return; // Si es un elemento interactivo, no hacer nada
-    }
-
-    // Alterna la clase 'expanded' en la tarjeta
-    if (!card.classList.contains('expanded')) {
-      card.classList.add('expanded');
-      setTimeout(() => {
-        window.dispatchEvent(new Event('resize')); // Redibujar gráficos
-      }, 300);
-    } else {
-      card.classList.remove('expanded');
-      setTimeout(() => {
-        window.dispatchEvent(new Event('resize')); // Redibujar gráficos
-      }, 300);
-    }
-  });
-});
 
 // Barra de progreso
 
 document.addEventListener('DOMContentLoaded', function() {
-  const card = document.getElementById('cardindexscore');
+  const cards = document.querySelectorAll('.cardindexscore, .cardindex');
   const progressText = document.getElementById('progressText');
   const shield = document.getElementById('shield');
   const duration = 2000; // Duración de la animación en milisegundos
@@ -87,25 +66,29 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCounter();
   }
 
-  card.addEventListener('click', function(event) {
-    event.stopPropagation();
-    if (card.classList.contains('expanded')) {
-      card.classList.remove('expanded');
-      document.body.style.overflow = 'auto';
-    } else {
-      card.classList.add('expanded');
-      document.body.style.overflow = 'hidden';
-    }
-    obtenerDatos('progressScore', (targetNumber) => {
-      startCounter(progressText, targetNumber, duration);
+  cards.forEach(card => {
+    card.addEventListener('click', function(event) {
+      event.stopPropagation();
+      if (card.classList.contains('expanded')) {
+        card.classList.remove('expanded');
+        document.body.style.overflow = 'auto';
+      } else {
+        card.classList.add('expanded');
+        document.body.style.overflow = 'hidden';
+      }
+      obtenerDatos('progressScore', (targetNumber) => {
+        startCounter(progressText, targetNumber, duration);
+      });
     });
   });
 
   document.addEventListener('click', function() {
-    if (card.classList.contains('expanded')) {
-      card.classList.remove('expanded');
-      document.body.style.overflow = 'auto';
-    }
+    cards.forEach(card => {
+      if (card.classList.contains('expanded')) {
+        card.classList.remove('expanded');
+        document.body.style.overflow = 'auto';
+      }
+    });
   });
 
   // Ejecutar la animación al cargar la página
@@ -113,6 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
     startCounter(progressText, targetNumber, duration);
   });
 });
+
 
 
 // Función para actualizar gráficos con los datos obtenidos

@@ -82,6 +82,8 @@
 
 .cardindex-body {
     padding: 0 20px 20px 20px;
+    text-align: center;
+
     color: #fff;
 }
 
@@ -223,7 +225,7 @@
 
 
 
-/*------------------SIDEBARD---------------*/
+/*------------------SIDEBAR---------------*/
 .sidebar-bg-container {
     position: relative;
     width: 100%;
@@ -236,7 +238,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 80%; /* Ajusta el tamaño de la imagen según sea necesario */
-    opacity: 0.1; /* Ajusta la opacidad para dar efecto de marca de agua */
+    opacity: 0.2; /* Ajusta la opacidad para dar efecto de marca de agua */
     filter: drop-shadow(0 0 1px rgb(245, 245, 248));
     animation: neon-border 2s infinite alternate;
   }
@@ -246,7 +248,7 @@
       filter: drop-shadow(0 0 2px #ffffff);
     }
     50% {
-      filter: drop-shadow(0 0 2px #070707);
+      filter: drop-shadow(0 0 2px #3bbada);
     }
 
   }
@@ -300,8 +302,8 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
 
 
   .fondoperfil {
-    background: linear-gradient(135deg, #0d1b30 25%, #043e94 100%); /* Cambia el color a un azul más claro */
-    color:#fff
+    background: #bdcbe92d;
+    color:#000;
   }
   .fondoperfil h6{
     color:#fff !important
@@ -310,16 +312,16 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
     color:#fff
   }
   .fondoperfil i{
-    color:#fff
+    color:#043e94
   }
   .fondoperfil i:hover{
-    color:#0d1b30 !important
+    color:#043e94 !important
   }
   .fondoperfil span:hover{
-    color:#0d1b30 !important
+    color:#043e94 !important
   }
   .fondoperfil a:hover{
-    color:#0d1b30 !important
+    color:#043e94 !important
   }
 
   .cardindexscore {
@@ -684,4 +686,9 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
 /* Deshabilitar scroll en body cuando el modal está abierto */
 body.modal-open {
   overflow: hidden;
+}
+
+
+.form-check-label {
+  color: #fff;
 }
