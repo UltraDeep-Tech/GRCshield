@@ -68,6 +68,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   cards.forEach(card => {
     card.addEventListener('click', function(event) {
+      // Verificar si el elemento clicado es interactivo
+      const interactiveElements = ['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'];
+      if (interactiveElements.includes(event.target.tagName)) {
+        return; // No hacer nada si el elemento clicado es interactivo
+      }
+
       event.stopPropagation();
       if (card.classList.contains('expanded')) {
         card.classList.remove('expanded');
@@ -96,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     startCounter(progressText, targetNumber, duration);
   });
 });
+
 
 
 

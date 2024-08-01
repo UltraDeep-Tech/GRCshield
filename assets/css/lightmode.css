@@ -21,8 +21,9 @@
     height: 100%;
     z-index: -1;
     object-fit: cover;
-    opacity: 1;
-    filter: brightness(1);  /* Ajusta el brillo del video */
+    opacity:0;
+    background: #000;
+    
 }
   
   .content {
@@ -58,13 +59,14 @@
   
   .pagetitle {
     margin-bottom: 10px;
+    align-content: center;
   }
   
   .pagetitle h1 {
     font-size: 24px;
     margin-bottom: 0;
-    font-weight: 600;
-    color: #fff;
+    font-weight: 900;
+    color: #0056b3;
   }
   
   .back-to-top {
@@ -113,6 +115,7 @@
     border: none;
     border-radius: 5px;
     box-shadow: 0px 0 30px rgba(0, 91, 248, 0.1);
+
   }
   
   .card-header, .card-footer {
@@ -126,7 +129,8 @@
     padding: 20px 0 15px 0;
     font-size: 18px;
     font-weight: 500;
-    color: #4f87be;
+    color: #ffff;
+    text-shadow: 0 0 5px #000;
     font-family: "Poppins", sans-serif;
   }
   
@@ -205,24 +209,33 @@
     font-family: "Nunito", sans-serif;
     color: #4f87be;
     font-weight: 600;
+    z-index: 1000;
+
   }
   
   .breadcrumb a {
-    color: #899bbd;
+    color: #0056b3 !important;
     transition: 0.3s;
+    z-index: 1000;
   }
   
   .breadcrumb a:hover {
     color: #51678f;
+    z-index: 1000;
+
   }
   
   .breadcrumb .breadcrumb-item::before {
     color: #899bbd;
+    z-index: 1000;
+
   }
   
   .breadcrumb .active {
     color: #51678f;
     font-weight: 600;
+    z-index: 1000;
+
   }
   
   .nav-tabs-bordered {
@@ -260,16 +273,29 @@
     margin-right: 6px;
 
   }
+
+  .nombrelogin  {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0056b3 !important;
+    font-family: "Nunito", sans-serif;
+    margin-left: 6px;
+    
+  }
+  .creditslogin{
+    color: #000;
+  }
   
   .logo span {
     font-size: 26px;
     font-weight: 700;
-    color: #fff;
+    color: rgb(255, 255, 255);
     font-family: "Nunito", sans-serif;
     margin-left: 6px;
     text-shadow: 0 0 5px #000;
-
   }
+
+
   
   .header {
     transition: all 0.5s;
@@ -535,12 +561,12 @@
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #fff transparent;
-    box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
+    box-shadow: 0px 0px 20px rgb(1, 42, 112);
     background: #d6d9db;
-        background-size: 400% 400%;
+    background-size: 400% 400%;
     animation: gradientAnimation 10s ease infinite;
-  }
-  
+}
+
   @media (max-width: 1199px) {
     .sidebar {
       left: -300px;
@@ -600,7 +626,7 @@
   .sidebar-nav .nav-heading {
     font-size: 11px;
     text-transform: uppercase;
-    color: #0056b3;
+    color: #fff;
     font-weight: 600;
     margin: 10px 0 5px 15px;
   }
@@ -634,14 +660,14 @@
   }
   
   .sidebar-nav .nav-link:hover {
-    color: #4a87d8;
+    color: #0056b3;
     background: #f3f4f6;
     text-shadow: 0 0 0px #000;
 
   }
   
   .sidebar-nav .nav-link:hover i {
-    color: #4a87d8;
+    color: #0056b3;
   }
   
   .sidebar-nav .nav-link .bi-chevron-down {
@@ -668,7 +694,7 @@
     color: #0056b3;
     padding: 10px 0 10px 40px;
     transition: background 0.3s ease, color 0.3s ease;
-  }
+}
   
   .sidebar-nav .nav-content a i {
     font-size: 15px;
@@ -679,11 +705,11 @@
   
   .sidebar-nav .nav-content a:hover, .sidebar-nav .nav-content a.active {
     color: #fff;
-    background:#4a87d8;
+    background:#3573c4;
   }
   
   .sidebar-nav .nav-content a.active i {
-    background-color: #031086;
+    background-color: #414ba7;
   }
   
   .dashboard .filter {
@@ -1088,13 +1114,13 @@
     margin-bottom: 30px;
     border: none;
     border-radius: 20px;
-    box-shadow: 0px 0 30px #0e64f79a;
-    background: rgb(65,137,194);
-    background: linear-gradient(0deg, rgba(65, 136, 194, 0.733) 0%, rgb(55, 113, 194) 100%);
+    background: rgb(65, 137, 194);
+    background: linear-gradient(0deg, rgba(33, 105, 163, 0.925) 0%, rgba(84, 152, 244, 1) 100%);
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
     cursor: default;
+    box-shadow: 0 0 5px #02358d;
   }
   
   .cardindex::before {
@@ -1276,6 +1302,8 @@
     position: relative;
     width: 100%;
     height: 50%;
+    z-index: 9999;
+
   }
   
   .sidebar-bg {
@@ -1283,17 +1311,20 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
-    opacity: 1;
-}
+    width: 80%; /* Ajusta el tamaño de la imagen según sea necesario */
+    opacity: 0.9; /* Ajusta la opacidad para dar efecto de marca de agua */
+    filter: drop-shadow(0 0 1px rgb(245, 245, 248));
+    animation: neon-border 2s infinite alternate;
+  }
   
   @keyframes neon-border {
     0% {
-      filter: drop-shadow(0 0 2px #000);
+      filter: drop-shadow(0 0 2px #ffffff);
     }
     50% {
-      filter: drop-shadow(0 0 2px #000);
+      filter: drop-shadow(0 0 2px #3bbada);
     }
+
   }
   
   .badge-number {
@@ -1376,9 +1407,8 @@
     margin-bottom: 30px;
     border: none;
     border-radius: 15px;
-    box-shadow: 0px 0 30px rgba(14, 100, 247, 0.603);
     background: rgb(65,137,194);
-    background: linear-gradient(0deg, rgba(65, 136, 194, 0.733) 0%, rgba(84,152,244,1) 100%);
+    background: linear-gradient(0deg, rgba(33, 105, 163, 0.925) 0%, rgba(84, 152, 244, 1) 100%);
         position: relative;
     overflow: hidden;
     cursor: default;
@@ -1386,6 +1416,8 @@
     width: auto;
     display: flex;
     justify-content: center;
+    box-shadow: 0 0 5px #02358d;
+
   }
   
   .cardindexscore.expanded {
@@ -1453,7 +1485,6 @@
     .cardindexscore {
       width: 100%;
       margin-bottom: 20px;
-      box-shadow: 0px 0 20px rgba(14, 100, 247, 0.603);
     }
   
     .cardindexscore.expanded {
@@ -1486,7 +1517,6 @@
     .cardindexscore {
       width: 100%;
       margin-bottom: 25px;
-      box-shadow: 0px 0 25px rgba(14, 100, 247, 0.603);
     }
   
     .cardindexscore.expanded {
@@ -1519,7 +1549,6 @@
     .cardindexscore {
       width: 100%;
       margin-bottom: 30px;
-      box-shadow: 0px 0 30px rgba(14, 100, 247, 0.603);
     }
   
     .cardindexscore.expanded {
@@ -1701,6 +1730,25 @@
     overflow: hidden;
   }
   
+  .hack-mode-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .hack-mode-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease; /* Transición para el cambio de color */
+    text-shadow: 0 0 5px #000;
+  }
+  
+  .hack-mode-icon.active {
+    color: #ffff; /* Color dorado o amarillo cuando está activo */
+  }
+  
+  .hack-mode-icon.inactive {
+    color: #fff; /* Color gris cuando está inactivo */
+  }
   .form-check-label {
     color: #fff;
     text-shadow: 0 0 5px #000;

@@ -1,3 +1,21 @@
+  
+  .pagetitle {
+    margin-bottom: 10px;
+    align-content: center;
+  }
+  
+  .pagetitle h1 {
+    font-size: 24px;
+    margin-bottom: 0;
+    font-weight: 900;
+    color: #fff;
+  }
+
+
+
+
+
+
 /* Efecto de borde con estrella fugaz en movimiento */
 .cardindex {
     margin-bottom: 30px;
@@ -687,6 +705,24 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
 /* Deshabilitar scroll en body cuando el modal está abierto */
 body.modal-open {
   overflow: hidden;
+}
+.hack-mode-container {
+  display: flex;
+  align-items: center;
+}
+
+.hack-mode-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease; /* Transición para el cambio de color */
+}
+
+.hack-mode-icon.active {
+  color: #ffff; /* Color dorado o amarillo cuando está activo */
+}
+
+.hack-mode-icon.inactive {
+  color: #fff; /* Color gris cuando está inactivo */
 }
 
   .form-check-label {
