@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - GRC Shield Ultra</title>
+  <title>Dashboard - Safety Shield Ultra</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -51,7 +51,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/favicon.png" alt="" class="logoheader">
-        <span class="d-none d-lg-block">GRC Shield Ultra</span>
+        <span class="d-none d-lg-block">Safety Shield Ultra</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -131,7 +131,7 @@
               <i class="bi bi-info-circle text-primary"></i>
               <div>
                 <h4>Weekly Report Available</h4>
-                <p>The GRC Shield Ultra weekly summary is ready for review.</p>
+                <p>The Safety Shield Ultra weekly summary is ready for review.</p>
                 <p>4 hrs. ago</p>
               </div>
             </li>
@@ -689,7 +689,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footerindex">
     <div class="copyright">
-      &copy; Copyright <strong><span>GRC Shield Ultra</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>Safety Shield Ultra</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       Designed by <a href="https://www.ultradeeptech.com/">Ultra Deep Tech</a>
@@ -732,12 +732,12 @@
 
     // Inicializar el estado según el tema guardado en localStorage
     const currentTheme = localStorage.getItem('theme');
-    if (currentTheme) {
-      applyTheme(currentTheme === 'dark-mode');
-    } else {
-      // Por defecto, activamos el modo oscuro
+    if (currentTheme === 'dark-mode') {
+      hackModeSwitch.checked = true;  // Activar el switch si el tema guardado es oscuro
       applyTheme(true);
-      localStorage.setItem('theme', 'dark-mode');
+    } else {
+      hackModeSwitch.checked = false; // Desactivar el switch si el tema guardado es claro o no hay tema guardado
+      applyTheme(false);
     }
 
     // Alternar el estado del switch al hacer clic en el ícono
@@ -778,6 +778,7 @@
     }
   });
 </script>
+
 </body>
 
 </html>

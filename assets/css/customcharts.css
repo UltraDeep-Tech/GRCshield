@@ -331,16 +331,16 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
     color:#fff
   }
   .fondoperfil i{
-    color:#043e94
+    color:#fff
   }
   .fondoperfil i:hover{
-    color:#043e94 !important
+    color:#fff !important
   }
   .fondoperfil span:hover{
-    color:#043e94 !important
+    color:#fff !important
   }
   .fondoperfil a:hover{
-    color:#043e94 !important
+    color:#2d5694c9 !important
   }
 
   .cardindexscore {
