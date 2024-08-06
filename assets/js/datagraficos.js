@@ -1,12 +1,12 @@
 // Función para obtener datos del backend Flask
-function obtenerDatos(ruta, callback) {
-  if (!ruta || ruta.trim() === "") {
-    console.error('Ruta no válida:', ruta);
+function obtenerDatos(key, callback) {
+  if (!key || key.trim() === "") {
+    console.error('Clave no válida:', key);
     return;
   }
 
-  console.log(`Solicitando datos desde la ruta: ${ruta}`);
-  fetch(`https://api-grcshield.ultradeep.tech/data/${ruta}`)
+  console.log(`Solicitando datos para la clave: ${key}`);
+  fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app///api/get_data')
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -14,22 +14,24 @@ function obtenerDatos(ruta, callback) {
       return response.json();
     })
     .then(data => {
-      console.log(`Datos recuperados de ${ruta}:`, data);
-      callback(data);
+      console.log(`Datos recuperados para ${key}:`, data[key]);
+      if (data[key]) {
+        callback(data[key]);
+      } else {
+        console.error(`La clave "${key}" no se encuentra en los datos.`);
+      }
     })
-    .catch(error => console.error('Error fetching data:', error));
+    .catch(error => console.error('Error al obtener los datos:', error));
 }
 
-// Ejemplo de llamada para obtener datos de la raíz
-obtenerDatos('/', function(data) {
-  console.log('Datos desde la raíz:', data);
-  // Aquí puedes procesar los datos y actualizar tus gráficos
+// Ejemplo de llamada para obtener datos de progressScore
+obtenerDatos('progressScore', function(progressScore) {
+  console.log('Score de progreso:', progressScore);
+  // Aquí puedes procesar el score y actualizar tus gráficos
+  startCounter(progressText, progressScore, duration);
 });
 
-
-
 // Barra de progreso
-
 document.addEventListener('DOMContentLoaded', function() {
   const cards = document.querySelectorAll('.cardindexscore, .cardindex');
   const progressText = document.getElementById('progressText');
@@ -103,9 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-
-
-
 // Función para actualizar gráficos con los datos obtenidos
 function actualizarGraficoTotalBlockedRequests(data) {
   const ctx = document.querySelector('#totalBlockedRequests').getContext('2d');
@@ -118,11 +117,11 @@ function actualizarGraficoTotalBlockedRequests(data) {
   gradientLine.addColorStop(1, 'rgba(255, 99, 132, 1)');
 
   const dataTotalBlocked = {
-    labels: data.labels,
+    labels: data.labels || [],
     datasets: [{
       type: 'line',
       label: 'Block Rate',
-      data: data.blockRate,
+      data: data.blockRate || [],
       borderColor: gradientLine,
       fill: false,
       tension: 0.4,
@@ -139,7 +138,7 @@ function actualizarGraficoTotalBlockedRequests(data) {
     {
       type: 'bar',
       label: 'Blocked Requests',
-      data: data.blockedRequests,
+      data: data.blockedRequests || [],
       backgroundColor: gradientBar,
       borderColor: 'rgba(0, 123, 255, 1)',
       borderWidth: 3,
@@ -147,7 +146,7 @@ function actualizarGraficoTotalBlockedRequests(data) {
       shadowOffsetX: 3,
       shadowOffsetY: 3,
       shadowBlur: 10,
-      shadowColor: ' srgba(0, 0, 0, 1)'
+      shadowColor: 'rgba(0, 0, 0, 1)'
     }]
   };
 
@@ -178,7 +177,7 @@ function actualizarGraficoTotalBlockedRequests(data) {
         legend: {
           labels: {
             color: '#fff',
-            usePointStyle: true ,
+            usePointStyle: true,
             pointStyle: 'circle',
             borderRadius: 2,
             font: {
@@ -209,10 +208,10 @@ document.addEventListener("DOMContentLoaded", () => {
     new Chart(document.querySelector('#blockedRequestsByCategory'), {
       type: 'pie',
       data: {
-        labels: data.labels,
+        labels: data.labels || [],
         datasets: [{
           label: 'Blocked Requests',
-          data: data.data,
+          data: data.data || [],
           backgroundColor: [
             'rgba(255, 99, 132, 0.7)',
             'rgba(54, 162, 235, 0.7)',
@@ -256,47 +255,45 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-
 // Gráfico de tasa de bloqueos por categoría a lo largo del tiempo
 document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('blockRateOverTimeByCategory', (data) => {
     new Chart(document.querySelector('#blockRateOverTimeByCategory'), {
       type: 'line',
       data: {
-        labels: data.labels,
+        labels: data.labels || [],
         datasets: [
           {
             label: 'Violence',
-            data: data.categories.violence,
+            data: data.categories?.violence || [],
             fill: false,
             borderColor: 'rgba(255, 99, 132, 0.7)',
             tension: 0.4
           },
           {
             label: 'Hate',
-            data: data.categories.hate,
+            data: data.categories?.hate || [],
             fill: false,
             borderColor: 'rgba(54, 162, 235, 0.7)',
             tension: 0.4
           },
           {
             label: 'Sexual',
-            data: data.categories.sexual,
+            data: data.categories?.sexual || [],
             fill: false,
             borderColor: 'rgba(75, 192, 192, 0.7)',
             tension: 0.4
           },
           {
             label: 'Self-harm',
-            data: data.categories.selfHarm,
+            data: data.categories?.selfHarm || [],
             fill: false,
             borderColor: 'rgba(153, 102, 255, 0.7)',
             tension: 0.4
           },
           {
             label: 'Jailbreak',
-            data: data.categories.jailbreak,
+            data: data.categories?.jailbreak || [],
             fill: false,
             borderColor: 'rgba(255, 205, 86, 0.7)',
             tension: 0.4
@@ -351,11 +348,11 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log('severityDistribution data:', data);  // Verifica los datos
 
     const dataSeverityDistribution = {
-      labels: data.labels,
+      labels: data.labels || [],
       datasets: [
         {
           label: 'Violence',
-          data: data.categories.violence,
+          data: data.categories?.violence || [],
           backgroundColor: 'rgba(255, 99, 132, 0.7)',
           borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 1,
@@ -363,15 +360,15 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
           label: 'Hate',
-          data: data.categories.hate,
+          data: data.categories?.hate || [],
           backgroundColor: 'rgba(54, 162, 235, 0.7)',
           borderColor: 'rgba(54, 162, 235, 1)',
           borderWidth: 1,
-          borderRadius:10     
+          borderRadius:10
         },
         {
           label: 'Sexual',
-          data: data.categories.sexual,
+          data: data.categories?.sexual || [],
           backgroundColor: 'rgba(75, 192, 192, 0.7)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1,
@@ -379,7 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
           label: 'Self-harm',
-          data: data.categories.selfHarm,
+          data: data.categories?.selfHarm || [],
           backgroundColor: 'rgba(153, 102, 255, 0.7)',
           borderColor: 'rgba(153, 102, 255, 1)',
           borderWidth: 1,
@@ -415,7 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
           legend: {
             labels: {
               color: '#fff',
-              usePointStyle: true ,
+              usePointStyle: true,
               pointStyle: 'circle',
               borderRadius: 2,
             }
@@ -441,39 +438,39 @@ document.addEventListener("DOMContentLoaded", () => {
     new Chart(document.querySelector('#SeverityTime'), {
       type: 'line',
       data: {
-        labels: data.labels,
+        labels: data.labels || [],
         datasets: [
           {
             label: 'Violence',
-            data: data.categories.violence,
+            data: data.categories?.violence || [],
             fill: false,
             borderColor: 'rgba(255, 99, 132, 0.7)',
             tension: 0.4
           },
           {
             label: 'Hate',
-            data: data.categories.hate,
+            data: data.categories?.hate || [],
             fill: false,
             borderColor: 'rgba(54, 162, 235, 0.7)',
             tension: 0.4
           },
           {
             label: 'Sexual',
-            data: data.categories.sexual,
+            data: data.categories?.sexual || [],
             fill: false,
             borderColor: 'rgba(75, 192, 192, 0.7)',
             tension: 0.4
           },
           {
             label: 'Self-harm',
-            data: data.categories.selfHarm,
+            data: data.categories?.selfHarm || [],
             fill: false,
             borderColor: 'rgba(153, 102, 255, 0.7)',
             tension: 0.4
           },
           {
             label: 'Jailbreak',
-            data: data.categories.jailbreak,
+            data: data.categories?.jailbreak || [],
             fill: false,
             borderColor: 'rgba(255, 205, 86, 0.7)',
             tension: 0.4
@@ -503,7 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
         plugins: {
           legend: {
             labels: {
-              usePointStyle: true ,
+              usePointStyle: true,
               pointStyle: 'circle',
               borderRadius: 2,
               color: '#fff'
@@ -522,19 +519,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-
-/// Gráfico de usuarios abusivos potenciales
+// Gráfico de usuarios abusivos potenciales
 document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('totalAbusiveUsers', (data) => {
     const ctx = document.getElementById('totalAbusiveUsersChart').getContext('2d');
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: data.labels,
+        labels: data.labels || [],
         datasets: [{
           label: 'Total Potential Abusive Users',
-          data: data.totalAbusiveUsers,
+          data: data.totalAbusiveUsers || [],
           backgroundColor: 'rgba(75, 192, 500, 0.5)',
           borderColor: 'rgba(75, 192, 500, 1)',
           borderWidth: 2,
@@ -566,7 +561,7 @@ document.addEventListener("DOMContentLoaded", () => {
           legend: {
             labels: {
               color: '#fff',
-              usePointStyle: true ,
+              usePointStyle: true,
               pointStyle: 'circle',
               borderRadius: 2
             }
@@ -611,10 +606,10 @@ document.addEventListener("DOMContentLoaded", () => {
     new Chart(document.querySelector('#hallucinationChart'), {
       type: 'bar',
       data: {
-        labels: data.labels,
+        labels: data.labels || [],
         datasets: [{
           label: 'Hallucinations Detected',
-          data: data.data,
+          data: data.data || [],
           backgroundColor: 'rgba(255, 99, 132, 0.7)',
           borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 3,
@@ -645,9 +640,10 @@ document.addEventListener("DOMContentLoaded", () => {
           legend: {
             labels: {
               color: '#fff',
-              usePointStyle: true ,
+              usePointStyle: true,
               pointStyle: 'circle',
-              borderRadius: 2,            }
+              borderRadius: 2,
+            }
           },
           tooltip: {
             backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -661,25 +657,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const hallucinationTbody = document.getElementById('hallucinationData');
-    data.details.forEach(item => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${item.type}</td>
-        <td>${item.description}</td>
-        <td>${item.date}</td>
-      `;
-      hallucinationTbody.appendChild(row);
-    });
+    if (Array.isArray(data.details)) {
+      data.details.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.type}</td>
+          <td>${item.description}</td>
+          <td>${item.date}</td>
+        `;
+        hallucinationTbody.appendChild(row);
+      });
+    }
   });
 
   obtenerDatos('biasData', (data) => {
     new Chart(document.querySelector('#biasPieChart'), {
       type: 'pie',
       data: {
-        labels: data.labels,
+        labels: data.labels || [],
         datasets: [{
           label: 'Types of Bias Detected',
-          data: data.biasCount,
+          data: data.biasCount || [],
           backgroundColor: [
             'rgba(255, 99, 132, 0.7)',
             'rgba(54, 162, 235, 0.7)',
@@ -711,9 +709,10 @@ document.addEventListener("DOMContentLoaded", () => {
           legend: {
             labels: {
               color: '#fff',
-              usePointStyle: true ,
+              usePointStyle: true,
               pointStyle: 'circle',
-              borderRadius: 2,            }
+              borderRadius: 2,
+            }
           },
           tooltip: {
             backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -729,10 +728,10 @@ document.addEventListener("DOMContentLoaded", () => {
     new Chart(document.querySelector('#biasLineChart'), {
       type: 'line',
       data: {
-        labels: data.biasIncidents.labels,
+        labels: data.biasIncidents?.labels || [],
         datasets: [{
           label: 'Bias Incidents Over Time',
-          data: data.biasIncidents.data,
+          data: data.biasIncidents?.data || [],
           backgroundColor: 'rgba(75, 192, 192, 0.7)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1,
@@ -764,9 +763,9 @@ document.addEventListener("DOMContentLoaded", () => {
           legend: {
             labels: {
               color: '#fff',
-              usePointStyle: true ,
+              usePointStyle: true,
               pointStyle: 'circle',
-              borderRadius: 2,            
+              borderRadius: 2,
             }
           },
           tooltip: {
@@ -781,25 +780,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const biasTbody = document.getElementById('biasData');
-    data.details.forEach(item => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${item.incident}</td>
-        <td>${item.description}</td>
-        <td>${item.date}</td>
-      `;
-      biasTbody.appendChild(row);
-    });
+    if (Array.isArray(data.details)) {
+      data.details.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.incident}</td>
+          <td>${item.description}</td>
+          <td>${item.date}</td>
+        `;
+        biasTbody.appendChild(row);
+      });
+    }
   });
 
   obtenerDatos('promptInjectionData', (data) => {
     new Chart(document.querySelector('#promptInjectionChart'), {
       type: 'line',
       data: {
-        labels: data.labels,
+        labels: data.labels || [],
         datasets: [{
           label: 'Number of Prompt Injections Detected Each Day',
-          data: data.data,
+          data: data.data || [],
           backgroundColor: 'rgba(75, 192, 192, 0.7)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1,
@@ -831,9 +832,10 @@ document.addEventListener("DOMContentLoaded", () => {
           legend: {
             labels: {
               color: '#fff',
-              usePointStyle: true ,
+              usePointStyle: true,
               pointStyle: 'circle',
-              borderRadius: 2,            }
+              borderRadius: 2,
+            }
           },
           tooltip: {
             backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -847,141 +849,146 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const promptInjectionTbody = document.getElementById('promptInjectionData');
-    data.details.forEach(item => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${item.incident}</td>
-        <td>${item.description}</td>
-        <td>${item.date}</td>
-      `;
-      promptInjectionTbody.appendChild(row);
+    if (Array.isArray(data.details)) {
+      data.details.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.incident}</td>
+          <td>${item.description}</td>
+          <td>${item.date}</td>
+        `;
+        promptInjectionTbody.appendChild(row);
+      });
+    }
+  });
+
+  // Código para crear el gráfico de incidentes en el tiempo
+  obtenerDatos('dataExposureData', (data) => {
+    new Chart(document.querySelector('#dataExposureLineChart'), {
+      type: 'line',
+      data: {
+        labels: data.incidentsOverTime.labels || [],
+        datasets: [{
+          label: 'Data Exposure Incidents Over Time',
+          data: data.incidentsOverTime.data || [],
+          backgroundColor: 'rgba(255, 206, 86, 0.7)',
+          borderColor: 'rgba(255, 206, 86, 1)',
+          borderWidth: 1,
+          fill: false,
+          tension: 0.4
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#fff'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#fff'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#fff',
+              usePointStyle: true,
+              pointStyle: 'circle',
+              borderRadius: 2,
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            borderColor: '#fff',
+            borderWidth: 1
+          }
+        }
+      }
     });
   });
 
-// Código para crear el gráfico de incidentes en el tiempo
-obtenerDatos('dataExposureData/incidentsOverTime', (data) => {
-  new Chart(document.querySelector('#dataExposureLineChart'), {
-    type: 'line',
-    data: {
-      labels: data.labels,
-      datasets: [{
-        label: 'Data Exposure Incidents Over Time',
-        data: data.data,
-        backgroundColor: 'rgba(255, 206, 86, 0.7)',
-        borderColor: 'rgba(255, 206, 86, 1)',
-        borderWidth: 1,
-        fill: false,
-        tension: 0.4
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            color: '#fff'
-          },
-          grid: {
-            color: 'rgba(255, 255, 255, 0.1)'
-          }
-        },
-        x: {
-          ticks: {
-            color: '#fff'
-          },
-          grid: {
-            color: 'rgba(255, 255, 255, 0.1)'
-          }
-        }
+  // Código para crear el gráfico de tipos de datos expuestos
+  obtenerDatos('dataExposureData', (data) => {
+    new Chart(document.querySelector('#dataExposurePieChart'), {
+      type: 'pie',
+      data: {
+        labels: data.types.labels || [],
+        datasets: [{
+          label: 'Types of Data Exposed',
+          data: data.types.data || [],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 205, 86, 0.7)',
+            'rgba(255, 159, 64, 0.7)',
+            'rgba(75, 192, 192, 0.7)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 205, 86, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1
+        }]
       },
-      plugins: {
-        legend: {
-          labels: {
-            color: '#fff',
-            usePointStyle: true ,
-            pointStyle: 'circle',
-            borderRadius: 2,          }
-        },
-        tooltip: {
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          titleColor: '#fff',
-          bodyColor: '#fff',
-          borderColor: '#fff',
-          borderWidth: 1
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: '#fff',
+              usePointStyle: true,
+              pointStyle: 'circle',
+              borderRadius: 2,
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            borderColor: '#fff',
+            borderWidth: 1
+          }
         }
       }
+    });
+  });
+
+  // Código para llenar la tabla con los datos expuestos
+  obtenerDatos('dataExposureData', (data) => {
+    const dataExposureTbody = document.getElementById('dataExposureData');
+    if (Array.isArray(data.details)) {
+      data.details.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.incident}</td>
+          <td>${item.description}</td>
+          <td>${item.airesponse}</td>
+          <td>${item.date}</td>
+        `;
+        dataExposureTbody.appendChild(row);
+      });
     }
   });
 });
-
-// Código para crear el gráfico de tipos de datos expuestos
-obtenerDatos('dataExposureData/types', (data) => {
-  new Chart(document.querySelector('#dataExposurePieChart'), {
-    type: 'pie',
-    data: {
-      labels: data.labels,
-      datasets: [{
-        label: 'Types of Data Exposed',
-        data: data.data,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.7)',
-          'rgba(54, 162, 235, 0.7)',
-          'rgba(75, 192, 192, 0.7)',
-          'rgba(153, 102, 255, 0.7)',
-          'rgba(255, 205, 86, 0.7)',
-          'rgba(255, 159, 64, 0.7)',
-          'rgba(75, 192, 192, 0.7)'
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 205, 86, 1)',
-          'rgba(255, 159, 64, 1)',
-          'rgba(75, 192, 192, 1)'
-        ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          labels: {
-            color: '#fff',
-            usePointStyle: true ,
-            pointStyle: 'circle',
-            borderRadius: 2,          }
-        },
-        tooltip: {
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          titleColor: '#fff',
-          bodyColor: '#fff',
-          borderColor: '#fff',
-          borderWidth: 1
-        }
-      }
-    }
-  });
-});
-
-// Código para llenar la tabla con los datos expuestos
-obtenerDatos('dataExposureData', (data) => {
-  const dataExposureTbody = document.getElementById('dataExposureData');
-  data.details.forEach(item => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${item.incident}</td>
-      <td>${item.description}</td>
-      <td>${item.airesponse}</td>
-      <td>${item.date}</td>
-    `;
-    dataExposureTbody.appendChild(row);
-  });
-});
-});
-
 
 function signOut(event) {
   event.preventDefault();
