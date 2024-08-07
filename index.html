@@ -61,12 +61,16 @@
         <!-- Hack Mode Switch -->
         <li class="nav-item d-flex align-items-center me-4 hack-mode-container">
           <!-- Icono de sol para pantallas medianas y más grandes -->
-          <label class="form-check-label bi bi-sun me-1 d-none d-md-block" for="flexSwitchCheckChecked"></label>
-          
+          <span class="bi bi-sun me-1 d-none d-md-inline-block" style="color: #fff;"></span>
+
           <!-- Switch de Hack Mode para pantallas medianas y más grandes -->
           <div class="form-check form-switch d-none d-md-flex">
-            <input class="form-check-input me-1" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-            <label class="form-check-label" for="flexSwitchCheckChecked">Hack Mode</label>
+
+            <input class="form-check-input " type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+            <span class="bi bi-moon ms-1 " style="color: #fff;"></span>
+
+            <label class="form-check-label ms-1" for="flexSwitchCheckChecked"></label>
+            
           </div>
           
           <!-- Icono de luna para pantallas pequeñas -->
@@ -722,61 +726,64 @@
   </script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const hackModeIcon = document.querySelector('.hack-mode-icon');
-    const hackModeSwitch = document.getElementById('flexSwitchCheckChecked');
-    const lightModeLink = document.getElementById('lightmode');
-    const darkModeBaseLink = document.getElementById('darkmode-base');
-    const darkModeItemLink = document.getElementById('darkmode-item');
-    const body = document.body;
+ document.addEventListener('DOMContentLoaded', function() {
+  const hackModeIcon = document.querySelector('.hack-mode-icon');
+  const hackModeSwitch = document.getElementById('flexSwitchCheckChecked');
+  const switchLabel = document.querySelector('label[for="flexSwitchCheckChecked"]');
+  const lightModeLink = document.getElementById('lightmode');
+  const darkModeBaseLink = document.getElementById('darkmode-base');
+  const darkModeItemLink = document.getElementById('darkmode-item');
+  const body = document.body;
 
-    // Inicializar el estado según el tema guardado en localStorage
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme === 'dark-mode') {
-      hackModeSwitch.checked = true;  // Activar el switch si el tema guardado es oscuro
-      applyTheme(true);
-    } else {
-      hackModeSwitch.checked = false; // Desactivar el switch si el tema guardado es claro o no hay tema guardado
-      applyTheme(false);
-    }
+  // Inicializar el estado según el tema guardado en localStorage
+  const currentTheme = localStorage.getItem('theme');
+  if (currentTheme === 'dark-mode') {
+    hackModeSwitch.checked = true;
+    applyTheme(true);
+  } else {
+    hackModeSwitch.checked = false;
+    applyTheme(false);
+  }
 
-    // Alternar el estado del switch al hacer clic en el ícono
-    hackModeIcon.addEventListener('click', function() {
-      const newThemeState = !hackModeSwitch.checked;
-      hackModeSwitch.checked = newThemeState;
-      applyTheme(newThemeState);
-      localStorage.setItem('theme', newThemeState ? 'dark-mode' : 'light-mode');
-    });
-
-    // Escuchar cambios en el switch
-    hackModeSwitch.addEventListener('change', () => {
-      applyTheme(hackModeSwitch.checked);
-      localStorage.setItem('theme', hackModeSwitch.checked ? 'dark-mode' : 'light-mode');
-    });
-
-    // Función combinada para aplicar el tema y actualizar el estado del ícono
-    function applyTheme(isDarkMode) {
-      if (isDarkMode) {
-        body.classList.add('dark-mode');
-        lightModeLink.disabled = true;
-        darkModeBaseLink.disabled = false;
-        darkModeItemLink.disabled = false;
-        hackModeIcon.classList.add('active');
-        hackModeIcon.classList.remove('inactive');
-        hackModeIcon.classList.remove('bi-moon');
-        hackModeIcon.classList.add('bi-sun');
-      } else {
-        body.classList.remove('dark-mode');
-        lightModeLink.disabled = false;
-        darkModeBaseLink.disabled = true;
-        darkModeItemLink.disabled = true;
-        hackModeIcon.classList.add('inactive');
-        hackModeIcon.classList.remove('active');
-        hackModeIcon.classList.remove('bi-sun');
-        hackModeIcon.classList.add('bi-moon');
-      }
-    }
+  // Alternar el estado del switch al hacer clic en el ícono
+  hackModeIcon.addEventListener('click', function() {
+    const newThemeState = !hackModeSwitch.checked;
+    hackModeSwitch.checked = newThemeState;
+    applyTheme(newThemeState);
+    localStorage.setItem('theme', newThemeState ? 'dark-mode' : 'light-mode');
   });
+
+  // Escuchar cambios en el switch
+  hackModeSwitch.addEventListener('change', () => {
+    applyTheme(hackModeSwitch.checked);
+    localStorage.setItem('theme', hackModeSwitch.checked ? 'dark-mode' : 'light-mode');
+  });
+
+  // Función combinada para aplicar el tema y actualizar el estado del ícono
+  function applyTheme(isDarkMode) {
+    if (isDarkMode) {
+      body.classList.add('dark-mode');
+      lightModeLink.disabled = true;
+      darkModeBaseLink.disabled = false;
+      darkModeItemLink.disabled = false;
+      hackModeIcon.classList.add('active');
+      hackModeIcon.classList.remove('inactive');
+      hackModeIcon.classList.remove('bi-moon');
+      hackModeIcon.classList.add('bi-sun');
+      switchLabel.textContent = 'Hack Mode';
+    } else {
+      body.classList.remove('dark-mode');
+      lightModeLink.disabled = false;
+      darkModeBaseLink.disabled = true;
+      darkModeItemLink.disabled = true;
+      hackModeIcon.classList.add('inactive');
+      hackModeIcon.classList.remove('active');
+      hackModeIcon.classList.remove('bi-sun');
+      hackModeIcon.classList.add('bi-moon');
+      switchLabel.textContent = 'Light Mode';
+    }
+  }
+});
 </script>
 
 </body>

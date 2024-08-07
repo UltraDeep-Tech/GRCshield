@@ -6,7 +6,7 @@ function obtenerDatos(key, callback) {
   }
 
   console.log(`Solicitando datos para la clave: ${key}`);
-  fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app///api/get_data')
+  fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/get_data')
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -23,13 +23,6 @@ function obtenerDatos(key, callback) {
     })
     .catch(error => console.error('Error al obtener los datos:', error));
 }
-
-// Ejemplo de llamada para obtener datos de progressScore
-obtenerDatos('progressScore', function(progressScore) {
-  console.log('Score de progreso:', progressScore);
-  // Aquí puedes procesar el score y actualizar tus gráficos
-  startCounter(progressText, progressScore, duration);
-});
 
 // Barra de progreso
 document.addEventListener('DOMContentLoaded', function() {
@@ -586,6 +579,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${item.guid}</td>
+          <td>${item.user}</td>
+          <td>${item.prompt}</td>
+          <td>${item.response}</td>
           <td>${item.score}</td>
           <td>${item.trend}</td>
           <td>${item.date}</td>
@@ -664,6 +660,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <td>${item.type}</td>
           <td>${item.description}</td>
           <td>${item.date}</td>
+          <td>${item.prompt}</td>
+          <td>${item.response_snippet}</td>
         `;
         hallucinationTbody.appendChild(row);
       });
@@ -787,6 +785,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <td>${item.incident}</td>
           <td>${item.description}</td>
           <td>${item.date}</td>
+          <td>${item.prompt}</td>
+          <td>${item.response}</td>
         `;
         biasTbody.appendChild(row);
       });
@@ -856,6 +856,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <td>${item.incident}</td>
           <td>${item.description}</td>
           <td>${item.date}</td>
+          <td>${item.prompt}</td>
         `;
         promptInjectionTbody.appendChild(row);
       });
