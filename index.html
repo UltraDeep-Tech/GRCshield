@@ -734,65 +734,59 @@
   </script>
 
 <script>
- document.addEventListener('DOMContentLoaded', function() {
-  const hackModeIcon = document.querySelector('.hack-mode-icon');
-  const hackModeSwitch = document.getElementById('flexSwitchCheckChecked');
-  const switchLabel = document.querySelector('label[for="flexSwitchCheckChecked"]');
-  const lightModeLink = document.getElementById('lightmode');
-  const darkModeBaseLink = document.getElementById('darkmode-base');
-  const darkModeItemLink = document.getElementById('darkmode-item');
-  const body = document.body;
-
-  // Inicializar el estado según el tema guardado en localStorage
-  const currentTheme = localStorage.getItem('theme');
-  if (currentTheme === 'dark-mode') {
-    hackModeSwitch.checked = true;
-    applyTheme(true);
-  } else {
-    hackModeSwitch.checked = false;
-    applyTheme(false);
-  }
-
-  // Alternar el estado del switch al hacer clic en el ícono
-  hackModeIcon.addEventListener('click', function() {
-    const newThemeState = !hackModeSwitch.checked;
-    hackModeSwitch.checked = newThemeState;
-    applyTheme(newThemeState);
-    localStorage.setItem('theme', newThemeState ? 'dark-mode' : 'light-mode');
-  });
-
-  // Escuchar cambios en el switch
-  hackModeSwitch.addEventListener('change', () => {
-    applyTheme(hackModeSwitch.checked);
-    localStorage.setItem('theme', hackModeSwitch.checked ? 'dark-mode' : 'light-mode');
-  });
-
-  // Función combinada para aplicar el tema y actualizar el estado del ícono
-  function applyTheme(isDarkMode) {
-    if (isDarkMode) {
-      body.classList.add('dark-mode');
-      lightModeLink.disabled = true;
-      darkModeBaseLink.disabled = false;
-      darkModeItemLink.disabled = false;
-      hackModeIcon.classList.add('active');
-      hackModeIcon.classList.remove('inactive');
-      hackModeIcon.classList.remove('bi-moon');
-      hackModeIcon.classList.add('bi-sun');
-      switchLabel.textContent = 'Hack Mode';
-    } else {
-      body.classList.remove('dark-mode');
-      lightModeLink.disabled = false;
-      darkModeBaseLink.disabled = true;
-      darkModeItemLink.disabled = true;
-      hackModeIcon.classList.add('inactive');
-      hackModeIcon.classList.remove('active');
-      hackModeIcon.classList.remove('bi-sun');
-      hackModeIcon.classList.add('bi-moon');
-      switchLabel.textContent = 'Light Mode';
+  (function() {
+    let globalIsDarkMode = false;
+  
+    function applyTheme(isDarkMode) {
+      globalIsDarkMode = isDarkMode;
+      document.body.classList.toggle('dark-mode', isDarkMode);
+      document.getElementById('lightmode').disabled = isDarkMode;
+      document.getElementById('darkmode-base').disabled = !isDarkMode;
+      document.getElementById('darkmode-item').disabled = !isDarkMode;
+      
+      const hackModeIcon = document.querySelector('.hack-mode-icon');
+      hackModeIcon.classList.toggle('active', isDarkMode);
+      hackModeIcon.classList.toggle('inactive', !isDarkMode);
+      hackModeIcon.classList.toggle('bi-moon', !isDarkMode);
+      hackModeIcon.classList.toggle('bi-sun', isDarkMode);
+      
+      document.querySelector('label[for="flexSwitchCheckChecked"]').textContent = isDarkMode ? 'Hack Mode' : 'Light Mode';
+      
+      localStorage.setItem('theme', isDarkMode ? 'dark-mode' : 'light-mode');
+      
+      // Llamar a la función de actualización de gráficos inmediatamente
+      if (typeof updateAllChartColors === 'function') {
+        updateAllChartColors(isDarkMode);
+      }
+      
+      // Disparar el evento themeChanged después de actualizar los gráficos
+      document.dispatchEvent(new CustomEvent('themeChanged', { detail: { isDarkMode } }));
     }
-  }
-});
-</script>
+  
+    function initializeTheme() {
+      const currentTheme = localStorage.getItem('theme');
+      const isDarkMode = currentTheme === 'dark-mode';
+      document.getElementById('flexSwitchCheckChecked').checked = isDarkMode;
+      applyTheme(isDarkMode);
+    }
+  
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeTheme();
+  
+      document.querySelector('.hack-mode-icon').addEventListener('click', function() {
+        applyTheme(!globalIsDarkMode);
+      });
+  
+      document.getElementById('flexSwitchCheckChecked').addEventListener('change', function(event) {
+        applyTheme(event.target.checked);
+      });
+    });
+  
+    window.isDatagraficosDarkMode = function() {
+      return globalIsDarkMode;
+    };
+  })();
+  </script>
 
 </body>
 

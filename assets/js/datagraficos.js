@@ -1,3 +1,11 @@
+// Al principio del archivo datagraficos.js
+function updateAllChartColors(isDarkMode) {
+  Object.values(Chart.instances).forEach(chart => {
+    updateChartColors(chart, isDarkMode);
+  });
+}
+
+
 // Función para obtener datos del backend Flask
 function obtenerDatos(key, callback) {
   if (!key || key.trim() === "") {
@@ -23,6 +31,52 @@ function obtenerDatos(key, callback) {
     })
     .catch(error => console.error('Error al obtener los datos:', error));
 }
+
+
+function updateAllChartColors(isDarkMode) {
+  Object.values(Chart.instances).forEach(chart => {
+    updateChartColors(chart, isDarkMode);
+  });
+}
+
+function updateChartColors(chart, isDarkMode) {
+  const textColor = isDarkMode ? '#fff' : '#000';
+  const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)';
+  const backgroundColor = isDarkMode ? 'rgba(255, 99, 132, 0.7)' : 'rgba(75, 192, 192, 0.5)';
+  const borderColor = isDarkMode ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 0.8)';
+
+  // Actualizar colores de ejes y cuadrícula
+  if (chart.options.scales.x) {
+    chart.options.scales.x.ticks.color = textColor;
+    chart.options.scales.x.grid.color = gridColor;
+  }
+  if (chart.options.scales.y) {
+    chart.options.scales.y.ticks.color = textColor;
+    chart.options.scales.y.grid.color = gridColor;
+  }
+
+  // Actualizar colores de datasets
+  chart.data.datasets.forEach(dataset => {
+    if (dataset.type === 'line' || dataset.type === 'bar') {
+      dataset.backgroundColor = backgroundColor;
+      dataset.borderColor = borderColor;
+    }
+  });
+
+  // Actualizar colores de leyenda y tooltip
+  if (chart.options.plugins.legend) {
+    chart.options.plugins.legend.labels.color = textColor;
+  }
+  if (chart.options.plugins.tooltip) {
+    chart.options.plugins.tooltip.backgroundColor = isDarkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)';
+    chart.options.plugins.tooltip.titleColor = textColor;
+    chart.options.plugins.tooltip.bodyColor = textColor;
+    chart.options.plugins.tooltip.borderColor = textColor;
+  }
+
+  chart.update();
+}
+
 
 // Barra de progreso
 document.addEventListener('DOMContentLoaded', function() {
@@ -143,7 +197,7 @@ function actualizarGraficoTotalBlockedRequests(data) {
     }]
   };
 
-  new Chart(ctx, {
+  const chart = new Chart(ctx, {
     type: 'bar',
     data: dataTotalBlocked,
     options: {
@@ -189,6 +243,8 @@ function actualizarGraficoTotalBlockedRequests(data) {
       }
     }
   });
+
+  updateChartColors(chart, window.isDatagraficosDarkMode()); // Aplicar los colores según el modo
 }
 
 // Total Blocked Requests gráfico
@@ -198,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('blockedRequestsByCategory', (data) => {
-    new Chart(document.querySelector('#blockedRequestsByCategory'), {
+    const chart = new Chart(document.querySelector('#blockedRequestsByCategory'), {
       type: 'pie',
       data: {
         labels: data.labels || [],
@@ -245,13 +301,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+
+    updateChartColors(chart, window.isDatagraficosDarkMode()); // Aplicar los colores según el modo
   });
 });
 
 // Gráfico de tasa de bloqueos por categoría a lo largo del tiempo
 document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('blockRateOverTimeByCategory', (data) => {
-    new Chart(document.querySelector('#blockRateOverTimeByCategory'), {
+    const chart = new Chart(document.querySelector('#blockRateOverTimeByCategory'), {
       type: 'line',
       data: {
         labels: data.labels || [],
@@ -332,6 +390,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+
+    updateChartColors(chart, window.isDatagraficosDarkMode()); // Aplicar los colores según el modo
   });
 });
 
@@ -378,7 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     };
 
-    new Chart(document.querySelector('#severity'), {
+    const chart = new Chart(document.querySelector('#severity'), {
       type: 'bar',
       data: dataSeverityDistribution,
       options: {
@@ -420,6 +480,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+
+    updateChartColors(chart, window.isDatagraficosDarkMode()); // Aplicar los colores según el modo
   });
 });
 
@@ -428,7 +490,7 @@ document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('severityOverTimeByCategory', (data) => {
     console.log('severityOverTimeByCategory data:', data);  // Verifica los datos
 
-    new Chart(document.querySelector('#SeverityTime'), {
+    const chart = new Chart(document.querySelector('#SeverityTime'), {
       type: 'line',
       data: {
         labels: data.labels || [],
@@ -509,6 +571,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+
+    updateChartColors(chart, window.isDatagraficosDarkMode()); // Aplicar los colores según el modo
   });
 });
 
@@ -516,7 +580,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   obtenerDatos('totalAbusiveUsers', (data) => {
     const ctx = document.getElementById('totalAbusiveUsersChart').getContext('2d');
-    new Chart(ctx, {
+    const chart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: data.labels || [],
@@ -569,6 +633,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+
+    updateChartColors(chart, window.isDatagraficosDarkMode()); // Aplicar los colores según el modo
   });
 
   obtenerDatos('abusiveUsersData', (data) => {
@@ -599,7 +665,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   obtenerDatos('hallucinationData', (data) => {
-    new Chart(document.querySelector('#hallucinationChart'), {
+    const chart = new Chart(document.querySelector('#hallucinationChart'), {
       type: 'bar',
       data: {
         labels: data.labels || [],
@@ -652,6 +718,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    updateChartColors(chart, window.isDatagraficosDarkMode()); // Aplicar los colores según el modo
+
     const hallucinationTbody = document.getElementById('hallucinationData');
     if (Array.isArray(data.details)) {
       data.details.forEach(item => {
@@ -669,7 +737,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   obtenerDatos('biasData', (data) => {
-    new Chart(document.querySelector('#biasPieChart'), {
+    const chart = new Chart(document.querySelector('#biasPieChart'), {
       type: 'pie',
       data: {
         labels: data.labels || [],
@@ -723,7 +791,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    new Chart(document.querySelector('#biasLineChart'), {
+    updateChartColors(chart, window.isDatagraficosDarkMode()); // Aplicar los colores según el modo
+
+    const chartLine = new Chart(document.querySelector('#biasLineChart'), {
       type: 'line',
       data: {
         labels: data.biasIncidents?.labels || [],
@@ -777,6 +847,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    updateChartColors(chartLine, isLightMode()); // Aplicar los colores según el modo
+
     const biasTbody = document.getElementById('biasData');
     if (Array.isArray(data.details)) {
       data.details.forEach(item => {
@@ -794,7 +866,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   obtenerDatos('promptInjectionData', (data) => {
-    new Chart(document.querySelector('#promptInjectionChart'), {
+    const chart = new Chart(document.querySelector('#promptInjectionChart'), {
       type: 'line',
       data: {
         labels: data.labels || [],
@@ -848,6 +920,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    updateChartColors(chart, window.isDatagraficosDarkMode()); // Aplicar los colores según el modo
+
     const promptInjectionTbody = document.getElementById('promptInjectionData');
     if (Array.isArray(data.details)) {
       data.details.forEach(item => {
@@ -865,7 +939,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Código para crear el gráfico de incidentes en el tiempo
   obtenerDatos('dataExposureData', (data) => {
-    new Chart(document.querySelector('#dataExposureLineChart'), {
+    const chart = new Chart(document.querySelector('#dataExposureLineChart'), {
       type: 'line',
       data: {
         labels: data.incidentsOverTime.labels || [],
@@ -918,11 +992,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+
+    updateChartColors(chart, window.isDatagraficosDarkMode()); // Aplicar los colores según el modo
   });
 
   // Código para crear el gráfico de tipos de datos expuestos
   obtenerDatos('dataExposureData', (data) => {
-    new Chart(document.querySelector('#dataExposurePieChart'), {
+    const chart = new Chart(document.querySelector('#dataExposurePieChart'), {
       type: 'pie',
       data: {
         labels: data.types.labels || [],
@@ -971,6 +1047,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+
+    updateChartColors(chart, window.isDatagraficosDarkMode()); // Aplicar los colores según el modo
   });
 
   // Código para llenar la tabla con los datos expuestos
