@@ -68,6 +68,20 @@
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
                     <div class="col-12">
+                      <label for="yourDepartment" class="form-label" style="color: #fff;">Select Department</label>
+                      <select name="department" class="form-control" id="yourDepartment" required>
+                        <option value="">Choose...</option>
+                        <option value="Account Manager">Account Manager</option>
+                        <option value="Customer Service">Customer Service</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Finance">Finance</option>
+                        <option value="IT Support">IT Support</option>
+                        <option value="Human Resources">Human Resources</option>
+                      </select>
+                      <div class="invalid-feedback">Please select your department.</div>
+                    </div>
+                    <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Login</button>
                     </div>
                     <div class="col-12"></div>
@@ -82,6 +96,7 @@
         </div>
       </section>
     </div>
+    
   </main>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -107,39 +122,46 @@
   </video>
 
 
-  <script>
-    function login(event) {
-      event.preventDefault();
+<script>
+function login(event) {
+  event.preventDefault();
 
-      const users = {
-        'avipilcer': 'pilcer123',
-        'maxi': 'maxi123',
-        'client': 'client123',
-        'user': 'user123',
-        'team': 'team123'
-      };
+  const users = {
+    'avipilcer': { password: 'pilcer123', departments: ['IT Support', 'Operations'] },
+    'maxi': { password: 'maxi123', departments: ['Account Manager', 'Sales'] },
+    'client': { password: 'client123', departments: ['Customer Service', 'Finance'] },
+    'user': { password: 'user123', departments: ['Sales', 'Operations'] },
+    'team': { password: 'team123', departments: ['Operations', 'Human Resources'] }
+  };
 
-      const username = document.getElementById('yourUsername').value;
-      const password = document.getElementById('yourPassword').value;
-      const loginMessage = document.getElementById('loginMessage');
+  const username = document.getElementById('yourUsername').value;
+  const password = document.getElementById('yourPassword').value;
+  const department = document.getElementById('yourDepartment').value;
+  const loginMessage = document.getElementById('loginMessage');
 
-      if (users[username] && users[username] === password) {
-        localStorage.setItem('loggedIn', 'true');
-        const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000;
-        localStorage.setItem('expiration', expirationTime);
-        loginMessage.style.color = 'green';
-        loginMessage.textContent = 'Login successful! Redirecting...';
-        loginMessage.style.display = 'block';
-        setTimeout(() => {
-          window.location.href = 'index.html';
-        }, 1000);
-      } else {
-        loginMessage.style.color = 'red';
-        loginMessage.textContent = 'Incorrect username or password. Please try again.';
-        loginMessage.style.display = 'block';
-      }
-    }
-  </script>
+  if (users[username] && users[username].password === password && users[username].departments.includes(department)) {
+    localStorage.setItem('loggedIn', 'true');
+    localStorage.setItem('department', department); // Almacenar el departamento seleccionado
+    localStorage.setItem('userDepartment', department); // Almacenar el departamento del usuario
+    const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000;
+    localStorage.setItem('expiration', expirationTime);
+    loginMessage.style.color = 'green';
+    loginMessage.textContent = 'Login successful! Redirecting...';
+    loginMessage.style.display = 'block';
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 1000);
+  } else {
+    loginMessage.style.color = 'red';
+    loginMessage.textContent = 'Incorrect username, password, or department. Please try again.';
+    loginMessage.style.display = 'block';
+  }
+}
+
+</script>
+
+  
+  
 
 <script>
   const toggleSwitch = document.getElementById('flexSwitchCheckChecked');

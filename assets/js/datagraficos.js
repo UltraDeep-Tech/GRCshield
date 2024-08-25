@@ -6,31 +6,38 @@ function updateAllChartColors(isDarkMode) {
 }
 
 
-// Función para obtener datos del backend Flask
 function obtenerDatos(key, callback) {
-  if (!key || key.trim() === "") {
-    console.error('Clave no válida:', key);
+  const department = localStorage.getItem('department');
+  const userDepartment = localStorage.getItem('userDepartment');
+
+  if (!department || department.trim() === "" || !userDepartment || userDepartment.trim() === "") {
+    console.error('Departamento o departamento de usuario no válido');
     return;
   }
 
-  console.log(`Solicitando datos para la clave: ${key}`);
-  fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/get_data')
-    .then(response => {
+  console.log(`Solicitando datos para el departamento: ${department}, userDepartment: ${userDepartment}`);
+  fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app//api/dashboard?department=${encodeURIComponent(department)}&user_department=${encodeURIComponent(userDepartment)}`)
+  .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return response.json();
     })
     .then(data => {
-      console.log(`Datos recuperados para ${key}:`, data[key]);
+      console.log(`Datos recuperados para el departamento ${department}:`, data);
       if (data[key]) {
-        callback(data[key]);
+        callback(data[key]); // Pasar solo los datos correspondientes a la key
       } else {
-        console.error(`La clave "${key}" no se encuentra en los datos.`);
+        console.error(`La clave ${key} no se encontró en los datos.`);
       }
     })
     .catch(error => console.error('Error al obtener los datos:', error));
 }
+
+
+
+
+
 
 
 function updateAllChartColors(isDarkMode) {

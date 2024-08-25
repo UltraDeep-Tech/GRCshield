@@ -206,13 +206,13 @@ h1, h2, h3, h4, h5, h6 {
 .breadcrumb {
   font-size: 14px;
   font-family: "Nunito", sans-serif;
-  color: #333333; /* Gris oscuro */
+  color: #4a87d8; /* Gris oscuro */
   font-weight: 600;
   z-index:50;
 }
 
 .breadcrumb a {
-  color: #333333 !important; /* Gris oscuro */
+  color: #4a87d8 !important; /* Gris oscuro */
   transition: 0.3s;
   z-index: 100;
 }
@@ -223,7 +223,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .breadcrumb .breadcrumb-item::before {
-  color: #666666; /* Gris medio */
+  color: #4a87d8; /* Gris medio */
   z-index: 100;
 }
 
@@ -1591,4 +1591,9 @@ body.modal-open {
 .btn-outline-primary {
   --bs-btn-color: #333333; /* Gris oscuro */
   --bs-btn-border-color: #333333; /* Gris oscuro */
+}
+
+#user-department {
+  color: #4a87d8;
+  font-weight: bold;
 }

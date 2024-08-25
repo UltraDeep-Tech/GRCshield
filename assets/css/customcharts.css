@@ -741,3 +741,8 @@ body.modal-open {
     color: #fff;
     text-shadow: 0 0 5px #000;
   }
+
+
+  #user-department {
+    color: #fff;
+  }
