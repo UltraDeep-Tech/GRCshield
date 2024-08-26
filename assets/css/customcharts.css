@@ -745,4 +745,27 @@ body.modal-open {
 
   #user-department {
     color: #fff;
+    display: none;
+  }
+
+  .modern-select {
+    appearance: none;
+    background-color: #0d1b3093;
+    border-radius: 4px;
+    border: none;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 16px;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .modern-select:focus {
+    border-color: #007bff;
+  }
+
+  .modern-select option {
+    padding: 5px;
   }

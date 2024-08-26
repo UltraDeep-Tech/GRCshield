@@ -385,10 +385,14 @@
   </div>
 
 
-  <li class=" nav-link ">
-    <!-- Mostrar el departamento -->
+  <li class="nav-link">
+    <!-- Mostrar el departamento y permitir cambiarlo -->
     <div id="user-department" class="text-center mb-2 align-items-center"></div>
+    <select id="department-select" class="modern-select mt-2">
+      <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+    </select>
   </li>
+  
 </aside><!-- End Sidebar-->
 
 <div id="loginModal" class="modal">
@@ -706,13 +710,36 @@
     <script src="assets/js/main.js"></script>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const department = localStorage.getItem('department');
-        if (department) {
-          document.getElementById('user-department').textContent = ` ${department}`;
-        }
-      });
-    </script>
+   document.addEventListener('DOMContentLoaded', function () {
+  const department = localStorage.getItem('department');
+  const userDepartments = JSON.parse(localStorage.getItem('userDepartments')) || [];
+  const departmentSelect = document.getElementById('department-select');
+  const userDepartmentDiv = document.getElementById('user-department');
+
+  // Llenar el menú desplegable con los departamentos disponibles
+  userDepartments.forEach(dep => {
+    const option = document.createElement('option');
+    option.value = dep;
+    option.textContent = dep;
+    departmentSelect.appendChild(option);
+  });
+
+  if (department) {
+    userDepartmentDiv.textContent = ` ${department}`;
+    departmentSelect.value = department;
+  }
+
+  departmentSelect.addEventListener('change', function () {
+    const selectedDepartment = departmentSelect.value;
+    localStorage.setItem('department', selectedDepartment);
+    userDepartmentDiv.textContent = ` ${selectedDepartment}`;
+
+    // Recargar la página para reflejar el cambio de departamento
+    window.location.reload();
+  });
+});
+
+</script>
     
 
   <!-- ======= Footer ======= -->

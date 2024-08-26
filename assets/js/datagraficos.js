@@ -7,12 +7,18 @@ function updateAllChartColors(isDarkMode) {
 
 
 function obtenerDatos(key, callback) {
-  const department = localStorage.getItem('department');
-  const userDepartment = localStorage.getItem('userDepartment');
+  let department = localStorage.getItem('department');
+  let userDepartment = localStorage.getItem('userDepartment');
 
   if (!department || department.trim() === "" || !userDepartment || userDepartment.trim() === "") {
     console.error('Departamento o departamento de usuario no válido');
     return;
+  }
+
+  // Si el department ha cambiado, actualizar userDepartment
+  if (department !== userDepartment) {
+    userDepartment = department;
+    localStorage.setItem('userDepartment', department);
   }
 
   console.log(`Solicitando datos para el departamento: ${department}, userDepartment: ${userDepartment}`);
