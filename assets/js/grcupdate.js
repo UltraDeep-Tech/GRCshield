@@ -1,34 +1,25 @@
-// Función para mostrar notificaciones
+// Show notification function
 function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
-    notification.classList.add('notification');
-    if (type === 'error') {
-        notification.classList.add('error');
-    }
+    notification.classList.add('alert');
+    notification.classList.add(type === 'error' ? 'alert-danger' : 'alert-success');
     notification.textContent = message;
 
-    document.body.appendChild(notification);
+    // Display notification in "Alerts" tab
+    const alertsContainer = document.getElementById('alertsContainer');
+    alertsContainer.appendChild(notification);
 
-    // Mostrar la notificación
+    // Remove notification after 3 seconds
     setTimeout(() => {
-        notification.classList.add('show');
-    }, 100);
-
-    // Ocultar la notificación después de 3 segundos
-    setTimeout(() => {
-        notification.classList.remove('show');
-        // Eliminar la notificación del DOM
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 500);
+        alertsContainer.removeChild(notification);
     }, 3000);
 }
 
-// Cargar políticas y manejar formulario de agregar política
+// Load existing policies and handle adding new policy form
 document.addEventListener('DOMContentLoaded', function () {
     const policiesTable = document.getElementById('policiesTable');
 
-    // Cargar políticas existentes
+    // Fetch existing policies
     fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies')
         .then(response => response.json())
         .then(data => {
@@ -44,12 +35,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         <button class="btn btn-warning btn-sm" onclick="updatePolicy(${policy.id}, 'compliant')">Mark as Compliant</button>
                         <button class="btn btn-danger btn-sm" onclick="updatePolicy(${policy.id}, 'non-compliant')">Mark as Non-Compliant</button>
                     </td>
+                    <td><button class="btn btn-info btn-sm" onclick="readPolicy(${policy.id})"><i class="bi bi-eye"></i></button></td>
+                    <td><button class="btn btn-primary btn-sm" onclick="editPolicy(${policy.id})"><i class="bi bi-pencil"></i></button></td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deletePolicy(${policy.id})"><i class="bi bi-trash"></i></button></td>
                 `;
                 policiesTable.appendChild(row);
             });
         });
 
-    // Manejar el envío del formulario para agregar una nueva política
+    // Handle form submission for adding a new policy
     document.getElementById('addPolicyForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -78,14 +72,82 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Función para actualizar el estado de cumplimiento de una política
-function updatePolicy(policyId, status) {
+// Function to read and display policy details in the modal
+function readPolicy(policyId) {
+    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`)
+        .then(response => response.json())
+        .then(policy => {
+            document.getElementById('modalPolicyName').value = policy.name;
+            document.getElementById('modalPolicyDescription').value = policy.description;
+            document.getElementById('modalPolicyRegulation').value = policy.regulation;
+            document.getElementById('modalPolicyCompliance').value = policy.compliance_status;
+
+            // Disable fields for read-only view
+            document.getElementById('modalPolicyName').disabled = true;
+            document.getElementById('modalPolicyDescription').disabled = true;
+            document.getElementById('modalPolicyRegulation').disabled = true;
+            document.getElementById('modalPolicyCompliance').disabled = true;
+
+            // Hide the save button in read mode
+            document.getElementById('editSaveBtn').hidden = true;
+
+            // Show the modal
+            const policyModal = new bootstrap.Modal(document.getElementById('policyModal'));
+            policyModal.show();
+        })
+        .catch(error => {
+            showNotification('Failed to load policy details.', 'error');
+        });
+}
+
+// Function to open the modal in edit mode
+function editPolicy(policyId) {
+    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`)
+        .then(response => response.json())
+        .then(policy => {
+            document.getElementById('modalPolicyName').value = policy.name;
+            document.getElementById('modalPolicyDescription').value = policy.description;
+            document.getElementById('modalPolicyRegulation').value = policy.regulation;
+            document.getElementById('modalPolicyCompliance').value = policy.compliance_status;
+
+            // Enable fields for editing
+            document.getElementById('modalPolicyName').disabled = false;
+            document.getElementById('modalPolicyDescription').disabled = false;
+            document.getElementById('modalPolicyRegulation').disabled = false;
+            document.getElementById('modalPolicyCompliance').disabled = false;
+
+            // Show the save button in edit mode
+            document.getElementById('editSaveBtn').hidden = false;
+
+            // Assign the save changes function to the button's onclick event
+            document.getElementById('editSaveBtn').onclick = function () {
+                savePolicyChanges(policyId);
+            };
+
+            // Show the modal
+            const policyModal = new bootstrap.Modal(document.getElementById('policyModal'));
+            policyModal.show();
+        })
+        .catch(error => {
+            showNotification('Failed to load policy details.', 'error');
+        });
+}
+
+// Function to save changes made in edit mode
+function savePolicyChanges(policyId) {
+    const updatedPolicy = {
+        name: document.getElementById('modalPolicyName').value,
+        description: document.getElementById('modalPolicyDescription').value,
+        regulation: document.getElementById('modalPolicyRegulation').value,
+        compliance_status: document.getElementById('modalPolicyCompliance').value,
+    };
+
     fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ compliance_status: status })
+        body: JSON.stringify(updatedPolicy)
     })
     .then(response => response.json())
     .then(data => {
@@ -96,3 +158,75 @@ function updatePolicy(policyId, status) {
         showNotification('Failed to update policy.', 'error');
     });
 }
+
+// Function to delete a policy
+function deletePolicy(policyId) {
+    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        showNotification('Policy deleted successfully!');
+        window.location.reload();
+    })
+    .catch(error => {
+        showNotification('Failed to delete policy.', 'error');
+    });
+}
+
+// Import predefined policies based on regulations
+document.getElementById('importPoliciesBtn').addEventListener('click', function () {
+    fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/import_policies', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        showNotification('Policies imported successfully!');
+        window.location.reload();
+    })
+    .catch(error => {
+        showNotification('Failed to import policies.', 'error');
+    });
+});
+
+function checkCompliance() {
+    fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(policy => {
+                if (policy.compliance_status === 'non-compliant') {
+                    showNotification(`The policy ${policy.name} does not comply with regulations`, 'error');
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error checking compliance:', error);
+        });
+}
+
+// Call compliance check on page load
+document.addEventListener('DOMContentLoaded', checkCompliance);
+
+document.getElementById('generateReportBtn').addEventListener('click', function () {
+    fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/generate_report')
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'grc_report.pdf';  // Or .csv depending on the format
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+        showNotification('Failed to generate the report.', 'error');
+    });
+});

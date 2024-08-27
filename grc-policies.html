@@ -291,7 +291,7 @@
       </li><!-- End Dashboard Nav -->
   
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="index.html#">
           <i class="bi bi-eye"></i><span>Monitoring</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="charts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
@@ -397,64 +397,141 @@
     </li>
     
   </aside><!-- End Sidebar-->
-  <main id="main" class="main">
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="cardindex">
-            <div class="cardindex-body">
-              <h5 class="cardindex-title">GRC Policies Management</h5>
+  
+  <main id="main" class="main ">
+    <h1 class="cardindex-title" style="font-size: 25px;">GRC Policies Management</h1>
 
-              <!-- Formulario para agregar una nueva política -->
-              <form id="addPolicyForm">
-                <div class="mb-3">
-                  <label for="policyName" class="form-label">Policy Name</label>
-                  <input type="text" class="form-control" id="policyName" required>
-                </div>
-                <div class="mb-3">
-                  <label for="policyDescription" class="form-label">Description</label>
-                  <textarea class="form-control" id="policyDescription" rows="3" required></textarea>
-                </div>
-                <div class="mb-3">
-                  <label for="policyRegulation" class="form-label">Regulation</label>
-                  <input type="text" class="form-control" id="policyRegulation" required>
-                </div>
-                <div class="mb-3">
-                  <label for="policyCompliance" class="form-label">Compliance Status</label>
-                  <select class="form-select" id="policyCompliance">
-                    <option value="compliant">Compliant</option>
-                    <option value="non-compliant">Non-compliant</option>
-                  </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Add Policy</button>
-              </form>
+    <!-- Navegación por pestañas -->
+    <ul class="nav nav-tabs" id="grcTabs" role="tablist">
+        <li class="nav-itemt" role="presentation">
+            <a class="nav-link active" id="existing-policies-tab" data-bs-toggle="tab" href="#existing-policies" role="tab" aria-controls="existing-policies" aria-selected="true">Existing Policies</a>
+        </li>
+        <li class="nav-itemt" role="presentation">
+            <a class="nav-link " id="add-policy-tab" data-bs-toggle="tab" href="#add-policy" role="tab" aria-controls="add-policy" aria-selected="false">Add Policies</a>
+        </li>
+        <li class="nav-itemt" role="presentation">
+            <a class="nav-link" id="export-policy-tab" data-bs-toggle="tab" href="#export-policy" role="tab" aria-controls="export-policy" aria-selected="false">Export Policies</a>
+        </li>
 
-              <!-- Tabla de políticas existentes -->
-              <h6 class="mt-4">Existing Policies</h6>
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
+        <li class="nav-itemt" role="presentation">
+            <a class="nav-link" id="generate-report-tab" data-bs-toggle="tab" href="#generate-report" role="tab" aria-controls="generate-report" aria-selected="false">Report</a>
+        </li>
+        <li class="nav-itemt" role="presentation">
+            <a class="nav-link" id="alerts-tab" data-bs-toggle="tab" href="#alerts" role="tab" aria-controls="alerts" aria-selected="false">Alertas</a>
+        </li>
+    </ul>
+
+<div class="tab-content" id="grcTabsContent">
+    <!-- Pestaña Políticas Existentes -->
+    <div class="tab-pane fade show active" id="existing-policies" role="tabpanel" aria-labelledby="existing-policies-tab">
+        <h6 class="mt-4">Existing Policies</h6>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Regulation</th>
                     <th>Compliance Status</th>
                     <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="policiesTable">
-                  <!-- Las políticas se llenarán dinámicamente -->
-                </tbody>
-              </table>
+                    <th>Read</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody id="policiesTable">
+                <!-- Las políticas se llenarán dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pestaña Agregar Políticas -->
+    <div class="tab-pane fade" id="add-policy" role="tabpanel" aria-labelledby="add-policy-tab">
+        <form id="addPolicyForm" class="mt-4">
+            <div class="mb-3">
+                <label for="policyName" class="form-label">Policy Name</label>
+                <input type="text" class="form-control" id="policyName" required>
             </div>
-          </div>
+            <div class="mb-3">
+                <label for="policyDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="policyDescription" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="policyRegulation" class="form-label">Regulation</label>
+                <input type="text" class="form-control" id="policyRegulation" required>
+            </div>
+            <div class="mb-3">
+                <label for="policyCompliance" class="form-label">Compliance Status</label>
+                <select class="form-select" id="policyCompliance">
+                    <option value="compliant">Compliant</option>
+                    <option value="non-compliant">Non-compliant</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Policy</button>
+        </form>
+    </div>
+
+    <!-- Pestaña Exportar Políticas -->
+    <div class="tab-pane fade" id="export-policy" role="tabpanel" aria-labelledby="export-policy-tab">
+        <button id="importPoliciesBtn" class="btn btn-outline-primary mt-4">Importar Políticas Basadas en Regulaciones</button>
+    </div>
+
+    <!-- Pestaña Generar Reporte -->
+    <div class="tab-pane fade" id="generate-report" role="tabpanel" aria-labelledby="generate-report-tab">
+        <button id="generateReportBtn" class="btn btn-info mt-4">Generar Reporte GRC</button>
+    </div>
+
+    <!-- Pestaña Alertas -->
+    <div class="tab-pane fade" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
+        <div id="alertsContainer"></div>
+    </div>
+</div>
+
+
+    
+</main>
+
+<!-- Modal para leer y editar políticas -->
+<div class="modal fade" id="policyModal" tabindex="-1" aria-labelledby="policyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="policyModalLabel">Policy Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí se llenarán los detalles de la política -->
+                <form id="editPolicyForm">
+                    <div class="mb-3">
+                        <label for="modalPolicyName" class="form-label">Policy Name</label>
+                        <input type="text" class="form-control" id="modalPolicyName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalPolicyDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="modalPolicyDescription" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalPolicyRegulation" class="form-label">Regulation</label>
+                        <input type="text" class="form-control" id="modalPolicyRegulation">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalPolicyCompliance" class="form-label">Compliance Status</label>
+                        <select class="form-select" id="modalPolicyCompliance">
+                            <option value="compliant">Compliant</option>
+                            <option value="non-compliant">Non-compliant</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="editSaveBtn">Save changes</button>
+            </div>
         </div>
-      </div>
-    </section>
-  </main>
+    </div>
+</div>
 
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/main.js"></script>
     <!-- Vendor JS Files -->
     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
