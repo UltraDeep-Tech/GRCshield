@@ -1531,34 +1531,100 @@ margin-right: 15px;
   visibility: hidden;
 }
 
-.modal {
-  display: none;
+/* Estilo para el modal */
+.custom-modal {
+  display: none; /* Ocultar por defecto */
   position: fixed;
   z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #ffffff;
+  background-color: rgb(3, 14, 31); /* Fondo del mismo color */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.modal-content {
-  background-color: #ffffff;
+.custom-modal-content {
+  background-color: rgb(3, 14, 31);
   padding: 60px;
   border: none;
   width: auto;
   height: auto;
-  color: #000000; /* Negro */
+  color: #e9ecef;
   border-radius: 5px;
   text-align: center;
   align-items: center;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
-  top: 100px;
+  top: 100px ;
+}
+
+/* Estilos generales para el modal */
+.modal .modal-content {
+  background-color: #f8f9fa; /* Fondo claro */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  border: none; /* Sin borde */
+}
+
+.modal .modal-header {
+  background-color: #007bff; /* Fondo azul para el encabezado */
+  color: #fff; /* Texto blanco */
+  border-bottom: 2px solid #0056b3; /* Línea inferior */
+  border-top-left-radius: 8px; /* Bordes superiores redondeados */
+  border-top-right-radius: 8px;
+}
+
+.modal .modal-title {
+  font-weight: bold; /* Negrita para el título */
+  font-size: 20px; /* Tamaño de fuente mayor */
+}
+
+.modal .btn-close {
+  background-color: transparent; /* Fondo transparente */
+  border: none; /* Sin borde */
+  color: #fff; /* Ícono de cierre blanco */
+}
+
+.modal .modal-body {
+  padding: 20px; /* Espaciado interno */
+  background-color: #ffffff; /* Fondo blanco */
+}
+
+.modal .form-label {
+  font-weight: bold; /* Negrita para etiquetas de formulario */
+  color: #495057; /* Color de texto gris oscuro */
+}
+
+.modal .form-control {
+  border-radius: 4px; /* Bordes redondeados en los campos de formulario */
+  border: 1px solid #ced4da; /* Borde gris */
+}
+
+.modal .form-select {
+  border-radius: 4px; /* Bordes redondeados en los select */
+  border: 1px solid #ced4da; /* Borde gris */
+}
+
+.modal .modal-footer {
+  background-color: #f1f1f1; /* Fondo gris claro */
+  border-top: 1px solid #e9ecef; /* Línea superior */
+  padding: 15px; /* Espaciado interno */
+  border-bottom-left-radius: 8px; /* Bordes inferiores redondeados */
+  border-bottom-right-radius: 8px;
+}
+
+.modal .btn-secondary {
+  background-color: #6c757d; /* Fondo gris para el botón "Close" */
+  border-color: #6c757d; /* Borde gris */
+}
+
+.modal .btn-primary {
+  background-color: #007bff; /* Fondo azul para el botón "Save changes" */
+  border-color: #007bff; /* Borde azul */
 }
 
 body.modal-open {
@@ -1618,4 +1684,36 @@ body.modal-open {
 
 .modern-select option {
   padding: 5px;
+}
+
+.nav {
+  background: #858484;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+}
+
+.navlink:hover{
+  border: none;
+}
+.nav-itemt a{
+  color: rgb(15, 15, 15) ;
+  padding: 10px;
+}
+.nav-itemt a:focus {
+  padding: 10px;
+}
+
+.nav-link:active  {
+  color: #dbd9d9 !important;
+  padding: 10px;
+}
+
+.tab-content {
+  background: #dbd9d9;
+  color: #333333;
+  padding: 15px;
+}
+
+.nav-tabs .nav-link {
+  border: none;
 }

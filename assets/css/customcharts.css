@@ -662,7 +662,7 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
   justify-content: center;
 }
 
-.custom-modal {
+.custom-modal-content {
   background-color: rgb(3, 14, 31);
   padding: 60px;
   border: none;
@@ -678,29 +678,69 @@ text-shadow: 0 0 5px rgb(217, 217, 218);
   top: 100px ;
 }
 
-/* Estilo para el modal */
-.modal {
-  z-index: 1000;
-  background-color: rgb(3, 14, 31); /* Fondo del mismo color */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Estilos generales para el modal */
+.modal .modal-content {
+  background-color: #f8f9fa; /* Fondo claro */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  border: none; /* Sin borde */
 }
 
-.modal {
-  background-color: rgb(3, 14, 31);
-  padding: 60px;
-  border: none;
-  width: auto;
-  height: auto;
-  color: #e9ecef;
-  border-radius: 5px;
-  text-align: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  top: 100px ;
+.modal .modal-header {
+  background-color: #007bff; /* Fondo azul para el encabezado */
+  color: #fff; /* Texto blanco */
+  border-bottom: 2px solid #0056b3; /* Línea inferior */
+  border-top-left-radius: 8px; /* Bordes superiores redondeados */
+  border-top-right-radius: 8px;
+}
+
+.modal .modal-title {
+  font-weight: bold; /* Negrita para el título */
+  font-size: 20px; /* Tamaño de fuente mayor */
+}
+
+.modal .btn-close {
+  background-color: transparent; /* Fondo transparente */
+  border: none; /* Sin borde */
+  color: #fff; /* Ícono de cierre blanco */
+}
+
+.modal .modal-body {
+  padding: 20px; /* Espaciado interno */
+  background-color: #ffffff; /* Fondo blanco */
+}
+
+.modal .form-label {
+  font-weight: bold; /* Negrita para etiquetas de formulario */
+  color: #495057; /* Color de texto gris oscuro */
+}
+
+.modal .form-control {
+  border-radius: 4px; /* Bordes redondeados en los campos de formulario */
+  border: 1px solid #ced4da; /* Borde gris */
+}
+
+.modal .form-select {
+  border-radius: 4px; /* Bordes redondeados en los select */
+  border: 1px solid #ced4da; /* Borde gris */
+}
+
+.modal .modal-footer {
+  background-color: #f1f1f1; /* Fondo gris claro */
+  border-top: 1px solid #e9ecef; /* Línea superior */
+  padding: 15px; /* Espaciado interno */
+  border-bottom-left-radius: 8px; /* Bordes inferiores redondeados */
+  border-bottom-right-radius: 8px;
+}
+
+.modal .btn-secondary {
+  background-color: #6c757d; /* Fondo gris para el botón "Close" */
+  border-color: #6c757d; /* Borde gris */
+}
+
+.modal .btn-primary {
+  background-color: #007bff; /* Fondo azul para el botón "Save changes" */
+  border-color: #007bff; /* Borde azul */
 }
 
 .spinner-image {
