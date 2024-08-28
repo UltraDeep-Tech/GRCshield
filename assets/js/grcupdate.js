@@ -60,7 +60,9 @@ document.addEventListener('DOMContentLoaded', function () {
             name: document.getElementById('policyName').value,
             description: document.getElementById('policyDescription').value,
             regulation: document.getElementById('policyRegulation').value,
-            compliance_status: document.getElementById('policyCompliance').value
+            compliance_status: document.getElementById('policyCompliance').value,
+            expiration_date: document.getElementById('policyExpirationDate').value,
+            reminder_days: document.getElementById('policyReminderDays').value
         };
 
         fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies', {
@@ -109,12 +111,16 @@ function readPolicy(policyId) {
             document.getElementById('modalPolicyDescription').value = policy.description;
             document.getElementById('modalPolicyRegulation').value = policy.regulation;
             document.getElementById('modalPolicyCompliance').value = policy.compliance_status;
+            document.getElementById('modalPolicyExpirationDate').value = policy.expiration_date;
+            document.getElementById('modalPolicyReminderDays').value = policy.reminder_days;
 
             // Desactivar campos para solo lectura
             document.getElementById('modalPolicyName').disabled = true;
             document.getElementById('modalPolicyDescription').disabled = true;
             document.getElementById('modalPolicyRegulation').disabled = true;
             document.getElementById('modalPolicyCompliance').disabled = true;
+            document.getElementById('modalPolicyExpirationDate').disabled = true;
+            document.getElementById('modalPolicyReminderDays').disabled = true;
 
             // Ocultar el botón de guardar en modo solo lectura
             document.getElementById('editSaveBtn').hidden = true;
@@ -137,12 +143,16 @@ function editPolicy(policyId) {
             document.getElementById('modalPolicyDescription').value = policy.description;
             document.getElementById('modalPolicyRegulation').value = policy.regulation;
             document.getElementById('modalPolicyCompliance').value = policy.compliance_status;
+            document.getElementById('modalPolicyExpirationDate').value = policy.expiration_date;
+            document.getElementById('modalPolicyReminderDays').value = policy.reminder_days;
 
             // Habilitar campos para edición
             document.getElementById('modalPolicyName').disabled = false;
             document.getElementById('modalPolicyDescription').disabled = false;
             document.getElementById('modalPolicyRegulation').disabled = false;
             document.getElementById('modalPolicyCompliance').disabled = false;
+            document.getElementById('modalPolicyExpirationDate').disabled = false;
+            document.getElementById('modalPolicyReminderDays').disabled = false;
 
             // Mostrar el botón de guardar en modo edición
             document.getElementById('editSaveBtn').hidden = false;
@@ -168,6 +178,8 @@ function savePolicyChanges(policyId) {
         description: document.getElementById('modalPolicyDescription').value,
         regulation: document.getElementById('modalPolicyRegulation').value,
         compliance_status: document.getElementById('modalPolicyCompliance').value,
+        expiration_date: document.getElementById('modalPolicyExpirationDate').value,
+        reminder_days: document.getElementById('modalPolicyReminderDays').value,
     };
 
     fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
@@ -339,3 +351,43 @@ document.addEventListener('DOMContentLoaded', function () {
     displayPoliciesForPage(1);
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const templatesTable = document.getElementById('templatesTable');
+
+    fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/templates')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(template => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${template.id}</td>
+                    <td>${template.name}</td>
+                    <td>${template.description}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm" onclick="useTemplate(${template.id})"><i class="bi bi-file-earmark-text"></i></button>
+                        <button class="btn btn-primary btn-sm" onclick="editTemplate(${template.id})"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteTemplate(${template.id})"><i class="bi bi-trash"></i></button>
+                    </td>
+                `;
+                templatesTable.appendChild(row);
+            });
+        });
+
+    document.getElementById('createTemplateBtn').addEventListener('click', function () {
+        // Lógica para abrir un modal o una nueva página para crear una plantilla
+        // Aquí podrías abrir un modal similar al de la creación de políticas
+    });
+});
+
+function useTemplate(templateId) {
+    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/templates/${templateId}`)
+        .then(response => response.json())
+        .then(template => {
+            document.getElementById('policyName').value = template.name;
+            document.getElementById('policyDescription').value = template.description;
+            document.getElementById('policyRegulation').value = template.regulation;
+        })
+        .catch(error => {
+            showNotification('Failed to load template.', 'error');
+        });
+}

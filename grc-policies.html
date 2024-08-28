@@ -418,6 +418,10 @@
             <a class="nav-link" id="generate-report-tab" data-bs-toggle="tab" href="#generate-report" role="tab" aria-controls="generate-report" aria-selected="false">Report</a>
         </li>
         <li class="nav-itemt" role="presentation">
+            <a class="nav-link" id="templates-tab" data-bs-toggle="tab" href="#templates" role="tab" aria-controls="templates" aria-selected="false">Templates</a>
+        </li>
+        
+        <li class="nav-itemt" role="presentation">
             <a class="nav-link" id="alerts-tab" data-bs-toggle="tab" href="#alerts" role="tab" aria-controls="alerts" aria-selected="false">Alerts</a>
         </li>
     </ul>
@@ -482,6 +486,15 @@
                         <option value="non-compliant">Non-compliant</option>
                     </select>
                 </div>
+                <div class="mb-3">
+                    <label for="policyExpirationDate" class="form-label">Expiration Date</label>
+                    <input type="date" class="form-control" id="policyExpirationDate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="policyReminderDays" class="form-label">Reminder Days Before Expiration</label>
+                    <input type="number" class="form-control" id="policyReminderDays" min="1" required>
+                </div>
+                
                 <button type="submit" class="btn btn-primary">Add Policy</button>
             </form>
         </div>
@@ -516,6 +529,28 @@
             <!-- Button to generate the report -->
             <button id="generateReportBtn" class="btn btn-outline-primary mt-4">Generate GRC Report</button>
         </div>
+
+        <div class="tab-pane fade" id="templates" role="tabpanel" aria-labelledby="templates-tab">
+            <h6 class="mt-4">Manage Policy Templates</h6>
+            <div class="d-flex justify-content-between mb-3">
+                <input type="text" id="templateSearch" class="form-control w-50" placeholder="Search templates by name">
+                <button id="createTemplateBtn" class="btn btn-primary">Create New Template</button>
+            </div>
+            <table class="table table-bordered tablepolicy">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="templatesTable">
+                    <!-- Las plantillas se llenarán dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+        
 
         <!-- Pestaña Alertas -->
         <div class="tab-pane fade" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
@@ -556,6 +591,15 @@
                             <option value="non-compliant">Non-compliant</option>
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label for="policyExpirationDate" class="form-label">Expiration Date</label>
+                        <input type="date" class="form-control" id="policyExpirationDate" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="policyReminderDays" class="form-label">Reminder Days Before Expiration</label>
+                        <input type="number" class="form-control" id="policyReminderDays" min="1" required>
+                    </div>
+                    
                 </form>
             </div>
             <div class="modal-footer">
