@@ -193,12 +193,24 @@ function deletePolicy(policyId) {
 }
 
 // Importar políticas predefinidas basadas en regulaciones
+// Función para importar políticas predefinidas basadas en regulaciones
 document.getElementById('importPoliciesBtn').addEventListener('click', function () {
+    const policiesToImport = [
+        {
+            name: "Policy Name",
+            description: "Policy Description",
+            regulation: "Some Regulation",
+            compliance_status: "compliant"
+        }
+        // Puedes agregar más políticas aquí...
+    ];
+
     fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/import_policies', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify(policiesToImport)
     })
     .then(response => response.json())
     .then(data => {
@@ -209,6 +221,7 @@ document.getElementById('importPoliciesBtn').addEventListener('click', function 
         showNotification('Error al importar políticas.', 'error');
     });
 });
+
 
 // Verificar cumplimiento
 function checkCompliance() {
