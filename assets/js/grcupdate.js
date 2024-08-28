@@ -3,13 +3,26 @@ function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
     notification.classList.add('alert');
     notification.classList.add(type === 'error' ? 'alert-danger' : 'alert-success');
+    notification.classList.add('alert-dismissible'); // Para permitir el cierre
+    notification.setAttribute('role', 'alert');
+    
+    // Añadir el botón de cierre (X)
+    const closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.classList.add('btn-close');
+    closeButton.setAttribute('aria-label', 'Close');
+    closeButton.onclick = function() {
+        notification.remove();
+    };
+
     notification.textContent = message;
+    notification.appendChild(closeButton); // Agregar el botón de cierre a la alerta
 
     // Mostrar la notificación en la pestaña "Alerts"
     const alertsContainer = document.getElementById('alertsContainer');
     alertsContainer.appendChild(notification);
-
 }
+
 
 // Cargar políticas y manejar formulario de agregar política
 document.addEventListener('DOMContentLoaded', function () {
@@ -29,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>${policy.compliance_status}</td>
                     <td>
                         <button class="btn btn-outline-primary btn-sm" onclick="updatePolicy(${policy.id}, 'Compliant')"> Compliant</button>
-                        <button class="btn btn-outline-primary btn-sm" onclick="updatePolicy(${policy.id}, 'Non-compliant')"> Non-Compliant</button>
+                        <button class="btn btn-outline-primary btn-sm" style="color:red;" onclick="updatePolicy(${policy.id}, 'Non-compliant')"> Non-Compliant</button>
                     </td>
                     <td><button class="btn btn-info btn-sm" onclick="readPolicy(${policy.id})"><i class="bi bi-eye"></i></button></td>
                     <td><button class="btn btn-primary btn-sm" onclick="editPolicy(${policy.id})"><i class="bi bi-pencil"></i></button></td>
@@ -209,16 +222,14 @@ document.getElementById('fileInput').addEventListener('change', function () {
         })
         .then(response => response.json())
         .then(data => {
-            showNotification('Políticas importadas exitosamente!');
+            showNotification('Policies imported successfully!');
             window.location.reload();
         })
         .catch(error => {
-            showNotification('Error al importar políticas.', 'error');
+            showNotification('Error importing policies.', 'error');
         });
     }
 });
-
-
 
 // Verificar cumplimiento
 function checkCompliance() {
@@ -232,7 +243,7 @@ function checkCompliance() {
             });
         })
         .catch(error => {
-            console.error('Error al verificar el cumplimiento:', error);
+            console.error('Error checking compliance:', error);
         });
 }
 
@@ -253,6 +264,6 @@ document.getElementById('generateReportBtn').addEventListener('click', function 
         window.URL.revokeObjectURL(url);
     })
     .catch(error => {
-        showNotification('Error al generar el reporte.', 'error');
+        showNotification('Error generating report.', 'error');
     });
 });

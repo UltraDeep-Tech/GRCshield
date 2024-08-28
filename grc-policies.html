@@ -412,7 +412,7 @@
             <a class="nav-link " id="add-policy-tab" data-bs-toggle="tab" href="#add-policy" role="tab" aria-controls="add-policy" aria-selected="false">Add Policies</a>
         </li>
         <li class="nav-itemt" role="presentation">
-            <a class="nav-link" id="export-policy-tab" data-bs-toggle="tab" href="#export-policy" role="tab" aria-controls="export-policy" aria-selected="false">Export Policies</a>
+            <a class="nav-link" id="export-policy-tab" data-bs-toggle="tab" href="#export-policy" role="tab" aria-controls="export-policy" aria-selected="false">Import Policies</a>
         </li>
 
         <li class="nav-itemt" role="presentation">
@@ -475,15 +475,37 @@
 
     <!-- Pestaña Exportar Políticas -->
     <div class="tab-pane fade" id="export-policy" role="tabpanel" aria-labelledby="export-policy-tab">
-        <button id="importPoliciesBtn" class="btn btn-outline-primary mt-4">Importar Políticas Basadas en Regulaciones</button>
+        <!-- Informational alert for the user -->
+        <div class="alert alert mt-4" role="alert">
+            <h5 class="alert-heading">Import Policies</h5>
+            <p>If you already have existing policies, you can upload them to the system using the button below. Make sure that the file is in JSON format and follows the appropriate structure to be compatible with the system. You can select a file from your computer by clicking on the "Import Policies Based on Regulations" button.</p>
+            <p><strong>Supported formats:</strong> JSON (.json)</p>
+            <p><strong>Last upload:</strong> <span id="lastUploadDate">No policies uploaded yet.</span></p>
+        </div>
+        
+        <!-- Button to upload files -->
+        <button id="importPoliciesBtn" class="btn btn-outline-primary mt-4">Import Policies Based on Regulations</button>
+        
+        <!-- Hidden file input -->
         <input type="file" id="fileInput" style="display: none;" />
-
     </div>
+    
 
-    <!-- Pestaña Generar Reporte -->
-    <div class="tab-pane fade" id="generate-report" role="tabpanel" aria-labelledby="generate-report-tab">
-        <button id="generateReportBtn" class="btn btn-info mt-4">Generar Reporte GRC</button>
+<!-- Tab for Generating Report -->
+<div class="tab-pane fade" id="generate-report" role="tabpanel" aria-labelledby="generate-report-tab">
+    <!-- Informational alert for the user -->
+    <div class="alert alert mt-4" role="alert">
+        <h5 class="alert-heading">Generate GRC Report</h5>
+        <p>In this section, you can generate a comprehensive report of all policies and their compliance status. The report will provide an overview of compliant and non-compliant policies within the system, allowing you to assess the current state of policy adherence.</p>
+        <p>Click the "Generate GRC Report" button below to create and download the report.</p>
+        <p><strong>Supported formats:</strong> PDF, CSV</p>
     </div>
+    
+    <!-- Button to generate the report -->
+    <button id="generateReportBtn" class="btn btn-outline-primary mt-4">Generate GRC Report</button>
+</div>
+
+
 
     <!-- Pestaña Alertas -->
     <div class="tab-pane fade" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
