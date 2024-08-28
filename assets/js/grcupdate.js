@@ -103,6 +103,7 @@ function updatePolicy(policyId, status) {
 }
 
 // Función para leer una política (usando el modal)
+// Función para leer una política (usando el modal)
 function readPolicy(policyId) {
     fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`)
         .then(response => response.json())
@@ -136,6 +137,7 @@ function readPolicy(policyId) {
             showNotification('Failed to load policy details.', 'error');
         });
 }
+
 
 // Load policy history when the modal is opened
 function loadPolicyHistory(policyId) {
