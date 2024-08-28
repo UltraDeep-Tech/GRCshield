@@ -294,10 +294,10 @@ document.getElementById('policySearch').addEventListener('input', filterPolicies
 document.getElementById('complianceFilter').addEventListener('change', filterPolicies);
 
 
+// Pagination and display logic
 let currentPage = 1;
-const rowsPerPage = 10; // Number of policies per page
+const rowsPerPage = 10;
 
-// Function to display policies for the current page
 function displayPoliciesForPage(page) {
     const rows = document.querySelectorAll('#policiesTable tr');
     const start = (page - 1) * rowsPerPage;
@@ -311,11 +311,9 @@ function displayPoliciesForPage(page) {
         }
     });
 
-    // Update the pagination controls
     updatePaginationControls(page, Math.ceil(rows.length / rowsPerPage));
 }
 
-// Function to update pagination controls
 function updatePaginationControls(currentPage, totalPages) {
     const paginationControls = document.getElementById('paginationControls');
     paginationControls.innerHTML = '';
