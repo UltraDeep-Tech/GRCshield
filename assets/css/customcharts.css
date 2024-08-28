@@ -844,6 +844,7 @@ body.modal-open {
   .navlink:hover{
     border: none;
   }
+  
   .nav-itemt a{
     color: #fff ;
     padding: 10px;
