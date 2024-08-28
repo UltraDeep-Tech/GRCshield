@@ -141,21 +141,22 @@ function login(event) {
 
   if (users[username] && users[username].password === password && users[username].departments.includes(department)) {
     localStorage.setItem('loggedIn', 'true');
-    localStorage.setItem('department', department); // Almacenar el departamento seleccionado
-    localStorage.setItem('userDepartment', department); // Almacenar el departamento del usuario
+    localStorage.setItem('department', department); // Departamento seleccionado
+    localStorage.setItem('userDepartments', JSON.stringify(users[username].departments)); // Departamentos permitidos
     const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000;
     localStorage.setItem('expiration', expirationTime);
     loginMessage.style.color = 'green';
     loginMessage.textContent = 'Login successful! Redirecting...';
     loginMessage.style.display = 'block';
     setTimeout(() => {
-      window.location.href = 'index.html';
+        window.location.href = 'index.html';
     }, 1000);
-  } else {
+} else {
     loginMessage.style.color = 'red';
     loginMessage.textContent = 'Incorrect username, password, or department. Please try again.';
     loginMessage.style.display = 'block';
-  }
+}
+
 }
 
 </script>
