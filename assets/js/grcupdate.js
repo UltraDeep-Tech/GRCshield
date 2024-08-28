@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>${policy.regulation}</td>
                     <td>${policy.compliance_status}</td>
                     <td>
-                        <button class="btn btn-warning btn-sm" onclick="updatePolicy(${policy.id}, 'compliant')">Mark as Compliant</button>
-                        <button class="btn btn-danger btn-sm" onclick="updatePolicy(${policy.id}, 'non-compliant')">Mark as Non-Compliant</button>
+                        <button class="btn btn-outline-primary btn-sm" onclick="updatePolicy(${policy.id}, 'Compliant')"> Compliant</button>
+                        <button class="btn btn-outline-primary btn-sm" onclick="updatePolicy(${policy.id}, 'Non-compliant')"> Non-Compliant</button>
                     </td>
                     <td><button class="btn btn-info btn-sm" onclick="readPolicy(${policy.id})"><i class="bi bi-eye"></i></button></td>
                     <td><button class="btn btn-primary btn-sm" onclick="editPolicy(${policy.id})"><i class="bi bi-pencil"></i></button></td>
