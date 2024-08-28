@@ -193,34 +193,31 @@ function deletePolicy(policyId) {
 }
 
 // Importar políticas predefinidas basadas en regulaciones
-// Función para importar políticas predefinidas basadas en regulaciones
 document.getElementById('importPoliciesBtn').addEventListener('click', function () {
-    const policiesToImport = [
-        {
-            name: "Policy Name",
-            description: "Policy Description",
-            regulation: "Some Regulation",
-            compliance_status: "compliant"
-        }
-        // Puedes agregar más políticas aquí...
-    ];
-
-    fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/import_policies', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(policiesToImport)
-    })
-    .then(response => response.json())
-    .then(data => {
-        showNotification('Políticas importadas exitosamente!');
-        window.location.reload();
-    })
-    .catch(error => {
-        showNotification('Error al importar políticas.', 'error');
-    });
+    document.getElementById('fileInput').click();
 });
+
+document.getElementById('fileInput').addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        fetch('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/import_policies', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            showNotification('Políticas importadas exitosamente!');
+            window.location.reload();
+        })
+        .catch(error => {
+            showNotification('Error al importar políticas.', 'error');
+        });
+    }
+});
+
 
 
 // Verificar cumplimiento
