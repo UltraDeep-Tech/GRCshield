@@ -23,6 +23,7 @@ function showNotification(message, type = 'success') {
     alertsContainer.appendChild(notification);
 }
 
+
 // Cargar políticas y manejar formulario de agregar política
 document.addEventListener('DOMContentLoaded', function () {
     const policiesTable = document.getElementById('policiesTable');
@@ -49,9 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 `;
                 policiesTable.appendChild(row);
             });
-
-            // Initialize pagination after data is loaded
-            displayPoliciesForPage(1);
         });
 
     // Manejar el envío del formulario para agregar una nueva política
@@ -103,7 +101,6 @@ function updatePolicy(policyId, status) {
 }
 
 // Función para leer una política (usando el modal)
-// Función para leer una política (usando el modal)
 function readPolicy(policyId) {
     fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`)
         .then(response => response.json())
@@ -122,49 +119,12 @@ function readPolicy(policyId) {
             // Ocultar el botón de guardar en modo solo lectura
             document.getElementById('editSaveBtn').hidden = true;
 
-            // Set the policy ID on the modal for later use
-            const policyModalElement = document.getElementById('policyModal');
-            policyModalElement.setAttribute('data-policy-id', policyId);
-
-            // Load the version history when the modal is opened
-            loadPolicyHistory(policyId);
-
             // Mostrar el modal
-            const policyModal = new bootstrap.Modal(policyModalElement);
+            const policyModal = new bootstrap.Modal(document.getElementById('policyModal'));
             policyModal.show();
         })
         .catch(error => {
             showNotification('Failed to load policy details.', 'error');
-        });
-}
-
-
-// Load policy history when the modal is opened
-function loadPolicyHistory(policyId) {
-    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}/history`)
-        .then(response => response.json())
-        .then(history => {
-            const container = document.getElementById('policyHistoryContainer');
-            container.innerHTML = ''; // Clear previous content
-
-            if (history.length > 0) {
-                history.forEach(record => {
-                    const historyItem = document.createElement('div');
-                    historyItem.classList.add('history-item');
-                    historyItem.innerHTML = `
-                        <strong>Version:</strong> ${record.version} <br>
-                        <strong>Changes:</strong> ${record.changes} <br>
-                        <strong>Modified by:</strong> ${record.modified_by} <br>
-                        <strong>Date:</strong> ${new Date(record.modified_at).toLocaleString()} <hr>
-                    `;
-                    container.appendChild(historyItem);
-                });
-            } else {
-                container.innerHTML = '<p>No version history available for this policy.</p>';
-            }
-        })
-        .catch(error => {
-            showNotification('Failed to load policy history.', 'error');
         });
 }
 
@@ -333,6 +293,7 @@ function filterPolicies() {
 document.getElementById('policySearch').addEventListener('input', filterPolicies);
 document.getElementById('complianceFilter').addEventListener('change', filterPolicies);
 
+
 // Pagination and display logic
 let currentPage = 1;
 const rowsPerPage = 10;
@@ -377,3 +338,4 @@ function updatePaginationControls(currentPage, totalPages) {
 document.addEventListener('DOMContentLoaded', function () {
     displayPoliciesForPage(1);
 });
+

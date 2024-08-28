@@ -462,7 +462,6 @@
 
         <!-- Pestaña Agregar Políticas -->
         <div class="tab-pane fade" id="add-policy" role="tabpanel" aria-labelledby="add-policy-tab">
-            
             <form id="addPolicyForm" class="mt-4">
                 <div class="mb-3">
                     <label for="policyName" class="form-label">Policy Name</label>
@@ -528,7 +527,6 @@
 
 
 <!-- Modal para leer y editar políticas -->
-<!-- Modal para leer y editar políticas -->
 <div class="modal fade" id="policyModal" tabindex="-1" aria-labelledby="policyModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -537,56 +535,36 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Tab Navigation -->
-                <ul class="nav nav-tabs" id="policyTabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="details-tab" data-bs-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">Details</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="history-tab" data-bs-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">Version History</a>
-                    </li>
-                </ul>
-
-                <!-- Tab Content -->
-                <div class="tab-content" id="policyTabsContent">
-                    <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
-                        <form id="editPolicyForm">
-                            <div class="mb-3">
-                                <label for="modalPolicyName" class="form-label">Policy Name </label>
-                                <input type="text" class="form-control" id="modalPolicyName" disabled>
-                            </div>
-                            <div class="mb-3">
-                                <label for="modalPolicyDescription" class="form-label">Description</label>
-                                <textarea class="form-control" id="modalPolicyDescription" rows="3" disabled></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="modalPolicyRegulation" class="form-label">Regulation</label>
-                                <input type="text" class="form-control" id="modalPolicyRegulation" disabled>
-                            </div>
-                            <div class="mb-3">
-                                <label for="modalPolicyCompliance" class="form-label">Compliance Status</label>
-                                <select class="form-select" id="modalPolicyCompliance" disabled>
-                                    <option value="compliant">Compliant</option>
-                                    <option value="non-compliant">Non-compliant</option>
-                                </select>
-                            </div>
-                        </form>
+                <!-- Aquí se llenarán los detalles de la política -->
+                <form id="editPolicyForm">
+                    <div class="mb-3">
+                        <label for="modalPolicyName" class="form-label">Policy Name</label>
+                        <input type="text" class="form-control" id="modalPolicyName">
                     </div>
-                    <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-                        <h6 class="mt-4">Policy Version History</h6>
-                        <div id="policyHistoryContainer" class="mt-4">
-                            <!-- Aquí se cargará el historial de versiones -->
-                        </div>
+                    <div class="mb-3">
+                        <label for="modalPolicyDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="modalPolicyDescription" rows="3"></textarea>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label for="modalPolicyRegulation" class="form-label">Regulation</label>
+                        <input type="text" class="form-control" id="modalPolicyRegulation">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalPolicyCompliance" class="form-label">Compliance Status</label>
+                        <select class="form-select" id="modalPolicyCompliance">
+                            <option value="compliant">Compliant</option>
+                            <option value="non-compliant">Non-compliant</option>
+                        </select>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="editSaveBtn">Save changes</button>
             </div>
         </div>
     </div>
 </div>
-
 
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Vendor JS Files -->
