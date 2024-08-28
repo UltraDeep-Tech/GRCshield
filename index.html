@@ -719,8 +719,11 @@
 
     <script>
    document.addEventListener('DOMContentLoaded', function () {
+  // Obtener el departamento seleccionado y los departamentos a los que el usuario tiene acceso desde localStorage
   const department = localStorage.getItem('department');
   const userDepartments = JSON.parse(localStorage.getItem('userDepartments')) || [];
+  
+  // Referencias a los elementos del DOM
   const departmentSelect = document.getElementById('department-select');
   const userDepartmentDiv = document.getElementById('user-department');
 
@@ -732,11 +735,13 @@
     departmentSelect.appendChild(option);
   });
 
+  // Establecer el departamento seleccionado previamente
   if (department) {
     userDepartmentDiv.textContent = ` ${department}`;
     departmentSelect.value = department;
   }
 
+  // Escuchar el cambio de selección de departamento y actualizar localStorage
   departmentSelect.addEventListener('change', function () {
     const selectedDepartment = departmentSelect.value;
     localStorage.setItem('department', selectedDepartment);
@@ -746,6 +751,7 @@
     window.location.reload();
   });
 });
+
 
 </script>
     
