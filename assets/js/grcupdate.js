@@ -119,14 +119,24 @@ function readPolicy(policyId) {
             // Ocultar el botón de guardar en modo solo lectura
             document.getElementById('editSaveBtn').hidden = true;
 
+            // Set the policy ID on the modal for later use
+            const policyModalElement = document.getElementById('policyModal');
+            policyModalElement.setAttribute('data-policy-id', policyId);
+
             // Mostrar el modal
-            const policyModal = new bootstrap.Modal(document.getElementById('policyModal'));
+            const policyModal = new bootstrap.Modal(policyModalElement);
             policyModal.show();
         })
         .catch(error => {
             showNotification('Failed to load policy details.', 'error');
         });
 }
+
+// Load policy history when the "Version History" tab is clicked
+document.getElementById('history-tab').addEventListener('click', function () {
+    const policyId = document.getElementById('policyModal').getAttribute('data-policy-id');
+    loadPolicyHistory(policyId);
+});
 
 // Función para abrir el modal en modo edición
 function editPolicy(policyId) {
@@ -337,4 +347,38 @@ function updatePaginationControls(currentPage, totalPages) {
 // Initialize pagination on page load
 document.addEventListener('DOMContentLoaded', function () {
     displayPoliciesForPage(1);
+});
+
+function loadPolicyHistory(policyId) {
+    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}/history`)
+        .then(response => response.json())
+        .then(history => {
+            const container = document.getElementById('policyHistoryContainer');
+            container.innerHTML = ''; // Clear previous content
+
+            if (history.length > 0) {
+                history.forEach(record => {
+                    const historyItem = document.createElement('div');
+                    historyItem.classList.add('history-item');
+                    historyItem.innerHTML = `
+                        <strong>Version:</strong> ${record.version} <br>
+                        <strong>Changes:</strong> ${record.changes} <br>
+                        <strong>Modified by:</strong> ${record.modified_by} <br>
+                        <strong>Date:</strong> ${new Date(record.modified_at).toLocaleString()} <hr>
+                    `;
+                    container.appendChild(historyItem);
+                });
+            } else {
+                container.innerHTML = '<p>No version history available for this policy.</p>';
+            }
+        })
+        .catch(error => {
+            showNotification('Failed to load policy history.', 'error');
+        });
+}
+
+// Add event listener for history tab click
+document.getElementById('history-tab').addEventListener('click', function () {
+    const policyId = document.getElementById('policyModal').getAttribute('data-policy-id');
+    loadPolicyHistory(policyId);
 });
