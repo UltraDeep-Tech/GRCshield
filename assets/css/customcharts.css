@@ -859,6 +859,8 @@ body.modal-open {
   }
   
   .tab-content {
+    background: #0d1b30;
+    color: #fff;
     padding: 15px;
     align-items: center;
   }

@@ -427,6 +427,15 @@
     <!-- Pestaña Políticas Existentes -->
     <div class="tab-pane fade show active" id="existing-policies" role="tabpanel" aria-labelledby="existing-policies-tab">
         <h6 class="mt-4">Existing Policies</h6>
+        <div class="d-flex justify-content-between mb-3">
+            <input type="text" id="policySearch" class="form-control w-50" placeholder="Search policies by name">
+            <select id="complianceFilter" class="form-select w-25">
+                <option value="All">All</option>
+                <option value="Compliant">Compliant</option>
+                <option value="Non-compliant">Non-compliant</option>
+            </select>
+        </div>
+        
         <table class="table table-bordered tablepolicy">
             <thead>
                 <tr>
@@ -444,6 +453,8 @@
             <tbody id="policiesTable">
                 <!-- Las políticas se llenarán dinámicamente -->
             </tbody>
+            <div id="paginationControls" class="d-flex justify-content-center mt-4"></div>
+
         </table>
     </div>
 

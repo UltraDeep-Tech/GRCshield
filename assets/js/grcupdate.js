@@ -267,3 +267,76 @@ document.getElementById('generateReportBtn').addEventListener('click', function 
         showNotification('Error generating report.', 'error');
     });
 });
+
+// Function to filter policies
+function filterPolicies() {
+    const searchTerm = document.getElementById('policySearch').value.toLowerCase();
+    const complianceFilter = document.getElementById('complianceFilter').value;
+    const rows = document.querySelectorAll('#policiesTable tr');
+
+    rows.forEach(row => {
+        const name = row.children[1].textContent.toLowerCase();
+        const complianceStatus = row.children[4].textContent;
+
+        const matchesSearch = name.includes(searchTerm);
+        const matchesFilter = complianceFilter === 'All' || complianceStatus === complianceFilter;
+
+        if (matchesSearch && matchesFilter) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
+// Add event listeners for search and filter inputs
+document.getElementById('policySearch').addEventListener('input', filterPolicies);
+document.getElementById('complianceFilter').addEventListener('change', filterPolicies);
+
+
+let currentPage = 1;
+const rowsPerPage = 10; // Number of policies per page
+
+// Function to display policies for the current page
+function displayPoliciesForPage(page) {
+    const rows = document.querySelectorAll('#policiesTable tr');
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    rows.forEach((row, index) => {
+        if (index >= start && index < end) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+
+    // Update the pagination controls
+    updatePaginationControls(page, Math.ceil(rows.length / rowsPerPage));
+}
+
+// Function to update pagination controls
+function updatePaginationControls(currentPage, totalPages) {
+    const paginationControls = document.getElementById('paginationControls');
+    paginationControls.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.classList.add('btn', 'btn-secondary', 'm-1');
+        if (i === currentPage) {
+            pageButton.classList.add('btn-primary');
+        }
+
+        pageButton.addEventListener('click', () => {
+            displayPoliciesForPage(i);
+        });
+
+        paginationControls.appendChild(pageButton);
+    }
+}
+
+// Initialize pagination on page load
+document.addEventListener('DOMContentLoaded', function () {
+    displayPoliciesForPage(1);
+});
