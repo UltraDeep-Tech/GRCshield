@@ -343,5 +343,34 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  const tabLinks = document.querySelectorAll('#grc-policies-nav a[data-bs-target]');
+
+  tabLinks.forEach(link => {
+    link.addEventListener('click', function(event) {
+      event.preventDefault();
+
+      const targetTab = document.querySelector(this.getAttribute('data-bs-target'));
+      if (targetTab) {
+        const tabTrigger = new bootstrap.Tab(targetTab);
+        tabTrigger.show();
+      }
+    });
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const url = window.location.href;
+  const activeTab = url.split('#')[1];
+
+  if (activeTab) {
+    const targetTab = document.querySelector(`a[data-bs-target="#${activeTab}"]`);
+    if (targetTab) {
+      const tabTrigger = new bootstrap.Tab(targetTab);
+      tabTrigger.show();
+    }
+  }
+});
+
 
 

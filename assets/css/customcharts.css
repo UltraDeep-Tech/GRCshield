@@ -839,45 +839,119 @@ body.modal-open {
     background: #0d1b30;
     color: #fff;
     padding: 10px;
-  }
+}
 
-  .navlink:hover{
+.navlink:hover {
     border: none;
-  }
+}
 
-  .nav-itemt a{
-    color: #fff ;
+.nav-itemt a {
+    color: #fff;
     padding: 10px;
-  }
-  .nav-itemt a:focus {
-    padding: 10px;
-  }
+}
 
-  .nav-link:active  {
+.nav-itemt a:focus {
+    padding: 10px;
+}
+
+.nav-link:active {
     color: #0d1b30 !important;
     padding: 10px;
-  }
-  
-  .tab-content {
+}
+
+.tab-content {
     background: #0d1b30;
     color: #fff;
     padding: 15px;
     align-items: center;
-  }
+}
 
-  .nav-tabs .nav-link {
+.nav-tabs .nav-link {
     border: none;
-  }
+}
 
-  .tablepolicy thead th {
+.tablepolicy thead th {
     vertical-align: bottom;
     background-color: #102d5a;
     border: none;
     text-align: center;
     align-content: center;
-    text-align: center;
     padding: 0.75rem;
     font-weight: bold;
     color: #ffffff;
     text-transform: uppercase;
+}
+
+.tablepolicy tbody tr {
+    background-color: #1c3c70;
+    color: #ffffff;
+    text-align: center;
+    border-bottom: 1px solid #102d5a;
+}
+
+.tablepolicy tbody tr:hover {
+    background-color: #122b4d;
+}
+
+.tablepolicy tbody td {
+    padding: 0.75rem;
+    border: none;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.tablepolicy tbody td .btn {
+    color: #0d1b30;
+    background-color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.tablepolicy tbody td .btn:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.tablepolicy tbody td .btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #043e94;
+}
+
+.tablepolicy tbody td .btn-outline-primary {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0) !important;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.tablepolicy tbody td .btn-outline-primary:hover {
+ text-shadow: 0 0 10px #0056b3;
+}
+
+
+/* Estilos personalizados para el gráfico */
+#complianceStatusChart {
+  max-width: 600px;
+  margin: 20px auto;
+}
+/* Estilos personalizados para el gráfico */
+#complianceOverTimeChart {
+  max-width: 600px;
+  margin: 20px auto;
+}
+/* Estilos personalizados para el gráfico */
+#policyCategoryDistributionChart {
+  max-width: 600px;
+  margin: 20px auto;
+}
+/* Estilos personalizados para el gráfico */
+#complianceByCategoryChart {
+  max-width: 600px;
+  min-width: 400px;
+  margin: 20px auto;
 }

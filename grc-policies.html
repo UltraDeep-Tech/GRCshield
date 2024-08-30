@@ -350,11 +350,43 @@
       <!-- End Charts Nav -->
   
       <li class="nav-item">
-    <a class="nav-link collapsed" href="grc-policies.html">
-      <i class="bi bi-file-earmark-lock"></i>
-      <span>GRC Policies</span>
-    </a>
-  </li>
+        <a class="nav-link collapsed" data-bs-target="#grc-policies-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-file-earmark-lock"></i><span>GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="grc-policies-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="#" data-bs-target="#existing-policies-tab" data-bs-toggle="tab">
+              <i class="bi bi-file-earmark-text"></i><span>Policies</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-bs-target="#add-policy-tab" data-bs-toggle="tab">
+              <i class="bi bi-plus-square"></i><span>Add Policies</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-bs-target="#export-policy-tab" data-bs-toggle="tab">
+              <i class="bi bi-upload"></i><span>Import Policies</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-bs-target="#generate-report-tab" data-bs-toggle="tab">
+              <i class="bi bi-file-earmark-bar-graph"></i><span>Generate Report</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-bs-target="#alerts-tab" data-bs-toggle="tab">
+              <i class="bi bi-bell"></i><span>Notifications</span>
+            </a>
+          </li>
+          <li>
+            <a href="#chartsPolicy" >
+              <i class="bi bi-bar-chart"></i><span>Charts</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      
   
   
       <li class="nav-heading">Pages</li>
@@ -400,7 +432,7 @@
   
   <main id="main" class="main ">
 
-    <h1 class="cardindex-title" style="font-size: 25px;">GRC Policies Management</h1>
+    <h1 class=" cardindex-title" style="font-size: 25px;">GRC Policies Management</h1>
 
     <!-- Navegación por pestañas -->
     <ul class="nav nav-tabs" id="grcTabs" role="tablist">
@@ -417,12 +449,10 @@
         <li class="nav-itemt" role="presentation">
             <a class="nav-link" id="generate-report-tab" data-bs-toggle="tab" href="#generate-report" role="tab" aria-controls="generate-report" aria-selected="false">Report</a>
         </li>
-        <li class="nav-itemt" role="presentation">
-            <a class="nav-link" id="templates-tab" data-bs-toggle="tab" href="#templates" role="tab" aria-controls="templates" aria-selected="false">Templates</a>
-        </li>
+
         
         <li class="nav-itemt" role="presentation">
-            <a class="nav-link" id="alerts-tab" data-bs-toggle="tab" href="#alerts" role="tab" aria-controls="alerts" aria-selected="false">Alerts</a>
+            <a class="nav-link" id="alerts-tab" data-bs-toggle="tab" href="#alerts" role="tab" aria-controls="alerts" aria-selected="false">Notifications</a>
         </li>
     </ul>
 
@@ -430,6 +460,8 @@
         <!-- Pestaña Políticas Existentes -->
         <div class="tab-pane fade show active" id="existing-policies" role="tabpanel" aria-labelledby="existing-policies-tab">
             <h6 class="mt-4">Existing Policies</h6>
+
+
             <!-- Search and Filter Controls -->
             <div class="d-flex justify-content-between mb-3">
                 <input type="text" id="policySearch" class="form-control w-50" placeholder="Search policies by name">
@@ -485,16 +517,7 @@
                         <option value="compliant">Compliant</option>
                         <option value="non-compliant">Non-compliant</option>
                     </select>
-                </div>
-                <div class="mb-3">
-                    <label for="policyExpirationDate" class="form-label">Expiration Date</label>
-                    <input type="date" class="form-control" id="policyExpirationDate" required>
-                </div>
-                <div class="mb-3">
-                    <label for="policyReminderDays" class="form-label">Reminder Days Before Expiration</label>
-                    <input type="number" class="form-control" id="policyReminderDays" min="1" required>
-                </div>
-                
+                </div>                
                 <button type="submit" class="btn btn-primary">Add Policy</button>
             </form>
         </div>
@@ -530,26 +553,7 @@
             <button id="generateReportBtn" class="btn btn-outline-primary mt-4">Generate GRC Report</button>
         </div>
 
-        <div class="tab-pane fade" id="templates" role="tabpanel" aria-labelledby="templates-tab">
-            <h6 class="mt-4">Manage Policy Templates</h6>
-            <div class="d-flex justify-content-between mb-3">
-                <input type="text" id="templateSearch" class="form-control w-50" placeholder="Search templates by name">
-                <button id="createTemplateBtn" class="btn btn-primary">Create New Template</button>
-            </div>
-            <table class="table table-bordered tablepolicy">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="templatesTable">
-                    <!-- Las plantillas se llenarán dinámicamente -->
-                </tbody>
-            </table>
-        </div>
+
         
 
         <!-- Pestaña Alertas -->
@@ -558,6 +562,46 @@
         </div>
     </div>
 
+    <div class="row mt-3" id="chartsPolicy">
+
+
+    <div class="col-lg-6" >
+      <div class="cardindex">
+        <div class="cardindex-body">
+          <h5 class="cardindex-title">Compliant Status</h5>
+          <canvas id="complianceStatusChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 " >
+      <div class="cardindex">
+        <div class="cardindex-body">
+          <h5 class="cardindex-title">Cumpliance OverTime</h5>
+          <canvas id="complianceOverTimeChart"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-6" >
+      <div class="cardindex">
+        <div class="cardindex-body">
+          <h5 class="cardindex-title">Category Distribution</h5>
+          <canvas id="policyCategoryDistributionChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6" >
+      <div class="cardindex">
+        <div class="cardindex-body">
+          <h5 class="cardindex-title">Compliance by Category</h5>
+          <canvas id="complianceByCategoryChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    </div>
 </main>
 
 
@@ -591,15 +635,6 @@
                             <option value="non-compliant">Non-compliant</option>
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="policyExpirationDate" class="form-label">Expiration Date</label>
-                        <input type="date" class="form-control" id="policyExpirationDate" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="policyReminderDays" class="form-label">Reminder Days Before Expiration</label>
-                        <input type="number" class="form-control" id="policyReminderDays" min="1" required>
-                    </div>
-                    
                 </form>
             </div>
             <div class="modal-footer">
@@ -610,7 +645,6 @@
     </div>
 </div>
 
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Vendor JS Files -->
     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
