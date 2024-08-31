@@ -434,202 +434,206 @@
 
     <!-- Navegación entre secciones -->
     <div class="row align-items-center">
-  
-      <div class="col-lg-4">
-        <ul class="nav nav-pills mb-3 justify-content-center justify-content-lg-end cardindex"id="viewTabs" role="tablist" style="width: max-content;">
-          <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="policies-tab" data-bs-toggle="pill" href="#policiesSection" role="tab" aria-controls="policiesSection" aria-selected="true">Policies Management</a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="dashboard-tab" data-bs-toggle="pill" href="#dashboardSection" role="tab" aria-controls="dashboardSection" aria-selected="false">Dashboard</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-lg-8">
-        <h1 class="cardindex-title" style="font-size: 25px;">GRC Policies Management</h1>
-      </div>
+        <div class="col-lg-4">
+            <ul class="nav nav-pills mb-3 justify-content-center justify-content-lg-end cardindex" id="viewTabs" role="tablist" style="width: max-content;">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="policies-tab" data-bs-toggle="pill" href="#policiesSection" role="tab" aria-controls="policiesSection" aria-selected="true">Policies Management</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="dashboard-tab" data-bs-toggle="pill" href="#dashboardSection" role="tab" aria-controls="dashboardSection" aria-selected="false">Dashboard</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="notifications-tab" data-bs-toggle="pill" href="#notificationsSection" role="tab" aria-controls="notificationsSection" aria-selected="false">
+                        <i class="bi bi-bell"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-lg-8">
+            <h1 class="cardindex-title" style="font-size: 25px;">GRC Policies Management</h1>
+        </div>
     </div>
-    
 
     <div class="tab-content" id="viewTabsContent">
-      <!-- Sección de Gestión de Políticas -->
-      <div class="tab-pane fade show active" id="policiesSection" role="tabpanel" aria-labelledby="policies-tab">
-  
-        <!-- Navegación por pestañas dentro de la Gestión de Políticas -->
-        <ul class="nav nav-tabs justify-content-center" id="grcTabs" role="tablist">
-          <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="existing-policies-tab" data-bs-toggle="tab" href="#existing-policies" role="tab" aria-controls="existing-policies" aria-selected="true">Existing Policies</a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="add-policy-tab" data-bs-toggle="tab" href="#add-policy" role="tab" aria-controls="add-policy" aria-selected="false">Add Policies</a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="export-policy-tab" data-bs-toggle="tab" href="#export-policy" role="tab" aria-controls="export-policy" aria-selected="false">Import Policies</a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="generate-report-tab" data-bs-toggle="tab" href="#generate-report" role="tab" aria-controls="generate-report" aria-selected="false">Report</a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="alerts-tab" data-bs-toggle="tab" href="#alerts" role="tab" aria-controls="alerts" aria-selected="false">Notifications</a>
-          </li>
-        </ul>
-  
-        <div class="tab-content" id="grcTabsContent">
-          <!-- Pestaña Políticas Existentes -->
-          <div class="tab-pane fade show active" id="existing-policies" role="tabpanel" aria-labelledby="existing-policies-tab">
-            <h6 class="mt-4">Existing Policies</h6>
-            <!-- Controles de búsqueda y filtrado -->
-            <div class="d-flex justify-content-between mb-3">
-              <input type="text" id="policySearch" class="form-control w-50" placeholder="Search policies by name">
-              <select id="complianceFilter" class="form-select w-25">
-                <option value="All">All</option>
-                <option value="Compliant">Compliant</option>
-                <option value="Non-compliant">Non-compliant</option>
-              </select>
+        <!-- Sección de Gestión de Políticas -->
+        <div class="tab-pane fade show active" id="policiesSection" role="tabpanel" aria-labelledby="policies-tab">
+            <!-- Contenido para la gestión de políticas -->
+            <ul class="nav nav-tabs justify-content-center" id="grcTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="existing-policies-tab" data-bs-toggle="tab" href="#existing-policies" role="tab" aria-controls="existing-policies" aria-selected="true">Existing Policies</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="add-policy-tab" data-bs-toggle="tab" href="#add-policy" role="tab" aria-controls="add-policy" aria-selected="false">Add Policies</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="export-policy-tab" data-bs-toggle="tab" href="#export-policy" role="tab" aria-controls="export-policy" aria-selected="false">Import Policies</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="generate-report-tab" data-bs-toggle="tab" href="#generate-report" role="tab" aria-controls="generate-report" aria-selected="false">Report</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="grcTabsContent">
+                <!-- Pestaña Políticas Existentes -->
+                <div class="tab-pane fade show active" id="existing-policies" role="tabpanel" aria-labelledby="existing-policies-tab">
+                    <h6 class="mt-4">Existing Policies</h6>
+                    <!-- Controles de búsqueda y filtrado -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <input type="text" id="policySearch" class="form-control w-50" placeholder="Search policies by name">
+                        <select id="complianceFilter" class="form-select w-25">
+                            <option value="All">All</option>
+                            <option value="Compliant">Compliant</option>
+                            <option value="Non-compliant">Non-compliant</option>
+                        </select>
+                    </div>
+
+                    <!-- Tabla de Políticas -->
+                    <table class="table table-bordered tablepolicy">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Regulation</th>
+                                <th>Compliance Status</th>
+                                <th>Actions</th>
+                                <th>Read</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="policiesTable">
+                            <!-- Las políticas se llenarán dinámicamente -->
+                        </tbody>
+                    </table>
+
+                    <!-- Controles de paginación -->
+                    <div id="paginationControls" class="d-flex justify-content-center mt-4"></div>
+                </div>
+
+                <!-- Pestaña Agregar Políticas -->
+                <div class="tab-pane fade" id="add-policy" role="tabpanel" aria-labelledby="add-policy-tab">
+                    <form id="addPolicyForm" class="mt-4">
+                        <div class="mb-3">
+                            <label for="policyName" class="form-label">Policy Name</label>
+                            <input type="text" class="form-control" id="policyName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="policyDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="policyDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="policyRegulation" class="form-label">Regulation</label>
+                            <input type="text" class="form-control" id="policyRegulation" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="policyCompliance" class="form-label">Compliance Status</label>
+                            <select class="form-select" id="policyCompliance">
+                                <option value="compliant">Compliant</option>
+                                <option value="non-compliant">Non-compliant</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Policy</button>
+                    </form>
+                </div>
+
+                <!-- Pestaña Importar Políticas -->
+                <div class="tab-pane fade" id="export-policy" role="tabpanel" aria-labelledby="export-policy-tab">
+                    <div class="alert alert mt-4" role="alert">
+                        <h5 class="alert-heading">Import Policies</h5>
+                        <p>If you already have existing policies, you can upload them to the system using the button below. Make sure that the file is in JSON format and follows the appropriate structure to be compatible with the system. You can select a file from your computer by clicking on the "Import Policies Based on Regulations" button.</p>
+                        <p><strong>Supported formats:</strong> JSON (.json)</p>
+                        <p><strong>Last upload:</strong> <span id="lastUploadDate">No policies uploaded yet.</span></p>
+                    </div>
+
+                    <!-- Botón para subir archivos -->
+                    <button id="importPoliciesBtn" class="btn btn-outline-primary mt-4">Import Policies Based on Regulations</button>
+
+                    <!-- Input de archivo oculto -->
+                    <input type="file" id="fileInput" style="display: none;" />
+                </div>
+
+                <!-- Pestaña Generar Reporte -->
+                <div class="tab-pane fade" id="generate-report" role="tabpanel" aria-labelledby="generate-report-tab">
+                    <div class="alert alert mt-4" role="alert">
+                        <h5 class="alert-heading">Generate GRC Report</h5>
+                        <p>In this section, you can generate a comprehensive report of all policies and their compliance status. The report will provide an overview of compliant and non-compliant policies within the system, allowing you to assess the current state of policy adherence.</p>
+                        <p>Click the "Generate GRC Report" button below to create and download the report.</p>
+                        <p><strong>Supported formats:</strong> PDF, CSV</p>
+                    </div>
+
+                    <!-- Botón para generar el reporte -->
+                    <button id="generateReportBtn" class="btn btn-outline-primary mt-4">Generate GRC Report</button>
+                </div>
             </div>
-  
-            <!-- Tabla de Políticas -->
-            <table class="table table-bordered tablepolicy">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Regulation</th>
-                  <th>Compliance Status</th>
-                  <th>Actions</th>
-                  <th>Read</th>
-                  <th>Update</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody id="policiesTable">
-                <!-- Las políticas se llenarán dinámicamente -->
-              </tbody>
-            </table>
-  
-            <!-- Controles de paginación -->
-            <div id="paginationControls" class="d-flex justify-content-center mt-4"></div>
-          </div>
-  
-          <!-- Pestaña Agregar Políticas -->
-          <div class="tab-pane fade" id="add-policy" role="tabpanel" aria-labelledby="add-policy-tab">
-            <form id="addPolicyForm" class="mt-4">
-              <div class="mb-3">
-                <label for="policyName" class="form-label">Policy Name</label>
-                <input type="text" class="form-control" id="policyName" required>
-              </div>
-              <div class="mb-3">
-                <label for="policyDescription" class="form-label">Description</label>
-                <textarea class="form-control" id="policyDescription" rows="3" required></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="policyRegulation" class="form-label">Regulation</label>
-                <input type="text" class="form-control" id="policyRegulation" required>
-              </div>
-              <div class="mb-3">
-                <label for="policyCompliance" class="form-label">Compliance Status</label>
-                <select class="form-select" id="policyCompliance">
-                  <option value="compliant">Compliant</option>
-                  <option value="non-compliant">Non-compliant</option>
-                </select>
-              </div>
-              <button type="submit" class="btn btn-primary">Add Policy</button>
-            </form>
-          </div>
-  
-          <!-- Pestaña Importar Políticas -->
-          <div class="tab-pane fade" id="export-policy" role="tabpanel" aria-labelledby="export-policy-tab">
-            <div class="alert alert mt-4" role="alert">
-              <h5 class="alert-heading">Import Policies</h5>
-              <p>If you already have existing policies, you can upload them to the system using the button below. Make sure that the file is in JSON format and follows the appropriate structure to be compatible with the system. You can select a file from your computer by clicking on the "Import Policies Based on Regulations" button.</p>
-              <p><strong>Supported formats:</strong> JSON (.json)</p>
-              <p><strong>Last upload:</strong> <span id="lastUploadDate">No policies uploaded yet.</span></p>
-            </div>
-  
-            <!-- Botón para subir archivos -->
-            <button id="importPoliciesBtn" class="btn btn-outline-primary mt-4">Import Policies Based on Regulations</button>
-  
-            <!-- Input de archivo oculto -->
-            <input type="file" id="fileInput" style="display: none;" />
-          </div>
-  
-          <!-- Pestaña Generar Reporte -->
-          <div class="tab-pane fade" id="generate-report" role="tabpanel" aria-labelledby="generate-report-tab">
-            <div class="alert alert mt-4" role="alert">
-              <h5 class="alert-heading">Generate GRC Report</h5>
-              <p>In this section, you can generate a comprehensive report of all policies and their compliance status. The report will provide an overview of compliant and non-compliant policies within the system, allowing you to assess the current state of policy adherence.</p>
-              <p>Click the "Generate GRC Report" button below to create and download the report.</p>
-              <p><strong>Supported formats:</strong> PDF, CSV</p>
-            </div>
-  
-            <!-- Botón para generar el reporte -->
-            <button id="generateReportBtn" class="btn btn-outline-primary mt-4">Generate GRC Report</button>
-          </div>
-  
-          <!-- Pestaña Alertas -->
-          <div class="tab-pane fade" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
-            <div id="alertsContainer"></div>
-          </div>
         </div>
-      </div>
-  
-      <!-- Sección de Dashboard -->
-      <div class="tab-pane fade" id="dashboardSection" role="tabpanel" aria-labelledby="dashboard-tab">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="cardindex">
-              <div class="cardindex-body">
-                <h5 class="cardindex-title">Compliance Status</h5>
-                <canvas id="complianceStatusChart" style="max-height:240px; min-width: 240px;"></canvas>
-              </div>
+
+        <!-- Sección de Dashboard -->
+        <div class="tab-pane fade" id="dashboardSection" role="tabpanel" aria-labelledby="dashboard-tab">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="cardindex">
+                        <div class="cardindex-body">
+                            <h5 class="cardindex-title">Compliance Status</h5>
+                            <canvas id="complianceStatusChart" style="max-height:240px; min-width: 240px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="cardindex">
+                        <div class="cardindex-body">
+                            <h5 class="cardindex-title">Department Distribution</h5>
+                            <canvas id="departmentDistributionChart" style="max-height:240px; min-width: 240px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="cardindex">
+                        <div class="cardindex-body">
+                            <h5 class="cardindex-title">Regulation Type</h5>
+                            <canvas id="regulationTypeChart" style="max-height:240px; min-width: 240px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="cardindex">
+                        <div class="cardindex-body">
+                            <h5 class="cardindex-title">Policy Creation Timeline</h5>
+                            <canvas id="policyCreationTimelineChart" style="max-height:240px; min-width: 240px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="cardindex">
+                        <div class="cardindex-body">
+                            <h5 class="cardindex-title">Expiration Reminder</h5>
+                            <canvas id="expirationReminderChart" style="max-height:240px; min-width: 240px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="cardindex">
+                        <div class="cardindex-body">
+                            <h5 class="cardindex-title">Policy Complexity</h5>
+                            <canvas id="policyComplexityChart" style="max-height:240px; min-width: 240px;"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="cardindex">
-              <div class="cardindex-body">
-                <h5 class="cardindex-title">Department Distribution</h5>
-                <canvas id="departmentDistributionChart" style="max-height:240px; min-width: 240px;"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="cardindex">
-              <div class="cardindex-body">
-                <h5 class="cardindex-title">Regulation Type</h5>
-                <canvas id="regulationTypeChart" style="max-height:240px; min-width: 240px;"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="cardindex">
-              <div class="cardindex-body">
-                <h5 class="cardindex-title">Policy Creation Timeline</h5>
-                <canvas id="policyCreationTimelineChart" style="max-height:240px; min-width: 240px;"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="cardindex">
-              <div class="cardindex-body">
-                <h5 class="cardindex-title">Expiration Reminder</h5>
-                <canvas id="expirationReminderChart" style="max-height:240px; min-width: 240px;"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="cardindex">
-              <div class="cardindex-body">
-                <h5 class="cardindex-title">Policy Complexity</h5>
-                <canvas id="policyComplexityChart" style="max-height:240px; min-width: 240px;"></canvas>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
+
+        <!-- Sección de Notificaciones -->
+        <div class="tab-pane fade" id="notificationsSection" role="tabpanel" aria-labelledby="notifications-tab">
+            <div id="alertsContainer">
+                <h5>Notifications</h5>
+                <hr>
+                <!-- Las notificaciones se cargarán dinámicamente aquí -->
+            </div>
+        </div>
     </div>
-  
-  </main>
+</main>
+
   
   
 

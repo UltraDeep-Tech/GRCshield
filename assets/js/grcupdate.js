@@ -1,15 +1,11 @@
-
-
-
-// Función para mostrar notificaciones
+// Function to show notifications in the notifications tab
 function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
     notification.classList.add('alert');
     notification.classList.add(type === 'error' ? 'alert-danger' : 'alert-success');
-    notification.classList.add('alert-dismissible'); // Para permitir el cierre
+    notification.classList.add('alert-dismissible');
     notification.setAttribute('role', 'alert');
     
-    // Añadir el botón de cierre (X)
     const closeButton = document.createElement('button');
     closeButton.type = 'button';
     closeButton.classList.add('btn-close');
@@ -19,12 +15,13 @@ function showNotification(message, type = 'success') {
     };
 
     notification.textContent = message;
-    notification.appendChild(closeButton); // Agregar el botón de cierre a la alerta
+    notification.appendChild(closeButton);
 
-    // Mostrar la notificación en la pestaña "Alerts"
+    // Add notification to the alerts container
     const alertsContainer = document.getElementById('alertsContainer');
     alertsContainer.appendChild(notification);
 }
+
 
 // Cargar políticas y manejar formulario de agregar política
 document.addEventListener('DOMContentLoaded', function () {
