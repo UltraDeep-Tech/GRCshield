@@ -1,3 +1,6 @@
+
+
+
 // Función para mostrar notificaciones
 function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
@@ -106,7 +109,6 @@ function loadPolicies() {
 }
 
 
-// Función para actualizar el estado de cumplimiento de una política
 function updatePolicy(policyId, status) {
     const userDepartment = localStorage.getItem('userDepartment'); // Obtener el departamento del usuario
     fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
@@ -118,13 +120,26 @@ function updatePolicy(policyId, status) {
     })
     .then(response => response.json())
     .then(data => {
-        showNotification('Policy updated successfully!');
-        window.location.reload();
+        if (data.success) {
+            showNotification('Policy updated successfully!');
+            // Actualiza la política en la tabla
+            const row = document.querySelector(`#policy-row-${policyId}`);
+            if (row) {
+                const complianceCell = row.querySelector('td:nth-child(5)');
+                complianceCell.textContent = status;
+            }
+
+            // Verificar el estado de compliance después de la actualización
+            checkCompliance();
+        } else {
+            showNotification('Failed to update policy.', 'error');
+        }
     })
     .catch(error => {
         showNotification('Failed to update policy.', 'error');
     });
 }
+
 
 // Función para leer una política (usando el modal)
 function readPolicy(policyId) {
@@ -272,11 +287,6 @@ function checkCompliance() {
 }
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    loadPolicies();
-    createComplianceStatusChart(); // Llamar a la función para crear el gráfico
-});
-
 
 
 // Llamar a la función de verificación de cumplimiento al cargar la página
@@ -421,191 +431,171 @@ document.addEventListener('DOMContentLoaded', function () {
     displayPoliciesForPage(1);
 });
 
+const policyData = {
+    complianceStatus: {
+        compliant: 75,
+        nonCompliant: 25
+    },
+    departmentDistribution: {
+        'IT': 30,
+        'HR': 20,
+        'Finance': 25,
+        'Operations': 15,
+        'Legal': 10
+    },
+    regulationTypes: {
+        'GDPR': 40,
+        'HIPAA': 20,
+        'SOX': 15,
+        'PCI-DSS': 25
+    },
+    policyCreationTimeline: {
+        'Jan': 5, 'Feb': 8, 'Mar': 12, 'Apr': 7, 'May': 10, 'Jun': 15
+    },
+    expirationReminder: {
+        '30 days': 40,
+        '60 days': 30,
+        '90 days': 20,
+        'No reminder': 10
+    },
+    policyComplexity: {
+        'Low': 20,
+        'Medium': 50,
+        'High': 30
+    }
+};
 
-function createComplianceStatusChart() {
-    const ctx = document.getElementById('complianceStatusChart').getContext('2d');
+// Compliance Status Chart
+new Chart(document.getElementById('complianceStatusChart'), {
+    type: 'pie',
+    data: {
+        labels: ['Compliant', 'Non-Compliant'],
+        datasets: [{
+            data: [policyData.complianceStatus.compliant, policyData.complianceStatus.nonCompliant],
+            backgroundColor: ['#36a2eb', '#ff6384']
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Compliance Status Distribution'
+            }
+        }
+    }
+});
 
-    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies?userDepartment=${localStorage.getItem('userDepartment')}`)
-        .then(response => response.json())
-        .then(data => {
-            const compliantCount = data.filter(policy => policy.compliance_status === 'compliant').length;
-            const nonCompliantCount = data.filter(policy => policy.compliance_status === 'non-compliant').length;
+// Department Distribution Chart
+new Chart(document.getElementById('departmentDistributionChart'), {
+    type: 'bar',
+    data: {
+        labels: Object.keys(policyData.departmentDistribution),
+        datasets: [{
+            label: 'Policies per Department',
+            data: Object.values(policyData.departmentDistribution),
+            backgroundColor: '#4bc0c0'
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Policy Distribution by Department'
+            }
+        }
+    }
+});
 
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Compliant', 'Non-compliant'],
-                    datasets: [{
-                        label: 'Compliance Status',
-                        data: [compliantCount, nonCompliantCount],
-                        backgroundColor: ['#4CAF50', '#F44336'], // Colores para cada barra
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        })
-        .catch(error => console.error('Error loading compliance data:', error));
-}
+// Regulation Type Chart
+new Chart(document.getElementById('regulationTypeChart'), {
+    type: 'doughnut',
+    data: {
+        labels: Object.keys(policyData.regulationTypes),
+        datasets: [{
+            data: Object.values(policyData.regulationTypes),
+            backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0']
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Regulation Type Distribution'
+            }
+        }
+    }
+});
 
+// Policy Creation Timeline Chart
+new Chart(document.getElementById('policyCreationTimelineChart'), {
+    type: 'line',
+    data: {
+        labels: Object.keys(policyData.policyCreationTimeline),
+        datasets: [{
+            label: 'Policies Created',
+            data: Object.values(policyData.policyCreationTimeline),
+            borderColor: '#36a2eb',
+            tension: 0.1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Policy Creation Timeline'
+            }
+        }
+    }
+});
 
-function createComplianceOverTimeChart() {
-    const ctx = document.getElementById('complianceOverTimeChart').getContext('2d');
+// Expiration Reminder Chart
+new Chart(document.getElementById('expirationReminderChart'), {
+    type: 'polarArea',
+    data: {
+        labels: Object.keys(policyData.expirationReminder),
+        datasets: [{
+            data: Object.values(policyData.expirationReminder),
+            backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0']
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Policy Expiration Reminder Distribution'
+            }
+        }
+    }
+});
 
-    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies?userDepartment=${localStorage.getItem('userDepartment')}`)
-        .then(response => response.json())
-        .then(data => {
-            const dates = data.map(policy => policy.expiration_date).filter(Boolean); // Suponiendo que cada política tiene una fecha de expiración
-            const complianceStatus = data.map(policy => policy.compliance_status);
-
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: dates,
-                    datasets: [{
-                        label: 'Compliance Over Time',
-                        data: complianceStatus.map(status => status === 'compliant' ? 1 : 0),
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1,
-                        fill: true,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return value === 1 ? 'Compliant' : 'Non-compliant';
-                                }
-                            }
-                        },
-                        x: {
-                            type: 'time',
-                            time: {
-                                unit: 'month'
-                            }
-                        }
-                    }
-                }
-            });
-        })
-        .catch(error => console.error('Error loading compliance over time data:', error));
-}
-
-// Llamar a la función después de cargar el DOM
-document.addEventListener('DOMContentLoaded', createComplianceOverTimeChart);
-
-
-function createPolicyCategoryDistributionChart() {
-    const ctx = document.getElementById('policyCategoryDistributionChart').getContext('2d');
-
-    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies?userDepartment=${localStorage.getItem('userDepartment')}`)
-        .then(response => response.json())
-        .then(data => {
-            const categories = data.map(policy => policy.regulation);
-            const categoryCounts = categories.reduce((acc, category) => {
-                acc[category] = (acc[category] || 0) + 1;
-                return acc;
-            }, {});
-
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(categoryCounts),
-                    datasets: [{
-                        label: 'Policy Categories',
-                        data: Object.values(categoryCounts),
-                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.label + ': ' + tooltipItem.raw + ' policies';
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        })
-        .catch(error => console.error('Error loading policy category data:', error));
-}
-
-// Llamar a la función después de cargar el DOM
-document.addEventListener('DOMContentLoaded', createPolicyCategoryDistributionChart);
-
-function createComplianceByCategoryChart() {
-    const ctx = document.getElementById('complianceByCategoryChart').getContext('2d');
-
-    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies?userDepartment=${localStorage.getItem('userDepartment')}`)
-        .then(response => response.json())
-        .then(data => {
-            const categories = [...new Set(data.map(policy => policy.regulation))];
-            const compliantData = categories.map(category =>
-                data.filter(policy => policy.regulation === category && policy.compliance_status === 'compliant').length
-            );
-            const nonCompliantData = categories.map(category =>
-                data.filter(policy => policy.regulation === category && policy.compliance_status === 'non-compliant').length
-            );
-
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: categories,
-                    datasets: [
-                        {
-                            label: 'Compliant',
-                            data: compliantData,
-                            backgroundColor: '#4CAF50',
-                        },
-                        {
-                            label: 'Non-compliant',
-                            data: nonCompliantData,
-                            backgroundColor: '#F44336',
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        },
-                        x: {
-                            stacked: true
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        })
-        .catch(error => console.error('Error loading compliance by category data:', error));
-}
-
-// Llamar a la función después de cargar el DOM
-document.addEventListener('DOMContentLoaded', createComplianceByCategoryChart);
-
+// Policy Complexity Chart
+new Chart(document.getElementById('policyComplexityChart'), {
+    type: 'radar',
+    data: {
+        labels: Object.keys(policyData.policyComplexity),
+        datasets: [{
+            label: 'Policy Complexity',
+            data: Object.values(policyData.policyComplexity),
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgb(54, 162, 235)',
+            pointBackgroundColor: 'rgb(54, 162, 235)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgb(54, 162, 235)'
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Policy Complexity Distribution'
+            }
+        }
+    }
+});

@@ -359,18 +359,5 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  const url = window.location.href;
-  const activeTab = url.split('#')[1];
-
-  if (activeTab) {
-    const targetTab = document.querySelector(`a[data-bs-target="#${activeTab}"]`);
-    if (targetTab) {
-      const tabTrigger = new bootstrap.Tab(targetTab);
-      tabTrigger.show();
-    }
-  }
-});
-
 
 

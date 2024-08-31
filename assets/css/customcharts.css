@@ -935,23 +935,4 @@ body.modal-open {
 
 
 /* Estilos personalizados para el gráfico */
-#complianceStatusChart {
-  max-width: 600px;
-  margin: 20px auto;
-}
-/* Estilos personalizados para el gráfico */
-#complianceOverTimeChart {
-  max-width: 600px;
-  margin: 20px auto;
-}
-/* Estilos personalizados para el gráfico */
-#policyCategoryDistributionChart {
-  max-width: 600px;
-  margin: 20px auto;
-}
-/* Estilos personalizados para el gráfico */
-#complianceByCategoryChart {
-  max-width: 600px;
-  min-width: 400px;
-  margin: 20px auto;
-}
+
