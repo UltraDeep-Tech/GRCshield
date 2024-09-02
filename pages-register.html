@@ -91,6 +91,21 @@
                     </div>
 
                     <div class="col-12">
+                      <label for="yourDepartment" class="form-label" style="color: #fff;">Select Department</label>
+                      <select name="department" class="form-control" id="yourDepartment" required>
+                        <option value="">Choose...</option>
+                        <option value="Account Manager">Account Manager</option>
+                        <option value="Customer Service">Customer Service</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Finance">Finance</option>
+                        <option value="IT Support">IT Support</option>
+                        <option value="Human Resources">Human Resources</option>
+                      </select>
+                      <div class="invalid-feedback">Please select your department.</div>
+                    </div>
+
+                    <div class="col-12">
                       <div class="form-check">
                         <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
                         <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
