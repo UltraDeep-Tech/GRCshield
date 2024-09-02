@@ -22,7 +22,6 @@ function showNotification(message, type = 'success') {
     alertsContainer.appendChild(notification);
 }
 
-
 // Cargar políticas y manejar formulario de agregar política
 document.addEventListener('DOMContentLoaded', function () {
     loadPolicies();
@@ -105,7 +104,6 @@ function loadPolicies() {
         });
 }
 
-
 function updatePolicy(policyId, status) {
     const userDepartment = localStorage.getItem('userDepartment'); // Obtener el departamento del usuario
     fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
@@ -136,7 +134,6 @@ function updatePolicy(policyId, status) {
         showNotification('Failed to update policy.', 'error');
     });
 }
-
 
 // Función para leer una política (usando el modal)
 function readPolicy(policyId) {
@@ -283,9 +280,6 @@ function checkCompliance() {
         });
 }
 
-
-
-
 // Llamar a la función de verificación de cumplimiento al cargar la página
 document.addEventListener('DOMContentLoaded', checkCompliance);
 
@@ -319,7 +313,6 @@ document.getElementById('fileInput').addEventListener('change', function () {
     }
 });
 
-
 // Función para generar reportes
 document.getElementById('generateReportBtn').addEventListener('click', function () {
     // Suponiendo que el user_department está almacenado en localStorage o en el DOM
@@ -350,7 +343,6 @@ document.getElementById('generateReportBtn').addEventListener('click', function 
         console.error(error);
     });
 });
-
 
 // Función para filtrar políticas
 function filterPolicies() {
