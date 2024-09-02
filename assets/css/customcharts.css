@@ -930,9 +930,6 @@ body.modal-open {
 }
 
 .tablepolicy tbody td .btn-outline-primary:hover {
- text-shadow: 0 0 10px #0056b3;
+ text-shadow: 0 0 10px hsl(211, 100%, 35%);
 }
-
-
-/* Estilos personalizados para el gráfico */
 

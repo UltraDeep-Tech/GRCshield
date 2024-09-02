@@ -22,7 +22,7 @@ function obtenerDatos(key, callback) {
   }
 
   console.log(`Solicitando datos para el departamento: ${department}, userDepartment: ${userDepartment}`);
-  fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app//api/dashboard?department=${encodeURIComponent(department)}&user_department=${encodeURIComponent(userDepartment)}`)
+  fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/dashboard?department=${encodeURIComponent(department)}&user_department=${encodeURIComponent(userDepartment)}`)
   .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

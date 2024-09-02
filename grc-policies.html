@@ -433,17 +433,17 @@
   <main id="main" class="main">
 
     <!-- Navegación entre secciones -->
-    <div class="row align-items-center">
+    <div class="row align-items-center" >
         <div class="col-lg-4">
-            <ul class="nav nav-pills mb-3 justify-content-center justify-content-lg-end cardindex" id="viewTabs" role="tablist" style="width: max-content;">
+            <ul class="nav nav-pills mb-3 justify-content-center justify-content-lg-end cardindex " id="viewTabs" role="tablist" style="width: max-content;">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="policies-tab" data-bs-toggle="pill" href="#policiesSection" role="tab" aria-controls="policiesSection" aria-selected="true">Policies Management</a>
+                    <a class="nav-link active" id="policies-tab" data-bs-toggle="pill" href="#policiesSection" role="tab" aria-controls="policiesSection" aria-selected="true" style="color: #fff;">Policies Management</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="dashboard-tab" data-bs-toggle="pill" href="#dashboardSection" role="tab" aria-controls="dashboardSection" aria-selected="false">Dashboard</a>
+                    <a class="nav-link" id="dashboard-tab" data-bs-toggle="pill" href="#dashboardSection" role="tab" aria-controls="dashboardSection" aria-selected="false" style="color: #fff;">Dashboard</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="notifications-tab" data-bs-toggle="pill" href="#notificationsSection" role="tab" aria-controls="notificationsSection" aria-selected="false">
+                    <a class="nav-link" id="notifications-tab" data-bs-toggle="pill" href="#notificationsSection" role="tab" aria-controls="notificationsSection" aria-selected="false" style="color: #fff;">
                         <i class="bi bi-bell"></i>
                     </a>
                 </li>
@@ -461,7 +461,7 @@
             <!-- Contenido para la gestión de políticas -->
             <ul class="nav nav-tabs justify-content-center" id="grcTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="existing-policies-tab" data-bs-toggle="tab" href="#existing-policies" role="tab" aria-controls="existing-policies" aria-selected="true">Existing Policies</a>
+                    <a class="nav-link active" id="existing-policies-tab" data-bs-toggle="tab" href="#existing-policies" role="tab" aria-controls="existing-policies" aria-selected="true" >Existing Policies</a>
                 </li>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" id="add-policy-tab" data-bs-toggle="tab" href="#add-policy" role="tab" aria-controls="add-policy" aria-selected="false">Add Policies</a>
@@ -632,6 +632,9 @@
             </div>
         </div>
     </div>
+
+    <div id="alertsContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+
 </main>
 
   
