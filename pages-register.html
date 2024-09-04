@@ -54,16 +54,14 @@
               </div><!-- End Logo -->
 
               <div class="cardindex mb-3">
-
                 <div class="cardindex-body">
-
                   <div class="pt-4 pb-2">
-                    <h5 class="cardindex-title text-center pb-0 fs-4">Create an Account</h5>
+                    <h5 class="card-title pb-0 fs-4">Create an Account</h5>
                     <p class="text-center small">Enter your personal details to create account</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
-                    <div class="col-12">
+                  <form class="row g-3 needs-validation " novalidate>
+                    <div class="col-12 ">
                       <label for="yourName" class="form-label">Your Name</label>
                       <input type="text" name="name" class="form-control" id="yourName" required>
                       <div class="invalid-feedback">Please, enter your name!</div>
@@ -90,32 +88,45 @@
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
 
-                    <div class="col-12">
-                      <label for="yourDepartment" class="form-label" style="color: #fff;">Select Department</label>
-                      <select name="department" class="form-control" id="yourDepartment" required>
-                        <option value="">Choose...</option>
-                        <option value="Account Manager">Account Manager</option>
-                        <option value="Customer Service">Customer Service</option>
-                        <option value="Sales">Sales</option>
-                        <option value="Operations">Operations</option>
-                        <option value="Finance">Finance</option>
-                        <option value="IT Support">IT Support</option>
-                        <option value="Human Resources">Human Resources</option>
-                      </select>
-                      <div class="invalid-feedback">Please select your department.</div>
+                    <div class="col-12 align-items-center">
+                      <label class="form-label" style="color: #fff;">Select Department(s)</label>
+                      <div class="btn-group" role="group" aria-label="Department selection">
+                        <input type="checkbox" class="btn-check" id="accountManager" name="departments[]" value="Account Manager" autocomplete="off">
+                        <label class="btn btn-outline-light" for="accountManager">Account Manager</label>
+                    
+                        <input type="checkbox" class="btn-check" id="customerService" name="departments[]" value="Customer Service" autocomplete="off">
+                        <label class="btn btn-outline-light" for="customerService">Customer Service</label>
+                    
+                        <input type="checkbox" class="btn-check" id="sales" name="departments[]" value="Sales" autocomplete="off">
+                        <label class="btn btn-outline-light" for="sales">Sales</label>
+                    
+                        <input type="checkbox" class="btn-check" id="operations" name="departments[]" value="Operations" autocomplete="off">
+                        <label class="btn btn-outline-light" for="operations">Operations</label>
+                    
+                        <input type="checkbox" class="btn-check" id="finance" name="departments[]" value="Finance" autocomplete="off">
+                        <label class="btn btn-outline-light" for="finance">Finance</label>
+                    
+                        <input type="checkbox" class="btn-check" id="itSupport" name="departments[]" value="IT Support" autocomplete="off">
+                        <label class="btn btn-outline-light" for="itSupport">IT Support</label>
+                    
+                        <input type="checkbox" class="btn-check" id="humanResources" name="departments[]" value="Human Resources" autocomplete="off">
+                        <label class="btn btn-outline-light" for="humanResources">Human Resources</label>
+                      </div>
+                      <div class="invalid-feedback" style="display: none;">Please select at least one department.</div>
                     </div>
+                    
 
                     <div class="col-12">
                       <div class="form-check">
                         <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
-                        <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
+                        <label class="form-check-label credits" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
                         <div class="invalid-feedback">You must agree before submitting.</div>
                       </div>
                     </div>
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Create Account</button>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 credits">
                       <p class="small mb-0">Already have an account? <a href="pages-login.html">Log in</a></p>
                     </div>
                   </form>
@@ -136,7 +147,53 @@
 
     </div>
   </main><!-- End #main -->
-
+  <script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+  
+      const name = document.getElementById('yourName').value;
+      const email = document.getElementById('yourEmail').value;
+      const password = document.getElementById('yourPassword').value;
+  
+      // Capturar los departamentos seleccionados
+      const departments = [];
+      document.querySelectorAll('input[name="departments[]"]:checked').forEach((checkbox) => {
+          departments.push(checkbox.value);
+      });
+  
+      if (departments.length === 0) {
+          alert('Please select at least one department.');
+          return;
+      }
+  
+      fetch('http://127.0.0.1:8080/register', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              name: name,
+              email: email,
+              password: password,
+              departments: departments  // Enviar los departamentos seleccionados
+          })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.error) {
+              alert('Error: ' + data.error);
+          } else {
+              alert('User registered successfully!');
+              window.location.href = 'pages-login.html';  // Redirigir al usuario a la página de login
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while registering. Please try again.');
+      });
+    });
+  </script>
+  
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
