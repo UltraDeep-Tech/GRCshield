@@ -132,7 +132,7 @@ function login(event) {
     const department = document.getElementById('yourDepartment').value;
     const loginMessage = document.getElementById('loginMessage');
 
-    fetch('http://127.0.0.1:8080/login', {
+    fetch('https://backend-grcshield-934866038204.us-central1.run.app/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
