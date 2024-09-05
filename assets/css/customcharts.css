@@ -1047,3 +1047,25 @@ body.modal-open {
 .unique-btn-primary:hover {
   background-color: #081529cc;
 }
+
+
+@media (max-width: 768px) {
+  .cardindex {
+    width: 90%;
+  }
+}
+
+@media (max-width: 576px) {
+  .cardindex {
+    width: 100%;
+    margin: 0 10px;
+  }
+
+  .logo img {
+    max-width: 150px;
+  }
+
+  .btn-group label {
+    font-size: 14px;
+  }
+}
