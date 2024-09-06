@@ -611,6 +611,9 @@
   </footer><!-- End Footer -->
 
   <script>
+    // No es necesario obtener el token del frontend, ya lo has validado en el backend.
+    const userUid = "{{ uid }}";  // Usamos la variable 'uid' pasada desde el backend
+  
     document.getElementById('profile-form').addEventListener('submit', function (e) {
       e.preventDefault(); // Prevenir la recarga de la página
   
@@ -652,14 +655,13 @@
   
   // Función para actualizar el perfil en el backend
   function updateProfile(fullName, email, company, job, country, address, phone, linkedin, about, profileImageUrl) {
-      fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/update-profile', {
+      fetch('/api/update-profile', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`  // Enviar el token JWT si es necesario
           },
           body: JSON.stringify({
-              userUid: userUid,  // UID del usuario
+              userUid: userUid,  // Utilizamos el UID del usuario obtenido desde el backend
               fullName: fullName,
               email: email,
               company: company,
@@ -683,6 +685,7 @@
         });
   }
   </script>
+  
   
   
   
