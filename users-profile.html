@@ -619,10 +619,9 @@
     }
   
     const token = getCookie('jwt');
+    const userUid = "{{ uid }}" || getCookie('uid');  // Asegúrate de tener el UID
   
     if (token) {
-      const userUid = "{{ uid }}";  // UID pasado desde el backend
-  
       // Conectarse a Firebase y cargar los datos del perfil del usuario
       firebase.firestore().collection('users').doc(userUid).get().then((doc) => {
         if (doc.exists) {
@@ -682,9 +681,11 @@
           document.getElementById('profileImageEdit').src = url;
   
           // Guardar la URL de la imagen en Firestore
-          firebase.firestore().collection('users').doc(userUid).update({
+          return firebase.firestore().collection('users').doc(userUid).update({
             profileImageUrl: url
           });
+        }).then(() => {
+          alert('Imagen de perfil actualizada correctamente');
         }).catch((error) => {
           console.error('Error al subir la imagen:', error);
         });
@@ -693,15 +694,21 @@
       // Guardar los cambios en Firestore
       document.querySelector('form').addEventListener('submit', function (e) {
         e.preventDefault();
-        const fullName = document.getElementById('fullNameEdit').value;
-        const email = document.getElementById('EmailEdit').value;
-        const company = document.getElementById('companyEdit').value;
-        const job = document.getElementById('JobEdit').value;
-        const country = document.getElementById('CountryEdit').value;
-        const address = document.getElementById('AddressEdit').value;
-        const phone = document.getElementById('PhoneEdit').value;
-        const linkedin = document.getElementById('LinkedinEdit').value;
-        const about = document.getElementById('aboutEdit').value;
+        
+        const fullName = document.getElementById('fullNameEdit').value || 'Nombre no disponible';
+        const email = document.getElementById('EmailEdit').value || 'Email no disponible';
+        const company = document.getElementById('companyEdit').value || 'Compañía no disponible';
+        const job = document.getElementById('JobEdit').value || 'Trabajo no disponible';
+        const country = document.getElementById('CountryEdit').value || 'País no disponible';
+        const address = document.getElementById('AddressEdit').value || 'Dirección no disponible';
+        const phone = document.getElementById('PhoneEdit').value || 'Teléfono no disponible';
+        const linkedin = document.getElementById('LinkedinEdit').value || 'No disponible';
+        const about = document.getElementById('aboutEdit').value || 'Sin descripción disponible';
+  
+        if (!userUid) {
+          console.error('No se ha proporcionado el UID del usuario.');
+          return;
+        }
   
         // Actualizar los datos en Firebase
         firebase.firestore().collection('users').doc(userUid).set({
@@ -715,13 +722,26 @@
           linkedin: linkedin,
           about: about
         }).then(() => {
-          alert('Perfil actualizado');
+          alert('Perfil actualizado correctamente');
+  
+          // Actualizamos la vista con los nuevos datos
+          document.getElementById('fullName').textContent = fullName;
+          document.getElementById('fullNameDetail').textContent = fullName;
+          document.getElementById('Email').textContent = email;
+          document.getElementById('company').textContent = company;
+          document.getElementById('Job').textContent = job;
+          document.getElementById('JobDetail').textContent = job;
+          document.getElementById('Country').textContent = country;
+          document.getElementById('Address').textContent = address;
+          document.getElementById('Phone').textContent = phone;
+          document.getElementById('about').textContent = about;
         }).catch((error) => {
           console.error('Error al actualizar el perfil:', error);
         });
       });
     }
   </script>
+  
   
   
   
