@@ -514,25 +514,80 @@
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        <img id="profileImageEdit" src="assets/img/profile-img.jpeg" alt="Profile">
-                        <input type="file" id="uploadImage" class="btn btn-primary btn-sm">
+                        <img id="profileImageEdit" src="" alt="Profile">
+                        <div class="pt-2">
+                          <input type="file" id="uploadImage" class="btn btn-primary btn-sm">
+                        </div>
                       </div>
                     </div>
-                  
-                    <!-- Otros campos aquí -->
+    
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="fullName" type="text" class="form-control" id="fullNameEdit">
                       </div>
                     </div>
-                    <!-- Más campos aquí... -->
-                  
+    
+                    <div class="row mb-3">
+                      <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                      <div class="col-md-8 col-lg-9">
+                        <textarea name="about" class="form-control" id="aboutEdit" style="height: 100px"></textarea>
+                      </div>
+                    </div>
+    
+                    <div class="row mb-3">
+                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="company" type="text" class="form-control" id="companyEdit">
+                      </div>
+                    </div>
+    
+                    <div class="row mb-3">
+                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="job" type="text" class="form-control" id="JobEdit">
+                      </div>
+                    </div>
+    
+                    <div class="row mb-3">
+                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="country" type="text" class="form-control" id="CountryEdit">
+                      </div>
+                    </div>
+    
+                    <div class="row mb-3">
+                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="address" type="text" class="form-control" id="AddressEdit">
+                      </div>
+                    </div>
+    
+                    <div class="row mb-3">
+                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="phone" type="text" class="form-control" id="PhoneEdit">
+                      </div>
+                    </div>
+    
+                    <div class="row mb-3">
+                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="email" type="email" class="form-control" id="EmailEdit">
+                      </div>
+                    </div>
+    
+                    <div class="row mb-3">
+                      <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="linkedin" type="text" class="form-control" id="LinkedinEdit">
+                      </div>
+                    </div>
+    
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
-                  </form>
-                  <!-- End Profile Edit Form -->
+                  </form><!-- End Profile Edit Form -->
                 </div>
     
               </div><!-- End Bordered Tabs -->
@@ -556,135 +611,77 @@
   </footer><!-- End Footer -->
 
   <script>
-    // Obtener el token JWT de las cookies
-    function getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-    }
+    document.getElementById('profile-form').addEventListener('submit', function (e) {
+      e.preventDefault(); // Prevenir la recarga de la página
   
-    const token = getCookie('jwt');
-    const userUid = "{{ uid }}" || getCookie('uid');  // Asegúrate de tener el UID
+      // Obtener los valores del formulario
+      const fullName = document.getElementById('fullNameEdit').value || 'Nombre no disponible';
+      const email = document.getElementById('EmailEdit').value || 'Email no disponible';
+      const company = document.getElementById('companyEdit').value || 'Compañía no disponible';
+      const job = document.getElementById('JobEdit').value || 'Trabajo no disponible';
+      const country = document.getElementById('CountryEdit').value || 'País no disponible';
+      const address = document.getElementById('AddressEdit').value || 'Dirección no disponible';
+      const phone = document.getElementById('PhoneEdit').value || 'Teléfono no disponible';
+      const linkedin = document.getElementById('LinkedinEdit').value || 'No disponible';
+      const about = document.getElementById('aboutEdit').value || 'Sin descripción disponible';
   
-    if (token) {
-      // Conectarse a Firebase y cargar los datos del perfil del usuario
-      firebase.firestore().collection('users').doc(userUid).get().then((doc) => {
-        if (doc.exists) {
-          const userData = doc.data();
+      // Manejar la imagen de perfil
+      const profileImage = document.getElementById('uploadImage').files[0];
+      let profileImageUrl = '';
   
-          // Llenar los datos en la vista (sección de visualización)
-          document.getElementById('fullName').textContent = userData.fullName || 'Nombre no disponible';
-          document.getElementById('fullNameDetail').textContent = userData.fullName || 'Nombre no disponible';
-          document.getElementById('Email').textContent = userData.email || 'Email no disponible';
-          document.getElementById('company').textContent = userData.company || 'Compañía no disponible';
-          document.getElementById('Job').textContent = userData.job || 'Trabajo no disponible';
-          document.getElementById('JobDetail').textContent = userData.job || 'Trabajo no disponible';
-          document.getElementById('Country').textContent = userData.country || 'País no disponible';
-          document.getElementById('Address').textContent = userData.address || 'Dirección no disponible';
-          document.getElementById('Phone').textContent = userData.phone || 'Teléfono no disponible';
-          document.getElementById('about').textContent = userData.about || 'Sin descripción disponible';
+      if (profileImage) {
+          // Subir la imagen a Firebase Storage
+          const storageRef = firebase.storage().ref();
+          const userImageRef = storageRef.child('profileImages/' + userUid + '/' + profileImage.name);
+          
+          userImageRef.put(profileImage).then(() => {
+              return userImageRef.getDownloadURL();
+          }).then((url) => {
+              profileImageUrl = url;
   
-          // Llenar los datos en la vista de edición
-          document.getElementById('fullNameEdit').value = userData.fullName || '';
-          document.getElementById('EmailEdit').value = userData.email || '';
-          document.getElementById('companyEdit').value = userData.company || '';
-          document.getElementById('JobEdit').value = userData.job || '';
-          document.getElementById('CountryEdit').value = userData.country || '';
-          document.getElementById('AddressEdit').value = userData.address || '';
-          document.getElementById('PhoneEdit').value = userData.phone || '';
-          document.getElementById('LinkedinEdit').value = userData.linkedin || '';
-          document.getElementById('aboutEdit').value = userData.about || '';
-  
-          // Actualizar la imagen de perfil
-          if (userData.profileImageUrl) {
-            document.getElementById('profileImage').src = userData.profileImageUrl;
-            document.getElementById('profileImageEdit').src = userData.profileImageUrl;
-          }
-  
-          // Actualizar el enlace de LinkedIn
-          if (userData.linkedin) {
-            document.getElementById('linkedinProfile').href = userData.linkedin;
-          }
-        } else {
-          console.error("No user data found!");
-        }
-      }).catch((error) => {
-        console.error("Error al cargar los datos del usuario: ", error);
-      });
-  
-      // Manejar la subida de imagen a Firebase Storage
-      document.getElementById('uploadImage').addEventListener('change', function (e) {
-        const file = e.target.files[0];
-        const storageRef = firebase.storage().ref();
-        const userImageRef = storageRef.child('profileImages/' + userUid + '/' + file.name);
-  
-        // Subir la imagen
-        userImageRef.put(file).then(() => {
-          return userImageRef.getDownloadURL();
-        }).then((url) => {
-          document.getElementById('profileImage').src = url;
-          document.getElementById('profileImageEdit').src = url;
-  
-          // Guardar la URL de la imagen en Firestore
-          return firebase.firestore().collection('users').doc(userUid).update({
-            profileImageUrl: url
+              // Ahora que tenemos la URL de la imagen, enviamos todos los datos al backend
+              updateProfile(fullName, email, company, job, country, address, phone, linkedin, about, profileImageUrl);
+          }).catch((error) => {
+              console.error('Error al subir la imagen:', error);
           });
-        }).then(() => {
-          alert('Imagen de perfil actualizada correctamente');
+      } else {
+          // Si no se subió una nueva imagen, enviamos los demás datos de inmediato
+          updateProfile(fullName, email, company, job, country, address, phone, linkedin, about, '');
+      }
+  });
+  
+  // Función para actualizar el perfil en el backend
+  function updateProfile(fullName, email, company, job, country, address, phone, linkedin, about, profileImageUrl) {
+      fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/update-profile', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`  // Enviar el token JWT si es necesario
+          },
+          body: JSON.stringify({
+              userUid: userUid,  // UID del usuario
+              fullName: fullName,
+              email: email,
+              company: company,
+              job: job,
+              country: country,
+              address: address,
+              phone: phone,
+              linkedin: linkedin,
+              about: about,
+              profileImageUrl: profileImageUrl  // URL de la imagen de perfil (si existe)
+          })
+      }).then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+            } else {
+                console.error('Error:', data.error);
+            }
         }).catch((error) => {
-          console.error('Error al subir la imagen:', error);
+            console.error('Error al actualizar el perfil:', error);
         });
-      });
-  
-      // Guardar los cambios en Firestore
-      document.querySelector('form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        
-        const fullName = document.getElementById('fullNameEdit').value || 'Nombre no disponible';
-        const email = document.getElementById('EmailEdit').value || 'Email no disponible';
-        const company = document.getElementById('companyEdit').value || 'Compañía no disponible';
-        const job = document.getElementById('JobEdit').value || 'Trabajo no disponible';
-        const country = document.getElementById('CountryEdit').value || 'País no disponible';
-        const address = document.getElementById('AddressEdit').value || 'Dirección no disponible';
-        const phone = document.getElementById('PhoneEdit').value || 'Teléfono no disponible';
-        const linkedin = document.getElementById('LinkedinEdit').value || 'No disponible';
-        const about = document.getElementById('aboutEdit').value || 'Sin descripción disponible';
-  
-        if (!userUid) {
-          console.error('No se ha proporcionado el UID del usuario.');
-          return;
-        }
-  
-        // Actualizar los datos en Firebase
-        firebase.firestore().collection('users').doc(userUid).set({
-          fullName: fullName,
-          email: email,
-          company: company,
-          job: job,
-          country: country,
-          address: address,
-          phone: phone,
-          linkedin: linkedin,
-          about: about
-        }).then(() => {
-          alert('Perfil actualizado correctamente');
-  
-          // Actualizamos la vista con los nuevos datos
-          document.getElementById('fullName').textContent = fullName;
-          document.getElementById('fullNameDetail').textContent = fullName;
-          document.getElementById('Email').textContent = email;
-          document.getElementById('company').textContent = company;
-          document.getElementById('Job').textContent = job;
-          document.getElementById('JobDetail').textContent = job;
-          document.getElementById('Country').textContent = country;
-          document.getElementById('Address').textContent = address;
-          document.getElementById('Phone').textContent = phone;
-          document.getElementById('about').textContent = about;
-        }).catch((error) => {
-          console.error('Error al actualizar el perfil:', error);
-        });
-      });
-    }
+  }
   </script>
   
   
