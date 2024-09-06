@@ -702,6 +702,67 @@
     </div>
   </footer><!-- End Footer -->
 
+
+
+
+  <script>
+    // Obtener el token JWT de las cookies
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+  
+    const token = getCookie('jwt');
+  
+    if (token) {
+      // Llamar a tu backend para obtener el UID usando el token (si es necesario)
+      const userUid = "{{ uid }}";  // UID pasado desde el backend
+  
+      // Conectarse a Firebase y cargar los datos del perfil del usuario
+      firebase.firestore().collection('users').doc(userUid).get().then((doc) => {
+        if (doc.exists) {
+          const userData = doc.data();
+          document.getElementById('fullName').value = userData.fullName || '';
+          document.getElementById('Email').value = userData.email || '';
+          // Cargar otros campos...
+        }
+      });
+  
+      // Guardar los cambios en Firestore
+      document.querySelector('form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const fullName = document.getElementById('fullName').value;
+        const email = document.getElementById('Email').value;
+        // Obtener otros campos...
+  
+        firebase.firestore().collection('users').doc(userUid).set({
+          fullName: fullName,
+          email: email,
+          // Guardar otros campos...
+        }).then(() => {
+          alert('Perfil actualizado');
+        }).catch((error) => {
+          console.error('Error al actualizar el perfil: ', error);
+        });
+      });
+    }
+  </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
@@ -799,6 +860,7 @@
    window.location.reload();
  });
 });
+
 
 
 </script>
