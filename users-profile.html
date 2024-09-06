@@ -424,271 +424,179 @@
     <section class="section profile">
       <div class="row">
         <div class="col-xl-4">
-
+    
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center fondoperfil">
-
-              <img src="assets/img/profile-img.jpeg" alt="Profile" class="rounded-circle">
-              <h2>Abraham A. Pilcer</h2>
-              <h3>CEO and Chief Scientist</h3>
+    
+              <img id="profileImage" src="assets/img/profile-img.jpeg" alt="Profile" class="rounded-circle">
+              <h2 id="fullName"></h2>
+              <h3 id="Job"></h3>
               <div class="social-links mt-2">
-                <a href="https://www.linkedin.com/in/avipil/" class="linkedin" target="_blank"><i class="bi bi-linkedin"></i></a>
+                <a id="linkedinProfile" href="#" class="linkedin" target="_blank"><i class="bi bi-linkedin"></i></a>
               </div>
             </div>
           </div>
-
+    
         </div>
-
+    
         <div class="col-xl-8 ">
-
+    
           <div class="card ">
             <div class="card-body pt-3">
               <!-- Bordered Tabs -->
               <ul class="nav nav-tabs nav-tabs-bordered" style="color: #000; background: #bdcbe92d;">
-
+    
                 <li class="nav-item">
                   <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
                 </li>
-
+    
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
                 </li>
-
+    
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
                 </li>
-
+    
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
                 </li>
-
+    
               </ul>
               <div class="tab-content pt-2" style="color: #000; background: #bdcbe92d;">
-
+    
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
                   <h5 class="card-title">About</h5>
-                  <p class="small fst-italic">15 years leading innovation in big data and deep learning across homeland security, cybersecurity, biotechnology, finance and blockchain. 
-
-                    Former head of innovation (deep learning) at Motorola Solutions Innovation Center.
-                    
-                    I worked with Israeli intelligence in AI cybersecurity - terabytes of data in real-time.
-                    
-                    Chief Scientist of 3 startups - 2 acquired, 1 Series B.
-                    
-                    I started my career in academic research on AI systems applied to nanotechnology (DNA origami)
-                    
-                    Passionate violinist, composer of 45 symphonies (avipilcer.com).
-                    
-                    Honored twice by President Shimon Peres, as a researcher and as a violinist..</p>
-
+                  <p class="small fst-italic" id="about">Texto de descripción.</p>
+    
                   <h5 class="card-title">Profile Details</h5>
-
+    
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8">Abraham A. Pilcer</div>
+                    <div class="col-lg-3 col-md-4 label">Full Name</div>
+                    <div class="col-lg-9 col-md-8" id="fullNameDetail"></div>
                   </div>
-
+    
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Company</div>
-                    <div class="col-lg-9 col-md-8">Safety Shield Ultra</div>
+                    <div class="col-lg-9 col-md-8" id="company"> </div>
                   </div>
-
+    
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Job</div>
-                    <div class="col-lg-9 col-md-8">CEO</div>
+                    <div class="col-lg-9 col-md-8" id="JobDetail"></div>
                   </div>
-
+    
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Country</div>
-                    <div class="col-lg-9 col-md-8">Argentina</div>
+                    <div class="col-lg-9 col-md-8" id="Country"></div>
                   </div>
-
+    
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8">Corrientes 800, CABA</div>
+                    <div class="col-lg-9 col-md-8" id="Address"></div>
                   </div>
-
+    
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8">+54 9 11 7645-5965</div>
+                    <div class="col-lg-9 col-md-8" id="Phone"></div>
                   </div>
-
+    
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">avi@ultradeeptech.com</div>
+                    <div class="col-lg-9 col-md-8" id="Email"></div>
                   </div>
-
+    
                 </div>
-
+    
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
                   <!-- Profile Edit Form -->
                   <form>
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        <img src="assets/img/profile-img.jpeg" alt="Profile">
+                        <img id="profileImageEdit" src="assets/img/profile-img.jpeg" alt="Profile">
                         <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                          <input type="file" id="uploadImage" class="btn btn-primary btn-sm">
                         </div>
                       </div>
                     </div>
-
+    
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Abraham A. Pilcer">
+                        <input name="fullName" type="text" class="form-control" id="fullNameEdit">
                       </div>
                     </div>
-
+    
                     <div class="row mb-3">
                       <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
                       <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+                        <textarea name="about" class="form-control" id="aboutEdit" style="height: 100px"></textarea>
                       </div>
                     </div>
-
+    
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="Ultra Deep Tech">
+                        <input name="company" type="text" class="form-control" id="companyEdit">
                       </div>
                     </div>
-
+    
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="CEO">
+                        <input name="job" type="text" class="form-control" id="JobEdit">
                       </div>
                     </div>
-
+    
                     <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="Argentina">
+                        <input name="country" type="text" class="form-control" id="CountryEdit">
                       </div>
                     </div>
-
+    
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="Corrientes 800, CABA">
+                        <input name="address" type="text" class="form-control" id="AddressEdit">
                       </div>
                     </div>
-
+    
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="+54 9 11 7645-5965">
+                        <input name="phone" type="text" class="form-control" id="PhoneEdit">
                       </div>
                     </div>
-
+    
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="avi@ultradeeptech.com">
+                        <input name="email" type="email" class="form-control" id="EmailEdit">
                       </div>
                     </div>
-
-                    
-
+    
                     <div class="row mb-3">
                       <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
+                        <input name="linkedin" type="text" class="form-control" id="LinkedinEdit">
                       </div>
                     </div>
-
+    
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
-
                 </div>
-
-                <div class="tab-pane fade pt-3" id="profile-settings">
-
-                  <!-- Settings Form -->
-                  <form>
-
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                      <div class="col-md-8 col-lg-9">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                          <label class="form-check-label" for="changesMade">
-                            Changes made to your account
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                          <label class="form-check-label" for="newProducts">
-                            Information on new products and services
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="proOffers">
-                          <label class="form-check-label" for="proOffers">
-                            Marketing and promo offers
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                          <label class="form-check-label" for="securityNotify">
-                            Security alerts
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End settings Form -->
-
-                </div>
-
-                <div class="tab-pane fade pt-3" id="profile-change-password">
-                  <!-- Change Password Form -->
-                  <form>
-
-                    <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
-                    </div>
-                  </form><!-- End Change Password Form -->
-
-                </div>
-
+    
               </div><!-- End Bordered Tabs -->
-
             </div>
           </div>
-
         </div>
       </div>
     </section>
+    
 
   </main><!-- End #main -->
 
@@ -702,9 +610,6 @@
     </div>
   </footer><!-- End Footer -->
 
-
-
-
   <script>
     // Obtener el token JWT de las cookies
     function getCookie(name) {
@@ -716,38 +621,109 @@
     const token = getCookie('jwt');
   
     if (token) {
-      // Llamar a tu backend para obtener el UID usando el token (si es necesario)
       const userUid = "{{ uid }}";  // UID pasado desde el backend
   
       // Conectarse a Firebase y cargar los datos del perfil del usuario
       firebase.firestore().collection('users').doc(userUid).get().then((doc) => {
         if (doc.exists) {
           const userData = doc.data();
-          document.getElementById('fullName').value = userData.fullName || '';
-          document.getElementById('Email').value = userData.email || '';
-          // Cargar otros campos...
+  
+          // Llenar los datos en la vista (sección de visualización)
+          document.getElementById('fullName').textContent = userData.fullName || 'Nombre no disponible';
+          document.getElementById('fullNameDetail').textContent = userData.fullName || 'Nombre no disponible';
+          document.getElementById('Email').textContent = userData.email || 'Email no disponible';
+          document.getElementById('company').textContent = userData.company || 'Compañía no disponible';
+          document.getElementById('Job').textContent = userData.job || 'Trabajo no disponible';
+          document.getElementById('JobDetail').textContent = userData.job || 'Trabajo no disponible';
+          document.getElementById('Country').textContent = userData.country || 'País no disponible';
+          document.getElementById('Address').textContent = userData.address || 'Dirección no disponible';
+          document.getElementById('Phone').textContent = userData.phone || 'Teléfono no disponible';
+          document.getElementById('about').textContent = userData.about || 'Sin descripción disponible';
+  
+          // Llenar los datos en la vista de edición
+          document.getElementById('fullNameEdit').value = userData.fullName || '';
+          document.getElementById('EmailEdit').value = userData.email || '';
+          document.getElementById('companyEdit').value = userData.company || '';
+          document.getElementById('JobEdit').value = userData.job || '';
+          document.getElementById('CountryEdit').value = userData.country || '';
+          document.getElementById('AddressEdit').value = userData.address || '';
+          document.getElementById('PhoneEdit').value = userData.phone || '';
+          document.getElementById('LinkedinEdit').value = userData.linkedin || '';
+          document.getElementById('aboutEdit').value = userData.about || '';
+  
+          // Actualizar la imagen de perfil
+          if (userData.profileImageUrl) {
+            document.getElementById('profileImage').src = userData.profileImageUrl;
+            document.getElementById('profileImageEdit').src = userData.profileImageUrl;
+          }
+  
+          // Actualizar el enlace de LinkedIn
+          if (userData.linkedin) {
+            document.getElementById('linkedinProfile').href = userData.linkedin;
+          }
+        } else {
+          console.error("No user data found!");
         }
+      }).catch((error) => {
+        console.error("Error al cargar los datos del usuario: ", error);
+      });
+  
+      // Manejar la subida de imagen a Firebase Storage
+      document.getElementById('uploadImage').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        const storageRef = firebase.storage().ref();
+        const userImageRef = storageRef.child('profileImages/' + userUid + '/' + file.name);
+  
+        // Subir la imagen
+        userImageRef.put(file).then(() => {
+          return userImageRef.getDownloadURL();
+        }).then((url) => {
+          document.getElementById('profileImage').src = url;
+          document.getElementById('profileImageEdit').src = url;
+  
+          // Guardar la URL de la imagen en Firestore
+          firebase.firestore().collection('users').doc(userUid).update({
+            profileImageUrl: url
+          });
+        }).catch((error) => {
+          console.error('Error al subir la imagen:', error);
+        });
       });
   
       // Guardar los cambios en Firestore
       document.querySelector('form').addEventListener('submit', function (e) {
         e.preventDefault();
-        const fullName = document.getElementById('fullName').value;
-        const email = document.getElementById('Email').value;
-        // Obtener otros campos...
+        const fullName = document.getElementById('fullNameEdit').value;
+        const email = document.getElementById('EmailEdit').value;
+        const company = document.getElementById('companyEdit').value;
+        const job = document.getElementById('JobEdit').value;
+        const country = document.getElementById('CountryEdit').value;
+        const address = document.getElementById('AddressEdit').value;
+        const phone = document.getElementById('PhoneEdit').value;
+        const linkedin = document.getElementById('LinkedinEdit').value;
+        const about = document.getElementById('aboutEdit').value;
   
+        // Actualizar los datos en Firebase
         firebase.firestore().collection('users').doc(userUid).set({
           fullName: fullName,
           email: email,
-          // Guardar otros campos...
+          company: company,
+          job: job,
+          country: country,
+          address: address,
+          phone: phone,
+          linkedin: linkedin,
+          about: about
         }).then(() => {
           alert('Perfil actualizado');
         }).catch((error) => {
-          console.error('Error al actualizar el perfil: ', error);
+          console.error('Error al actualizar el perfil:', error);
         });
       });
     }
   </script>
+  
+  
   
 
 
