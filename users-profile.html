@@ -655,7 +655,7 @@
   
   // Función para actualizar el perfil en el backend
   function updateProfile(fullName, email, company, job, country, address, phone, linkedin, about, profileImageUrl) {
-      fetch('/api/update-profile', {
+      fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/update-profile', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
