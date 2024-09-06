@@ -612,13 +612,46 @@
 
   <script>
     const userUid = "{{ uid }}";  // Usamos la variable 'uid' pasada desde el backend
-  
+
+    // Función para obtener los datos del perfil del usuario desde el backend
+    function loadUserProfile() {
+        fetch(`https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile?uid=${userUid}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                // Actualizar los campos con los datos recibidos
+                document.getElementById('fullName').textContent = data.fullName || 'Nombre no disponible';
+                document.getElementById('Email').textContent = data.email || 'Email no disponible';
+                document.getElementById('company').textContent = data.company || 'Compañía no disponible';
+                document.getElementById('Job').textContent = data.job || 'Trabajo no disponible';
+                document.getElementById('Country').textContent = data.country || 'País no disponible';
+                document.getElementById('Address').textContent = data.address || 'Dirección no disponible';
+                document.getElementById('Phone').textContent = data.phone || 'Teléfono no disponible';
+                document.getElementById('Linkedin').textContent = data.linkedin || 'LinkedIn no disponible';
+                document.getElementById('about').textContent = data.about || 'Sin descripción disponible';
+                
+                // Actualizar la imagen de perfil
+                if (data.profileImageUrl) {
+                    document.getElementById('profileImage').src = data.profileImageUrl;
+                }
+            } else {
+                console.error('No se encontraron datos del perfil.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar el perfil:', error);
+        });
+    }
+
+    // Llamar a la función para cargar el perfil cuando la página cargue
+    document.addEventListener('DOMContentLoaded', loadUserProfile);
+
+    // Manejar el envío del formulario para actualizar los datos
     document.getElementById('profile-form').addEventListener('submit', function (e) {
         e.preventDefault(); // Prevenir la recarga de la página
-  
-        // Crear un objeto FormData para enviar la imagen y los demás datos
+
         const formData = new FormData();
-        formData.append('userUid', userUid);  // UID del usuario
+        formData.append('userUid', userUid);
         formData.append('fullName', document.getElementById('fullNameEdit').value || 'Nombre no disponible');
         formData.append('email', document.getElementById('EmailEdit').value || 'Email no disponible');
         formData.append('company', document.getElementById('companyEdit').value || 'Compañía no disponible');
@@ -628,21 +661,22 @@
         formData.append('phone', document.getElementById('PhoneEdit').value || 'Teléfono no disponible');
         formData.append('linkedin', document.getElementById('LinkedinEdit').value || 'No disponible');
         formData.append('about', document.getElementById('aboutEdit').value || 'Sin descripción disponible');
-  
-        // Adjuntar la imagen de perfil al FormData si hay una imagen seleccionada
+
         const profileImage = document.getElementById('uploadImage').files[0];
         if (profileImage) {
             formData.append('profileImage', profileImage);
         }
-  
-        // Enviar los datos al backend
+
+        // Enviar los datos al backend para guardarlos
         fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/update-profile', {
             method: 'POST',
-            body: formData  // Enviar los datos y la imagen en un objeto FormData
+            body: formData
         }).then(response => response.json())
           .then(data => {
               if (data.message) {
                   alert(data.message);
+                  // Recargar los datos actualizados
+                  loadUserProfile();
               } else {
                   console.error('Error:', data.error);
               }
@@ -651,6 +685,7 @@
           });
     });
 </script>
+
 
 
   
