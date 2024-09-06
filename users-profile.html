@@ -611,80 +611,48 @@
   </footer><!-- End Footer -->
 
   <script>
-    // No es necesario obtener el token del frontend, ya lo has validado en el backend.
     const userUid = "{{ uid }}";  // Usamos la variable 'uid' pasada desde el backend
   
     document.getElementById('profile-form').addEventListener('submit', function (e) {
-      e.preventDefault(); // Prevenir la recarga de la página
+        e.preventDefault(); // Prevenir la recarga de la página
   
-      // Obtener los valores del formulario
-      const fullName = document.getElementById('fullNameEdit').value || 'Nombre no disponible';
-      const email = document.getElementById('EmailEdit').value || 'Email no disponible';
-      const company = document.getElementById('companyEdit').value || 'Compañía no disponible';
-      const job = document.getElementById('JobEdit').value || 'Trabajo no disponible';
-      const country = document.getElementById('CountryEdit').value || 'País no disponible';
-      const address = document.getElementById('AddressEdit').value || 'Dirección no disponible';
-      const phone = document.getElementById('PhoneEdit').value || 'Teléfono no disponible';
-      const linkedin = document.getElementById('LinkedinEdit').value || 'No disponible';
-      const about = document.getElementById('aboutEdit').value || 'Sin descripción disponible';
+        // Crear un objeto FormData para enviar la imagen y los demás datos
+        const formData = new FormData();
+        formData.append('userUid', userUid);  // UID del usuario
+        formData.append('fullName', document.getElementById('fullNameEdit').value || 'Nombre no disponible');
+        formData.append('email', document.getElementById('EmailEdit').value || 'Email no disponible');
+        formData.append('company', document.getElementById('companyEdit').value || 'Compañía no disponible');
+        formData.append('job', document.getElementById('JobEdit').value || 'Trabajo no disponible');
+        formData.append('country', document.getElementById('CountryEdit').value || 'País no disponible');
+        formData.append('address', document.getElementById('AddressEdit').value || 'Dirección no disponible');
+        formData.append('phone', document.getElementById('PhoneEdit').value || 'Teléfono no disponible');
+        formData.append('linkedin', document.getElementById('LinkedinEdit').value || 'No disponible');
+        formData.append('about', document.getElementById('aboutEdit').value || 'Sin descripción disponible');
   
-      // Manejar la imagen de perfil
-      const profileImage = document.getElementById('uploadImage').files[0];
-      let profileImageUrl = '';
+        // Adjuntar la imagen de perfil al FormData si hay una imagen seleccionada
+        const profileImage = document.getElementById('uploadImage').files[0];
+        if (profileImage) {
+            formData.append('profileImage', profileImage);
+        }
   
-      if (profileImage) {
-          // Subir la imagen a Firebase Storage
-          const storageRef = firebase.storage().ref();
-          const userImageRef = storageRef.child('profileImages/' + userUid + '/' + profileImage.name);
-          
-          userImageRef.put(profileImage).then(() => {
-              return userImageRef.getDownloadURL();
-          }).then((url) => {
-              profileImageUrl = url;
-  
-              // Ahora que tenemos la URL de la imagen, enviamos todos los datos al backend
-              updateProfile(fullName, email, company, job, country, address, phone, linkedin, about, profileImageUrl);
+        // Enviar los datos al backend
+        fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/update-profile', {
+            method: 'POST',
+            body: formData  // Enviar los datos y la imagen en un objeto FormData
+        }).then(response => response.json())
+          .then(data => {
+              if (data.message) {
+                  alert(data.message);
+              } else {
+                  console.error('Error:', data.error);
+              }
           }).catch((error) => {
-              console.error('Error al subir la imagen:', error);
+              console.error('Error al actualizar el perfil:', error);
           });
-      } else {
-          // Si no se subió una nueva imagen, enviamos los demás datos de inmediato
-          updateProfile(fullName, email, company, job, country, address, phone, linkedin, about, '');
-      }
-  });
-  
-  // Función para actualizar el perfil en el backend
-  function updateProfile(fullName, email, company, job, country, address, phone, linkedin, about, profileImageUrl) {
-      fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/update-profile', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              userUid: userUid,  // Utilizamos el UID del usuario obtenido desde el backend
-              fullName: fullName,
-              email: email,
-              company: company,
-              job: job,
-              country: country,
-              address: address,
-              phone: phone,
-              linkedin: linkedin,
-              about: about,
-              profileImageUrl: profileImageUrl  // URL de la imagen de perfil (si existe)
-          })
-      }).then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                alert(data.message);
-            } else {
-                console.error('Error:', data.error);
-            }
-        }).catch((error) => {
-            console.error('Error al actualizar el perfil:', error);
-        });
-  }
-  </script>
+    });
+</script>
+
+
   
   
   
