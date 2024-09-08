@@ -622,11 +622,9 @@
   </footer><!-- End Footer -->
 
   <script>
-    const userUid = "{{ uid }}";  // Usamos la variable 'uid' pasada desde el backend
-
     // Función para obtener los datos del perfil del usuario desde el backend
     function loadUserProfile() {
-        fetch(`https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile?uid=${userUid}`)
+        fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', { method: 'GET' })  // No es necesario pasar el UID
         .then(response => response.json())
         .then(data => {
             if (data) {
@@ -662,7 +660,6 @@
         e.preventDefault(); // Prevenir la recarga de la página
 
         const formData = new FormData();
-        formData.append('userUid', userUid);
         formData.append('fullName', document.getElementById('fullNameEdit').value || 'Nombre no disponible');
         formData.append('email', document.getElementById('EmailEdit').value || 'Email no disponible');
         formData.append('company', document.getElementById('companyEdit').value || 'Compañía no disponible');
@@ -696,6 +693,7 @@
           });
     });
 </script>
+
 
 
 
