@@ -624,7 +624,7 @@
   <script>
     // Función para cargar el perfil del usuario
     function loadProfile() {
-        fetch('/api/get-profile', {
+      fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', {
             method: 'GET',
             credentials: 'include'
         })
@@ -692,7 +692,7 @@
             formData.append('profileImage', profileImage);
         }
     
-        fetch('/api/update-profile', {
+        fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/update-profile', {
             method: 'POST',
             body: formData,
             credentials: 'include'
