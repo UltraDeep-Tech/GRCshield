@@ -624,7 +624,7 @@
   <script>
     // Función para cargar el perfil del usuario
     function loadProfile() {
-      fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', {
+        fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', {
             method: 'GET',
             credentials: 'include'
         })
@@ -634,35 +634,35 @@
                 alert('Error: ' + data.error);
             } else {
                 // Actualizar la información en la vista general
-                document.getElementById('fullName').textContent = data.fullName || '';
-                document.getElementById('Job').textContent = data.job || '';
-                document.getElementById('company').textContent = data.company || '';
-                document.getElementById('Country').textContent = data.country || '';
-                document.getElementById('Address').textContent = data.address || '';
-                document.getElementById('Phone').textContent = data.phone || '';
-                document.getElementById('Email').textContent = data.email || '';
-                document.getElementById('about').textContent = data.about || '';
+                document.querySelectorAll('#fullName').forEach(el => el.textContent = data.fullName || '');
+                document.querySelector('#Job').textContent = data.job || '';
+                document.querySelector('#company').textContent = data.company || '';
+                document.querySelector('#Country').textContent = data.country || '';
+                document.querySelector('#Address').textContent = data.address || '';
+                document.querySelector('#Phone').textContent = data.phone || '';
+                document.querySelector('#Email').textContent = data.email || '';
+                document.querySelector('#about').textContent = data.about || '';
     
                 // Actualizar los campos del formulario de edición
-                document.getElementById('fullNameEdit').value = data.fullName || '';
-                document.getElementById('aboutEdit').value = data.about || '';
-                document.getElementById('companyEdit').value = data.company || '';
-                document.getElementById('JobEdit').value = data.job || '';
-                document.getElementById('CountryEdit').value = data.country || '';
-                document.getElementById('AddressEdit').value = data.address || '';
-                document.getElementById('PhoneEdit').value = data.phone || '';
-                document.getElementById('EmailEdit').value = data.email || '';
-                document.getElementById('LinkedinEdit').value = data.linkedin || '';
+                document.querySelector('#fullNameEdit').value = data.fullName || '';
+                document.querySelector('#aboutEdit').value = data.about || '';
+                document.querySelector('#companyEdit').value = data.company || '';
+                document.querySelector('#JobEdit').value = data.job || '';
+                document.querySelector('#CountryEdit').value = data.country || '';
+                document.querySelector('#AddressEdit').value = data.address || '';
+                document.querySelector('#PhoneEdit').value = data.phone || '';
+                document.querySelector('#EmailEdit').value = data.email || '';
+                document.querySelector('#LinkedinEdit').value = data.linkedin || '';
     
                 // Actualizar la imagen de perfil
                 if (data.profileImageUrl) {
-                    document.getElementById('profileImage').src = data.profileImageUrl;
-                    document.getElementById('profileImageEdit').src = data.profileImageUrl;
+                    document.querySelector('#profileImage').src = data.profileImageUrl;
+                    document.querySelector('#profileImageEdit').src = data.profileImageUrl;
                 }
     
                 // Actualizar el enlace de LinkedIn
                 if (data.linkedin) {
-                    document.getElementById('linkedinProfile').href = data.linkedin;
+                    document.querySelector('#linkedinProfile').href = data.linkedin;
                 }
             }
         })
@@ -677,17 +677,17 @@
         event.preventDefault();
     
         const formData = new FormData();
-        formData.append('fullName', document.getElementById('fullNameEdit').value);
-        formData.append('email', document.getElementById('EmailEdit').value);
-        formData.append('company', document.getElementById('companyEdit').value);
-        formData.append('job', document.getElementById('JobEdit').value);
-        formData.append('country', document.getElementById('CountryEdit').value);
-        formData.append('address', document.getElementById('AddressEdit').value);
-        formData.append('phone', document.getElementById('PhoneEdit').value);
-        formData.append('linkedin', document.getElementById('LinkedinEdit').value);
-        formData.append('about', document.getElementById('aboutEdit').value);
+        formData.append('fullName', document.querySelector('#fullNameEdit').value);
+        formData.append('email', document.querySelector('#EmailEdit').value);
+        formData.append('company', document.querySelector('#companyEdit').value);
+        formData.append('job', document.querySelector('#JobEdit').value);
+        formData.append('country', document.querySelector('#CountryEdit').value);
+        formData.append('address', document.querySelector('#AddressEdit').value);
+        formData.append('phone', document.querySelector('#PhoneEdit').value);
+        formData.append('linkedin', document.querySelector('#LinkedinEdit').value);
+        formData.append('about', document.querySelector('#aboutEdit').value);
     
-        const profileImage = document.getElementById('uploadImage').files[0];
+        const profileImage = document.querySelector('#uploadImage').files[0];
         if (profileImage) {
             formData.append('profileImage', profileImage);
         }
@@ -716,15 +716,15 @@
     window.addEventListener('load', loadProfile);
     
     // Agregar el evento de envío al formulario de edición de perfil
-    document.getElementById('profile-form').addEventListener('submit', updateProfile);
+    document.querySelector('#profile-form').addEventListener('submit', updateProfile);
     
     // Previsualización de la imagen de perfil
-    document.getElementById('uploadImage').addEventListener('change', function(event) {
+    document.querySelector('#uploadImage').addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                document.getElementById('profileImageEdit').src = e.target.result;
+                document.querySelector('#profileImageEdit').src = e.target.result;
             }
             reader.readAsDataURL(file);
         }
