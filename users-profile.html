@@ -634,36 +634,37 @@
             if (data.error) {
                 alert('Error: ' + data.error);
             } else {
-                // Actualizar la información en la vista general
+                // Actualizar todos los elementos con id 'fullName'
                 document.querySelectorAll('#fullName').forEach(el => el.textContent = data.fullName || '');
-                document.querySelector('#Job').textContent = data.job || '';
-                document.querySelector('#company').textContent = data.company || '';
-                document.querySelector('#Country').textContent = data.country || '';
-                document.querySelector('#Address').textContent = data.address || '';
-                document.querySelector('#Phone').textContent = data.phone || '';
-                document.querySelector('#Email').textContent = data.email || '';
-                document.querySelector('#about').textContent = data.about || '';
+    
+                // Actualizar elementos individuales
+                updateElementText('#Job', data.job);
+                updateElementText('#company', data.company);
+                updateElementText('#Country', data.country);
+                updateElementText('#Address', data.address);
+                updateElementText('#Phone', data.phone);
+                updateElementText('#Email', data.email);
+                updateElementText('#about', data.about);
     
                 // Actualizar los campos del formulario de edición
-                document.querySelector('#fullNameEdit').value = data.fullName || '';
-                document.querySelector('#aboutEdit').value = data.about || '';
-                document.querySelector('#companyEdit').value = data.company || '';
-                document.querySelector('#JobEdit').value = data.job || '';
-                document.querySelector('#CountryEdit').value = data.country || '';
-                document.querySelector('#AddressEdit').value = data.address || '';
-                document.querySelector('#PhoneEdit').value = data.phone || '';
-                document.querySelector('#EmailEdit').value = data.email || '';
-                document.querySelector('#LinkedinEdit').value = data.linkedin || '';
+                updateInputValue('#fullNameEdit', data.fullName);
+                updateInputValue('#aboutEdit', data.about);
+                updateInputValue('#companyEdit', data.company);
+                updateInputValue('#JobEdit', data.job);
+                updateInputValue('#CountryEdit', data.country);
+                updateInputValue('#AddressEdit', data.address);
+                updateInputValue('#PhoneEdit', data.phone);
+                updateInputValue('#EmailEdit', data.email);
+                updateInputValue('#LinkedinEdit', data.linkedin);
     
-                // Actualizar la imagen de perfil
+                // Actualizar todas las imágenes de perfil
                 if (data.profileImageUrl) {
-                    document.querySelector('#profileImage').src = data.profileImageUrl;
-                    document.querySelector('#profileImageEdit').src = data.profileImageUrl;
+                    updateProfileImages(data.profileImageUrl);
                 }
     
                 // Actualizar el enlace de LinkedIn
                 if (data.linkedin) {
-                    document.querySelector('#linkedinProfile').href = data.linkedin;
+                    updateLinkedInLink(data.linkedin);
                 }
             }
         })
@@ -671,6 +672,29 @@
             console.error('Error:', error);
             alert('Ocurrió un error al cargar el perfil');
         });
+    }
+    
+    // Funciones auxiliares para actualizar elementos
+    function updateElementText(selector, value) {
+        const element = document.querySelector(selector);
+        if (element) element.textContent = value || '';
+    }
+    
+    function updateInputValue(selector, value) {
+        const element = document.querySelector(selector);
+        if (element) element.value = value || '';
+    }
+    
+    function updateProfileImages(imageUrl) {
+        document.querySelectorAll('#profileImage, #profileImageEdit').forEach(img => img.src = imageUrl);
+        // Actualizar también la imagen en la barra de navegación si existe
+        const navProfileImg = document.querySelector('.nav-profile img');
+        if (navProfileImg) navProfileImg.src = imageUrl;
+    }
+    
+    function updateLinkedInLink(linkedinUrl) {
+        const linkedinLink = document.querySelector('#linkedinProfile');
+        if (linkedinLink) linkedinLink.href = linkedinUrl;
     }
     
     // Función para actualizar el perfil
