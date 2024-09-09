@@ -167,9 +167,6 @@
                     localStorage.setItem('department', department); // Departamento seleccionado
                     localStorage.setItem('userDepartments', JSON.stringify(data.user_data.departments)); // Departamentos permitidos
     
-                    // Guardar el token JWT en una cookie segura
-                    document.cookie = `jwt=${data.token}; path=/; secure; HttpOnly`;
-    
                     loginMessage.style.color = 'green';
                     loginMessage.textContent = 'Login successful! Redirecting...';
                     loginMessage.style.display = 'block';
@@ -185,7 +182,8 @@
                 loginMessage.style.display = 'block';
             });
     }
-    </script>
+</script>
+
     
 
 </body>
