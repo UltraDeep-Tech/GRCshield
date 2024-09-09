@@ -622,107 +622,114 @@
   </footer><!-- End Footer -->
 
   <script>
-    // Función para obtener los datos del perfil del usuario desde el backend
-    function loadUserProfile() {
-        fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', { 
+    // Función para cargar el perfil del usuario
+    function loadProfile() {
+        fetch('/api/get-profile', {
             method: 'GET',
-            credentials: 'include'  // Asegurar que las cookies se envíen con la solicitud
+            credentials: 'include'
         })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else if (response.status === 403) {
-                throw new Error('No autorizado');
-            } else {
-                throw new Error('Error al cargar el perfil');
-            }
-        })
+        .then(response => response.json())
         .then(data => {
-            if (data) {
-                // Actualizar los campos con los datos recibidos
-                document.getElementById('fullName').textContent = data.fullName || 'Nombre no disponible';
-                document.getElementById('Email').textContent = data.email || 'Email no disponible';
-                document.getElementById('company').textContent = data.company || 'Compañía no disponible';
-                document.getElementById('Job').textContent = data.job || 'Trabajo no disponible';
-                document.getElementById('Country').textContent = data.country || 'País no disponible';
-                document.getElementById('Address').textContent = data.address || 'Dirección no disponible';
-                document.getElementById('Phone').textContent = data.phone || 'Teléfono no disponible';
-                document.getElementById('Linkedin').textContent = data.linkedin || 'LinkedIn no disponible';
-                document.getElementById('about').textContent = data.about || 'Sin descripción disponible';
-                
+            if (data.error) {
+                alert('Error: ' + data.error);
+            } else {
+                // Actualizar la información en la vista general
+                document.getElementById('fullName').textContent = data.fullName || '';
+                document.getElementById('Job').textContent = data.job || '';
+                document.getElementById('company').textContent = data.company || '';
+                document.getElementById('Country').textContent = data.country || '';
+                document.getElementById('Address').textContent = data.address || '';
+                document.getElementById('Phone').textContent = data.phone || '';
+                document.getElementById('Email').textContent = data.email || '';
+                document.getElementById('about').textContent = data.about || '';
+    
+                // Actualizar los campos del formulario de edición
+                document.getElementById('fullNameEdit').value = data.fullName || '';
+                document.getElementById('aboutEdit').value = data.about || '';
+                document.getElementById('companyEdit').value = data.company || '';
+                document.getElementById('JobEdit').value = data.job || '';
+                document.getElementById('CountryEdit').value = data.country || '';
+                document.getElementById('AddressEdit').value = data.address || '';
+                document.getElementById('PhoneEdit').value = data.phone || '';
+                document.getElementById('EmailEdit').value = data.email || '';
+                document.getElementById('LinkedinEdit').value = data.linkedin || '';
+    
                 // Actualizar la imagen de perfil
                 if (data.profileImageUrl) {
                     document.getElementById('profileImage').src = data.profileImageUrl;
+                    document.getElementById('profileImageEdit').src = data.profileImageUrl;
                 }
-            } else {
-                console.error('No se encontraron datos del perfil.');
+    
+                // Actualizar el enlace de LinkedIn
+                if (data.linkedin) {
+                    document.getElementById('linkedinProfile').href = data.linkedin;
+                }
             }
         })
         .catch(error => {
-            console.error('Error al cargar el perfil:', error);
-            if (error.message === 'No autorizado') {
-                alert('Debes iniciar sesión para acceder a esta sección.');
-                window.location.href = '/login';  // Redirigir al login si no está autorizado
-            }
+            console.error('Error:', error);
+            alert('Ocurrió un error al cargar el perfil');
         });
     }
-
-    // Llamar a la función para cargar el perfil cuando la página cargue
-    document.addEventListener('DOMContentLoaded', loadUserProfile);
-
-    // Manejar el envío del formulario para actualizar los datos
-    document.getElementById('profile-form').addEventListener('submit', function (e) {
-        e.preventDefault(); // Prevenir la recarga de la página
-
+    
+    // Función para actualizar el perfil
+    function updateProfile(event) {
+        event.preventDefault();
+    
         const formData = new FormData();
-        formData.append('fullName', document.getElementById('fullNameEdit').value || 'Nombre no disponible');
-        formData.append('email', document.getElementById('EmailEdit').value || 'Email no disponible');
-        formData.append('company', document.getElementById('companyEdit').value || 'Compañía no disponible');
-        formData.append('job', document.getElementById('JobEdit').value || 'Trabajo no disponible');
-        formData.append('country', document.getElementById('CountryEdit').value || 'País no disponible');
-        formData.append('address', document.getElementById('AddressEdit').value || 'Dirección no disponible');
-        formData.append('phone', document.getElementById('PhoneEdit').value || 'Teléfono no disponible');
-        formData.append('linkedin', document.getElementById('LinkedinEdit').value || 'No disponible');
-        formData.append('about', document.getElementById('aboutEdit').value || 'Sin descripción disponible');
-
+        formData.append('fullName', document.getElementById('fullNameEdit').value);
+        formData.append('email', document.getElementById('EmailEdit').value);
+        formData.append('company', document.getElementById('companyEdit').value);
+        formData.append('job', document.getElementById('JobEdit').value);
+        formData.append('country', document.getElementById('CountryEdit').value);
+        formData.append('address', document.getElementById('AddressEdit').value);
+        formData.append('phone', document.getElementById('PhoneEdit').value);
+        formData.append('linkedin', document.getElementById('LinkedinEdit').value);
+        formData.append('about', document.getElementById('aboutEdit').value);
+    
         const profileImage = document.getElementById('uploadImage').files[0];
         if (profileImage) {
             formData.append('profileImage', profileImage);
         }
-
-        // Enviar los datos al backend para guardarlos
-        fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/update-profile', {
+    
+        fetch('/api/update-profile', {
             method: 'POST',
             body: formData,
-            credentials: 'include'  // Asegurar que las cookies se envíen con la solicitud
+            credentials: 'include'
         })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else if (response.status === 403) {
-                throw new Error('No autorizado');
-            } else {
-                throw new Error('Error al actualizar el perfil');
-            }
-        })
+        .then(response => response.json())
         .then(data => {
-            if (data.message) {
-                alert(data.message);
-                // Recargar los datos actualizados
-                loadUserProfile();
+            if (data.error) {
+                alert('Error: ' + data.error);
             } else {
-                console.error('Error:', data.error);
+                alert('Perfil actualizado correctamente');
+                loadProfile();  // Recargar el perfil después de la actualización
             }
         })
-        .catch((error) => {
-            console.error('Error al actualizar el perfil:', error);
-            if (error.message === 'No autorizado') {
-                alert('Debes iniciar sesión para acceder a esta sección.');
-                window.location.href = '/login';  // Redirigir al login si no está autorizado
-            }
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Ocurrió un error al actualizar el perfil');
         });
+    }
+    
+    // Cargar el perfil cuando se carga la página
+    window.addEventListener('load', loadProfile);
+    
+    // Agregar el evento de envío al formulario de edición de perfil
+    document.getElementById('profile-form').addEventListener('submit', updateProfile);
+    
+    // Previsualización de la imagen de perfil
+    document.getElementById('uploadImage').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profileImageEdit').src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
     });
-</script>
+    </script>
 
 
 
