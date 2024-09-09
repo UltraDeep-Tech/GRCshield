@@ -624,8 +624,19 @@
   <script>
     // Función para obtener los datos del perfil del usuario desde el backend
     function loadUserProfile() {
-        fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', { method: 'GET' })  // No es necesario pasar el UID
-        .then(response => response.json())
+        fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', { 
+            method: 'GET',
+            credentials: 'include'  // Asegurar que las cookies se envíen con la solicitud
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else if (response.status === 403) {
+                throw new Error('No autorizado');
+            } else {
+                throw new Error('Error al cargar el perfil');
+            }
+        })
         .then(data => {
             if (data) {
                 // Actualizar los campos con los datos recibidos
@@ -649,6 +660,10 @@
         })
         .catch(error => {
             console.error('Error al cargar el perfil:', error);
+            if (error.message === 'No autorizado') {
+                alert('Debes iniciar sesión para acceder a esta sección.');
+                window.location.href = '/login';  // Redirigir al login si no está autorizado
+            }
         });
     }
 
@@ -678,21 +693,38 @@
         // Enviar los datos al backend para guardarlos
         fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/update-profile', {
             method: 'POST',
-            body: formData
-        }).then(response => response.json())
-          .then(data => {
-              if (data.message) {
-                  alert(data.message);
-                  // Recargar los datos actualizados
-                  loadUserProfile();
-              } else {
-                  console.error('Error:', data.error);
-              }
-          }).catch((error) => {
-              console.error('Error al actualizar el perfil:', error);
-          });
+            body: formData,
+            credentials: 'include'  // Asegurar que las cookies se envíen con la solicitud
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else if (response.status === 403) {
+                throw new Error('No autorizado');
+            } else {
+                throw new Error('Error al actualizar el perfil');
+            }
+        })
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+                // Recargar los datos actualizados
+                loadUserProfile();
+            } else {
+                console.error('Error:', data.error);
+            }
+        })
+        .catch((error) => {
+            console.error('Error al actualizar el perfil:', error);
+            if (error.message === 'No autorizado') {
+                alert('Debes iniciar sesión para acceder a esta sección.');
+                window.location.href = '/login';  // Redirigir al login si no está autorizado
+            }
+        });
     });
 </script>
+
+
 
 
 
