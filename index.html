@@ -434,12 +434,7 @@
   
 </aside><!-- End Sidebar-->
 
-<div id="loginModal" class="custom-modal">
-  <div class="custom-modal-content">
-    <img src="assets/img/logo.png" class="spinner-image" alt="Loading...">
-    <p>Your session has expired or you are not logged in. Redirecting to login page...</p>
-  </div>
-</div>
+
 
 <div id="preloader">
   <img src="/assets/img/favicon.png" alt="Loading..." class="spinner-image">
@@ -803,94 +798,7 @@
 
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  <script>
-    // Función para cargar el perfil del usuario
-    function loadProfile() {
-        fetch('/api/get-profile', {
-            method: 'GET',
-            credentials: 'include'
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                alert('Error: ' + data.error);
-            } else {
-                document.getElementById('fullName').textContent = data.fullName || '';
-                document.getElementById('company').textContent = data.company || '';
-                document.getElementById('Job').textContent = data.job || '';
-                document.getElementById('Country').textContent = data.country || '';
-                document.getElementById('Address').textContent = data.address || '';
-                document.getElementById('Phone').textContent = data.phone || '';
-                document.getElementById('Email').textContent = data.email || '';
-                
-                // Actualizar campos de edición
-                document.getElementById('fullNameEdit').value = data.fullName || '';
-                document.getElementById('aboutEdit').value = data.about || '';
-                document.getElementById('companyEdit').value = data.company || '';
-                document.getElementById('jobEdit').value = data.job || '';
-                document.getElementById('countryEdit').value = data.country || '';
-                document.getElementById('addressEdit').value = data.address || '';
-                document.getElementById('phoneEdit').value = data.phone || '';
-                document.getElementById('emailEdit').value = data.email || '';
-                document.getElementById('linkedinEdit').value = data.linkedin || '';
-    
-                if (data.profileImageUrl) {
-                    document.getElementById('profileImageEdit').src = data.profileImageUrl;
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Ocurrió un error al cargar el perfil');
-        });
-    }
-    
-    // Función para actualizar el perfil
-    function updateProfile(event) {
-        event.preventDefault();
-    
-        const formData = new FormData();
-        formData.append('fullName', document.getElementById('fullNameEdit').value);
-        formData.append('email', document.getElementById('emailEdit').value);
-        formData.append('company', document.getElementById('companyEdit').value);
-        formData.append('job', document.getElementById('jobEdit').value);
-        formData.append('country', document.getElementById('countryEdit').value);
-        formData.append('address', document.getElementById('addressEdit').value);
-        formData.append('phone', document.getElementById('phoneEdit').value);
-        formData.append('linkedin', document.getElementById('linkedinEdit').value);
-        formData.append('about', document.getElementById('aboutEdit').value);
-    
-        const profileImage = document.getElementById('profileImage').files[0];
-        if (profileImage) {
-            formData.append('profileImage', profileImage);
-        }
-    
-        fetch('/api/update-profile', {
-            method: 'POST',
-            body: formData,
-            credentials: 'include'
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                alert('Error: ' + data.error);
-            } else {
-                alert('Perfil actualizado correctamente');
-                loadProfile();  // Recargar el perfil después de la actualización
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Ocurrió un error al actualizar el perfil');
-        });
-    }
-    
-    // Cargar el perfil cuando se carga la página
-    window.addEventListener('load', loadProfile);
-    
-    // Agregar el evento de envío al formulario de edición de perfil
-    document.getElementById('profileForm').addEventListener('submit', updateProfile);
-    </script>
+
 
 <script>
   (function() {
