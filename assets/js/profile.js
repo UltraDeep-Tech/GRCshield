@@ -160,7 +160,7 @@ async function signOut(event) {
         const response = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/logout', {
             method: 'POST',
             credentials: 'include' // Importante para incluir las cookies
-        });
+        }); 
 
         if (response.ok) {
             alert('You have been signed out.');
