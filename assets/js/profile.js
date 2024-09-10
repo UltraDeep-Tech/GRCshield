@@ -153,10 +153,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function signOut(event) {
+async function signOut(event) {
     event.preventDefault();
-    localStorage.removeItem('loggedIn');
-    localStorage.removeItem('expiration');
-    alert('You have been signed out.');
-    window.location.href = "/pages-login.html"; // Ajusta la ruta según tu estructura
-  }
+
+    try {
+        const response = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/logout', {
+            method: 'POST',
+            credentials: 'include' // Importante para incluir las cookies
+        });
+
+        if (response.ok) {
+            alert('You have been signed out.');
+            window.location.href = "/pages-login.html"; // Ajusta la ruta según tu estructura
+        } else {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Logout failed');
+        }
+    } catch (error) {
+        console.error('Logout error:', error);
+        alert('An error occurred during logout. Please try again.');
+    }
+}
