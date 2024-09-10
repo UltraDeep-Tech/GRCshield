@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (response.status === 401) {
-                // Usuario no autorizado, mostrar modal y redirigir
                 throw new Error('Unauthorized');
             }
             if (!response.ok) {
@@ -33,6 +32,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(data.error);
             }
             
+            // Ocultar el modal si existe
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+    
             // Actualizar todos los elementos con id 'fullName'
             document.querySelectorAll('#fullName').forEach(el => el.textContent = data.fullName || '');
     
@@ -73,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (error.message === 'Unauthorized') {
                 showModalAndRedirect();
             } else {
-                // Para otros errores, puedes decidir si quieres mostrar una alerta o manejarlos de otra manera
                 console.error('Error al cargar el perfil:', error.message);
             }
         });
