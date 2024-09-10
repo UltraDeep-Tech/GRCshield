@@ -157,7 +157,7 @@ async function signOut(event) {
     event.preventDefault();
 
     try {
-        const response = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/logout', {
+        const response = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/logout', {
             method: 'POST',
             credentials: 'include' // Importante para incluir las cookies
         });
