@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Función para mostrar el modal y redirigir
+
     function showModalAndRedirect() {
-        const modal = document.getElementById('loginModal');
-        modal.style.display = 'block';
-        setTimeout(() => {
-            window.location.href = "/pages-login.html";
-        }, 3000); // Redirige después de 3 segundos
+    const modal = document.getElementById('loginModal');
+    modal.style.display = 'block';
+    setTimeout(() => {
+        window.location.href = "/pages-login.html";
+    }, 3000); // Redirige después de 3 segundos
     }
 
-    // Función para cargar el perfil del usuario
     function loadProfile() {
         fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', {
             method: 'GET',
@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
             },
         })
         .then(response => {
+            if (response.status === 401) {
+                // Usuario no autorizado, mostrar modal y redirigir
+                throw new Error('Unauthorized');
+            }
             if (!response.ok) {
                 throw new Error('HTTP status ' + response.status);
             }
@@ -31,10 +35,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Actualizar todos los elementos con id 'fullName'
             document.querySelectorAll('#fullName').forEach(el => el.textContent = data.fullName || '');
-
+    
             // Actualizar todos los elementos relacionados con 'Job'
             document.querySelectorAll('#Job, .job-title').forEach(el => el.textContent = data.job || '');
-
+    
             // Actualizar elementos individuales
             updateElementText('#company', data.company);
             updateElementText('#Country', data.country);
@@ -42,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateElementText('#Phone', data.phone);
             updateElementText('#Email', data.email);
             updateElementText('#about', data.about);
-
+    
             // Actualizar los campos del formulario de edición
             updateInputValue('#fullNameEdit', data.fullName);
             updateInputValue('#aboutEdit', data.about);
@@ -53,12 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
             updateInputValue('#PhoneEdit', data.phone);
             updateInputValue('#EmailEdit', data.email);
             updateInputValue('#LinkedinEdit', data.linkedin);
-
+    
             // Actualizar todas las imágenes de perfil
             if (data.profileImageUrl) {
                 updateProfileImages(data.profileImageUrl);
             }
-
+    
             // Actualizar el enlace de LinkedIn
             if (data.linkedin) {
                 updateLinkedInLink(data.linkedin);
@@ -66,7 +70,12 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Ocurrió un error al cargar el perfil: ' + error.message);
+            if (error.message === 'Unauthorized') {
+                showModalAndRedirect();
+            } else {
+                // Para otros errores, puedes decidir si quieres mostrar una alerta o manejarlos de otra manera
+                console.error('Error al cargar el perfil:', error.message);
+            }
         });
     }
 
