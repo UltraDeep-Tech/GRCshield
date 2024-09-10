@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Función para mostrar el modal y redirigir
+    function showModalAndRedirect() {
+        const modal = document.getElementById('loginModal');
+        modal.style.display = 'block';
+        setTimeout(() => {
+            window.location.href = "/pages-login.html";
+        }, 3000); // Redirige después de 3 segundos
+    }
+
     // Función para cargar el perfil del usuario
     function loadProfile() {
         fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', {
@@ -153,18 +162,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Función de cierre de sesión actualizada
 async function signOut(event) {
     event.preventDefault();
 
     try {
         const response = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/logout', {
             method: 'POST',
-            credentials: 'include' // Importante para incluir las cookies
+            credentials: 'include'
         }); 
 
         if (response.ok) {
-            alert('You have been signed out.');
-            window.location.href = "/pages-login.html"; // Ajusta la ruta según tu estructura
+            showModalAndRedirect();
         } else {
             const errorData = await response.json();
             throw new Error(errorData.error || 'Logout failed');

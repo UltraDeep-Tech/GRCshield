@@ -1082,10 +1082,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-function signOut(event) {
-  event.preventDefault();
-  localStorage.removeItem('loggedIn');
-  localStorage.removeItem('expiration');
-  alert('You have been signed out.');
-  window.location.href = "/pages-login.html"; // Ajusta la ruta según tu estructura
-}
+
