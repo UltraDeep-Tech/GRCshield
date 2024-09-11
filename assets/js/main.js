@@ -350,5 +350,14 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+  const chatLink = document.getElementById("chat-link");
+  const popupSound = document.getElementById("popup-sound");
+
+  // Play sound on click (more reliable for browsers)
+  chatLink.addEventListener("click", function() {
+    popupSound.play();
+  });
+});
 
 

@@ -78,7 +78,7 @@
     
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
+            <i class="bi bi-bell bellnotification"></i>
             <span class="badge bg-primary badge-number">4</span>
           </a><!-- End Notification Icon -->
     
@@ -279,6 +279,15 @@
     
 
   </header><!-- End Header -->  
+
+
+  <a href="https://chat.ultradeep.tech/" class="whatsapp-float" target="_blank" data-aos="fade-up" id="chat-link">
+    <i class="bi bi-robot whatsapp-icon"></i>
+    <span class="tooltip-text">Hi, how can I assist you today?</span>
+</a>
+
+<audio id="popup-sound" src="/assets/sound/level-up-191997.mp3" preload="auto"></audio>
+
   <div id="preloader">
     <img src="/assets/img/favicon.png" alt="Loading..." class="spinner-image">
   </div>
@@ -465,7 +474,7 @@
         <!-- Sección de Gestión de Políticas -->
         <div class="tab-pane fade show active" id="policiesSection" role="tabpanel" aria-labelledby="policies-tab">
             <!-- Contenido para la gestión de políticas -->
-            <ul class="nav nav-tabs justify-content-center" id="grcTabs" role="tablist">
+            <ul class="nav nav-tabs justify-content-center principiotabla" id="grcTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="existing-policies-tab" data-bs-toggle="tab" href="#existing-policies" role="tab" aria-controls="existing-policies" aria-selected="true" >Existing Policies</a>
                 </li>
@@ -483,7 +492,7 @@
             <div class="tab-content" id="grcTabsContent">
                 <!-- Pestaña Políticas Existentes -->
                 <div class="tab-pane fade show active" id="existing-policies" role="tabpanel" aria-labelledby="existing-policies-tab">
-                    <h6 class="mt-4">Existing Policies</h6>
+                    <h6 class="mt-4 existing-policies">Existing Policies</h6>
                     <!-- Controles de búsqueda y filtrado -->
                     <div class="d-flex justify-content-between mb-3">
                         <input type="text" id="policySearch" class="form-control w-50" placeholder="Search policies by name">
@@ -540,7 +549,7 @@
                                 <option value="non-compliant">Non-compliant</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add Policy</button>
+                        <button type="submit" class="btn btn-primary" id="addpolicybutton">Add Policy</button>
                     </form>
                 </div>
 

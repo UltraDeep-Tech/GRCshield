@@ -87,7 +87,7 @@ h6 {
   right: 20px;
   bottom: 20px;
   z-index: 99999;
-  background: linear-gradient(135deg, #0d1b30 25%, #043e94 100%); /* Cambia el color a un azul más claro */
+  background: #0056b3; /* Cambia el color a un azul más claro */
   width: 50px; /* Tamaño ligeramente más grande */
   height: 50px;
   border-radius: 50%; /* Botón redondo */
@@ -435,12 +435,13 @@ animation: gradientAnimation 3s ease infinite;
 
 .header-nav .notifications {
   inset: 8px -15px auto auto !important;
-  background: linear-gradient(135deg, #0d1b30 25%, #043e94 100%); /* Cambia el color a un azul más claro */
-  color:#fff;
+  background: #f0f0f0; /* Cambia el color a un azul más claro */
+  color: #000;
 }
-.header-nav .notifications  a{
+
+.header-nav .notifications  a {
   inset: 8px -15px auto auto !important;
-  color:#fff;
+  color:#000;
 }
 
 .header-nav .notifications .notification-item {
@@ -448,14 +449,14 @@ animation: gradientAnimation 3s ease infinite;
   align-items: center;
   padding: 15px 10px;
   transition: 0.3s;
-  color:#fff;
+  color:#000;
 
 }
 
 .header-nav .notifications .notification-item i {
   margin: 0 20px 0 10px;
   font-size: 24px;
-  color:#fff;
+  color:#000;
 
 }
 
@@ -463,30 +464,37 @@ animation: gradientAnimation 3s ease infinite;
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 5px;
-    color:#fff;
+    color:#000;
 
 }
 
 .header-nav .notifications .notification-item p {
   font-size: 13px;
   margin-bottom: 3px;
-  color:#fff;
+  color:#333;
 }
 
 .header-nav .notifications .notification-item:hover {
-  background-color: #0056b3;
+  background-color: #012a70e3;
+  color: #fff !important;
+}
+.header-nav .notifications .notification-item:hover h4{
+  color: #fff !important;
+}
+.header-nav .notifications .notification-item:hover p{
+  color: #fff !important;
 }
 
 .header-nav .messages {
   inset: 8px -15px auto auto !important;
-  background: linear-gradient(135deg, #0d1b30 25%, #043e94 100%); /* Cambia el color a un azul más claro */
-color:#fff;
+  background: #f0f0f0; /* Cambia el color a un azul más claro */
+  color:#000;
 }
 
 .header-nav .messages .message-item {
   padding: 15px 10px;
   transition: 0.3s;
-  color:#fff;
+  color:#000;
 
   
   
@@ -494,7 +502,7 @@ color:#fff;
 
 .header-nav .messages .message-item a {
   display: flex;
-    color:#fff;
+    color:#000;
 
 }
 
@@ -507,29 +515,36 @@ color:#fff;
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 5px;
-  color:#fff;
+  color:#000;
 }
 
 .header-nav .messages .message-item p {
   font-size: 13px;
   margin-bottom: 3px;
-  color:#fff;
+  color:#333;
 }
 .header-nav .messages  a {
   font-size: 13px;
   margin-bottom: 3px;
-  color:#fff;
+  color:#333;
 }
 
 .header-nav .messages .message-item:hover {
-  background-color: #0056b3;
+  background-color: #012970;
+}
+.header-nav .messages .message-item:hover h4 {
+color: #fff;
+}
+.header-nav .messages .message-item:hover p{
+  color: #fff;
 }
 
 .header-nav .profile {
   min-width: 240px;
   padding-bottom: 0;
   top: 8px !important;
-  background: linear-gradient(135deg, #0d1b30 25%, #043e94 100%); /* Cambia el color a un azul más claro */
+  background: #f0f0f0; 
+  color: #000;
 
 }
 
@@ -537,27 +552,43 @@ color:#fff;
   font-size: 18px;
   margin-bottom: 0;
   font-weight: 600;
-  color:#fff;
+  color:#000;
 }
 
 .header-nav .profile .dropdown-header span {
   font-size: 14px;
+  color:#000 !important;
+
 }
 
 .header-nav .profile .dropdown-item {
   font-size: 14px;
   padding: 10px 15px;
   transition: 0.3s;
+  color:#000;
+
 }
 
 .header-nav .profile .dropdown-item i {
   margin-right: 10px;
   font-size: 18px;
   line-height: 0;
+  color:#000;
+
+}
+.header-nav .profile .dropdown-item span {
+
+  color:#000;
 }
 
 .header-nav .profile .dropdown-item:hover {
-  background-color: #0056b3;
+  background-color: #012970;
+  color: #000;
+}
+.header-nav .profile .dropdown-item:hover  i{
+  color: #fff;
+}
+.header-nav .profile .dropdown-item:hover span{
   color: #fff;
 }
 
