@@ -1,16 +1,12 @@
-
-    function showModalAndRedirect() {
+function showModalAndRedirect() {
     const modal = document.getElementById('loginModal');
     modal.style.display = 'block';
     setTimeout(() => {
         window.location.href = "/pages-login.html";
     }, 3000); // Redirige después de 3 segundos
-    }
-
+}
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Función para mostrar el modal y redirigir
-
     function loadProfile() {
         fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', {
             method: 'GET',
@@ -34,12 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(data.error);
             }
             
-            // Ocultar el modal si existe
-            const modal = document.getElementById('loginModal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
-    
             // Actualizar todos los elementos con id 'fullName'
             document.querySelectorAll('#fullName').forEach(el => el.textContent = data.fullName || '');
     
