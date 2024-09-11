@@ -60,12 +60,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .finally(() => {
-            // Ocultar cualquier modal que pudiera estar visible si el usuario está autorizado
-            if (isAuthorized) {
-                const loginModal = document.getElementById('loginModal');
-                if (loginModal) {
-                    loginModal.style.display = 'none';
-                }
+            // Asegurarse de que el modal de login esté oculto si el usuario está autorizado
+            const loginModal = document.getElementById('loginModal');
+            if (loginModal) {
+                loginModal.style.display = isAuthorized ? 'none' : 'block';
             }
         });
     }
