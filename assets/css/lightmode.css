@@ -4,7 +4,7 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  background: #ffffff;
+  background: #f0f0f0;
   color: #000000;
   margin: 0;
   padding: 0;
@@ -78,7 +78,7 @@ h1, h2, h3, h4, h5, h6 {
   right: 20px;
   bottom: 20px;
   z-index: 99999;
-  background: #e0e0e0; /* Gris claro */
+  background: #0056b3;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -90,8 +90,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .back-to-top i {
-  font-size: 24px;
-  color: #333333; /* Gris oscuro */
+  font-size: 32px;
+  color: #fff; /* Gris oscuro */
   transition: transform 0.2s;
 }
 
@@ -1198,14 +1198,15 @@ margin-right: 15px;
   filter: brightness(1);
 }
 
+/* Botón Flotante de WhatsApp */
 .whatsapp-float {
   position: fixed;
   width: 50px;
   height: 50px;
   bottom: 18px;
   right: 75px;
-  background: #dcdcdc; /* Gris claro */
-  color: #333333; /* Gris oscuro */
+  background: #0056b3; /* Cambia el color a un azul más claro */
+  color: #fff;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -1217,7 +1218,7 @@ margin-right: 15px;
 
 .whatsapp-float:hover {
   background-color: #ffffff; /* Blanco */
-  color: #333333; /* Gris oscuro */
+  color: #0056b3; /* Gris oscuro */
   transform: scale(1.1);
 }
 
@@ -1666,54 +1667,274 @@ body.modal-open {
 
 .modern-select {
   appearance: none;
-  background-color: #4a87d8;
-  border-radius: 4px;
-  border: none;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
   text-align: center;
-  padding: 8px 12px;
+  padding: 10px 15px;
   font-size: 16px;
-  color: #fff;
+  color: #212529; /* Texto en negro */
   outline: none;
   cursor: pointer;
   width: 100%;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .modern-select:focus {
-  border-color: #007bff;
+  border-color: #80bdff;
+  background-color: #e9ecef;
 }
 
 .modern-select option {
-  padding: 5px;
+  background-color: #ffffff;
+  color: #212529; /* Texto en negro */
+  padding: 10px;
 }
 
+.modern-select:hover {
+  background-color: #f1f3f5;
+}
+
+.modern-select:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+  color: #adb5bd;
+}
+
+/* Navbar */
 .nav {
-  background: #858484;
-  color: rgb(0, 0, 0);
+  background: #f8f9fa;
+  color: #343a40 !important;
   padding: 10px;
 }
 
-.navlink:hover{
-  border: none;
+.nav-link {
+  color: #000 !important;
 }
-.nav-itemt a{
-  color: rgb(15, 15, 15) ;
+
+.navlink:hover {
+  border: none;
+  color: #007bff;
+}
+
+.nav-itemt a {
+  color: #343a40;
   padding: 10px;
 }
+
 .nav-itemt a:focus {
   padding: 10px;
 }
 
-.nav-link:active  {
-  color: #dbd9d9 !important;
+.nav-link:active {
+  color: #007bff !important;
   padding: 10px;
 }
 
+.nav-pills .nav-link.active {
+  color: #fff !important;
+}
+
+/* Tabs */
 .tab-content {
-  background: #dbd9d9;
-  color: #333333;
+  background: #ffffff;
+  color: #343a40;
   padding: 15px;
+  align-items: center;
 }
 
 .nav-tabs .nav-link {
   border: none;
+  color: #495057;
+}
+
+.nav-tabs .nav-link.active {
+  border-bottom: 2px solid #007bff;
+}
+
+/* Table Policy */
+.tablepolicy thead th {
+  vertical-align: bottom;
+  background-color: #e9ecef;
+  border: none;
+  text-align: center;
+  align-content: center;
+  padding: 0.75rem;
+  font-weight: bold;
+  color: #212529; /* Texto en negro */
+  text-transform: uppercase;
+}
+
+.tablepolicy tbody tr {
+  background-color: #f8f9fa;
+  color: #212529; /* Texto en negro */
+  text-align: center;
+  border-bottom: 1px solid #ced4da;
+}
+
+.tablepolicy tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+.tablepolicy tbody td {
+  padding: 0.75rem;
+  border: none;
+  vertical-align: middle;
+  text-align: center;
+}
+
+/* Buttons */
+.tablepolicy tbody td .btn {
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.tablepolicy tbody td .btn:hover {
+  background-color: #0056b3;
+  color: #fff;
+}
+
+.tablepolicy tbody td .btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #80bdff;
+}
+
+.tablepolicy tbody td .btn-outline-primary {
+  color: #007bff;
+  background-color: transparent;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: 1px solid #007bff;
+}
+
+.tablepolicy tbody td .btn-outline-primary:hover {
+  background-color: #e9f1ff;
+  color: #007bff;
+}
+
+/* Modern Button */
+.btn-check {
+  display: none;
+}
+
+.btn-outline-light {
+  color: #007bff;
+  background-color: rgba(0, 123, 255, 0.1);
+  border: 1px solid rgba(0, 123, 255, 0.5);
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 5px;
+  text-transform: uppercase;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.3);
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.btn-outline-light:hover {
+  background-color: rgba(0, 123, 255, 0.3);
+  color: #fff;
+  box-shadow: 0px 0px 20px rgba(0, 123, 255, 0.5);
+}
+
+.btn-outline-light:active {
+  background-color: rgba(0, 123, 255, 0.5);
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.btn-check:checked + .btn-outline-light {
+  background-color: rgba(0, 123, 255, 0.9);
+  color: #ffffff;
+  box-shadow: 0px 0px 20px rgba(0, 123, 255, 1);
+}
+
+/* Form Check */
+.form-check {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.form-check-input {
+  margin-right: 8px; /* Space between checkbox and label */
+}
+
+/* Modal */
+.unique-modal-content {
+  background-color: #ffffff; 
+  border-radius: 10px;
+  border: none;
+  color: #343a40; /* Texto en negro */
+}
+
+.unique-modal-header {
+  border-bottom: none;
+  background-color: #f8f9fa;
+  color: #343a40; /* Texto en negro */
+  padding: 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.unique-modal-body {
+  padding: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+  background-color: #ffffff;
+  color: #343a40; /* Texto en negro */
+}
+
+.unique-modal-footer {
+  border-top: none;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* Unique button */
+.unique-btn-primary {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.unique-btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+.cardindex {
+  width: 90%;
+}
+}
+
+@media (max-width: 576px) {
+.cardindex {
+  width: 100%;
+  margin: 0 10px;
+}
+
+.logo img {
+  max-width: 150px;
+}
+
+.btn-group label {
+  font-size: 14px;
+}
 }
