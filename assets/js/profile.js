@@ -22,6 +22,12 @@ function showModalAndRedirect() {
 
 document.addEventListener('DOMContentLoaded', function() {
     let isAuthorized = false;
+    const loginModal = document.getElementById('loginModal');
+
+    // Ocultar el modal de login inicialmente
+    if (loginModal) {
+        loginModal.style.display = 'none';
+    }
 
     function loadProfile() {
         fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', {
@@ -57,13 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 showModalAndRedirect();
             } else {
                 console.error('Error al cargar el perfil:', error.message);
-            }
-        })
-        .finally(() => {
-            // Asegurarse de que el modal de login esté oculto si el usuario está autorizado
-            const loginModal = document.getElementById('loginModal');
-            if (loginModal) {
-                loginModal.style.display = isAuthorized ? 'none' : 'block';
             }
         });
     }
