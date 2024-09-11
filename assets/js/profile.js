@@ -1,22 +1,46 @@
-
-// Función para mostrar el modal y redirigir
-function showModalAndRedirect() {
-    const modal = document.getElementById('loginModal');
-    if (modal) {
-        modal.style.display = 'block';
-        setTimeout(() => {
-            window.location.href = "/pages-login.html";
-        }, 3000); // Redirige después de 3 segundos
-    } else {
-        console.warn('Modal not found. Redirecting immediately.');
-        window.location.href = "/pages-login.html";
-    }
-}
-
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Función para mostrar el modal y redirigir
+    const preloader = document.getElementById('preloader');
 
+    // Función para ocultar el preloader
+    function hidePreloader() {
+        preloader.classList.add('hidden');
+    }
+
+    // Función para mostrar el modal y redirigir
+    function showModalAndRedirect() {
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+            modal.style.display = 'block';
+            setTimeout(() => {
+                window.location.href = "/pages-login.html";
+            }, 3000); // Redirige después de 3 segundos
+        } else {
+            console.warn('Modal not found. Redirecting immediately.');
+            window.location.href = "/pages-login.html";
+        }
+    }
+
+    // Funciones auxiliares para actualizar elementos
+    function updateElementText(selector, value) {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => el.textContent = value || '');
+    }
+
+    function updateInputValue(selector, value) {
+        const element = document.querySelector(selector);
+        if (element) element.value = value || '';
+    }
+
+    function updateProfileImages(imageUrl) {
+        document.querySelectorAll('#profileImage, #profileImageEdit, .profile-img').forEach(img => img.src = imageUrl);
+    }
+
+    function updateLinkedInLink(linkedinUrl) {
+        const linkedinLinks = document.querySelectorAll('#linkedinProfile, .linkedin-link');
+        linkedinLinks.forEach(link => link.href = linkedinUrl);
+    }
+
+    // Función para cargar el perfil
     function loadProfile() {
         fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', {
             method: 'GET',
@@ -46,13 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 modal.style.display = 'none';
             }
     
-            // Actualizar todos los elementos con id 'fullName'
+            // Actualizar elementos de la interfaz
             document.querySelectorAll('#fullName').forEach(el => el.textContent = data.fullName || '');
-    
-            // Actualizar todos los elementos relacionados con 'Job'
             document.querySelectorAll('#Job, .job-title').forEach(el => el.textContent = data.job || '');
-    
-            // Actualizar elementos individuales
             updateElementText('#company', data.company);
             updateElementText('#Country', data.country);
             updateElementText('#Address', data.address);
@@ -60,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateElementText('#Email', data.email);
             updateElementText('#about', data.about);
     
-            // Actualizar los campos del formulario de edición
+            // Actualizar campos del formulario de edición
             updateInputValue('#fullNameEdit', data.fullName);
             updateInputValue('#aboutEdit', data.about);
             updateInputValue('#companyEdit', data.company);
@@ -71,12 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
             updateInputValue('#EmailEdit', data.email);
             updateInputValue('#LinkedinEdit', data.linkedin);
     
-            // Actualizar todas las imágenes de perfil
             if (data.profileImageUrl) {
                 updateProfileImages(data.profileImageUrl);
             }
     
-            // Actualizar el enlace de LinkedIn
             if (data.linkedin) {
                 updateLinkedInLink(data.linkedin);
             }
@@ -88,27 +106,11 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 console.error('Error al cargar el perfil:', error.message);
             }
+        })
+        .finally(() => {
+            // Ocultar el preloader después de cargar el perfil, sea exitoso o no
+            hidePreloader();
         });
-    }
-
-    // Funciones auxiliares para actualizar elementos
-    function updateElementText(selector, value) {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(el => el.textContent = value || '');
-    }
-
-    function updateInputValue(selector, value) {
-        const element = document.querySelector(selector);
-        if (element) element.value = value || '';
-    }
-
-    function updateProfileImages(imageUrl) {
-        document.querySelectorAll('#profileImage, #profileImageEdit, .profile-img').forEach(img => img.src = imageUrl);
-    }
-
-    function updateLinkedInLink(linkedinUrl) {
-        const linkedinLinks = document.querySelectorAll('#linkedinProfile, .linkedin-link');
-        linkedinLinks.forEach(link => link.href = linkedinUrl);
     }
 
     // Función para actualizar el perfil
@@ -181,9 +183,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Manejar el evento 'load' de la ventana
+    window.addEventListener('load', function() {
+        // Si el perfil ya se cargó, ocultar el preloader
+        // Si no, el preloader se ocultará cuando loadProfile() termine
+        if (document.readyState === 'complete') {
+            hidePreloader();
+        }
+    });
 });
 
-// Función de cierre de sesión actualizada
+// Función de cierre de sesión
 async function signOut(event) {
     event.preventDefault();
 
