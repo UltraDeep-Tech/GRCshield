@@ -1,11 +1,17 @@
 
-    function showModalAndRedirect() {
-        const modal = document.getElementById('loginModal');
+// Función para mostrar el modal y redirigir
+function showModalAndRedirect() {
+    const modal = document.getElementById('loginModal');
+    if (modal) {
         modal.style.display = 'block';
         setTimeout(() => {
             window.location.href = "/pages-login.html";
         }, 3000); // Redirige después de 3 segundos
-        }
+    } else {
+        console.warn('Modal not found. Redirecting immediately.');
+        window.location.href = "/pages-login.html";
+    }
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -187,14 +193,9 @@ async function signOut(event) {
             credentials: 'include'
         }); 
 
-        if (response.ok) {
-            showModalAndRedirect();
-        } else {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Logout failed');
-        }
+        showModalAndRedirect();
     } catch (error) {
         console.error('Logout error:', error);
-        alert('An error occurred during logout. Please try again.');
+        showModalAndRedirect();
     }
 }
