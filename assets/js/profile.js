@@ -1,3 +1,11 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const preloader = document.getElementById('preloader');
+    window.addEventListener('load', function() {
+      preloader.classList.add('hidden');
+    });
+  });
+
+
 function showModalAndRedirect() {
     const modal = document.getElementById('loginModal');
     modal.style.display = 'block';
