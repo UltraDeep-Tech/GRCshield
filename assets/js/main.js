@@ -333,7 +333,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
- // Hide the preloade
 
 document.addEventListener('DOMContentLoaded', function() {
   const tabLinks = document.querySelectorAll('#grc-policies-nav a[data-bs-target]');

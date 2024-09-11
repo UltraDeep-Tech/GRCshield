@@ -21,6 +21,8 @@ function showModalAndRedirect() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    let isAuthorized = false;
+
     function loadProfile() {
         fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', {
             method: 'GET',
@@ -37,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 throw new Error('HTTP status ' + response.status);
             }
+            isAuthorized = true;
             return response.json();
         })
         .then(data => {
@@ -50,9 +53,19 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error('Error:', error);
             if (error.message === 'Unauthorized') {
+                isAuthorized = false;
                 showModalAndRedirect();
             } else {
                 console.error('Error al cargar el perfil:', error.message);
+            }
+        })
+        .finally(() => {
+            // Ocultar cualquier modal que pudiera estar visible si el usuario está autorizado
+            if (isAuthorized) {
+                const loginModal = document.getElementById('loginModal');
+                if (loginModal) {
+                    loginModal.style.display = 'none';
+                }
             }
         });
     }
