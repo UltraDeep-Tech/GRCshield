@@ -30,6 +30,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function loadProfile() {
+        // Intentar cargar datos del caché primero
+        const cachedProfile = localStorage.getItem('userProfile');
+        if (cachedProfile) {
+            const profileData = JSON.parse(cachedProfile);
+            updateProfileUI(profileData);
+        }
+
+        // Hacer la petición al servidor para obtener datos actualizados
         fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', {
             method: 'GET',
             credentials: 'include',
@@ -52,6 +60,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.error) {
                 throw new Error(data.error);
             }
+            
+            // Actualizar el caché con los nuevos datos
+            localStorage.setItem('userProfile', JSON.stringify(data));
             
             // Actualizar la interfaz con los datos del perfil
             updateProfileUI(data);
@@ -108,7 +119,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateProfileImages(imageUrl) {
-        document.querySelectorAll('#profileImage, #profileImageEdit, .profile-img').forEach(img => img.src = imageUrl);
+        document.querySelectorAll('#profileImage, #profileImageEdit, .profile-img').forEach(img => {
+            if (img.src !== imageUrl) {
+                img.src = imageUrl;
+            }
+        });
     }
 
     function updateLinkedInLink(linkedinUrl) {
@@ -158,6 +173,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(data.error);
             }
             alert('Perfil actualizado correctamente');
+            // Actualizar el caché con los nuevos datos
+            localStorage.setItem('userProfile', JSON.stringify(data));
             loadProfile();  // Recargar el perfil después de la actualización
         })
         .catch(error => {
@@ -206,6 +223,8 @@ async function signOut(event) {
         }); 
 
         if (response.ok) {
+            // Limpiar el caché al cerrar sesión
+            localStorage.removeItem('userProfile');
             showModalAndRedirect();
         } else {
             const errorData = await response.json();
