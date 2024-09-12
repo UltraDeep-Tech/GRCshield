@@ -409,7 +409,7 @@ h6 {
 }
 
 .header-nav .nav-profile {
-  color: #fff;
+  color: #000 !important;
 }
 
 .header-nav .nav-profile img {
@@ -552,7 +552,7 @@ color: #fff;
   font-size: 18px;
   margin-bottom: 0;
   font-weight: 600;
-  color:#000 !important;
+  color: #000 !important;
 }
 
 .header-nav .profile .dropdown-header span {
