@@ -1245,3 +1245,7 @@ color: #fff;
   font-size: 13px;
   color: #012970;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: #0056b3 !important;
+}

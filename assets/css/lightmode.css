@@ -1069,7 +1069,7 @@ color: #fff;
   margin-bottom: 30px;
   border: none;
   border-radius: 20px;
-  background: #eeeeee; /* Gris claro */
+  background: #ffffff; /* Gris claro */
   color: #000;
   position: relative;
   overflow: hidden;
@@ -1318,7 +1318,7 @@ color: #fff;
   margin-bottom: 30px;
   border: none;
   border-radius: 15px;
-  background: #eeeeee; /* Gris claro */
+  background: #ffff; /* Gris claro */
   position: relative;
   overflow: hidden;
   cursor: default;
@@ -1767,7 +1767,7 @@ body.modal-open {
 
 /* Navbar */
 .nav {
-  background: #cccccc;
+  background: #eeeeee ;
   color: #343a40 !important;
   padding: 10px;
   border-radius: 15px;
@@ -1799,6 +1799,7 @@ body.modal-open {
 
 .nav-pills .nav-link.active {
   color: #fff !important;
+  background-color: #0056b3;
 }
 
 
@@ -1806,9 +1807,9 @@ body.modal-open {
 
 /* Tabs */
 .tab-content {
-  background: #4a87d8;
+  background: #eeeeee ;
   border-radius: 5px;
-  color: #fff;
+  color: #333;
   padding: 15px;
   align-items: center;
 }
@@ -1843,12 +1844,12 @@ body.modal-open {
   align-content: center;
   padding: 0.75rem;
   font-weight: bold;
-  color: #212529; /* Texto en negro */
+  color: #333333; 
   text-transform: uppercase;
 }
 
 .tablepolicy tbody tr {
-  background-color: #f8f9fa;
+  background-color: #eeee;
   color: #212529; /* Texto en negro */
   text-align: center;
   border-bottom: 1px solid #ced4da;
@@ -2074,5 +2075,5 @@ body.modal-open {
 .existing-policies {
   font-size: larger;
   font-weight: bold;
-  color: #fff !important;
+  color: #0056b3 !important;
 }
