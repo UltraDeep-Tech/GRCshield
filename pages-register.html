@@ -206,49 +206,53 @@
   </main><!-- End #main -->
   <script>
     document.querySelector('form').addEventListener('submit', function(event) {
-      event.preventDefault();
-  
-      const name = document.getElementById('yourName').value;
-      const email = document.getElementById('yourEmail').value;
-      const password = document.getElementById('yourPassword').value;
-  
-      // Capturar los departamentos seleccionados
-      const departments = [];
-      document.querySelectorAll('input[name="departments[]"]:checked').forEach((checkbox) => {
-          departments.push(checkbox.value);
-      });
-  
-      if (departments.length === 0) {
-          alert('Please select at least one department.');
-          return;
-      }
-  
-      fetch('https://backend-grcshield-934866038204.us-central1.run.app/register', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              name: name,
-              email: email,
-              password: password,
-              departments: departments  // Enviar los departamentos seleccionados
-          })
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.error) {
-              alert('Error: ' + data.error);
-          } else {
-              alert('User registered successfully!');
-              window.location.href = 'pages-login.html';  // Redirigir al usuario a la página de login
-          }
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          alert('An error occurred while registering. Please try again.');
-      });
+    event.preventDefault();
+
+    const name = document.getElementById('yourName').value;
+    const email = document.getElementById('yourEmail').value;
+    const password = document.getElementById('yourPassword').value;
+
+    // Capturar los departamentos seleccionados
+    const departments = [];
+    document.querySelectorAll('input[name="departments[]"]:checked').forEach((checkbox) => {
+        departments.push(checkbox.value);
     });
+
+    if (departments.length === 0) {
+        alert('Please select at least one department.');
+        return;
+    }
+
+    // Verificar los departamentos seleccionados en la consola
+    console.log('Selected departments:', departments);
+
+    fetch('https://backend-grcshield-934866038204.us-central1.run.app/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password,
+            departments: departments  // Enviar los departamentos seleccionados
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert('Error: ' + data.error);
+        } else {
+            alert('User registered successfully!');
+            window.location.href = 'pages-login.html';  // Redirigir al usuario a la página de login
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while registering. Please try again.');
+    });
+});
+
   </script>
   
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

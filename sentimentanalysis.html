@@ -315,6 +315,55 @@
         </a>
       </li><!-- End Dashboard Nav -->
   
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-chat-square-dots"></i><span>Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="#sentimentAnalysis">
+              <i class="bi bi-emoji-smile"></i><span>Sentiment Analysis</span>
+            </a>
+          </li>
+          <li>
+            <a href="#conversationCategorization">
+              <i class="bi bi-tags"></i><span>Conversation Categorization</span>
+            </a>
+          </li>
+          <li>
+            <a href="#engagementMetrics">
+              <i class="bi bi-bar-chart"></i><span>Engagement Quality Metrics</span>
+            </a>
+          </li>
+          <li>
+            <a href="#keywordTracking">
+              <i class="bi bi-search"></i><span>Keyword Tracking</span>
+            </a>
+          </li>
+          <li>
+            <a href="#biasDetection">
+              <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
+            </a>
+          </li>
+          <li>
+            <a href="#behaviorPrediction">
+              <i class="bi bi-lightbulb"></i><span>User Behavior Prediction</span>
+            </a>
+          </li>
+          <li>
+            <a href="#realTimeAlertsSection">
+              <i class="bi bi-bell"></i><span>Real-Time Alerts</span>
+            </a>
+          </li>
+          <li>
+            <a href="#customReportGenerationSection">
+              <i class="bi bi-file-earmark-text"></i><span>Custom Report Generation</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <!-- End Interaction Analysis Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-pc"></i><span>Flat</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -374,54 +423,7 @@
       </li>
       <!-- End Charts Nav -->
   
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-chat-square-dots"></i><span>Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#sentimentAnalysis">
-              <i class="bi bi-emoji-smile"></i><span>Sentiment Analysis</span>
-            </a>
-          </li>
-          <li>
-            <a href="#conversationCategorization">
-              <i class="bi bi-tags"></i><span>Conversation Categorization</span>
-            </a>
-          </li>
-          <li>
-            <a href="#engagementMetrics">
-              <i class="bi bi-bar-chart"></i><span>Engagement Quality Metrics</span>
-            </a>
-          </li>
-          <li>
-            <a href="#keywordTracking">
-              <i class="bi bi-search"></i><span>Keyword Tracking</span>
-            </a>
-          </li>
-          <li>
-            <a href="#biasDetection">
-              <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
-            </a>
-          </li>
-          <li>
-            <a href="#behaviorPrediction">
-              <i class="bi bi-lightbulb"></i><span>User Behavior Prediction</span>
-            </a>
-          </li>
-          <li>
-            <a href="#realTimeAlertsSection">
-              <i class="bi bi-bell"></i><span>Real-Time Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="#customReportGenerationSection">
-              <i class="bi bi-file-earmark-text"></i><span>Custom Report Generation</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <!-- End Interaction Analysis Nav -->
+
   
       <li class="nav-heading">Policies</li>
   
@@ -508,7 +510,7 @@
       <!-- Sentiment Analysis & Emotion Detection -->
       <div class="col-lg-6">
         <div class="cardindex">
-          <div class="cardindex-body">
+          <div class="cardindex-body" id="sentimentAnalysis">
             <h5 class="cardindex-title">Real-Time Emotion Tracker</h5>
             <canvas id="emotionTrackerChart" style="max-height: 400px;"></canvas>
           </div>
@@ -548,7 +550,7 @@
       <!-- Conversation Categorization -->
       <div class="col-12">
         <div class="cardindex">
-          <div class="cardindex-body">
+          <div class="cardindex-body" id="conversationCategorization">
             <h5 class="cardindex-title">Conversation Categorization</h5>
             <table class="table table-bordered">
               <thead>
@@ -570,7 +572,7 @@
       <!-- Engagement Quality Metrics -->
       <div class="col-lg-12">
         <div class="cardindex">
-          <div class="cardindex-body">
+          <div class="cardindex-body" id="engagementMetrics">
             <h5 class="cardindex-title">Engagement Quality Metrics</h5>
             <canvas id="engagementMetricsChart" style="max-height: 400px;"></canvas>
           </div>
@@ -581,7 +583,7 @@
       <!-- Keyword Trend Tracking -->
       <div class="col-lg-6">
         <div class="cardindex">
-          <div class="cardindex-body">
+          <div class="cardindex-body" id="keywordTracking">
             <h5 class="cardindex-title">Keyword Trend Word Cloud</h5>
             <canvas id="keywordWordCloud" style="max-height: 400px;"></canvas>
           </div>
@@ -601,7 +603,7 @@
       <!-- Bias Detection -->
       <div class="col-12">
         <div class="cardindex">
-          <div class="cardindex-body">
+          <div class="cardindex-body" id="biasDetection">
             <h5 class="cardindex-title">Bias Detection</h5>
             <canvas id="biasDetectionChart" style="max-height: 400px;"></canvas>
           </div>
@@ -621,7 +623,7 @@
       <!-- User Behavior Prediction -->
       <div class="col-12">
         <div class="cardindex">
-          <div class="cardindex-body">
+          <div class="cardindex-body" id="behaviorPrediction">
             <h5 class="cardindex-title">User Behavior Prediction</h5>
             <canvas id="behaviorPredictionChart" style="max-height: 400px;"></canvas>
           </div>
@@ -664,6 +666,8 @@
   </section>
 
 </main><!-- End #main -->
+
+
 <script>
     // Real-Time Emotion Tracker
     var ctx = document.getElementById('emotionTrackerChart').getContext('2d');

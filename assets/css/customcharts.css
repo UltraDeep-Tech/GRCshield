@@ -1085,3 +1085,8 @@ body.modal-open {
     font-size: 14px;
   }
 }
+
+.nav-pills .nav-link.active {
+  color: #fff !important;
+  background-color: #0056b3;
+}
