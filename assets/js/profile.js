@@ -98,9 +98,11 @@ document.addEventListener('DOMContentLoaded', function() {
         updateInputValue('#EmailEdit', data.email);
         updateInputValue('#LinkedinEdit', data.linkedin);
 
-        if (data.profileImageUrl) {
-            updateProfileImages(data.profileImageUrl);
-        }
+        // Verificar si hay una imagen de perfil o mostrar la predeterminada
+        const defaultProfileImage = 'assets/img/default.png'; // Ruta de la imagen predeterminada
+        const profileImageUrl = data.profileImageUrl || defaultProfileImage; // Usar imagen predeterminada si no hay
+
+        updateProfileImages(profileImageUrl);
 
         if (data.linkedin) {
             updateLinkedInLink(data.linkedin);
