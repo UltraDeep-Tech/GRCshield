@@ -605,6 +605,7 @@ color: #fff;
   transition: all 0.3s ease-in-out;
   padding: 20px;
   overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: #fff transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);

@@ -266,12 +266,12 @@
   .sidebar-bg {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 100%;
     transform: translate(-50%, -50%);
-    width: 80%; /* Ajusta el tamaño de la imagen según sea necesario */
-    opacity: 0.2; /* Ajusta la opacidad para dar efecto de marca de agua */
-    filter: drop-shadow(0 0 1px rgb(245, 245, 248));
-    animation: neon-border 2s infinite alternate;
+    width: 180%; /* Ajusta el tamaño de la imagen según sea necesario */
+    opacity: 0.05; /* Ajusta la opacidad para dar efecto de marca de agua */
+    z-index: -10;
+
   }
   
   @keyframes neon-border {
@@ -832,9 +832,9 @@ body.modal-open {
 
   .modern-select {
     appearance: none;
-    background-color: #0d1b30;
+    background-color: #00000040;
+    border: none;
     border-radius: 8px;
-    border: 1px solid #1f2b45;
     text-align: center;
     padding: 10px 15px;
     font-size: 16px;
@@ -857,7 +857,7 @@ body.modal-open {
 }
 
 .modern-select:hover {
-    background-color: #1a2c46;
+    background-color: #061b3a;
 }
 
 .modern-select:disabled {

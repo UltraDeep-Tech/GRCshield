@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Safety Shield Ultra</title>
+  <meta name="description" content="Safety Shield Ultra offers comprehensive solutions for monitoring, detecting, and managing cyber threats, abusive user behavior, hallucination detection, and data exposure incidents. Stay protected with real-time analytics and security insights.">
+  <meta name="keywords" content="cybersecurity, threat detection, abusive user management, hallucination detection, data exposure, monitoring, safety shield ultra, security, AI, dashboard">
+  
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/favicon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link id="darkmode-base" href="assets/css/style.css" rel="stylesheet">
+  <link id="darkmode-item" href="assets/css/customcharts.css" rel="stylesheet">
+  <link id="lightmode" href="assets/css/lightmode.css" rel="stylesheet" disabled>
+
+
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.8.3/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.8.3/firebase-database-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="assets/js/datagraficos.js"></script>
+  <script src="assets/js/profile.js"></script>
+
+</head>
+
+<body>
+  <video autoplay muted loop class="video-background">
+    <source src="assets/img/compressed_dashboard_background.mp4" type="video/mp4">
+  </video>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/favicon.png" alt="" class="logoheader">
+        <span class="d-none d-lg-block">Safety Shield Ultra</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+        <!-- Hack Mode Switch -->
+        <li class="nav-item d-flex align-items-center me-4 hack-mode-container">
+          <!-- Icono de sol para pantallas medianas y más grandes -->
+          <span class="bi bi-sun me-1 d-none d-md-inline-block" style="color: #fff;"></span>
+
+          <!-- Switch de Hack Mode para pantallas medianas y más grandes -->
+          <div class="form-check form-switch d-none d-md-flex">
+
+            <input class="form-check-input " type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+            <span class="bi bi-moon ms-1 " style="color: #fff;"></span>
+
+            <label class="form-check-label ms-1" for="flexSwitchCheckChecked"></label>
+            
+          </div>
+          
+          <!-- Icono de luna para pantallas pequeñas -->
+          <i class="bi bi-moon d-md-none hack-mode-icon"></i>
+        </li>
+    
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell bellnotification"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a><!-- End Notification Icon -->
+    
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 4 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+    
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Increased Blocked Requests</h4>
+                <p>Spike in blocked requests detected in the last hour.</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+    
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+    
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>New Abusive User Detected</h4>
+                <p>User GUID 1234 flagged for potential abusive behavior.</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+    
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+    
+            <li class="notification-item">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Hallucination Detection Update</h4>
+                <p>New algorithm for hallucination detection deployed.</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+    
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+    
+            <li class="notification-item">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Weekly Report Available</h4>
+                <p>The Safety Shield Ultra weekly summary is ready for review.</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </li>
+    
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer text-center">
+              <a href="#">Show all notifications</a>
+            </li>
+          </ul><!-- End Notification Dropdown Items -->
+        </li><!-- End Notification Nav -->
+    
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a><!-- End Messages Icon -->
+    
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+    
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>The project files have been uploaded successfully.</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+    
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Meeting rescheduled to tomorrow at 10 AM.</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+    
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Can you review the latest draft of the report?</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+    
+            <li class="dropdown-footer text-center">
+              <a href="#">Show all messages</a>
+            </li>
+          </ul><!-- End Messages Dropdown Items -->
+        </li><!-- End Messages Nav -->
+    
+        <li class="nav-item dropdown pe-3">
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img id="profileImage" alt="Profile" class="rounded-circle me-3">
+          </a><!-- End Profile Image Icon -->
+    
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile fondoperfil">
+            <li class="dropdown-header text-center">
+              <h6 id="fullName"></h6>
+              <span id="Job"></span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+    
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+    
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+    
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+    
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#" onclick="signOut(event)">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+    
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+      </ul>
+    </nav><!-- End Icons Navigation -->
+    
+    
+    
+    
+    
+    
+
+  </header><!-- End Header -->
+
+
+  <a href="https://chat.ultradeep.tech/" class="whatsapp-float" target="_blank" data-aos="fade-up" id="chat-link">
+    <i class="bi bi-robot whatsapp-icon"></i>
+    <span class="tooltip-text">Hi, how can I assist you today?</span>
+</a>
+
+<audio id="popup-sound" src="/assets/sound/level-up-191997.mp3" preload="auto"></audio>
+
+
+<div id="loginModal" class="custom-modal">
+  <div class="custom-modal-content">
+    <img src="assets/img/logo.png" class="spinner-image" alt="Loading...">
+    <p>Your session has expired or you are not logged in. Redirecting to login page...</p>
+  </div>
+</div>
+
+ <!-- ======= Sidebar ======= -->
+ <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-heading">Department</li>
+
+    <li class="">
+        <!-- Mostrar el departamento y permitir cambiarlo -->
+        <div id="user-department" class="text-center mb-2 align-items-center"></div>
+        <select id="department-select" class="modern-select mt-2">
+          <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+        </select>
+      </li>
+      <br>
+        
+  
+      <li class="nav-item">
+        <a class="nav-link " href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-pc"></i><span>Flat</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="#totalBlockedRequests">
+              <i class="bi bi-shield-lock"></i><span>Blocked Requests & Rate</span>
+            </a>
+          </li>
+          <li>
+            <a href="#blockedRequestsByCategory">
+              <i class="bi bi-bar-chart"></i><span>Blocked Requests by Category</span>
+            </a>
+          </li>
+          <li>
+            <a href="#blockRateOverTimeByCategory">
+              <i class="bi bi-graph-up-arrow"></i><span>Block Rate Over Time by Category</span>
+            </a>
+          </li>
+          <li>
+            <a href="#severity">
+              <i class="bi bi-exclamation-triangle"></i><span>Severity Distribution by Category</span>
+            </a>
+          </li>
+          <li>
+            <a href="#SeverityTime">
+              <i class="bi bi-clock-history"></i><span>Severity Over Time by Category</span>
+            </a>
+          </li>
+          <li>
+            <a href="#totalAbusiveUsersChart">
+              <i class="bi bi-person-x"></i><span>Abusive User Detection</span>
+            </a>
+          </li>
+          <li>
+            <a href="#hallucinationChart">
+              <i class="bi bi-eye-slash"></i><span>Hallucination Detection</span>
+            </a>
+          </li>
+          <li>
+            <a href="#biasPieChart">
+              <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
+            </a>
+          </li>
+          <li>
+            <a href="#promptInjectionChart">
+              <i class="bi bi-shield-exclamation"></i><span>Prompt Injection/Jailbreak Detection</span>
+            </a>
+          </li>
+          <li>
+            <a href="#dataExposureLineChart">
+              <i class="bi bi-file-earmark-lock"></i><span>Data Exposure</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <!-- End Charts Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-chat-square-dots"></i><span>Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="#sentimentAnalysis">
+              <i class="bi bi-emoji-smile"></i><span>Sentiment Analysis</span>
+            </a>
+          </li>
+          <li>
+            <a href="#conversationCategorization">
+              <i class="bi bi-tags"></i><span>Conversation Categorization</span>
+            </a>
+          </li>
+          <li>
+            <a href="#engagementMetrics">
+              <i class="bi bi-bar-chart"></i><span>Engagement Quality Metrics</span>
+            </a>
+          </li>
+          <li>
+            <a href="#keywordTracking">
+              <i class="bi bi-search"></i><span>Keyword Tracking</span>
+            </a>
+          </li>
+          <li>
+            <a href="#biasDetection">
+              <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
+            </a>
+          </li>
+          <li>
+            <a href="#behaviorPrediction">
+              <i class="bi bi-lightbulb"></i><span>User Behavior Prediction</span>
+            </a>
+          </li>
+          <li>
+            <a href="#realTimeAlertsSection">
+              <i class="bi bi-bell"></i><span>Real-Time Alerts</span>
+            </a>
+          </li>
+          <li>
+            <a href="#customReportGenerationSection">
+              <i class="bi bi-file-earmark-text"></i><span>Custom Report Generation</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <!-- End Interaction Analysis Nav -->
+  
+      <li class="nav-heading">Policies</li>
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#grc-policies-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-file-earmark-lock"></i><span>GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="grc-policies-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="grc-policies.html#existing-policies-tab">
+              <i class="bi bi-file-earmark-text"></i><span>Policies</span>
+            </a>
+          </li>
+          <li>
+            <a href="grc-policies.html#add-policy-tab">
+              <i class="bi bi-plus-square"></i><span>Add Policies</span>
+            </a>
+          </li>
+          <li>
+            <a href="grc-policies.html#export-policy-tab">
+              <i class="bi bi-upload"></i><span>Import Policies</span>
+            </a>
+          </li>
+          <li>
+            <a href="grc-policies.html#generate-report-tab">
+              <i class="bi bi-file-earmark-bar-graph"></i><span>Generate Report</span>
+            </a>
+          </li>
+          <li>
+            <a href="grc-policies.html#alerts-tab">
+              <i class="bi bi-bell"></i><span>Notifications</span>
+            </a>
+          </li>
+          <li>
+            <a href="grc-policies.html#chartsPolicy">
+              <i class="bi bi-bar-chart"></i><span>Charts</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+  
+      <li class="nav-heading">Pages</li>
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-faq.html">
+          <i class="bi bi-question-circle"></i>
+          <span>F.A.Q</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-contact.html">
+          <i class="bi bi-envelope"></i>
+          <span>Contact</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+  
+    </ul>
+  
+      <img src="/assets/img/logo.png" class="sidebar-bg">
+  
+
+    
+  </aside><!-- End Sidebar-->
+  
+
+<div id="preloader">
+  <img src="/assets/img/favicon.png" alt="Loading..." class="spinner-image">
+</div>
+
+<main id="main" class="main">
+
+  <!-- Existing sections for Interaction Analysis -->
+  <section class="section">
+    <div class="row">
+
+      <!-- Sentiment Analysis & Emotion Detection -->
+      <div class="col-lg-6">
+        <div class="cardindex">
+          <div class="cardindex-body">
+            <h5 class="cardindex-title">Real-Time Emotion Tracker</h5>
+            <canvas id="emotionTrackerChart" style="max-height: 400px;"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="cardindex">
+          <div class="cardindex-body">
+            <h5 class="cardindex-title">Emotion Trends Heatmap</h5>
+            <canvas id="emotionTrendsHeatmap" style="max-height: 400px;"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="cardindex">
+          <div class="cardindex-body">
+            <h5 class="cardindex-title">Sentiment Categorization per Conversation</h5>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Conversation ID</th>
+                  <th>Sentiment</th>
+                  <th>Category</th>
+                </tr>
+              </thead>
+              <tbody id="sentimentCategorizationData">
+                <!-- Data will be populated here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- End Sentiment Analysis -->
+
+      <!-- Conversation Categorization -->
+      <div class="col-12">
+        <div class="cardindex">
+          <div class="cardindex-body">
+            <h5 class="cardindex-title">Conversation Categorization</h5>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Conversation ID</th>
+                  <th>Category</th>
+                  <th>Urgency</th>
+                </tr>
+              </thead>
+              <tbody id="conversationCategorizationData">
+                <!-- Data will be populated here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- End Conversation Categorization -->
+
+      <!-- Engagement Quality Metrics -->
+      <div class="col-lg-12">
+        <div class="cardindex">
+          <div class="cardindex-body">
+            <h5 class="cardindex-title">Engagement Quality Metrics</h5>
+            <canvas id="engagementMetricsChart" style="max-height: 400px;"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- End Engagement Quality Metrics -->
+
+      <!-- Keyword Trend Tracking -->
+      <div class="col-lg-6">
+        <div class="cardindex">
+          <div class="cardindex-body">
+            <h5 class="cardindex-title">Keyword Trend Word Cloud</h5>
+            <canvas id="keywordWordCloud" style="max-height: 400px;"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="cardindex">
+          <div class="cardindex-body">
+            <h5 class="cardindex-title">Keyword Trends Over Time</h5>
+            <canvas id="keywordTrendsChart" style="max-height: 400px;"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- End Keyword Trend Tracking -->
+
+      <!-- Bias Detection -->
+      <div class="col-12">
+        <div class="cardindex">
+          <div class="cardindex-body">
+            <h5 class="cardindex-title">Bias Detection</h5>
+            <canvas id="biasDetectionChart" style="max-height: 400px;"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="cardindex">
+          <div class="cardindex-body">
+            <h5 class="cardindex-title">Bias Trends Over Time</h5>
+            <canvas id="biasTrendsChart" style="max-height: 400px;"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- End Bias Detection -->
+
+      <!-- User Behavior Prediction -->
+      <div class="col-12">
+        <div class="cardindex">
+          <div class="cardindex-body">
+            <h5 class="cardindex-title">User Behavior Prediction</h5>
+            <canvas id="behaviorPredictionChart" style="max-height: 400px;"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- End User Behavior Prediction -->
+
+    </div>
+  </section>
+
+  <!-- Nueva sección para Alertas y Reportes -->
+  <section class="section">
+    <div class="row">
+
+      <!-- Real-Time Alerts -->
+      <div class="col-12" id="realTimeAlertsSection">
+        <div class="cardindex">
+          <div class="cardindex-body">
+            <h5 class="cardindex-title">Real-Time Alerts</h5>
+            <canvas id="realTimeAlertsChart" style="max-height: 400px;"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- End Real-Time Alerts -->
+
+      <!-- Custom Report Generation -->
+      <div class="col-12" id="customReportGenerationSection">
+        <div class="cardindex">
+          <div class="cardindex-body">
+            <h5 class="cardindex-title">Custom Report Generation</h5>
+            <div>
+              <button class="btn btn-outline-primary">Generate Custom Report</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Custom Report Generation -->
+
+    </div>
+  </section>
+
+</main><!-- End #main -->
+<script>
+    // Real-Time Emotion Tracker
+    var ctx = document.getElementById('emotionTrackerChart').getContext('2d');
+    var emotionTrackerChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Joy', 'Sadness', 'Anger', 'Surprise', 'Disgust', 'Fear', 'Neutral'],
+            datasets: [{
+                label: 'Emotion Distribution',
+                data: [12, 19, 3, 5, 2, 3, 7],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(201, 203, 207, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+  
+    // Emotion Trends Heatmap
+    var ctx = document.getElementById('emotionTrendsHeatmap').getContext('2d');
+    var emotionTrendsHeatmap = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            datasets: [{
+                label: 'Joy',
+                data: [3, 2, 2, 5, 4, 7, 8],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false
+            }, {
+                label: 'Sadness',
+                data: [1, 1, 3, 2, 6, 3, 4],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Day of the Week'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Frequency'
+                    }
+                }
+            }
+        }
+    });
+  
+    // Sentiment Categorization per Conversation
+    document.getElementById('sentimentCategorizationData').innerHTML = `
+      <tr>
+        <td>12345</td>
+        <td>Joy</td>
+        <td>Positive Feedback</td>
+      </tr>
+      <tr>
+        <td>12346</td>
+        <td>Sadness</td>
+        <td>Complaint</td>
+      </tr>
+      <tr>
+        <td>12347</td>
+        <td>Anger</td>
+        <td>Escalation</td>
+      </tr>
+    `;
+  
+    // Conversation Categorization
+    document.getElementById('conversationCategorizationData').innerHTML = `
+      <tr>
+        <td>54321</td>
+        <td>Support</td>
+        <td>High</td>
+      </tr>
+      <tr>
+        <td>54322</td>
+        <td>Inquiry</td>
+        <td>Medium</td>
+      </tr>
+      <tr>
+        <td>54323</td>
+        <td>Complaint</td>
+        <td>Urgent</td>
+      </tr>
+    `;
+  
+    // Engagement Quality Metrics
+    var ctx = document.getElementById('engagementMetricsChart').getContext('2d');
+    var engagementMetricsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Conversation 1', 'Conversation 2', 'Conversation 3', 'Conversation 4'],
+            datasets: [{
+                label: 'Engagement (Low, Medium, High)',
+                data: [1, 3, 2, 4],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+  
+    // Keyword Trends Over Time
+    var ctx = document.getElementById('keywordTrendsChart').getContext('2d');
+    var keywordTrendsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'Keyword Trend',
+                data: [10, 20, 15, 25, 30],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+  
+    // Bias Detection
+    var ctx = document.getElementById('biasDetectionChart').getContext('2d');
+    var biasDetectionChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Gender Bias', 'Racial Bias', 'Age Bias', 'Cultural Bias'],
+            datasets: [{
+                data: [12, 19, 3, 5],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+  
+    // Bias Trends Over Time
+    var ctx = document.getElementById('biasTrendsChart').getContext('2d');
+    var biasTrendsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'Bias Incidents',
+                data: [3, 2, 4, 1, 5],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+  
+    // Real-Time Alerts
+    var ctx = document.getElementById('realTimeAlertsChart').getContext('2d');
+    var realTimeAlertsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['12:00', '12:30', '13:00', '13:30', '14:00'],
+            datasets: [{
+                label: 'Alerts Triggered',
+                data: [1, 2, 1, 5, 2],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+  
+    // User Behavior Prediction
+    var ctx = document.getElementById('behaviorPredictionChart').getContext('2d');
+    var behaviorPredictionChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'Churn Risk',
+                data: [2, 4, 6, 8, 10],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Risk Score'
+                    }
+                }
+            }
+        }
+    });
+  
+    // Custom Report Generation Button (Fictitious functionality)
+    document.getElementById('customReportGenerationSection').querySelector('button').addEventListener('click', function() {
+        alert('Custom Report Generated (Fictitious Data)');
+    });
+  
+  </script>
+  
+  
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/chart.js/chart.umd.js"></script>
+<script src="assets/vendor/echarts/echarts.min.js"></script>
+<script src="assets/vendor/quill/quill.js"></script>
+<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Obtener el departamento seleccionado y los departamentos a los que el usuario tiene acceso desde localStorage
+    const department = localStorage.getItem('department');
+    const userDepartments = JSON.parse(localStorage.getItem('userDepartments')) || [];
+    
+    // Referencias a los elementos del DOM
+    const departmentSelect = document.getElementById('department-select');
+    const userDepartmentDiv = document.getElementById('user-department');
+
+    // Llenar el menú desplegable con los departamentos disponibles
+    userDepartments.forEach(dep => {
+      const option = document.createElement('option');
+      option.value = dep;
+      option.textContent = dep;
+      departmentSelect.appendChild(option);
+    });
+
+    // Establecer el departamento seleccionado previamente
+    if (department) {
+      userDepartmentDiv.textContent = ` ${department}`;
+      departmentSelect.value = department;
+    }
+
+    // Escuchar el cambio de selección de departamento y actualizar localStorage
+    departmentSelect.addEventListener('change', function () {
+      const selectedDepartment = departmentSelect.value;
+      localStorage.setItem('department', selectedDepartment);
+      userDepartmentDiv.textContent = ` ${selectedDepartment}`;
+
+      // Recargar la página para reflejar el cambio de departamento
+      window.location.reload();
+    });
+  });
+</script>
+
+<!-- Dark Mode Handling Script -->
+<script>
+  (function() {
+    let globalIsDarkMode = false;
+  
+    function applyTheme(isDarkMode) {
+      globalIsDarkMode = isDarkMode;
+      document.body.classList.toggle('dark-mode', isDarkMode);
+      document.getElementById('lightmode').disabled = isDarkMode;
+      document.getElementById('darkmode-base').disabled = !isDarkMode;
+      document.getElementById('darkmode-item').disabled = !isDarkMode;
+      
+      const hackModeIcon = document.querySelector('.hack-mode-icon');
+      hackModeIcon.classList.toggle('active', isDarkMode);
+      hackModeIcon.classList.toggle('inactive', !isDarkMode);
+      hackModeIcon.classList.toggle('bi-moon', !isDarkMode);
+      hackModeIcon.classList.toggle('bi-sun', isDarkMode);
+      
+      document.querySelector('label[for="flexSwitchCheckChecked"]').textContent = isDarkMode ? 'Hack Mode' : 'Light Mode';
+      
+      localStorage.setItem('theme', isDarkMode ? 'dark-mode' : 'light-mode');
+      
+      // Llamar a la función de actualización de gráficos inmediatamente
+      if (typeof updateAllChartColors === 'function') {
+        updateAllChartColors(isDarkMode);
+      }
+      
+      // Disparar el evento themeChanged después de actualizar los gráficos
+      document.dispatchEvent(new CustomEvent('themeChanged', { detail: { isDarkMode } }));
+    }
+  
+    function initializeTheme() {
+      const currentTheme = localStorage.getItem('theme');
+      const isDarkMode = currentTheme === 'dark-mode';
+      document.getElementById('flexSwitchCheckChecked').checked = isDarkMode;
+      applyTheme(isDarkMode);
+    }
+  
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeTheme();
+  
+      document.querySelector('.hack-mode-icon').addEventListener('click', function() {
+        applyTheme(!globalIsDarkMode);
+      });
+  
+      document.getElementById('flexSwitchCheckChecked').addEventListener('change', function(event) {
+        applyTheme(event.target.checked);
+      });
+    });
+  
+    window.isDatagraficosDarkMode = function() {
+      return globalIsDarkMode;
+    };
+  })();
+</script>
+
+</body>
+
+</html>

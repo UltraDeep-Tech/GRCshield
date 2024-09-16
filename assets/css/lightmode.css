@@ -531,6 +531,7 @@ color: #fff;
   transition: all 0.3s ease-in-out;
   padding: 20px;
   overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: #84868abb transparent;
   background: #eeeeee; /* Gris claro */
@@ -595,7 +596,7 @@ color: #fff;
 .sidebar-nav .nav-heading {
   font-size: 12px;
   text-transform: uppercase;
-  color: #333333; /* Gris oscuro */
+  color: #007bff; /* Gris oscuro */
   font-weight: 700;
   margin: 15px 0 5px 15px;
 }
@@ -614,7 +615,7 @@ color: #fff;
 .sidebar-nav .nav-link i {
   font-size: 18px;
   margin-right: 10px;
-  color: #4a87d8; /* Gris oscuro */
+  color: #0056b3; /* Gris oscuro */
   transition: color 0.3s ease;
 }
 
@@ -623,11 +624,11 @@ color: #fff;
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #4a87d8; /* Azul oscuro */
+  color: #0056b3; /* Azul oscuro */
 }
 
 .sidebar-nav .nav-link:hover i {
-  color: #000000; /* Negro */
+  color: #0056b3; /* Negro */
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
@@ -658,7 +659,7 @@ color: #fff;
 
 .sidebar-nav .nav-content a i {
   margin-right: 15px;
-  color: #4a87d8; /* Azul oscuro */
+  color: #0056b3; /* Azul oscuro */
 }
 
 .sidebar-nav .nav-content a:hover i {
@@ -678,7 +679,7 @@ color: #fff;
 }
 
 .dashboard .filter .icon {
-  color: #666666; /* Gris medio */
+  color: #0000; /* Gris medio */
   padding-right: 20px;
   padding-bottom: 5px;
   transition: 0.3s;
@@ -1203,30 +1204,27 @@ color: #fff;
   color: #333333; /* Gris oscuro */
 }
 
-.sidebar-bg-container {
-  position: relative;
-  width: 100%;
-  height: 32%;
-  z-index: 9999;
-}
+
 
 .sidebar-bg {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 100%;
   transform: translate(-50%, -50%);
-  width: 60%; /* Ajusta el tamaño de la imagen según sea necesario */
-  opacity: 0.2; /* Ajusta la opacidad para dar efecto de marca de agua */
+  width: 180%; /* Ajusta el tamaño de la imagen según sea necesario */
+  opacity: 0.07; /* Ajusta la opacidad para dar efecto de marca de agua */
+  z-index: -10;
+
 }
 
 .badge-number {
-  background: #333333 !important; /* Gris oscuro */
-  color: #ffffff; /* Blanco */
+  background: #ffff !important; /* Gris oscuro */
+  color: #0000 !important; /* Blanco */
 }
 
 .badge-number:hover {
   background: #ffffff !important; /* Blanco */
-  color: #333333 !important; /* Gris oscuro */
+  color: #0000 !important; /* Gris oscuro */
 }
 
 .dropdown-toggle:hover {
