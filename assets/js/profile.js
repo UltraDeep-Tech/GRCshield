@@ -131,26 +131,42 @@ document.addEventListener('DOMContentLoaded', function() {
         linkedinLinks.forEach(link => link.href = linkedinUrl);
     }
 
-    // Función para actualizar el perfil
     function updateProfile(event) {
         event.preventDefault();
-
+    
+        // Obtener los valores de los campos
+        const fullName = document.querySelector('#fullNameEdit').value;
+        const email = document.querySelector('#EmailEdit').value;
+        const company = document.querySelector('#companyEdit').value;
+        const job = document.querySelector('#JobEdit').value;
+        const country = document.querySelector('#CountryEdit').value;
+        const address = document.querySelector('#AddressEdit').value;
+        const phone = document.querySelector('#PhoneEdit').value;
+        const linkedin = document.querySelector('#LinkedinEdit').value;
+        const about = document.querySelector('#aboutEdit').value;
+    
+        // Validar campos obligatorios
+        if (!fullName || !email || !company || !job || !country || !address || !phone) {
+            alert('All required fields must be filled.');
+            return;  // No proceder si faltan campos obligatorios
+        }
+    
         const formData = new FormData();
-        formData.append('fullName', document.querySelector('#fullNameEdit').value);
-        formData.append('email', document.querySelector('#EmailEdit').value);
-        formData.append('company', document.querySelector('#companyEdit').value);
-        formData.append('job', document.querySelector('#JobEdit').value);
-        formData.append('country', document.querySelector('#CountryEdit').value);
-        formData.append('address', document.querySelector('#AddressEdit').value);
-        formData.append('phone', document.querySelector('#PhoneEdit').value);
-        formData.append('linkedin', document.querySelector('#LinkedinEdit').value);
-        formData.append('about', document.querySelector('#aboutEdit').value);
-
+        formData.append('fullName', fullName);
+        formData.append('email', email);
+        formData.append('company', company);
+        formData.append('job', job);
+        formData.append('country', country);
+        formData.append('address', address);
+        formData.append('phone', phone);
+        formData.append('linkedin', linkedin);
+        formData.append('about', about);
+    
         const profileImage = document.querySelector('#uploadImage').files[0];
         if (profileImage) {
             formData.append('profileImage', profileImage);
         }
-
+    
         fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/update-profile', {
             method: 'POST',
             body: formData,
@@ -172,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.error) {
                 throw new Error(data.error);
             }
-            alert('Perfil actualizado correctamente');
+            alert('Profile updated successfully');
             // Actualizar el caché con los nuevos datos
             localStorage.setItem('userProfile', JSON.stringify(data));
             loadProfile();  // Recargar el perfil después de la actualización
@@ -182,11 +198,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (error.message === 'Unauthorized') {
                 showModalAndRedirect();
             } else {
-                alert('Ocurrió un error al actualizar el perfil: ' + error.message);
+                alert('An error occurred while updating the profile: ' + error.message);
             }
         });
     }
-
+    
     // Cargar el perfil cuando se carga la página
     loadProfile();
 
