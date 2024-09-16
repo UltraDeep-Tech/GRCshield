@@ -4,7 +4,7 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  background: #fff;
+  background: rgb(243, 243, 243);
   color: #000000;
   margin: 0;
   padding: 0;
@@ -989,7 +989,7 @@ color: #fff;
 }
 
 .contact .php-email-form button[type=submit] {
-  background: #333333; /* Gris oscuro */
+  background: #0056b3; /* Gris oscuro */
   border: 0;
   padding: 10px 30px;
   color: #ffffff; /* Blanco */
@@ -998,7 +998,7 @@ color: #fff;
 }
 
 .contact .php-email-form button[type=submit]:hover {
-  background: #000000; /* Negro */
+  background: #007bff; /* Negro */
 }
 
 @keyframes animate-loading {

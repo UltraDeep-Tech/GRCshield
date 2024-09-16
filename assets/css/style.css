@@ -1164,7 +1164,7 @@ color: #fff;
 }
 
 .contact .php-email-form button[type=submit] {
-  background: #031086f1;
+  background: #0056b3;
   border: 0;
   padding: 10px 30px;
   color: #fff;
@@ -1173,7 +1173,7 @@ color: #fff;
 }
 
 .contact .php-email-form button[type=submit]:hover {
-  background: #5969f3;
+  background: #012970;
 }
 
 @keyframes animate-loading {
@@ -1246,6 +1246,3 @@ color: #fff;
   color: #012970;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  background-color: #0056b3 !important;
-}
