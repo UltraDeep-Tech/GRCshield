@@ -7,39 +7,38 @@ function updateAllChartColors(isDarkMode) {
 
 
 function obtenerDatos(key, callback) {
-  let department = localStorage.getItem('department');
-  let userDepartment = localStorage.getItem('userDepartment');
+  let currentDepartment = localStorage.getItem('currentDepartment');
+  let authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
 
-  if (!department || department.trim() === "" || !userDepartment || userDepartment.trim() === "") {
-    console.error('Departamento o departamento de usuario no válido');
-    return;
+  if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
+    console.error('Departamento actual no válido o no autorizado');
+    // Si el departamento actual no es válido, intentamos usar el primer departamento autorizado
+    currentDepartment = authorizedDepartments[0];
+    if (!currentDepartment) {
+      console.error('No hay departamentos autorizados');
+      return;
+    }
+    localStorage.setItem('currentDepartment', currentDepartment);
   }
 
-  // Si el department ha cambiado, actualizar userDepartment
-  if (department !== userDepartment) {
-    userDepartment = department;
-    localStorage.setItem('userDepartment', department);
-  }
-
-  console.log(`Solicitando datos para el departamento: ${department}, userDepartment: ${userDepartment}`);
-  fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/dashboard?department=${encodeURIComponent(department)}&user_department=${encodeURIComponent(userDepartment)}`)
-  .then(response => {
+  console.log(`Solicitando datos para el departamento: ${currentDepartment}`);
+  fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/dashboard?department=${encodeURIComponent(currentDepartment)}`)
+    .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return response.json();
     })
     .then(data => {
-      console.log(`Datos recuperados para el departamento ${department}:`, data);
+      console.log(`Datos recuperados para el departamento ${currentDepartment}:`, data);
       if (data[key]) {
-        callback(data[key]); // Pasar solo los datos correspondientes a la key
+        callback(data[key]);
       } else {
         console.error(`La clave ${key} no se encontró en los datos.`);
       }
     })
     .catch(error => console.error('Error al obtener los datos:', error));
 }
-
 
 
 
