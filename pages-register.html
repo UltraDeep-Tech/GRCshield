@@ -205,7 +205,7 @@
     </div>
   </main><!-- End #main -->
   <script>
-    document.querySelector('form').addEventListener('submit', function(event) {
+document.querySelector('form').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const name = document.getElementById('yourName').value;
@@ -216,15 +216,19 @@
     const departments = [];
     document.querySelectorAll('input[name="departments[]"]:checked').forEach((checkbox) => {
         departments.push(checkbox.value);
+        console.log('Departamento seleccionado:', checkbox.value); // Nuevo log
     });
 
     if (departments.length === 0) {
-        alert('Please select at least one department.');
+        alert('Por favor, selecciona al menos un departamento.');
         return;
     }
 
     // Verificar los departamentos seleccionados en la consola
-    console.log('Selected departments:', departments);
+    console.log('Departamentos seleccionados:', departments);
+
+    // Verificar específicamente el estado del checkbox de Ventas
+    console.log('Checkbox de Ventas marcado:', document.getElementById('sales').checked);
 
     fetch('https://backend-grcshield-934866038204.us-central1.run.app/register', {
         method: 'POST',
@@ -235,7 +239,7 @@
             name: name,
             email: email,
             password: password,
-            departments: departments  // Enviar los departamentos seleccionados
+            departments: departments
         })
     })
     .then(response => response.json())
@@ -243,16 +247,16 @@
         if (data.error) {
             alert('Error: ' + data.error);
         } else {
-            alert('User registered successfully!');
-            window.location.href = 'pages-login.html';  // Redirigir al usuario a la página de login
+            alert('Usuario registrado exitosamente!');
+            console.log('Respuesta del servidor:', data); // Nuevo log
+            window.location.href = 'pages-login.html';
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred while registering. Please try again.');
+        alert('Ocurrió un error durante el registro. Por favor, intenta de nuevo.');
     });
 });
-
   </script>
   
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
