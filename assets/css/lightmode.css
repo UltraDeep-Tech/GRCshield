@@ -1818,7 +1818,7 @@ body.modal-open {
 }
 
 .nav-tabs .nav-link.active {
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #0056b3;
 }
 
 /* Responsive Tabs */
@@ -1882,7 +1882,7 @@ body.modal-open {
 /* Buttons */
 .tablepolicy tbody td .btn {
   color: #ffffff;
-  background-color: #007bff;
+  background-color: #0056b3;
   border: none;
   padding: 5px 10px;
   text-transform: uppercase;
@@ -1911,7 +1911,7 @@ body.modal-open {
 
 .tablepolicy tbody td .btn-outline-primary:hover {
   background-color: #e9f1ff;
-  color: #007bff;
+  color: #0056b3;
 }
 
 /* Responsive Buttons */
