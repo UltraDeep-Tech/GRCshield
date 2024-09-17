@@ -124,6 +124,11 @@
   </video>
 
 <script>
+// En tu archivo de script principal (por ejemplo, main.js)
+
+let currentDepartment = '';
+let authorizedDepartments = [];
+
 function login(event) {
     event.preventDefault();
     
@@ -132,13 +137,12 @@ function login(event) {
     const department = document.getElementById('yourDepartment').value;
     const loginMessage = document.getElementById('loginMessage');
     
-    // Send credentials to backend for authentication
     fetch('https://backend-grcshield-934866038204.us-central1.run.app/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        credentials: 'include',  // This allows sending cookies with the request
+        credentials: 'include',
         body: JSON.stringify({
             email: email,
             password: password,
@@ -161,11 +165,17 @@ function login(event) {
             loginMessage.textContent = 'Login successful! Redirecting...';
             loginMessage.style.display = 'block';
             
-            // Set login status and expiration in localStorage
+            // Guardar la información del usuario
             localStorage.setItem('loggedIn', 'true');
             const now = new Date();
             const expirationTime = now.getTime() + (24 * 60 * 60 * 1000); // 24 hours from now
             localStorage.setItem('expiration', expirationTime);
+            
+            // Guardar los departamentos autorizados y el departamento actual
+            authorizedDepartments = data.user_data.departments;
+            currentDepartment = data.user_data.current_department;
+            localStorage.setItem('authorizedDepartments', JSON.stringify(authorizedDepartments));
+            localStorage.setItem('currentDepartment', currentDepartment);
             
             // Redirect after a brief delay
             setTimeout(() => {
@@ -180,6 +190,39 @@ function login(event) {
         loginMessage.style.display = 'block';
     });
 }
+
+function initializeDepartmentSelector() {
+    const departmentSelect = document.getElementById('department-select');
+    const userDepartmentDiv = document.getElementById('user-department');
+
+    // Cargar los departamentos autorizados y el departamento actual desde localStorage
+    authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
+    currentDepartment = localStorage.getItem('currentDepartment') || '';
+
+    // Llenar el selector de departamentos
+    authorizedDepartments.forEach(dep => {
+        const option = document.createElement('option');
+        option.value = dep;
+        option.textContent = dep;
+        departmentSelect.appendChild(option);
+    });
+
+    // Establecer el departamento actual
+    departmentSelect.value = currentDepartment;
+    userDepartmentDiv.textContent = `Current Department: ${currentDepartment}`;
+
+    // Manejar cambios de departamento
+    departmentSelect.addEventListener('change', function() {
+        currentDepartment = this.value;
+        localStorage.setItem('currentDepartment', currentDepartment);
+        userDepartmentDiv.textContent = `Current Department: ${currentDepartment}`;
+        // Aquí puedes añadir lógica adicional si necesitas realizar acciones específicas al cambiar de departamento
+    });
+}
+
+// Llamar a esta función cuando se cargue la página
+document.addEventListener('DOMContentLoaded', initializeDepartmentSelector);
+
 </script>
 
 
