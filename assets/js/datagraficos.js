@@ -21,8 +21,8 @@ function obtenerDatos(key, callback) {
     localStorage.setItem('currentDepartment', currentDepartment);
   }
 
-  console.log(`Solicitando datos para el departamento: ${currentDepartment}`);
-  fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/dashboard?department=${encodeURIComponent(currentDepartment)}`)
+  console.log(`Solicitando datos para el departamento: ${currentDepartment}, userDepartment: ${currentDepartment}`);
+  fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/dashboard?department=${encodeURIComponent(currentDepartment)}&user_department=${encodeURIComponent(currentDepartment)}`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
