@@ -220,7 +220,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
     });
 
     if (departments.length === 0) {
-        alert('Por favor, selecciona al menos un departamento.');
+        alert('Please select at least one department.');
         return;
     }
 
@@ -247,14 +247,14 @@ document.querySelector('form').addEventListener('submit', function(event) {
         if (data.error) {
             alert('Error: ' + data.error);
         } else {
-            alert('Usuario registrado exitosamente!');
+            alert('Successfully registered user!');
             console.log('Respuesta del servidor:', data); // Nuevo log
             window.location.href = 'pages-login.html';
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Ocurrió un error durante el registro. Por favor, intenta de nuevo.');
+        alert(' An error occurred during registration, please try again.');
     });
 });
   </script>

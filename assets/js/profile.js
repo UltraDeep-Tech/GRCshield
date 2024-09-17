@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 isAuthorized = false;
                 showModalAndRedirect();
             } else {
-                console.error('Error al cargar el perfil:', error.message);
+                console.error('Error loading profile:', error.message);
             }
         });
     }
