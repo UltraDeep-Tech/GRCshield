@@ -302,32 +302,32 @@
       </a>
       <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
-          <a href="sentimentanalysis.html#sentimentAnalysis">
+          <a href="sentimentanalysis.html#realtime">
             <i class="bi bi-emoji-smile"></i><span>Sentiment Analysis</span>
           </a>
         </li>
         <li>
-          <a href="sentimentanalysis.html#conversationCategorization">
+          <a href="sentimentanalysis.html#conversation">
             <i class="bi bi-tags"></i><span>Conversation Categorization</span>
           </a>
         </li>
         <li>
-          <a href="sentimentanalysis.html#engagementMetrics">
+          <a href="sentimentanalysis.html#engagement">
             <i class="bi bi-bar-chart"></i><span>Engagement Quality Metrics</span>
           </a>
         </li>
         <li>
-          <a href="sentimentanalysis.html#keywordTracking">
+          <a href="sentimentanalysis.html#keyword">
             <i class="bi bi-search"></i><span>Keyword Tracking</span>
           </a>
         </li>
         <li>
-          <a href="sentimentanalysis.html#biasDetection">
+          <a href="sentimentanalysis.html#biasdetect">
             <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
           </a>
         </li>
         <li>
-          <a href="sentimentanalysis.html#behaviorPrediction">
+          <a href="sentimentanalysis.html#prediction">
             <i class="bi bi-lightbulb"></i><span>User Behavior Prediction</span>
           </a>
         </li>
@@ -758,43 +758,48 @@
       }
     });
   </script>
-      <script>
-        document.addEventListener('DOMContentLoaded', function () {
-       // Obtener el departamento seleccionado y los departamentos a los que el usuario tiene acceso desde localStorage
-       const department = localStorage.getItem('department');
-       const userDepartments = JSON.parse(localStorage.getItem('userDepartments')) || [];
-       
-       // Referencias a los elementos del DOM
-       const departmentSelect = document.getElementById('department-select');
-       const userDepartmentDiv = document.getElementById('user-department');
-     
-       // Llenar el menú desplegable con los departamentos disponibles
-       userDepartments.forEach(dep => {
-         const option = document.createElement('option');
-         option.value = dep;
-         option.textContent = dep;
-         departmentSelect.appendChild(option);
-       });
-     
-       // Establecer el departamento seleccionado previamente
-       if (department) {
-         userDepartmentDiv.textContent = ` ${department}`;
-         departmentSelect.value = department;
-       }
-     
-       // Escuchar el cambio de selección de departamento y actualizar localStorage
-       departmentSelect.addEventListener('change', function () {
-         const selectedDepartment = departmentSelect.value;
-         localStorage.setItem('department', selectedDepartment);
-         userDepartmentDiv.textContent = ` ${selectedDepartment}`;
-     
-         // Recargar la página para reflejar el cambio de departamento
-         window.location.reload();
-       });
-     });
-     
-     
-     </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const currentDepartment = localStorage.getItem('currentDepartment');
+        const authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
+      
+        const departmentSelect = document.getElementById('department-select');
+        const userDepartmentDiv = document.getElementById('user-department');
+      
+        // Llenar el menú desplegable solo con los departamentos autorizados
+        authorizedDepartments.forEach(dep => {
+          const option = document.createElement('option');
+          option.value = dep;
+          option.textContent = dep;
+          departmentSelect.appendChild(option);
+        });
+      
+        // Establecer el departamento seleccionado
+        if (currentDepartment && authorizedDepartments.includes(currentDepartment)) {
+          userDepartmentDiv.textContent = `Current Department: ${currentDepartment}`;
+          departmentSelect.value = currentDepartment;
+        } else if (authorizedDepartments.length > 0) {
+          const firstDepartment = authorizedDepartments[0];
+          localStorage.setItem('currentDepartment', firstDepartment);
+          userDepartmentDiv.textContent = `Current Department: ${firstDepartment}`;
+          departmentSelect.value = firstDepartment;
+        }
+      
+        // Manejar cambios de departamento
+        departmentSelect.addEventListener('change', function () {
+          const selectedDepartment = this.value;
+          if (authorizedDepartments.includes(selectedDepartment)) {
+            localStorage.setItem('currentDepartment', selectedDepartment);
+            userDepartmentDiv.textContent = `Current Department: ${selectedDepartment}`;
+            // Recargar los datos para el nuevo departamento
+            location.reload();
+          } else {
+            console.error('Intento de seleccionar un departamento no autorizado');
+            this.value = localStorage.getItem('currentDepartment');
+          }
+        });
+      });
+      </script>
 
 </body>
 

@@ -1247,3 +1247,27 @@ color: #fff;
   color: #012970;
 }
 
+#totalBlockedRequests,
+#blockedRequestsByCategory,
+#blockRateOverTimeByCategory,
+#severity,
+#SeverityTime,
+#totalAbusiveUsersChart,
+#hallucinationChart,
+#biasPieChart,
+#promptInjectionChart,
+#dataExposureLineChart {
+  scroll-margin-top: 100px; /* Ajusta el valor según la altura de la barra de navegación */
+}
+
+#realtime,
+#emotion,
+#sentiment,
+#conversation,
+#engagement,
+#keyword,
+#biasdetect,
+#prediction,
+#biastrend {
+  scroll-margin-top: 100px; /* Ajusta según la altura de tu navbar */
+}

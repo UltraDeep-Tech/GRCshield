@@ -315,52 +315,52 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="/sentimentanalysis.html">
-        <i class="bi bi-chat-square-dots"></i><span>Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="sentimentanalysis.html#sentimentAnalysis">
-            <i class="bi bi-emoji-smile"></i><span>Sentiment Analysis</span>
-          </a>
-        </li>
-        <li>
-          <a href="sentimentanalysis.html#conversationCategorization">
-            <i class="bi bi-tags"></i><span>Conversation Categorization</span>
-          </a>
-        </li>
-        <li>
-          <a href="sentimentanalysis.html#engagementMetrics">
-            <i class="bi bi-bar-chart"></i><span>Engagement Quality Metrics</span>
-          </a>
-        </li>
-        <li>
-          <a href="sentimentanalysis.html#keywordTracking">
-            <i class="bi bi-search"></i><span>Keyword Tracking</span>
-          </a>
-        </li>
-        <li>
-          <a href="sentimentanalysis.html#biasDetection">
-            <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
-          </a>
-        </li>
-        <li>
-          <a href="sentimentanalysis.html#behaviorPrediction">
-            <i class="bi bi-lightbulb"></i><span>User Behavior Prediction</span>
-          </a>
-        </li>
-        <li>
-          <a href="sentimentanalysis.html#realTimeAlertsSection">
-            <i class="bi bi-bell"></i><span>Real-Time Alerts</span>
-          </a>
-        </li>
-        <li>
-          <a href="sentimentanalysis.html#customReportGenerationSection">
-            <i class="bi bi-file-earmark-text"></i><span>Custom Report Generation</span>
-          </a>
-        </li>
-      </ul>
-    </li>
+        <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="/sentimentanalysis.html">
+          <i class="bi bi-chat-square-dots"></i><span>Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="sentimentanalysis.html#realtime">
+              <i class="bi bi-emoji-smile"></i><span>Sentiment Analysis</span>
+            </a>
+          </li>
+          <li>
+            <a href="sentimentanalysis.html#conversation">
+              <i class="bi bi-tags"></i><span>Conversation Categorization</span>
+            </a>
+          </li>
+          <li>
+            <a href="sentimentanalysis.html#engagement">
+              <i class="bi bi-bar-chart"></i><span>Engagement Quality Metrics</span>
+            </a>
+          </li>
+          <li>
+            <a href="sentimentanalysis.html#keyword">
+              <i class="bi bi-search"></i><span>Keyword Tracking</span>
+            </a>
+          </li>
+          <li>
+            <a href="sentimentanalysis.html#biasdetect">
+              <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
+            </a>
+          </li>
+          <li>
+            <a href="sentimentanalysis.html#prediction">
+              <i class="bi bi-lightbulb"></i><span>User Behavior Prediction</span>
+            </a>
+          </li>
+          <li>
+            <a href="sentimentanalysis.html#realTimeAlertsSection">
+              <i class="bi bi-bell"></i><span>Real-Time Alerts</span>
+            </a>
+          </li>
+          <li>
+            <a href="sentimentanalysis.html#customReportGenerationSection">
+              <i class="bi bi-file-earmark-text"></i><span>Custom Report Generation</span>
+            </a>
+          </li>
+        </ul>
+      </li>
     <!-- End Interaction Analysis Nav -->
 
     <li class="nav-item">
@@ -565,232 +565,241 @@
 
     <section class="section">
       <div class="row">
-
-<!-- Bar Chart -->
-
-<div class="col-lg-6" >
-  <div class="cardindex">
-    <div class="cardindex-body">
-      <h5 class="cardindex-title">Blocked Requests & Rate</h5>
-      <canvas id="totalBlockedRequests" style="max-height: 400px;"></canvas>
-    </div>
-  </div>
-</div>
-<!-- End Combined Chart -->
-
-
-<div class="col-lg-6">
-  <div class="cardindex">
-    <div class="cardindex-body">
-      <h5 class="cardindex-title">Blocked Requests by Category</h5>
-      <canvas id="blockedRequestsByCategory" style="max-height:240px; min-width: 240px;"></canvas>
-    </div>
-  </div>
-</div>
-<!-- End Pie Chart -->
-
-<div class="col-lg-12">
-  <div class="cardindex">
-    <div class="cardindex-body">
-      <h5 class="cardindex-title">Block Rate Over Time by Category</h5>
-      <canvas id="blockRateOverTimeByCategory" style="max-height: 400px;"></canvas>
-    </div>
-  </div>
-</div>
-<!-- End Line Chart -->
-
-<div class="col-lg-6">
-  <div class="cardindex">
-    <div class="cardindex-body">
-      <h5 class="cardindex-title">Severity Distribution by Category</h5>
-      <canvas id="severity"></canvas>
-    </div>
-  </div>
-</div>
-<!-- End Bar Chart -->
-
-<div class="col-lg-6">
-  <div class="cardindex">
-    <div class="cardindex-body">
-      <h5 class="cardindex-title">Severity Over Time by Category</h5>
-      <canvas id="SeverityTime" style="max-height: 400px;"></canvas>
-    </div>
-  </div>
-</div>
-<!-- End Line Chart -->
-
-<div class="col-12">
-  <div class="cardindex">
-    <div class="cardindex-body">
-      <h5 class="cardindex-title">Abusive User Detection</h5>
-      <div class="chart">
-        <h6>Total Potential Abusive Users Over Time</h6>
-        <canvas id="totalAbusiveUsersChart" style="max-height: 400px;"></canvas>
-      </div>
-
-      <div class="table-responsive mt-4">
-        <h6>Detailed Analysis of Potentially Abusive Users <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#abusiveUsersTable" aria-expanded="false" aria-controls="abusiveUsersTable"> Show info</button></h6>
-        <div class="collapse" id="abusiveUsersTable">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>User GUID</th>
-                <th>User</th>
-                <th>Text</th>
-                <th>Response</th>
-                <th>Abuse Score</th>
-                <th>Abuse Score Trend</th>
-                <th>Evaluate Date</th>
-                <th>Total Abuse Request Ratio/Count</th>
-                <th>Abuse Ratio/Count for Violence</th>
-                <th>Abuse Ratio/Count for Hate</th>
-                <th>Abuse Ratio/Count for Sexual</th>
-                <th>Abuse Ratio/Count for Self-harm</th>
-              </tr>
-            </thead>
-            <tbody id="abusiveUsersData">
-              <!-- Data will be populated here -->
-            </tbody>
-          </table>
+    
+        <!-- Bar Chart -->
+        <div id="totalBlockedRequests" class="col-lg-6">
+          <div class="cardindex">
+            <div class="cardindex-body">
+              <h5 class="cardindex-title">Blocked Requests & Rate</h5>
+              <canvas id="totalBlockedRequests" style="max-height: 400px;"></canvas>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Abusive User Detection Section -->
-
-<div class="col-12">
-  <div class="cardindex">
-    <div class="cardindex-body">
-      <h5 class="cardindex-title">Hallucination Detection</h5>
-      <div class="chart">
-        <h6>Number of Hallucinations Detected Each Day</h6>
-        <canvas id="hallucinationChart" style="max-height: 400px;"></canvas>
-      </div>
-      <div class="table-responsive mt-4">
-        <h6>Details of Each Hallucination <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#hallucinationTable" aria-expanded="false" aria-controls="hallucinationTable">Show Info</button></h6>
-        <div class="collapse" id="hallucinationTable">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>User Input</th>
-                <th>AI Response</th>
-                <th>Date</th>
-                <th>Prompt</th>
-                <th>Response</th>
-              </tr>
-            </thead>
-            <tbody id="hallucinationData">
-              <!-- Data will be populated here -->
-            </tbody>
-          </table>
+        <!-- End Combined Chart -->
+    
+        <div id="blockedRequestsByCategory" class="col-lg-6">
+          <div class="cardindex">
+            <div class="cardindex-body">
+              <h5 class="cardindex-title">Blocked Requests by Category</h5>
+              <canvas id="blockedRequestsByCategory" style="max-height:240px; min-width: 240px;"></canvas>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="col-12">
-  <div class="cardindex">
-    <div class="cardindex-body">
-      <h5 class="cardindex-title">Bias Detection</h5>
-      <div class="chart">
-        <h6>Types of Bias Detected</h6>
-        <canvas id="biasPieChart" style="max-height: 400px;"></canvas>
-      </div>
-      <div class="chart mt-4">
-        <h6>Bias Incidents Over Time</h6>
-        <canvas id="biasLineChart" style="max-height: 400px;"></canvas>
-      </div>
-      <div class="table-responsive mt-4">
-        <h6>Details of Each Bias Incident <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#biasTable" aria-expanded="false" aria-controls="biasTable">Show Info</button></h6>
-        <div class="collapse" id="biasTable">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>User Input</th>
-                <th>AI Response</th>
-                <th>Date</th>
-                <th>Text</th>
-                <th>Response</th>
-              </tr>
-            </thead>
-            <tbody id="biasData">
-              <!-- Data will be populated here -->
-            </tbody>
-          </table>
+        <!-- End Pie Chart -->
+    
+        <div id="blockRateOverTimeByCategory" class="col-lg-12">
+          <div class="cardindex">
+            <div class="cardindex-body">
+              <h5 class="cardindex-title">Block Rate Over Time by Category</h5>
+              <canvas id="blockRateOverTimeByCategory" style="max-height: 400px;"></canvas>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="col-12">
-  <div class="cardindex">
-    <div class="cardindex-body">
-      <h5 class="cardindex-title">Prompt Injection/Jailbreak Detection</h5>
-      <div class="chart">
-        <h6>Number of Prompt Injections Detected Each Day</h6>
-        <canvas id="promptInjectionChart" style="max-height: 400px;"></canvas>
-      </div>
-      <div class="table-responsive mt-4">
-        <h6>Details of Each Prompt Injection <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#promptInjectionTable" aria-expanded="false" aria-controls="promptInjectionTable">Show Info</button></h6>
-        <div class="collapse" id="promptInjectionTable">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>N°</th>
-                <th>Class</th>
-                <th>Date</th>
-                <th>Text</th>
-              </tr>
-            </thead>
-            <tbody id="promptInjectionData">
-              <!-- Data will be populated here -->
-            </tbody>
-          </table>
+        <!-- End Line Chart -->
+    
+        <div id="severity" class="col-lg-6">
+          <div class="cardindex">
+            <div class="cardindex-body">
+              <h5 class="cardindex-title">Severity Distribution by Category</h5>
+              <canvas id="severity"></canvas>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="col-12">
-  <div class="cardindex">
-    <div class="cardindex-body">
-      <h5 class="cardindex-title">Data Exposure (Leakage, Lineage, Observability, Privacy)</h5>
-      <div class="chart">
-        <h6>Data Exposure Incidents Over Time</h6>
-        <canvas id="dataExposureLineChart" style="max-height: 400px;"></canvas>
-      </div>
-      <div class="chart mt-4">
-        <h6>Types of Data Exposed</h6>
-        <canvas id="dataExposurePieChart" style="max-height: 400px;"></canvas>
-      </div>
-      <div class="table-responsive mt-4">
-        <h6>Details of Each Data Exposure Incident <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#dataExposureTable" aria-expanded="false" aria-controls="dataExposureTable">Show Info</button></h6>
-        <div class="collapse" id="dataExposureTable">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>Data Type</th>
-                <th>User Input</th>
-                <th>AI Response</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody id="dataExposureData">
-              <!-- Data will be populated here -->
-            </tbody>
-          </table>
+        <!-- End Bar Chart -->
+    
+        <div id="SeverityTime" class="col-lg-6">
+          <div class="cardindex">
+            <div class="cardindex-body">
+              <h5 class="cardindex-title">Severity Over Time by Category</h5>
+              <canvas id="SeverityTime" style="max-height: 400px;"></canvas>
+            </div>
+          </div>
         </div>
+        <!-- End Line Chart -->
+    
+        <div id="totalAbusiveUsersChart" class="col-12">
+          <div class="cardindex">
+            <div class="cardindex-body">
+              <h5 class="cardindex-title">Abusive User Detection</h5>
+              <div class="chart">
+                <h6>Total Potential Abusive Users Over Time</h6>
+                <canvas id="totalAbusiveUsersChart" style="max-height: 400px;"></canvas>
+              </div>
+    
+              <div class="table-responsive mt-4">
+                <h6>Detailed Analysis of Potentially Abusive Users 
+                  <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#abusiveUsersTable" aria-expanded="false" aria-controls="abusiveUsersTable">Show info</button>
+                </h6>
+                <div class="collapse" id="abusiveUsersTable">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>User GUID</th>
+                        <th>User</th>
+                        <th>Text</th>
+                        <th>Response</th>
+                        <th>Abuse Score</th>
+                        <th>Abuse Score Trend</th>
+                        <th>Evaluate Date</th>
+                        <th>Total Abuse Request Ratio/Count</th>
+                        <th>Abuse Ratio/Count for Violence</th>
+                        <th>Abuse Ratio/Count for Hate</th>
+                        <th>Abuse Ratio/Count for Sexual</th>
+                        <th>Abuse Ratio/Count for Self-harm</th>
+                      </tr>
+                    </thead>
+                    <tbody id="abusiveUsersData">
+                      <!-- Data will be populated here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Abusive User Detection Section -->
+    
+        <div id="hallucinationChart" class="col-12">
+          <div class="cardindex">
+            <div class="cardindex-body">
+              <h5 class="cardindex-title">Hallucination Detection</h5>
+              <div class="chart">
+                <h6>Number of Hallucinations Detected Each Day</h6>
+                <canvas id="hallucinationChart" style="max-height: 400px;"></canvas>
+              </div>
+              <div class="table-responsive mt-4">
+                <h6>Details of Each Hallucination 
+                  <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#hallucinationTable" aria-expanded="false" aria-controls="hallucinationTable">Show Info</button>
+                </h6>
+                <div class="collapse" id="hallucinationTable">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>User Input</th>
+                        <th>AI Response</th>
+                        <th>Date</th>
+                        <th>Prompt</th>
+                        <th>Response</th>
+                      </tr>
+                    </thead>
+                    <tbody id="hallucinationData">
+                      <!-- Data will be populated here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div id="biasPieChart" class="col-12">
+          <div class="cardindex">
+            <div class="cardindex-body">
+              <h5 class="cardindex-title">Bias Detection</h5>
+              <div class="chart">
+                <h6>Types of Bias Detected</h6>
+                <canvas id="biasPieChart" style="max-height: 400px;"></canvas>
+              </div>
+              <div class="chart mt-4">
+                <h6>Bias Incidents Over Time</h6>
+                <canvas id="biasLineChart" style="max-height: 400px;"></canvas>
+              </div>
+              <div class="table-responsive mt-4">
+                <h6>Details of Each Bias Incident 
+                  <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#biasTable" aria-expanded="false" aria-controls="biasTable">Show Info</button>
+                </h6>
+                <div class="collapse" id="biasTable">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>User Input</th>
+                        <th>AI Response</th>
+                        <th>Date</th>
+                        <th>Text</th>
+                        <th>Response</th>
+                      </tr>
+                    </thead>
+                    <tbody id="biasData">
+                      <!-- Data will be populated here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div id="promptInjectionChart" class="col-12">
+          <div class="cardindex">
+            <div class="cardindex-body">
+              <h5 class="cardindex-title">Prompt Injection/Jailbreak Detection</h5>
+              <div class="chart">
+                <h6>Number of Prompt Injections Detected Each Day</h6>
+                <canvas id="promptInjectionChart" style="max-height: 400px;"></canvas>
+              </div>
+              <div class="table-responsive mt-4">
+                <h6>Details of Each Prompt Injection 
+                  <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#promptInjectionTable" aria-expanded="false" aria-controls="promptInjectionTable">Show Info</button>
+                </h6>
+                <div class="collapse" id="promptInjectionTable">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>N°</th>
+                        <th>Class</th>
+                        <th>Date</th>
+                        <th>Text</th>
+                      </tr>
+                    </thead>
+                    <tbody id="promptInjectionData">
+                      <!-- Data will be populated here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div id="dataExposureLineChart" class="col-12">
+          <div class="cardindex">
+            <div class="cardindex-body">
+              <h5 class="cardindex-title">Data Exposure (Leakage, Lineage, Observability, Privacy)</h5>
+              <div class="chart">
+                <h6>Data Exposure Incidents Over Time</h6>
+                <canvas id="dataExposureLineChart" style="max-height: 400px;"></canvas>
+              </div>
+              <div class="chart mt-4">
+                <h6>Types of Data Exposed</h6>
+                <canvas id="dataExposurePieChart" style="max-height: 400px;"></canvas>
+              </div>
+              <div class="table-responsive mt-4">
+                <h6>Details of Each Data Exposure Incident 
+                  <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#dataExposureTable" aria-expanded="false" aria-controls="dataExposureTable">Show Info</button>
+                </h6>
+                <div class="collapse" id="dataExposureTable">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Data Type</th>
+                        <th>User Input</th>
+                        <th>AI Response</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dataExposureData">
+                      <!-- Data will be populated here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
       </div>
-    </div>
-  </div>
-</div>
-
-</section>
+    </section>
+    
   </main><!-- End #main -->
 
     <!-- Vendor JS Files -->

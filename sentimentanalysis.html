@@ -307,14 +307,7 @@
       </li>
       <br>
         
-  
-      <li class="nav-item">
-        <a class="nav-link " href="index.html">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-  
+
 
       <li class="nav-item">
         <a class="nav-link " href="index.html">
@@ -328,32 +321,32 @@
         </a>
         <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="sentimentanalysis.html#sentimentAnalysis">
+            <a href="sentimentanalysis.html#realtime">
               <i class="bi bi-emoji-smile"></i><span>Sentiment Analysis</span>
             </a>
           </li>
           <li>
-            <a href="sentimentanalysis.html#conversationCategorization">
+            <a href="sentimentanalysis.html#conversation">
               <i class="bi bi-tags"></i><span>Conversation Categorization</span>
             </a>
           </li>
           <li>
-            <a href="sentimentanalysis.html#engagementMetrics">
+            <a href="sentimentanalysis.html#engagement">
               <i class="bi bi-bar-chart"></i><span>Engagement Quality Metrics</span>
             </a>
           </li>
           <li>
-            <a href="sentimentanalysis.html#keywordTracking">
+            <a href="sentimentanalysis.html#keyword">
               <i class="bi bi-search"></i><span>Keyword Tracking</span>
             </a>
           </li>
           <li>
-            <a href="sentimentanalysis.html#biasDetection">
+            <a href="sentimentanalysis.html#biasdetect">
               <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
             </a>
           </li>
           <li>
-            <a href="sentimentanalysis.html#behaviorPrediction">
+            <a href="sentimentanalysis.html#prediction">
               <i class="bi bi-lightbulb"></i><span>User Behavior Prediction</span>
             </a>
           </li>
@@ -511,7 +504,7 @@
     <div class="row">
 
       <!-- Sentiment Analysis & Emotion Detection -->
-      <div class="col-lg-6">
+      <div class="col-lg-6" id="realtime">
         <div class="cardindex">
           <div class="cardindex-body" id="sentimentAnalysis">
             <h5 class="cardindex-title">Real-Time Emotion Tracker</h5>
@@ -520,7 +513,7 @@
         </div>
       </div>
 
-      <div class="col-lg-6">
+      <div class="col-lg-6" id="emotion" >
         <div class="cardindex">
           <div class="cardindex-body">
             <h5 class="cardindex-title">Emotion Trends Heatmap</h5>
@@ -529,7 +522,7 @@
         </div>
       </div>
 
-      <div class="col-12">
+      <div class="col-12" id="sentiment">
         <div class="cardindex">
           <div class="cardindex-body">
             <h5 class="cardindex-title">Sentiment Categorization per Conversation</h5>
@@ -551,7 +544,7 @@
       <!-- End Sentiment Analysis -->
 
       <!-- Conversation Categorization -->
-      <div class="col-12">
+      <div class="col-12" id="conversation"> 
         <div class="cardindex">
           <div class="cardindex-body" id="conversationCategorization">
             <h5 class="cardindex-title">Conversation Categorization</h5>
@@ -573,7 +566,7 @@
       <!-- End Conversation Categorization -->
 
       <!-- Engagement Quality Metrics -->
-      <div class="col-lg-12">
+      <div class="col-lg-12" id="engagement">
         <div class="cardindex">
           <div class="cardindex-body" id="engagementMetrics">
             <h5 class="cardindex-title">Engagement Quality Metrics</h5>
@@ -584,7 +577,7 @@
       <!-- End Engagement Quality Metrics -->
 
       <!-- Keyword Trend Tracking -->
-      <div class="col-lg-6">
+      <div class="col-lg-6" id="keyword">
         <div class="cardindex">
           <div class="cardindex-body" id="keywordTracking">
             <h5 class="cardindex-title">Keyword Trend Word Cloud</h5>
@@ -593,7 +586,7 @@
         </div>
       </div>
 
-      <div class="col-lg-6">
+      <div class="col-lg-6" id="keyword2">
         <div class="cardindex">
           <div class="cardindex-body">
             <h5 class="cardindex-title">Keyword Trends Over Time</h5>
@@ -604,7 +597,7 @@
       <!-- End Keyword Trend Tracking -->
 
       <!-- Bias Detection -->
-      <div class="col-12">
+      <div class="col-12" id="biasdetect">
         <div class="cardindex">
           <div class="cardindex-body" id="biasDetection">
             <h5 class="cardindex-title">Bias Detection</h5>
@@ -613,7 +606,7 @@
         </div>
       </div>
 
-      <div class="col-12">
+      <div class="col-12" id="biastrend">
         <div class="cardindex">
           <div class="cardindex-body">
             <h5 class="cardindex-title">Bias Trends Over Time</h5>
@@ -624,7 +617,7 @@
       <!-- End Bias Detection -->
 
       <!-- User Behavior Prediction -->
-      <div class="col-12">
+      <div class="col-12" id="prediction">
         <div class="cardindex">
           <div class="cardindex-body" id="behaviorPrediction">
             <h5 class="cardindex-title">User Behavior Prediction</h5>
@@ -955,39 +948,46 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    // Obtener el departamento seleccionado y los departamentos a los que el usuario tiene acceso desde localStorage
-    const department = localStorage.getItem('department');
-    const userDepartments = JSON.parse(localStorage.getItem('userDepartments')) || [];
-    
-    // Referencias a los elementos del DOM
+    const currentDepartment = localStorage.getItem('currentDepartment');
+    const authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
+  
     const departmentSelect = document.getElementById('department-select');
     const userDepartmentDiv = document.getElementById('user-department');
-
-    // Llenar el menú desplegable con los departamentos disponibles
-    userDepartments.forEach(dep => {
+  
+    // Llenar el menú desplegable solo con los departamentos autorizados
+    authorizedDepartments.forEach(dep => {
       const option = document.createElement('option');
       option.value = dep;
       option.textContent = dep;
       departmentSelect.appendChild(option);
     });
-
-    // Establecer el departamento seleccionado previamente
-    if (department) {
-      userDepartmentDiv.textContent = ` ${department}`;
-      departmentSelect.value = department;
+  
+    // Establecer el departamento seleccionado
+    if (currentDepartment && authorizedDepartments.includes(currentDepartment)) {
+      userDepartmentDiv.textContent = `Current Department: ${currentDepartment}`;
+      departmentSelect.value = currentDepartment;
+    } else if (authorizedDepartments.length > 0) {
+      const firstDepartment = authorizedDepartments[0];
+      localStorage.setItem('currentDepartment', firstDepartment);
+      userDepartmentDiv.textContent = `Current Department: ${firstDepartment}`;
+      departmentSelect.value = firstDepartment;
     }
-
-    // Escuchar el cambio de selección de departamento y actualizar localStorage
+  
+    // Manejar cambios de departamento
     departmentSelect.addEventListener('change', function () {
-      const selectedDepartment = departmentSelect.value;
-      localStorage.setItem('department', selectedDepartment);
-      userDepartmentDiv.textContent = ` ${selectedDepartment}`;
-
-      // Recargar la página para reflejar el cambio de departamento
-      window.location.reload();
+      const selectedDepartment = this.value;
+      if (authorizedDepartments.includes(selectedDepartment)) {
+        localStorage.setItem('currentDepartment', selectedDepartment);
+        userDepartmentDiv.textContent = `Current Department: ${selectedDepartment}`;
+        // Recargar los datos para el nuevo departamento
+        location.reload();
+      } else {
+        console.error('Intento de seleccionar un departamento no autorizado');
+        this.value = localStorage.getItem('currentDepartment');
+      }
     });
   });
-</script>
+  </script>
 
 <!-- Dark Mode Handling Script -->
 <script>
