@@ -1247,16 +1247,16 @@ color: #fff;
   color: #012970;
 }
 
-#totalBlockedRequests,
-#blockedRequestsByCategory,
-#blockRateOverTimeByCategory,
-#severity,
-#SeverityTime,
-#totalAbusiveUsersChart,
-#hallucinationChart,
-#biasPieChart,
-#promptInjectionChart,
-#dataExposureLineChart {
+#totalBlockedRequest,
+#blockedRequestsByCategor,
+#blockRateOverTimeByCategor,
+#severit,
+#SeverityTim,
+#totalAbusiveUsersChar,
+#hallucinationChar,
+#biasPieChar,
+#promptInjectionChar,
+#dataExposureLineChar {
   scroll-margin-top: 100px; /* Ajusta el valor según la altura de la barra de navegación */
 }
 
