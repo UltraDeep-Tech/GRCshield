@@ -361,4 +361,17 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-
+document.addEventListener('DOMContentLoaded', function() {
+  const redirectSpans = document.querySelectorAll('.sidebar-nav .redirect-span');
+  
+  redirectSpans.forEach(span => {
+    span.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const href = this.getAttribute('data-href');
+      if (href) {
+        window.location.href = href;
+      }
+    });
+  });
+});

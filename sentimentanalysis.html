@@ -295,202 +295,205 @@
 
  <!-- ======= Sidebar ======= -->
  <aside id="sidebar" class="sidebar">
-    <ul class="sidebar-nav" id="sidebar-nav">
-        <li class="nav-heading">Department</li>
+  <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-heading">Department</li>
 
-    <li class="">
-        <!-- Mostrar el departamento y permitir cambiarlo -->
-        <div id="user-department" class="text-center mb-2 align-items-center"></div>
-        <select id="department-select" class="modern-select mt-2">
-          <!-- Las opciones se llenarán dinámicamente con JavaScript -->
-        </select>
-      </li>
-      <br>
-        
+  <li class="">
+      <!-- Mostrar el departamento y permitir cambiarlo -->
+      <div id="user-department" class="text-center mb-2 align-items-center"></div>
+      <select id="department-select" class="modern-select mt-2">
+        <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+      </select>
+    </li>
+    <br>
+      
+
+    <li class="nav-item">
+      <a class="nav-link " href="index.html">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-chat-square-dots"></i><span class="redirect-span" data-href="/sentimentanalysis.html">Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="sentimentanalysis.html#realtime">
+            <i class="bi bi-emoji-smile"></i><span>Sentiment Analysis</span>
+          </a>
+        </li>
+        <li>
+          <a href="sentimentanalysis.html#conversation">
+            <i class="bi bi-tags"></i><span>Conversation Categorization</span>
+          </a>
+        </li>
+        <li>
+          <a href="sentimentanalysis.html#engagement">
+            <i class="bi bi-bar-chart"></i><span>Engagement Quality Metrics</span>
+          </a>
+        </li>
+        <li>
+          <a href="sentimentanalysis.html#keyword">
+            <i class="bi bi-search"></i><span>Keyword Tracking</span>
+          </a>
+        </li>
+        <li>
+          <a href="sentimentanalysis.html#biasdetect">
+            <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
+          </a>
+        </li>
+        <li>
+          <a href="sentimentanalysis.html#prediction">
+            <i class="bi bi-lightbulb"></i><span>User Behavior Prediction</span>
+          </a>
+        </li>
+        <li>
+          <a href="sentimentanalysis.html#realTimeAlertsSection">
+            <i class="bi bi-bell"></i><span>Real-Time Alerts</span>
+          </a>
+        </li>
+        <li>
+          <a href="sentimentanalysis.html#customReportGenerationSection">
+            <i class="bi bi-file-earmark-text"></i><span>Custom Report Generation</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- End Interaction Analysis Nav -->
+
+<!-- Thread Detection Nav -->
+<li class="nav-item">
+  <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+    <i class="bi bi-exclamation-circle"></i><span class="redirect-span" data-href="/index.html">Thread Detection</span><i class="bi bi-chevron-down ms-auto"></i>
+  </a>
+  <ul id="charts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+    <li>
+      <a href="index.html#totalBlockedRequest">
+        <i class="bi bi-shield-lock"></i><span>Blocked Requests & Rate</span>
+      </a>
+    </li>
+    <li>
+      <a href="index.html#blockedRequestsByCategor">
+        <i class="bi bi-bar-chart"></i><span>Blocked Requests by Category</span>
+      </a>
+    </li>
+    <li>
+      <a href="index.html#blockRateOverTimeByCategor">
+        <i class="bi bi-graph-up-arrow"></i><span>Block Rate Over Time by Category</span>
+      </a>
+    </li>
+    <li>
+      <a href="index.html#severit">
+        <i class="bi bi-exclamation-triangle"></i><span>Severity Distribution by Category</span>
+      </a>
+    </li>
+    <li>
+      <a href="index.html#SeverityTim">
+        <i class="bi bi-clock-history"></i><span>Severity Over Time by Category</span>
+      </a>
+    </li>
+    <li>
+      <a href="index.html#totalAbusiveUsersChar">
+        <i class="bi bi-person-x"></i><span>Abusive User Detection</span>
+      </a>
+    </li>
+    <li>
+      <a href="index.html#hallucinationChar">
+        <i class="bi bi-eye-slash"></i><span>Hallucination Detection</span>
+      </a>
+    </li>
+    <li>
+      <a href="index.html#biasPieChar">
+        <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
+      </a>
+    </li>
+    <li>
+      <a href="index.html#promptInjectionChar">
+        <i class="bi bi-shield-exclamation"></i><span>Prompt Injection/Jailbreak Detection</span>
+      </a>
+    </li>
+    <li>
+      <a href="index.html#dataExposureLineChar">
+        <i class="bi bi-file-earmark-lock"></i><span>Data Exposure</span>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<li class="nav-heading">Policies</li>
+
+<!-- GRC Policies Nav -->
+<li class="nav-item">
+  <a class="nav-link collapsed" data-bs-target="#grc-policies-nav" data-bs-toggle="collapse" href="#">
+    <i class="bi bi-file-earmark-lock"></i><span class="redirect-span" data-href="grc-policies.html">GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
+  </a>
+  <ul id="grc-policies-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+    <li>
+      <a href="grc-policies.html#existing-policies-tab">
+        <i class="bi bi-file-earmark-text"></i><span>Policies</span>
+      </a>
+    </li>
+    <li>
+      <a href="grc-policies.html#add-policy-tab">
+        <i class="bi bi-plus-square"></i><span>Add Policies</span>
+      </a>
+    </li>
+    <li>
+      <a href="grc-policies.html#export-policy-tab">
+        <i class="bi bi-upload"></i><span>Import Policies</span>
+      </a>
+    </li>
+    <li>
+      <a href="grc-policies.html#generate-report-tab">
+        <i class="bi bi-file-earmark-bar-graph"></i><span>Generate Report</span>
+      </a>
+    </li>
+    <li>
+      <a href="grc-policies.html#alerts-tab">
+        <i class="bi bi-bell"></i><span>Notifications</span>
+      </a>
+    </li>
+    <li>
+      <a href="grc-policies.html#chartsPolicy">
+        <i class="bi bi-bar-chart"></i><span>Charts</span>
+      </a>
+    </li>
+  </ul>
+</li>
+
+    <li class="nav-heading">Pages</li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="users-profile.html">
+        <i class="bi bi-person"></i>
+        <span>Profile</span>
+      </a>
+    </li><!-- End Profile Page Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="pages-faq.html">
+        <i class="bi bi-question-circle"></i>
+        <span>F.A.Q</span>
+      </a>
+    </li><!-- End F.A.Q Page Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="pages-contact.html">
+        <i class="bi bi-envelope"></i>
+        <span>Contact</span>
+      </a>
+    </li><!-- End Contact Page Nav -->
+
+  </ul>
+
+    <img src="/assets/img/logo.png" class="sidebar-bg">
 
 
-      <li class="nav-item">
-        <a class="nav-link " href="index.html">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="/sentimentanalysis.html">
-          <i class="bi bi-chat-square-dots"></i><span>Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="sentimentanalysis.html#realtime">
-              <i class="bi bi-emoji-smile"></i><span>Sentiment Analysis</span>
-            </a>
-          </li>
-          <li>
-            <a href="sentimentanalysis.html#conversation">
-              <i class="bi bi-tags"></i><span>Conversation Categorization</span>
-            </a>
-          </li>
-          <li>
-            <a href="sentimentanalysis.html#engagement">
-              <i class="bi bi-bar-chart"></i><span>Engagement Quality Metrics</span>
-            </a>
-          </li>
-          <li>
-            <a href="sentimentanalysis.html#keyword">
-              <i class="bi bi-search"></i><span>Keyword Tracking</span>
-            </a>
-          </li>
-          <li>
-            <a href="sentimentanalysis.html#biasdetect">
-              <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
-            </a>
-          </li>
-          <li>
-            <a href="sentimentanalysis.html#prediction">
-              <i class="bi bi-lightbulb"></i><span>User Behavior Prediction</span>
-            </a>
-          </li>
-          <li>
-            <a href="sentimentanalysis.html#realTimeAlertsSection">
-              <i class="bi bi-bell"></i><span>Real-Time Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="sentimentanalysis.html#customReportGenerationSection">
-              <i class="bi bi-file-earmark-text"></i><span>Custom Report Generation</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <!-- End Interaction Analysis Nav -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-exclamation-circle"></i><span>Thread Detection</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="index.html#totalBlockedRequests">
-              <i class="bi bi-shield-lock"></i><span>Blocked Requests & Rate</span>
-            </a>
-          </li>
-          <li>
-            <a href="index.html#blockedRequestsByCategory">
-              <i class="bi bi-bar-chart"></i><span>Blocked Requests by Category</span>
-            </a>
-          </li>
-          <li>
-            <a href="index.html#blockRateOverTimeByCategory">
-              <i class="bi bi-graph-up-arrow"></i><span>Block Rate Over Time by Category</span>
-            </a>
-          </li>
-          <li>
-            <a href="index.html#severity">
-              <i class="bi bi-exclamation-triangle"></i><span>Severity Distribution by Category</span>
-            </a>
-          </li>
-          <li>
-            <a href=index.html#SeverityTime">
-              <i class="bi bi-clock-history"></i><span>Severity Over Time by Category</span>
-            </a>
-          </li>
-          <li>
-            <a href="index.html#totalAbusiveUsersChart">
-              <i class="bi bi-person-x"></i><span>Abusive User Detection</span>
-            </a>
-          </li>
-          <li>
-            <a href="index.html#hallucinationChart">
-              <i class="bi bi-eye-slash"></i><span>Hallucination Detection</span>
-            </a>
-          </li>
-          <li>
-            <a href="index.html#biasPieChart">
-              <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
-            </a>
-          </li>
-          <li>
-            <a href="index.html#promptInjectionChart">
-              <i class="bi bi-shield-exclamation"></i><span>Prompt Injection/Jailbreak Detection</span>
-            </a>
-          </li>
-          <li>
-            <a href="index.html#dataExposureLineChart">
-              <i class="bi bi-file-earmark-lock"></i><span>Data Exposure</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <!-- End Charts Nav -->
   
-      <li class="nav-heading">Policies</li>
-  
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#grc-policies-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-file-earmark-lock"></i><span>GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="grc-policies-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="grc-policies.html#existing-policies-tab">
-              <i class="bi bi-file-earmark-text"></i><span>Policies</span>
-            </a>
-          </li>
-          <li>
-            <a href="grc-policies.html#add-policy-tab">
-              <i class="bi bi-plus-square"></i><span>Add Policies</span>
-            </a>
-          </li>
-          <li>
-            <a href="grc-policies.html#export-policy-tab">
-              <i class="bi bi-upload"></i><span>Import Policies</span>
-            </a>
-          </li>
-          <li>
-            <a href="grc-policies.html#generate-report-tab">
-              <i class="bi bi-file-earmark-bar-graph"></i><span>Generate Report</span>
-            </a>
-          </li>
-          <li>
-            <a href="grc-policies.html#alerts-tab">
-              <i class="bi bi-bell"></i><span>Notifications</span>
-            </a>
-          </li>
-          <li>
-            <a href="grc-policies.html#chartsPolicy">
-              <i class="bi bi-bar-chart"></i><span>Charts</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-heading">Pages</li>
-  
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
-  
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
-  
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Contact</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
-  
-    </ul>
-  
-      <img src="/assets/img/logo.png" class="sidebar-bg">
-  
-
-    
-  </aside><!-- End Sidebar-->
+</aside><!-- End Sidebar-->
   
 
 <div id="preloader">
