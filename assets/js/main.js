@@ -362,15 +362,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  const redirectSpans = document.querySelectorAll('.sidebar-nav .redirect-span');
+  const navLinks = document.querySelectorAll('.sidebar-nav .nav-link');
   
-  redirectSpans.forEach(span => {
-    span.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      const href = this.getAttribute('data-href');
-      if (href) {
-        window.location.href = href;
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      if (this.getAttribute('href') && !this.classList.contains('collapsed')) {
+        e.preventDefault();
+        window.location.href = this.getAttribute('href');
       }
     });
   });

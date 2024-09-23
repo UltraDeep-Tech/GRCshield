@@ -2074,3 +2074,29 @@ body.modal-open {
   font-weight: bold;
   color: #0056b3 !important;
 }
+
+
+#totalBlockedRequest,
+#blockedRequestsByCategor,
+#blockRateOverTimeByCategor,
+#severit,
+#SeverityTim,
+#totalAbusiveUsersChar,
+#hallucinationChar,
+#biasPieChar,
+#promptInjectionChar,
+#dataExposureLineChar {
+  scroll-margin-top: 80px; /* Ajusta el valor según la altura de la barra de navegación */
+}
+
+#realtime,
+#emotion,
+#sentiment,
+#conversation,
+#engagement,
+#keyword,
+#biasdetect,
+#prediction,
+#biastrend {
+  scroll-margin-top: 80px; /* Ajusta según la altura de tu navbar */
+}

@@ -1257,7 +1257,7 @@ color: #fff;
 #biasPieChar,
 #promptInjectionChar,
 #dataExposureLineChar {
-  scroll-margin-top: 100px; /* Ajusta el valor según la altura de la barra de navegación */
+  scroll-margin-top: 80px; /* Ajusta el valor según la altura de la barra de navegación */
 }
 
 #realtime,
@@ -1269,5 +1269,5 @@ color: #fff;
 #biasdetect,
 #prediction,
 #biastrend {
-  scroll-margin-top: 100px; /* Ajusta según la altura de tu navbar */
+  scroll-margin-top: 80px; /* Ajusta según la altura de tu navbar */
 }
