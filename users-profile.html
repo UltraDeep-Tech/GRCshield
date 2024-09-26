@@ -38,6 +38,8 @@
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
+    
+
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/favicon.png" alt="" class="logoheader">
@@ -70,13 +72,13 @@
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell bellnotification"></i>
-            <span class="badge bg-primary badge-number" style="color:#000  !important;" >4</span>
+            <span class="badge bg-primary badge-number" style="color: #000 !important;">4</span>
           </a><!-- End Notification Icon -->
     
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
+            <li class="dropdown-header" data-translate="notifications_header">
               You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2" data-translate="view_all">View all</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -85,9 +87,9 @@
             <li class="notification-item">
               <i class="bi bi-exclamation-circle text-warning"></i>
               <div>
-                <h4>Increased Blocked Requests</h4>
-                <p>Spike in blocked requests detected in the last hour.</p>
-                <p>30 min. ago</p>
+                <h4 data-translate="notification_blocked_requests">Increased Blocked Requests</h4>
+                <p data-translate="notification_blocked_requests_detail">Spike in blocked requests detected in the last hour.</p>
+                <p data-translate="notification-alert-1"> 30 min. ago</p>
               </div>
             </li>
     
@@ -98,9 +100,10 @@
             <li class="notification-item">
               <i class="bi bi-x-circle text-danger"></i>
               <div>
-                <h4>New Abusive User Detected</h4>
-                <p>User GUID 1234 flagged for potential abusive behavior.</p>
-                <p>1 hr. ago</p>
+                <h4 data-translate="notification_abusive_user">New Abusive User Detected</h4>
+                <p data-translate="notification_abusive_user_detail">User GUID 1234 flagged for potential abusive behavior.</p>
+
+                <p data-translate="notification-alert-2">1 hr. ago</p>
               </div>
             </li>
     
@@ -111,9 +114,9 @@
             <li class="notification-item">
               <i class="bi bi-check-circle text-success"></i>
               <div>
-                <h4>Hallucination Detection Update</h4>
-                <p>New algorithm for hallucination detection deployed.</p>
-                <p>2 hrs. ago</p>
+                <h4 data-translate="notification_hallucination">Hallucination Detection Update</h4>
+                <p data-translate="notification_hallucination_detail">New algorithm for hallucination detection deployed.</p>
+                <p data-translate="notification-alert-3">2 hrs. ago</p>
               </div>
             </li>
     
@@ -124,9 +127,9 @@
             <li class="notification-item">
               <i class="bi bi-info-circle text-primary"></i>
               <div>
-                <h4>Weekly Report Available</h4>
-                <p>The Safety Shield Ultra weekly summary is ready for review.</p>
-                <p>4 hrs. ago</p>
+                <h4 data-translate="notification_report">Weekly Report Available</h4>
+                <p data-translate="notification_report_detail">The Safety Shield Ultra weekly summary is ready for review.</p>
+                <p data-translate="notification-alert-4">4 hrs. ago</p>
               </div>
             </li>
     
@@ -134,7 +137,7 @@
               <hr class="dropdown-divider">
             </li>
             <li class="dropdown-footer text-center">
-              <a href="#">Show all notifications</a>
+              <a href="#" data-translate="show_all_notifications">Show all notifications</a>
             </li>
           </ul><!-- End Notification Dropdown Items -->
         </li><!-- End Notification Nav -->
@@ -142,13 +145,13 @@
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number" style="color:#000  !important;" >3</span>
+            <span class="badge bg-success badge-number" style="color: #000 !important;"">3</span>
           </a><!-- End Messages Icon -->
     
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-            <li class="dropdown-header">
+            <li class="dropdown-header" data-translate="dropdown_messages_header">
               You have 3 new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2" data-translate="dropdown_messages_view_all">View all</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -159,8 +162,8 @@
                 <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
                 <div>
                   <h4>Maria Hudson</h4>
-                  <p>The project files have been uploaded successfully.</p>
-                  <p>4 hrs. ago</p>
+                  <p data-translate="message_1_text">The project files have been uploaded successfully.</p>
+                  <p data-translate="message_1_time">4 hrs. ago</p>
                 </div>
               </a>
             </li>
@@ -173,8 +176,8 @@
                 <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
                 <div>
                   <h4>Anna Nelson</h4>
-                  <p>Meeting rescheduled to tomorrow at 10 AM.</p>
-                  <p>6 hrs. ago</p>
+                  <p data-translate="message_2_text">Meeting rescheduled to tomorrow at 10 AM.</p>
+                  <p data-translate="message_2_time">6 hrs. ago</p>
                 </div>
               </a>
             </li>
@@ -187,8 +190,8 @@
                 <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
                 <div>
                   <h4>David Muldon</h4>
-                  <p>Can you review the latest draft of the report?</p>
-                  <p>8 hrs. ago</p>
+                  <p data-translate="message_3_text">Can you review the latest draft of the report?</p>
+                  <p data-translate="message_3_time">8 hrs. ago</p>
                 </div>
               </a>
             </li>
@@ -197,7 +200,7 @@
             </li>
     
             <li class="dropdown-footer text-center">
-              <a href="#">Show all messages</a>
+              <a href="#" data-translate="dropdown_messages_show_all">Show all messages</a>
             </li>
           </ul><!-- End Messages Dropdown Items -->
         </li><!-- End Messages Nav -->
@@ -205,8 +208,7 @@
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img id="profileImage" alt="Profile" class="rounded-circle me-3">
-          </a><!-- End Profile Image Icon -->             
-
+          </a><!-- End Profile Image Icon -->
     
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile fondoperfil">
             <li class="dropdown-header text-center">
@@ -220,7 +222,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-person"></i>
-                <span>My Profile</span>
+                <span data-translate="profile">My Profile</span>
               </a>
             </li>
             <li>
@@ -230,7 +232,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
+                <span data-translate="account_settings">Account Settings</span>
               </a>
             </li>
             <li>
@@ -240,7 +242,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
                 <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
+                <span data-translate="need_help">Need Help?</span>
               </a>
             </li>
             <li>
@@ -250,41 +252,42 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#" onclick="signOut(event)">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+                <span data-translate="sign_out">Sign Out</span>
               </a>
             </li>
-    
+    <div>
+      <p>Select your lenguaje :</p>
+            <select id="languageSwitcher">
+              <option value="en">English</option>
+              <option value="es">Español</option>
+            </select>
+          </div>
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
       </ul>
     </nav><!-- End Icons Navigation -->
     
-    
-    
-    <div id="preloader">
-      <img src="/assets/img/favicon.png" alt="Loading..." class="spinner-image">
-    </div>
-    
-
   </header><!-- End Header -->
+
+
   <div id="loginModal" class="custom-modal">
     <div class="custom-modal-content">
       <img src="assets/img/logo.png" class="spinner-image" alt="Loading...">
-      <p>Your session has expired or you are not logged in. Redirecting to login page...</p>
+      <p data-translate="session_expired" >Your session has expired or you are not logged in. Redirecting to login page...</p>
     </div>
   </div>
 
   <a href="https://chat.ultradeep.tech/" class="whatsapp-float" target="_blank" data-aos="fade-up" id="chat-link">
     <i class="bi bi-robot whatsapp-icon"></i>
-    <span class="tooltip-text">Hi, how can I assist you today?</span>
-</a>
+    <span class="tooltip-text" data-translate="robot">Hi, how can I assist you today?</span>
+  </a>
 
 <audio id="popup-sound" src="/assets/sound/level-up-191997.mp3" preload="auto"></audio>
   
- <!-- ======= Sidebar ======= -->
- <aside id="sidebar" class="sidebar">
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
-      <li class="nav-heading">Department</li>
+    <li class="nav-heading" data-translate="sidebar_department">Department</li>
 
   <li class="">
       <!-- Mostrar el departamento y permitir cambiarlo -->
@@ -304,48 +307,48 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-chat-square-dots"></i><span class="redirect-span" data-href="/sentimentanalysis.html">Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
+      <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="/sentimentanalysis.html">
+        <i class="bi bi-chat-square-dots"></i><span data-translate="sidebar_interaction_analysis">Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
           <a href="sentimentanalysis.html#realtime">
-            <i class="bi bi-emoji-smile"></i><span>Sentiment Analysis</span>
+            <i class="bi bi-emoji-smile"></i><span data-translate="sidebar_sentiment_analysis">Sentiment Analysis</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#conversation">
-            <i class="bi bi-tags"></i><span>Conversation Categorization</span>
+            <i class="bi bi-tags"></i><span data-translate="sidebar_conversation_categorization">Conversation Categorization</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#engagement">
-            <i class="bi bi-bar-chart"></i><span>Engagement Quality Metrics</span>
+            <i class="bi bi-bar-chart"></i><span data-translate="sidebar_engagement_quality_metrics">Engagement Quality Metrics</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#keyword">
-            <i class="bi bi-search"></i><span>Keyword Tracking</span>
+            <i class="bi bi-search"></i><span data-translate="sidebar_keyword_tracking">Keyword Tracking</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#biasdetect">
-            <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
+            <i class="bi bi-slash-circle"></i><span data-translate="sidebar_bias_detection">Bias Detection</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#prediction">
-            <i class="bi bi-lightbulb"></i><span>User Behavior Prediction</span>
+            <i class="bi bi-lightbulb"></i><span data-translate="sidebar_user_behavior_prediction">User Behavior Prediction</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#realTimeAlertsSection">
-            <i class="bi bi-bell"></i><span>Real-Time Alerts</span>
+            <i class="bi bi-bell"></i><span data-translate="sidebar_real_time_alerts">Real-Time Alerts</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#customReportGenerationSection">
-            <i class="bi bi-file-earmark-text"></i><span>Custom Report Generation</span>
+            <i class="bi bi-file-earmark-text"></i><span data-translate="sidebar_custom_report_generation">Custom Report Generation</span>
           </a>
         </li>
       </ul>
@@ -355,322 +358,323 @@
 <!-- Thread Detection Nav -->
 <li class="nav-item">
   <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-    <i class="bi bi-exclamation-circle"></i><span class="redirect-span" data-href="/index.html">Thread Detection</span><i class="bi bi-chevron-down ms-auto"></i>
+    <i class="bi bi-exclamation-circle"></i><span data-translate="sidebar_thread_detection">Thread Detection</span><i class="bi bi-chevron-down ms-auto"></i>
   </a>
   <ul id="charts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
     <li>
       <a href="index.html#totalBlockedRequest">
-        <i class="bi bi-shield-lock"></i><span>Blocked Requests & Rate</span>
+        <i class="bi bi-shield-lock"></i><span data-translate="sidebar_blocked_requests_rate">Blocked Requests & Rate</span>
       </a>
     </li>
     <li>
       <a href="index.html#blockedRequestsByCategor">
-        <i class="bi bi-bar-chart"></i><span>Blocked Requests by Category</span>
+        <i class="bi bi-bar-chart"></i><span data-translate="sidebar_blocked_requests_by_category">Blocked Requests by Category</span>
       </a>
     </li>
     <li>
       <a href="index.html#blockRateOverTimeByCategor">
-        <i class="bi bi-graph-up-arrow"></i><span>Block Rate Over Time by Category</span>
+        <i class="bi bi-graph-up-arrow"></i><span data-translate="sidebar_block_rate_over_time_by_category">Block Rate Over Time by Category</span>
       </a>
     </li>
     <li>
       <a href="index.html#severit">
-        <i class="bi bi-exclamation-triangle"></i><span>Severity Distribution by Category</span>
+        <i class="bi bi-exclamation-triangle"></i><span data-translate="sidebar_severity_distribution_by_category">Severity Distribution by Category</span>
       </a>
     </li>
     <li>
       <a href="index.html#SeverityTim">
-        <i class="bi bi-clock-history"></i><span>Severity Over Time by Category</span>
+        <i class="bi bi-clock-history"></i><span data-translate="sidebar_severity_over_time_by_category">Severity Over Time by Category</span>
       </a>
     </li>
     <li>
       <a href="index.html#totalAbusiveUsersChar">
-        <i class="bi bi-person-x"></i><span>Abusive User Detection</span>
+        <i class="bi bi-person-x"></i><span data-translate="sidebar_abusive_user_detection">Abusive User Detection</span>
       </a>
     </li>
     <li>
       <a href="index.html#hallucinationChar">
-        <i class="bi bi-eye-slash"></i><span>Hallucination Detection</span>
+        <i class="bi bi-eye-slash"></i><span data-translate="sidebar_hallucination_detection">Hallucination Detection</span>
       </a>
     </li>
     <li>
       <a href="index.html#biasPieChar">
-        <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
+        <i class="bi bi-slash-circle"></i><span data-translate="sidebar_bias_detection">Bias Detection</span>
       </a>
     </li>
     <li>
       <a href="index.html#promptInjectionChar">
-        <i class="bi bi-shield-exclamation"></i><span>Prompt Injection/Jailbreak Detection</span>
+        <i class="bi bi-shield-exclamation"></i><span data-translate="sidebar_prompt_injection_detection">Prompt Injection/Jailbreak Detection</span>
       </a>
     </li>
     <li>
       <a href="index.html#dataExposureLineChar">
-        <i class="bi bi-file-earmark-lock"></i><span>Data Exposure</span>
+        <i class="bi bi-file-earmark-lock"></i><span data-translate="sidebar_data_exposure_detection">Data Exposure</span>
       </a>
     </li>
   </ul>
 </li>
 
-<li class="nav-heading">Policies</li>
+<li class="nav-heading" data-translate="sidebar_policies">Policies</li>
 
 <!-- GRC Policies Nav -->
 <li class="nav-item">
   <a class="nav-link collapsed" data-bs-target="#grc-policies-nav" data-bs-toggle="collapse" href="#">
-    <i class="bi bi-file-earmark-lock"></i><span class="redirect-span" data-href="grc-policies.html">GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
+    <i class="bi bi-file-earmark-lock"></i><span data-translate="sidebar_grc_policies">GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
   </a>
   <ul id="grc-policies-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
     <li>
       <a href="grc-policies.html#existing-policies-tab">
-        <i class="bi bi-file-earmark-text"></i><span>Policies</span>
+        <i class="bi bi-file-earmark-text"></i><span data-translate="sidebar_existing_policies">Policies</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#add-policy-tab">
-        <i class="bi bi-plus-square"></i><span>Add Policies</span>
+        <i class="bi bi-plus-square"></i><span data-translate="sidebar_add_policies">Add Policies</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#export-policy-tab">
-        <i class="bi bi-upload"></i><span>Import Policies</span>
+        <i class="bi bi-upload"></i><span data-translate="sidebar_import_policies">Import Policies</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#generate-report-tab">
-        <i class="bi bi-file-earmark-bar-graph"></i><span>Generate Report</span>
+        <i class="bi bi-file-earmark-bar-graph"></i><span data-translate="sidebar_generate_report">Generate Report</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#alerts-tab">
-        <i class="bi bi-bell"></i><span>Notifications</span>
+        <i class="bi bi-bell"></i><span data-translate="sidebar_notifications">Notifications</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#chartsPolicy">
-        <i class="bi bi-bar-chart"></i><span>Charts</span>
+        <i class="bi bi-bar-chart"></i><span data-translate="sidebar_charts">Charts</span>
       </a>
     </li>
   </ul>
 </li>
 
-    <li class="nav-heading">Pages</li>
+<li class="nav-heading" data-translate="sidebar_pages">Pages</li>
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="users-profile.html">
         <i class="bi bi-person"></i>
-        <span>Profile</span>
+        <span data-translate="sidebar_profile">Profile</span>
       </a>
     </li><!-- End Profile Page Nav -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="pages-faq.html">
         <i class="bi bi-question-circle"></i>
-        <span>F.A.Q</span>
+        <span data-translate="sidebar_faq">F.A.Q</span>
       </a>
     </li><!-- End F.A.Q Page Nav -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="pages-contact.html">
         <i class="bi bi-envelope"></i>
-        <span>Contact</span>
+        <span data-translate="sidebar_contact">Contact</span>
       </a>
     </li><!-- End Contact Page Nav -->
 
   </ul>
-
+  <div id="languageSwitcher" class="language-switcher2">
+    <img   src="assets/img/Flag_of_the_U.S..svg.png" alt="English" data-lang="en" class="language-flag2" style="cursor: pointer;" >
+    <img src="assets/img/Bandera_de_España.svg.png" alt="Español" data-lang="es" class="language-flag2" style="cursor: pointer;"  >
+  </div>
     <img src="/assets/img/logo.png" class="sidebar-bg">
 
 
   
 </aside><!-- End Sidebar-->
 
-  <main id="main" class="main">
+<main id="main" class="main">
+<div class="pagetitle">
+    <h1 data-translate="profile">Profile</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html" data-translate="home">Home</a></li>
+        <li class="breadcrumb-item" data-translate="users">Users</li>
+        <li class="breadcrumb-item active" data-translate="profile">Profile</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
 
-    <div class="pagetitle">
-      <h1>Profile</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Users</li>
-          <li class="breadcrumb-item active">Profile</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+  <section class="section profile">
+    <div class="row">
+      <div class="col-xl-4">
 
-    <section class="section profile">
-      <div class="row">
-        <div class="col-xl-4">
-    
-          <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center fondoperfil">
-    
-              <img id="profileImage"  alt="Profile" class="rounded-circle">
-              <h2 id="fullName"></h2>
-              <h3 id="Job"></h3>
-              <div class="social-links mt-2">
-                <a id="linkedinProfile" href="#" class="linkedin" target="_blank"><i class="bi bi-linkedin"></i></a>
-              </div>
+        <div class="card">
+          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center fondoperfil">
+
+            <img id="profileImage" alt="Profile" class="rounded-circle">
+            <h2 id="fullName" data-translate="full_name"></h2>
+            <h3 id="Job" data-translate="job"></h3>
+            <div class="social-links mt-2">
+              <a id="linkedinProfile" href="#" class="linkedin" target="_blank"><i class="bi bi-linkedin"></i></a>
             </div>
           </div>
-    
         </div>
-    
-        <div class="col-xl-8 ">
-    
-          <div class="card ">
-            <div class="card-body pt-3">
-              <!-- Bordered Tabs -->
-              <ul class="nav nav-tabs nav-tabs-bordered" style="color: #000; background: #bdcbe92d;">
-    
-                <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
-                </li>
-    
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
-                </li>
-    
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-                </li>
-    
-              </ul>
-              <div class="tab-content pt-2" style="color: #000; background: #bdcbe92d;">
-    
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  <h5 class="card-title">About</h5>
-                  <p class="small fst-italic" id="about"></p>
-    
-                  <h5 class="card-title">Profile Details</h5>
-    
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Full Name</div>
-                    <div class="col-lg-9 col-md-8" id="fullName"></div>
-                  </div>
-    
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Company</div>
-                    <div class="col-lg-9 col-md-8" id="company"> </div>
-                  </div>
-    
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Job</div>
-                    <div class="col-lg-9 col-md-8" id="Job"></div>
 
-                  </div>
-    
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Country</div>
-                    <div class="col-lg-9 col-md-8" id="Country"></div>
-                  </div>
-    
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8" id="Address"></div>
-                  </div>
-    
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8" id="Phone"></div>
-                  </div>
-    
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8" id="Email"></div>
-                  </div>
-    
+      </div>
+
+      <div class="col-xl-8 ">
+
+        <div class="card ">
+          <div class="card-body pt-3">
+            <!-- Bordered Tabs -->
+            <ul class="nav nav-tabs nav-tabs-bordered" style="color: #000; background: #bdcbe92d;">
+
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview" data-translate="overview">Overview</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit" data-translate="edit_profile">Edit Profile</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password" data-translate="change_password">Change Password</button>
+              </li>
+
+            </ul>
+            <div class="tab-content pt-2" style="color: #000; background: #bdcbe92d;">
+
+              <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                <h5 class="card-title" data-translate="about">About</h5>
+                <p class="small fst-italic" id="about" data-translate="about"></p>
+
+                <h5 class="card-title" data-translate="profile_details">Profile Details</h5>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label" data-translate="full_name">Full Name</div>
+                  <div class="col-lg-9 col-md-8" id="fullName"></div>
                 </div>
-    
-                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                  <!-- Profile Edit Form -->
-                  <form method="POST" action="#" id="profile-form">
-                    <div class="row mb-3">
-                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                      <div class="col-md-8 col-lg-9">
-                        <img id="profileImageEdit" src="" alt="Profile">
-                        <div class="pt-2">
-                          <input type="file" id="uploadImage" class="btn btn-primary btn-sm">
-                        </div>
-                      </div>
-                    </div>
-    
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullNameEdit">
-                      </div>
-                    </div>
-    
-                    <div class="row mb-3">
-                      <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
-                      <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="aboutEdit" style="height: 100px"></textarea>
-                      </div>
-                    </div>
-    
-                    <div class="row mb-3">
-                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="companyEdit">
-                      </div>
-                    </div>
-    
-                    <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="JobEdit">
-                      </div>
-                    </div>
-    
-                    <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="CountryEdit">
-                      </div>
-                    </div>
-    
-                    <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="AddressEdit">
-                      </div>
-                    </div>
-    
-                    <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="PhoneEdit">
-                      </div>
-                    </div>
-    
-                    <div class="row mb-3">
-                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="EmailEdit">
-                      </div>
-                    </div>
-    
-                    <div class="row mb-3">
-                      <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="linkedin" type="text" class="form-control" id="LinkedinEdit">
-                      </div>
-                    </div>
-    
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End Profile Edit Form -->
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label" data-translate="company">Company</div>
+                  <div class="col-lg-9 col-md-8" id="company"></div>
                 </div>
-    
-              </div><!-- End Bordered Tabs -->
-            </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label" data-translate="job">Job</div>
+                  <div class="col-lg-9 col-md-8" id="Job"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label" data-translate="country">Country</div>
+                  <div class="col-lg-9 col-md-8" id="Country"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label" data-translate="address">Address</div>
+                  <div class="col-lg-9 col-md-8" id="Address"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label" data-translate="phone">Phone</div>
+                  <div class="col-lg-9 col-md-8" id="Phone"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label" data-translate="email">Email</div>
+                  <div class="col-lg-9 col-md-8" id="Email"></div>
+                </div>
+
+              </div>
+
+              <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                <!-- Profile Edit Form -->
+                <form method="POST" action="#" id="profile-form">
+                  <div class="row mb-3">
+                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label" data-translate="profile_image">Profile Image</label>
+                    <div class="col-md-8 col-lg-9">
+                      <img id="profileImageEdit" src="" alt="Profile">
+                      <div class="pt-2">
+                        <input type="file" id="uploadImage" class="btn btn-primary btn-sm" data-translate="upload_image">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label" data-translate="full_name">Full Name</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="fullName" type="text" class="form-control" id="fullNameEdit">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="about" class="col-md-4 col-lg-3 col-form-label" data-translate="about">About</label>
+                    <div class="col-md-8 col-lg-9">
+                      <textarea name="about" class="form-control" id="aboutEdit" style="height: 100px"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="company" class="col-md-4 col-lg-3 col-form-label" data-translate="company">Company</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="company" type="text" class="form-control" id="companyEdit">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Job" class="col-md-4 col-lg-3 col-form-label" data-translate="job">Job</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="job" type="text" class="form-control" id="JobEdit">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Country" class="col-md-4 col-lg-3 col-form-label" data-translate="country">Country</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="country" type="text" class="form-control" id="CountryEdit">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Address" class="col-md-4 col-lg-3 col-form-label" data-translate="address">Address</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="address" type="text" class="form-control" id="AddressEdit">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Phone" class="col-md-4 col-lg-3 col-form-label" data-translate="phone">Phone</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="phone" type="text" class="form-control" id="PhoneEdit">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Email" class="col-md-4 col-lg-3 col-form-label" data-translate="email">Email</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="email" type="email" class="form-control" id="EmailEdit">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label" data-translate="linkedin_profile">Linkedin Profile</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="linkedin" type="text" class="form-control" id="LinkedinEdit">
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary" data-translate="save_changes">Save Changes</button>
+                  </div>
+                </form><!-- End Profile Edit Form -->
+              </div>
+
+            </div><!-- End Bordered Tabs -->
           </div>
         </div>
       </div>
-    </section>
-    
+    </div>
+  </section>
 
-  </main><!-- End #main -->
+</main><!-- End #main -->
+
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
@@ -723,6 +727,7 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/profile.js"></script>
+  <script src="assets/js/lenguaje.js"></script>
 
   <script>
     const toggleSwitch = document.getElementById('flexSwitchCheckChecked');

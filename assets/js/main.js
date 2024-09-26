@@ -376,3 +376,74 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  const notificationDropdown = document.querySelector('.nav-item.dropdown .nav-link.nav-icon i.bellnotification');
+  const messageDropdown = document.querySelector('.nav-item.dropdown .nav-link.nav-icon i.bi-chat-left-text');
+  const notificationBadge = document.querySelector('.badge-number.bg-primary');
+  const messageBadge = document.querySelector('.badge-number.bg-success');
+
+  // Función para ocultar el badge de notificaciones
+  function hideNotificationBadge() {
+    if (notificationBadge) {
+      notificationBadge.style.display = 'none'; // Oculta el badge de notificaciones
+      localStorage.setItem('notificationBadgeHidden', 'true'); // Guarda el estado en localStorage
+    }
+  }
+
+  // Función para ocultar el badge de mensajes
+  function hideMessageBadge() {
+    if (messageBadge) {
+      messageBadge.style.display = 'none'; // Oculta el badge de mensajes
+      localStorage.setItem('messageBadgeHidden', 'true'); // Guarda el estado en localStorage
+    }
+  }
+
+  // Detecta cuando se abre el menú de notificaciones
+  if (notificationDropdown) {
+    notificationDropdown.closest('.dropdown').addEventListener('show.bs.dropdown', hideNotificationBadge);
+  }
+
+  // Detecta cuando se abre el menú de mensajes
+  if (messageDropdown) {
+    messageDropdown.closest('.dropdown').addEventListener('show.bs.dropdown', hideMessageBadge);
+  }
+
+  // Ocultar notificaciones individuales
+  document.querySelectorAll('.notification-item').forEach((item, index) => {
+    // Comprobar si la notificación ya está oculta en localStorage
+    const isHidden = localStorage.getItem(`notificationHidden_${index}`);
+    if (isHidden === 'true') {
+      item.style.display = 'none'; // Ocultar si ya estaba oculto
+    }
+
+    item.addEventListener('click', function () {
+      item.style.display = 'none'; // Oculta la notificación
+      localStorage.setItem(`notificationHidden_${index}`, 'true'); // Guarda el estado en localStorage
+    });
+  });
+
+  // Ocultar mensajes individuales
+  document.querySelectorAll('.message-item').forEach((item, index) => {
+    // Comprobar si el mensaje ya está oculto en localStorage
+    const isHidden = localStorage.getItem(`messageHidden_${index}`);
+    if (isHidden === 'true') {
+      item.style.display = 'none'; // Ocultar si ya estaba oculto
+    }
+
+    item.addEventListener('click', function () {
+      item.style.display = 'none'; // Oculta el mensaje
+      localStorage.setItem(`messageHidden_${index}`, 'true'); // Guarda el estado en localStorage
+    });
+  });
+
+  // Restaurar el estado de los badges (notificaciones y mensajes) desde localStorage
+  if (localStorage.getItem('notificationBadgeHidden') === 'true' && notificationBadge) {
+    notificationBadge.style.display = 'none'; // Oculta el badge de notificaciones si estaba oculto
+  }
+
+  if (localStorage.getItem('messageBadgeHidden') === 'true' && messageBadge) {
+    messageBadge.style.display = 'none'; // Oculta el badge de mensajes si estaba oculto
+  }
+});
+

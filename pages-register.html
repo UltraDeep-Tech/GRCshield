@@ -39,171 +39,171 @@
   </video>
 
   <main>
-    <div class="container">
 
+    <div class="container">
+      <div id="languageSwitcher" class="language-switcher">
+        <img src="assets/img/Flag_of_the_U.S..svg.png" alt="English" data-lang="en" class="language-flag" style="cursor: pointer;">
+        <img src="assets/img/Bandera_de_España.svg.png" alt="Español" data-lang="es" class="language-flag" style="cursor: pointer;">
+      </div>
+    </div>
+  
+    <div class="container">
+  
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-
+  
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">Safety Shield Ultra</span>
+                  <span class="d-none d-lg-block" >Safety Shield Ultra</span>
                 </a>
               </div><!-- End Logo -->
-
+  
               <div class="cardindex mb-3">
                 <div class="cardindex-body">
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title pb-0 fs-4">Create an Account</h5>
-                    <p class="text-center small">Enter your personal details to create account</p>
+                    <h5 class="card-title pb-0 fs-4" data-translate="create_account">Create an Account</h5>
+                    <p class="text-center small" data-translate="enter_personal_details">Enter your personal details to create an account</p>
                   </div>
-
+  
                   <form class="row g-3 needs-validation " novalidate>
                     <div class="col-12 ">
-                      <label for="yourName" class="form-label">Your Name</label>
+                      <label for="yourName" class="form-label" data-translate="your_name">Your Name</label>
                       <input type="text" name="name" class="form-control" id="yourName" required>
-                      <div class="invalid-feedback">Please, enter your name!</div>
+                      <div class="invalid-feedback" data-translate="enter_name">Please, enter your name!</div>
                     </div>
-
+  
                     <div class="col-12">
-                      <label for="yourEmail" class="form-label">Your Email</label>
+                      <label for="yourEmail" class="form-label" data-translate="your_email">Your Email</label>
                       <input type="email" name="email" class="form-control" id="yourEmail" required>
-                      <div class="invalid-feedback">Please enter a valid Email adddress!</div>
+                      <div class="invalid-feedback" data-translate="enter_valid_email">Please enter a valid Email address!</div>
                     </div>
-
-
+  
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
+                      <label for="yourPassword" class="form-label" data-translate="your_password">Password</label>
                       <input type="password" name="password" class="form-control" id="yourPassword" required>
-                      <div class="invalid-feedback">Please enter your password!</div>
+                      <div class="invalid-feedback" data-translate="enter_password">Please enter your password!</div>
                     </div>
-
+  
                     <div class="col-12">
-                      <label class="form-label">Select your department(s)</label>
+                      <label class="form-label" data-translate="select_department">Select your department(s)</label>
                       <div class="row">
                         <div class="col-md-6 col-sm-12 mb-2">
                           <input type="checkbox" class="btn-check" id="accountManager" name="departments[]" value="Account Manager" autocomplete="off">
-                          <label class="btn btn-outline-light w-100" for="accountManager">Account Manager</label>
+                          <label class="btn btn-outline-light w-100" for="accountManager" data-translate="account_manager">Account Manager</label>
                         </div>
-                    
+  
                         <div class="col-md-6 col-sm-12 mb-2">
                           <input type="checkbox" class="btn-check" id="customerService" name="departments[]" value="Customer Service" autocomplete="off">
-                          <label class="btn btn-outline-light w-100" for="customerService">Customer Service</label>
+                          <label class="btn btn-outline-light w-100" for="customerService" data-translate="customer_service">Customer Service</label>
                         </div>
-                    
+  
                         <div class="col-md-6 col-sm-12 mb-2">
                           <input type="checkbox" class="btn-check" id="sales" name="departments[]" value="Sales" autocomplete="off">
-                          <label class="btn btn-outline-light w-100" for="sales">Sales</label>
+                          <label class="btn btn-outline-light w-100" for="sales" data-translate="sales">Sales</label>
                         </div>
-                    
+  
                         <div class="col-md-6 col-sm-12 mb-2">
                           <input type="checkbox" class="btn-check" id="operations" name="departments[]" value="Operations" autocomplete="off">
-                          <label class="btn btn-outline-light w-100" for="operations">Operations</label>
+                          <label class="btn btn-outline-light w-100" for="operations" data-translate="operations">Operations</label>
                         </div>
-                    
+  
                         <div class="col-md-6 col-sm-12 mb-2">
                           <input type="checkbox" class="btn-check" id="finance" name="departments[]" value="Finance" autocomplete="off">
-                          <label class="btn btn-outline-light w-100" for="finance">Finance</label>
+                          <label class="btn btn-outline-light w-100" for="finance" data-translate="finance">Finance</label>
                         </div>
-                    
+  
                         <div class="col-md-6 col-sm-12 mb-2">
                           <input type="checkbox" class="btn-check" id="itSupport" name="departments[]" value="IT Support" autocomplete="off">
-                          <label class="btn btn-outline-light w-100" for="itSupport">IT Support</label>
+                          <label class="btn btn-outline-light w-100" for="itSupport" data-translate="it_support">IT Support</label>
                         </div>
-                    
+  
                         <div class="col-md-12 col-sm-12 mb-2">
                           <input type="checkbox" class="btn-check" id="humanResources" name="departments[]" value="Human Resources" autocomplete="off">
-                          <label class="btn btn-outline-light w-100" for="humanResources">Human Resources</label>
+                          <label class="btn btn-outline-light w-100" for="humanResources" data-translate="human_resources">Human Resources</label>
                         </div>
                       </div>
                     </div>
-                    
-                    
-<!-- Checkbox con el enlace a los términos y condiciones -->
-<div class="col-12 d-flex justify-content-center">
-  <div class="form-check d-flex align-items-center">
-    <input class="form-check-input me-2" name="terms" type="checkbox" value="" id="acceptTerms" required>
-    <label class="form-check-label credits" for="acceptTerms">
-      I agree and accept the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">terms and conditions</a>
-    </label>
-    <div class="invalid-feedback">You must agree before submitting.</div>
-  </div>
-</div>
+  
+                    <!-- Checkbox con el enlace a los términos y condiciones -->
+                    <div class="col-12 d-flex justify-content-center">
+                      <div class="form-check d-flex align-items-center">
+                        <input class="form-check-input me-2" name="terms" type="checkbox" value="" id="acceptTerms" required>
+                        <label class="form-check-label credits" for="acceptTerms" data-translate="agree_terms">
+                          I agree and accept the 
+                        </label>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal" style="color: #4a87d8; padding-left: 5px;" data-translate="terms_conditions" >terms and conditions</a>
+                        <div class="invalid-feedback" data-translate="must_agree">You must agree before submitting.</div>
+                      </div>
+                    </div>
+  
+                    <!-- Modal -->
+                    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
 
-<!-- Modal -->
-<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="unique-modal-content">
-      <div class="unique-modal-header">
-        <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
-        <button type="button" class="unique-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="unique-modal-body">
-        <h4>1. Acceptance of the Terms</h4>
-        <p>By accessing or using our application, you agree to comply with and be bound by the following terms and conditions. These terms apply to all users of the application, including visitors, clients, employees, or any other person accessing the services.</p>
-
-        <h4>2. Use of the Application</h4>
-        <p>Our application provides access to information and data related to the operations of your company. The use of this application is restricted to authorized employees, contractors, and approved personnel by the company. Misuse, unauthorized distribution of data, or attempts to access confidential information that is not permitted may result in the termination of your access.</p>
-
-        <h4>3. Data Protection</h4>
-        <p>The user agrees to protect the confidentiality of the company’s information accessed through the application. All stored and processed information is subject to the company's privacy and security policies.</p>
-        <ul>
-          <li>Do not share your password or access details with third parties.</li>
-          <li>In the event of a security breach, immediately notify your company administrator.</li>
-          <li>Data entered or accessed through this application is subject to monitoring for security purposes.</li>
-        </ul>
-
-        <h4>4. Intellectual Property</h4>
-        <p>All content, design, and functionalities of the application are the property of the company and are protected by copyright and intellectual property laws. Reproduction, distribution, or modification is not allowed without prior written consent from the company.</p>
-
-        <h4>5. Limitation of Liability</h4>
-        <p>The company is not responsible for errors in the data provided by users or for the loss of information due to technical failures, cyber-attacks, or any other events beyond our control. Use of the application is at your own risk.</p>
-
-        <h4>6. Modifications to the Terms</h4>
-        <p>We reserve the right to modify or update these terms and conditions at any time. Any changes will be notified through the application, and you will be required to accept the new conditions to continue using the service.</p>
-
-        <h4>7. Contact</h4>
-        <p>If you have any questions or concerns about these terms and conditions, you can contact us at <strong>contract@ultradeeptech.com</strong>.</p>
-      </div>
-      <div class="unique-modal-footer">
-        <button type="button" class="unique-btn-primary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-                    
-                    
-
+                                <div class="unique-modal-content">
+                                  <div class="unique-modal-header">
+                                    <h5 class="modal-title" id="termsModalLabel" data-translate="terms_conditions">Terms and Conditions</h5>
+                                    <h4 data-translate="acceptance_terms">1. Acceptance of the Terms</h4>
+                                    <p data-translate="acceptance_terms_detail">By accessing or using our application, you agree to comply with and be bound by the following terms and conditions. These terms apply to all users of the application, including visitors, clients, employees, or any other person accessing the services.</p>
+                            
+                                    <h4 data-translate="use_application">2. Use of the Application</h4>
+                                    <p data-translate="use_application_detail">Our application provides access to information and data related to the operations of your company. The use of this application is restricted to authorized employees, contractors, and approved personnel by the company. Misuse, unauthorized distribution of data, or attempts to access confidential information that is not permitted may result in the termination of your access.</p>
+                            
+                                    <h4 data-translate="data_protection">3. Data Protection</h4>
+                                    <p data-translate="data_protection_detail">The user agrees to protect the confidentiality of the company’s information accessed through the application. All stored and processed information is subject to the company's privacy and security policies.</p>
+                                    <ul>
+                                      <li data-translate="data_protection_item1">Do not share your password or access details with third parties.</li>
+                                      <li data-translate="data_protection_item2">In the event of a security breach, immediately notify your company administrator.</li>
+                                      <li data-translate="data_protection_item3">Data entered or accessed through this application is subject to monitoring for security purposes.</li>
+                                    </ul>
+                            
+                                    <h4 data-translate="intellectual_property">4. Intellectual Property</h4>
+                                    <p data-translate="intellectual_property_detail">All content, design, and functionalities of the application are the property of the company and are protected by copyright and intellectual property laws. Reproduction, distribution, or modification is not allowed without prior written consent from the company.</p>
+                            
+                                    <h4 data-translate="limitation_liability">5. Limitation of Liability</h4>
+                                    <p data-translate="limitation_liability_detail">The company is not responsible for errors in the data provided by users or for the loss of information due to technical failures, cyber-attacks, or any other events beyond our control. Use of the application is at your own risk.</p>
+                            
+                                    <h4 data-translate="modifications_terms">6. Modifications to the Terms</h4>
+                                    <p data-translate="modifications_terms_detail">We reserve the right to modify or update these terms and conditions at any time. Any changes will be notified through the application, and you will be required to accept the new conditions to continue using the service.</p>
+                            
+                                    <h4 data-translate="contact_us">7. Contact</h4>
+                                    <p data-translate="contact_us_detail">If you have any questions or concerns about these terms and conditions, you can contact us at <strong>contract@ultradeeptech.com</strong>.</p>
+                                  </div>
+                                  <div class="unique-modal-footer">
+                                    <button type="button" class="unique-btn-primary" data-bs-dismiss="modal" data-translate="close">Close</button>
+                                </div>
+                        </div>
+                      </div>
+                    </div>
+  
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                      <button class="btn btn-primary w-100" type="submit" data-translate="create_account_button">Create Account</button>
                     </div>
                     <div class="col-12 credits">
-                      <p class="small mb-0">Already have an account? <a href="pages-login.html">Log in</a></p>
+                      <p class="small mb-0" data-translate="already_have_account">Already have an account? </p>
+                      <a href="pages-login.html" data-translate="login_here">Log in</a>
                     </div>
                   </form>
-
+  
                 </div>
               </div>
-
+  
               <div class="credits">
-                
-                Designed by <a href="https://www.ultradeeptech.com/">Ultra Deep Tech</a>
+                Designed by <a href="https://www.ultradeeptech.com/" >Ultra Deep Tech</a>
               </div>
-
+  
             </div>
           </div>
         </div>
-
+  
       </section>
-
+  
     </div>
   </main><!-- End #main -->
+  
   <script>
 document.querySelector('form').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -275,6 +275,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/lenguaje.js"></script>
 
 </body>
 

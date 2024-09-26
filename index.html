@@ -47,7 +47,7 @@
   </video>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
+  <header id="header" class="header fixed-top d-flex align-items-center">  
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
@@ -85,9 +85,9 @@
           </a><!-- End Notification Icon -->
     
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
+            <li class="dropdown-header" data-translate="notifications_header">
               You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2" data-translate="view_all">View all</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -96,9 +96,9 @@
             <li class="notification-item">
               <i class="bi bi-exclamation-circle text-warning"></i>
               <div>
-                <h4>Increased Blocked Requests</h4>
-                <p>Spike in blocked requests detected in the last hour.</p>
-                <p>30 min. ago</p>
+                <h4 data-translate="notification_blocked_requests">Increased Blocked Requests</h4>
+                <p data-translate="notification_blocked_requests_detail">Spike in blocked requests detected in the last hour.</p>
+                <p data-translate="notification-alert-1"> 30 min. ago</p>
               </div>
             </li>
     
@@ -109,9 +109,10 @@
             <li class="notification-item">
               <i class="bi bi-x-circle text-danger"></i>
               <div>
-                <h4>New Abusive User Detected</h4>
-                <p>User GUID 1234 flagged for potential abusive behavior.</p>
-                <p>1 hr. ago</p>
+                <h4 data-translate="notification_abusive_user">New Abusive User Detected</h4>
+                <p data-translate="notification_abusive_user_detail">User GUID 1234 flagged for potential abusive behavior.</p>
+
+                <p data-translate="notification-alert-2">1 hr. ago</p>
               </div>
             </li>
     
@@ -122,9 +123,9 @@
             <li class="notification-item">
               <i class="bi bi-check-circle text-success"></i>
               <div>
-                <h4>Hallucination Detection Update</h4>
-                <p>New algorithm for hallucination detection deployed.</p>
-                <p>2 hrs. ago</p>
+                <h4 data-translate="notification_hallucination">Hallucination Detection Update</h4>
+                <p data-translate="notification_hallucination_detail">New algorithm for hallucination detection deployed.</p>
+                <p data-translate="notification-alert-3">2 hrs. ago</p>
               </div>
             </li>
     
@@ -135,9 +136,9 @@
             <li class="notification-item">
               <i class="bi bi-info-circle text-primary"></i>
               <div>
-                <h4>Weekly Report Available</h4>
-                <p>The Safety Shield Ultra weekly summary is ready for review.</p>
-                <p>4 hrs. ago</p>
+                <h4 data-translate="notification_report">Weekly Report Available</h4>
+                <p data-translate="notification_report_detail">The Safety Shield Ultra weekly summary is ready for review.</p>
+                <p data-translate="notification-alert-4">4 hrs. ago</p>
               </div>
             </li>
     
@@ -145,7 +146,7 @@
               <hr class="dropdown-divider">
             </li>
             <li class="dropdown-footer text-center">
-              <a href="#">Show all notifications</a>
+              <a href="#" data-translate="show_all_notifications">Show all notifications</a>
             </li>
           </ul><!-- End Notification Dropdown Items -->
         </li><!-- End Notification Nav -->
@@ -157,9 +158,9 @@
           </a><!-- End Messages Icon -->
     
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-            <li class="dropdown-header">
+            <li class="dropdown-header" data-translate="dropdown_messages_header">
               You have 3 new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2" data-translate="dropdown_messages_view_all">View all</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -170,8 +171,8 @@
                 <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
                 <div>
                   <h4>Maria Hudson</h4>
-                  <p>The project files have been uploaded successfully.</p>
-                  <p>4 hrs. ago</p>
+                  <p data-translate="message_1_text">The project files have been uploaded successfully.</p>
+                  <p data-translate="message_1_time">4 hrs. ago</p>
                 </div>
               </a>
             </li>
@@ -184,8 +185,8 @@
                 <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
                 <div>
                   <h4>Anna Nelson</h4>
-                  <p>Meeting rescheduled to tomorrow at 10 AM.</p>
-                  <p>6 hrs. ago</p>
+                  <p data-translate="message_2_text">Meeting rescheduled to tomorrow at 10 AM.</p>
+                  <p data-translate="message_2_time">6 hrs. ago</p>
                 </div>
               </a>
             </li>
@@ -198,8 +199,8 @@
                 <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
                 <div>
                   <h4>David Muldon</h4>
-                  <p>Can you review the latest draft of the report?</p>
-                  <p>8 hrs. ago</p>
+                  <p data-translate="message_3_text">Can you review the latest draft of the report?</p>
+                  <p data-translate="message_3_time">8 hrs. ago</p>
                 </div>
               </a>
             </li>
@@ -208,7 +209,7 @@
             </li>
     
             <li class="dropdown-footer text-center">
-              <a href="#">Show all messages</a>
+              <a href="#" data-translate="dropdown_messages_show_all">Show all messages</a>
             </li>
           </ul><!-- End Messages Dropdown Items -->
         </li><!-- End Messages Nav -->
@@ -230,7 +231,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-person"></i>
-                <span>My Profile</span>
+                <span data-translate="profile">My Profile</span>
               </a>
             </li>
             <li>
@@ -240,7 +241,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
+                <span data-translate="account_settings">Account Settings</span>
               </a>
             </li>
             <li>
@@ -250,7 +251,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
                 <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
+                <span data-translate="need_help">Need Help?</span>
               </a>
             </li>
             <li>
@@ -260,10 +261,11 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#" onclick="signOut(event)">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+                <span data-translate="sign_out">Sign Out</span>
               </a>
             </li>
-    
+
+            </div>
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
       </ul>
@@ -274,12 +276,13 @@
     
     
 
-  </header><!-- End Header -->
+  </header>
+  <!-- End Header -->
 
 
   <a href="https://chat.ultradeep.tech/" class="whatsapp-float" target="_blank" data-aos="fade-up" id="chat-link">
     <i class="bi bi-robot whatsapp-icon"></i>
-    <span class="tooltip-text">Hi, how can I assist you today?</span>
+    <span class="tooltip-text" data-translate="robot">Hi, how can I assist you today?</span>
 </a>
 
 <audio id="popup-sound" src="/assets/sound/level-up-191997.mp3" preload="auto"></audio>
@@ -288,14 +291,14 @@
 <div id="loginModal" class="custom-modal">
   <div class="custom-modal-content">
     <img src="assets/img/logo.png" class="spinner-image" alt="Loading...">
-    <p>Your session has expired or you are not logged in. Redirecting to login page...</p>
+    <p data-translate="session_expired">Your session has expired or you are not logged in. Redirecting to login page...</p>
   </div>
 </div>
 
  <!-- ======= Sidebar ======= -->
  <aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
-      <li class="nav-heading">Department</li>
+    <li class="nav-heading" data-translate="sidebar_department">Department</li>
 
   <li class="">
       <!-- Mostrar el departamento y permitir cambiarlo -->
@@ -315,48 +318,48 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-chat-square-dots"></i><span class="redirect-span" data-href="/sentimentanalysis.html">Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
+      <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="/sentimentanalysis.html">
+        <i class="bi bi-chat-square-dots"></i><span data-translate="sidebar_interaction_analysis">Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
           <a href="sentimentanalysis.html#realtime">
-            <i class="bi bi-emoji-smile"></i><span>Sentiment Analysis</span>
+            <i class="bi bi-emoji-smile"></i><span data-translate="sidebar_sentiment_analysis">Sentiment Analysis</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#conversation">
-            <i class="bi bi-tags"></i><span>Conversation Categorization</span>
+            <i class="bi bi-tags"></i><span data-translate="sidebar_conversation_categorization">Conversation Categorization</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#engagement">
-            <i class="bi bi-bar-chart"></i><span>Engagement Quality Metrics</span>
+            <i class="bi bi-bar-chart"></i><span data-translate="sidebar_engagement_quality_metrics">Engagement Quality Metrics</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#keyword">
-            <i class="bi bi-search"></i><span>Keyword Tracking</span>
+            <i class="bi bi-search"></i><span data-translate="sidebar_keyword_tracking">Keyword Tracking</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#biasdetect">
-            <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
+            <i class="bi bi-slash-circle"></i><span data-translate="sidebar_bias_detection">Bias Detection</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#prediction">
-            <i class="bi bi-lightbulb"></i><span>User Behavior Prediction</span>
+            <i class="bi bi-lightbulb"></i><span data-translate="sidebar_user_behavior_prediction">User Behavior Prediction</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#realTimeAlertsSection">
-            <i class="bi bi-bell"></i><span>Real-Time Alerts</span>
+            <i class="bi bi-bell"></i><span data-translate="sidebar_real_time_alerts">Real-Time Alerts</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#customReportGenerationSection">
-            <i class="bi bi-file-earmark-text"></i><span>Custom Report Generation</span>
+            <i class="bi bi-file-earmark-text"></i><span data-translate="sidebar_custom_report_generation">Custom Report Generation</span>
           </a>
         </li>
       </ul>
@@ -366,128 +369,132 @@
 <!-- Thread Detection Nav -->
 <li class="nav-item">
   <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-    <i class="bi bi-exclamation-circle"></i><span class="redirect-span" data-href="/index.html">Thread Detection</span><i class="bi bi-chevron-down ms-auto"></i>
+    <i class="bi bi-exclamation-circle"></i><span data-translate="sidebar_thread_detection">Thread Detection</span><i class="bi bi-chevron-down ms-auto"></i>
   </a>
   <ul id="charts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
     <li>
       <a href="index.html#totalBlockedRequest">
-        <i class="bi bi-shield-lock"></i><span>Blocked Requests & Rate</span>
+        <i class="bi bi-shield-lock"></i><span data-translate="sidebar_blocked_requests_rate">Blocked Requests & Rate</span>
       </a>
     </li>
     <li>
       <a href="index.html#blockedRequestsByCategor">
-        <i class="bi bi-bar-chart"></i><span>Blocked Requests by Category</span>
+        <i class="bi bi-bar-chart"></i><span data-translate="sidebar_blocked_requests_by_category">Blocked Requests by Category</span>
       </a>
     </li>
     <li>
       <a href="index.html#blockRateOverTimeByCategor">
-        <i class="bi bi-graph-up-arrow"></i><span>Block Rate Over Time by Category</span>
+        <i class="bi bi-graph-up-arrow"></i><span data-translate="sidebar_block_rate_over_time_by_category">Block Rate Over Time by Category</span>
       </a>
     </li>
     <li>
       <a href="index.html#severit">
-        <i class="bi bi-exclamation-triangle"></i><span>Severity Distribution by Category</span>
+        <i class="bi bi-exclamation-triangle"></i><span data-translate="sidebar_severity_distribution_by_category">Severity Distribution by Category</span>
       </a>
     </li>
     <li>
       <a href="index.html#SeverityTim">
-        <i class="bi bi-clock-history"></i><span>Severity Over Time by Category</span>
+        <i class="bi bi-clock-history"></i><span data-translate="sidebar_severity_over_time_by_category">Severity Over Time by Category</span>
       </a>
     </li>
     <li>
       <a href="index.html#totalAbusiveUsersChar">
-        <i class="bi bi-person-x"></i><span>Abusive User Detection</span>
+        <i class="bi bi-person-x"></i><span data-translate="sidebar_abusive_user_detection">Abusive User Detection</span>
       </a>
     </li>
     <li>
       <a href="index.html#hallucinationChar">
-        <i class="bi bi-eye-slash"></i><span>Hallucination Detection</span>
+        <i class="bi bi-eye-slash"></i><span data-translate="sidebar_hallucination_detection">Hallucination Detection</span>
       </a>
     </li>
     <li>
       <a href="index.html#biasPieChar">
-        <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
+        <i class="bi bi-slash-circle"></i><span data-translate="sidebar_bias_detection">Bias Detection</span>
       </a>
     </li>
     <li>
       <a href="index.html#promptInjectionChar">
-        <i class="bi bi-shield-exclamation"></i><span>Prompt Injection/Jailbreak Detection</span>
+        <i class="bi bi-shield-exclamation"></i><span data-translate="sidebar_prompt_injection_detection">Prompt Injection/Jailbreak Detection</span>
       </a>
     </li>
     <li>
       <a href="index.html#dataExposureLineChar">
-        <i class="bi bi-file-earmark-lock"></i><span>Data Exposure</span>
+        <i class="bi bi-file-earmark-lock"></i><span data-translate="sidebar_data_exposure_detection">Data Exposure</span>
       </a>
     </li>
   </ul>
 </li>
 
-<li class="nav-heading">Policies</li>
+<li class="nav-heading" data-translate="sidebar_policies">Policies</li>
 
 <!-- GRC Policies Nav -->
 <li class="nav-item">
   <a class="nav-link collapsed" data-bs-target="#grc-policies-nav" data-bs-toggle="collapse" href="#">
-    <i class="bi bi-file-earmark-lock"></i><span class="redirect-span" data-href="grc-policies.html">GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
+    <i class="bi bi-file-earmark-lock"></i><span data-translate="sidebar_grc_policies">GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
   </a>
   <ul id="grc-policies-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
     <li>
       <a href="grc-policies.html#existing-policies-tab">
-        <i class="bi bi-file-earmark-text"></i><span>Policies</span>
+        <i class="bi bi-file-earmark-text"></i><span data-translate="sidebar_existing_policies">Policies</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#add-policy-tab">
-        <i class="bi bi-plus-square"></i><span>Add Policies</span>
+        <i class="bi bi-plus-square"></i><span data-translate="sidebar_add_policies">Add Policies</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#export-policy-tab">
-        <i class="bi bi-upload"></i><span>Import Policies</span>
+        <i class="bi bi-upload"></i><span data-translate="sidebar_import_policies">Import Policies</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#generate-report-tab">
-        <i class="bi bi-file-earmark-bar-graph"></i><span>Generate Report</span>
+        <i class="bi bi-file-earmark-bar-graph"></i><span data-translate="sidebar_generate_report">Generate Report</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#alerts-tab">
-        <i class="bi bi-bell"></i><span>Notifications</span>
+        <i class="bi bi-bell"></i><span data-translate="sidebar_notifications">Notifications</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#chartsPolicy">
-        <i class="bi bi-bar-chart"></i><span>Charts</span>
+        <i class="bi bi-bar-chart"></i><span data-translate="sidebar_charts">Charts</span>
       </a>
     </li>
   </ul>
 </li>
 
-    <li class="nav-heading">Pages</li>
+<li class="nav-heading" data-translate="sidebar_pages">Pages</li>
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="users-profile.html">
         <i class="bi bi-person"></i>
-        <span>Profile</span>
+        <span data-translate="sidebar_profile">Profile</span>
       </a>
     </li><!-- End Profile Page Nav -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="pages-faq.html">
         <i class="bi bi-question-circle"></i>
-        <span>F.A.Q</span>
+        <span data-translate="sidebar_faq">F.A.Q</span>
       </a>
     </li><!-- End F.A.Q Page Nav -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="pages-contact.html">
         <i class="bi bi-envelope"></i>
-        <span>Contact</span>
+        <span data-translate="sidebar_contact">Contact</span>
       </a>
     </li><!-- End Contact Page Nav -->
 
   </ul>
-
+  <div class="container">
+    <div id="languageSwitcher" class="language-switcher2">
+      <img   src="assets/img/Flag_of_the_U.S..svg.png" alt="English" data-lang="en" class="language-flag2" style="cursor: pointer;" >
+      <img src="assets/img/Bandera_de_España.svg.png" alt="Español" data-lang="es" class="language-flag2" style="cursor: pointer;"  >
+    </div>
     <img src="/assets/img/logo.png" class="sidebar-bg">
 
 
@@ -510,7 +517,7 @@
       <h1>Dashboard</h1>
       <nav>
         <ol class="breadcrumb text-center align-items-center ">
-          <li class="breadcrumb-item" ><a href="index.html" >Home</a></li>
+          <li class="breadcrumb-item" ><a href="index.html"  data-translate="home">Home</a></li>
           <li class="breadcrumb-item active" >Dashboard</li>
         </ol>
       </nav>
@@ -519,8 +526,8 @@
  <div class="col-lg-10">
         <div class="cardindexscore" id="cardindexscore">
             <div class="cardindex-bodyscore">
-                <h5 class="cardindex-titlescore">Ultra Deep Index</h5>
-                <div class="progress-bar-container">
+              <h5 class="cardindex-titlescore" data-translate="ultra_deep_index">Ultra Deep Index</h5>
+              <div class="progress-bar-container">
                     <div class="progress-bar" id="progressBar">
                         <span class="progress-text" id="progressText">0</span>
                     </div>
@@ -569,7 +576,7 @@
         <div id="totalBlockedRequest" class="col-lg-6">
           <div class="cardindex">
             <div class="cardindex-body">
-              <h5 class="cardindex-title">Blocked Requests & Rate</h5>
+              <h5 class="cardindex-title" data-translate="blocked_requests_rate">Blocked Requests & Rate</h5>
               <canvas id="totalBlockedRequests" style="max-height: 400px;"></canvas>
             </div>
           </div>
@@ -579,7 +586,7 @@
         <div id="blockedRequestsByCategor" class="col-lg-6">
           <div class="cardindex">
             <div class="cardindex-body">
-              <h5 class="cardindex-title">Blocked Requests by Category</h5>
+              <h5 class="cardindex-title" data-translate="blocked_requests_by_category">Blocked Requests by Category</h5>
               <canvas id="blockedRequestsByCategory" style="max-height:240px; min-width: 240px;"></canvas>
             </div>
           </div>
@@ -589,7 +596,7 @@
         <div id="blockRateOverTimeByCategor" class="col-lg-12">
           <div class="cardindex">
             <div class="cardindex-body">
-              <h5 class="cardindex-title">Block Rate Over Time by Category</h5>
+              <h5 class="cardindex-title" data-translate="block_rate_over_time_by_category">Block Rate Over Time by Category</h5>
               <canvas id="blockRateOverTimeByCategory" style="max-height: 400px;"></canvas>
             </div>
           </div>
@@ -599,7 +606,7 @@
         <div id="severit" class="col-lg-6">
           <div class="cardindex">
             <div class="cardindex-body">
-              <h5 class="cardindex-title">Severity Distribution by Category</h5>
+              <h5 class="cardindex-title" data-translate="severity_distribution_by_category">Severity Distribution by Category</h5>
               <canvas id="severity"></canvas>
             </div>
           </div>
@@ -609,7 +616,7 @@
         <div id="SeverityTim" class="col-lg-6">
           <div class="cardindex">
             <div class="cardindex-body">
-              <h5 class="cardindex-title">Severity Over Time by Category</h5>
+              <h5 class="cardindex-title" data-translate="severity_over_time_by_category">Severity Over Time by Category</h5>
               <canvas id="SeverityTime" style="max-height: 400px;"></canvas>
             </div>
           </div>
@@ -619,32 +626,32 @@
         <div id="totalAbusiveUsersChar" class="col-12">
           <div class="cardindex">
             <div class="cardindex-body">
-              <h5 class="cardindex-title">Abusive User Detection</h5>
+              <h5 class="cardindex-title" data-translate="abusive_user_detection">Abusive User Detection</h5>
               <div class="chart">
-                <h6>Total Potential Abusive Users Over Time</h6>
+                <h6 data-translate="total_abusive_users_over_time">Total Potential Abusive Users Over Time</h6>
                 <canvas id="totalAbusiveUsersChart" style="max-height: 400px;"></canvas>
               </div>
     
               <div class="table-responsive mt-4">
-                <h6>Detailed Analysis of Potentially Abusive Users 
-                  <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#abusiveUsersTable" aria-expanded="false" aria-controls="abusiveUsersTable">Show info</button>
-                </h6>
+                <h6 data-translate="detailed_analysis_abusive_users">Detailed Analysis of Potentially Abusive Users</h6>
+                <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#abusiveUsersTable" aria-expanded="false" aria-controls="abusiveUsersTable" data-translate="show_info">Show info</button>
+              </h6>
                 <div class="collapse" id="abusiveUsersTable">
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>User GUID</th>
-                        <th>User</th>
-                        <th>Text</th>
-                        <th>Response</th>
-                        <th>Abuse Score</th>
-                        <th>Abuse Score Trend</th>
-                        <th>Evaluate Date</th>
-                        <th>Total Abuse Request Ratio/Count</th>
-                        <th>Abuse Ratio/Count for Violence</th>
-                        <th>Abuse Ratio/Count for Hate</th>
-                        <th>Abuse Ratio/Count for Sexual</th>
-                        <th>Abuse Ratio/Count for Self-harm</th>
+                        <th data-translate="user_guid">User GUID</th>
+                        <th data-translate="user">User</th>
+                        <th data-translate="text">Text</th>
+                        <th data-translate="response">Response</th>
+                        <th data-translate="abuse_score">Abuse Score</th>
+                        <th data-translate="abuse_score_trend">Abuse Score Trend</th>
+                        <th data-translate="evaluate_date">Evaluate Date</th>
+                        <th data-translate="total_abuse_ratio">Total Abuse Request Ratio/Count</th>
+                        <th data-translate="violence_abuse_ratio">Abuse Ratio/Count for Violence</th>
+                        <th data-translate="hate_abuse_ratio">Abuse Ratio/Count for Hate</th>
+                        <th data-translate="sexual_abuse_ratio">Abuse Ratio/Count for Sexual</th>
+                        <th data-translate="self_harm_abuse_ratio">Abuse Ratio/Count for Self-harm</th>
                       </tr>
                     </thead>
                     <tbody id="abusiveUsersData">
@@ -661,24 +668,24 @@
         <div id="hallucinationChar" class="col-12">
           <div class="cardindex">
             <div class="cardindex-body">
-              <h5 class="cardindex-title">Hallucination Detection</h5>
+              <h5 class="cardindex-title" data-translate="hallucination_detection">Hallucination Detection</h5>
               <div class="chart">
-                <h6>Number of Hallucinations Detected Each Day</h6>
+                <h6 data-translate="hallucinations_detected_each_day">Number of Hallucinations Detected Each Day</h6>
                 <canvas id="hallucinationChart" style="max-height: 400px;"></canvas>
               </div>
               <div class="table-responsive mt-4">
-                <h6>Details of Each Hallucination 
-                  <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#hallucinationTable" aria-expanded="false" aria-controls="hallucinationTable">Show Info</button>
-                </h6>
+                <h6 data-translate="details_of_hallucination">Details of Each Hallucination</h6>
+                <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#hallucinationTable" aria-expanded="false" aria-controls="hallucinationTable" data-translate="show_info">Show Info</button>
+              </h6>
                 <div class="collapse" id="hallucinationTable">
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>User Input</th>
-                        <th>AI Response</th>
-                        <th>Date</th>
-                        <th>Prompt</th>
-                        <th>Response</th>
+                        <th data-translate="user_input">User Input</th>
+                        <th data-translate="ai_response">AI Response</th>
+                        <th data-translate="date">Date</th>
+                        <th data-translate="prompt">Prompt</th>
+                        <th data-translate="response">Response</th>
                       </tr>
                     </thead>
                     <tbody id="hallucinationData">
@@ -694,28 +701,28 @@
         <div id="biasPieChar" class="col-12">
           <div class="cardindex">
             <div class="cardindex-body">
-              <h5 class="cardindex-title">Bias Detection</h5>
+              <h5 class="cardindex-title" data-translate="bias_detection">Bias Detection</h5>
               <div class="chart">
-                <h6>Types of Bias Detected</h6>
+                <h6 data-translate="types_of_bias_detected">Types of Bias Detected</h6>
                 <canvas id="biasPieChart" style="max-height: 400px;"></canvas>
               </div>
               <div class="chart mt-4">
-                <h6>Bias Incidents Over Time</h6>
+                <h6 data-translate="bias_incidents_over_time">Bias Incidents Over Time</h6>
                 <canvas id="biasLineChart" style="max-height: 400px;"></canvas>
               </div>
               <div class="table-responsive mt-4">
-                <h6>Details of Each Bias Incident 
-                  <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#biasTable" aria-expanded="false" aria-controls="biasTable">Show Info</button>
-                </h6>
+                <h6 data-translate="details_of_bias_incident">Details of Each Bias Incident</h6>
+                <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#biasTable" aria-expanded="false" aria-controls="biasTable" data-translate="show_info">Show Info</button>
+              </h6>
                 <div class="collapse" id="biasTable">
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>User Input</th>
-                        <th>AI Response</th>
-                        <th>Date</th>
-                        <th>Text</th>
-                        <th>Response</th>
+                        <th data-translate="user_input">User Input</th>
+                        <th data-translate="ai_response">AI Response</th>
+                        <th data-translate="date">Date</th>
+                        <th data-translate="text">Text</th>
+                        <th data-translate="response">Response</th>
                       </tr>
                     </thead>
                     <tbody id="biasData">
@@ -731,23 +738,22 @@
         <div id="promptInjectionChar" class="col-12">
           <div class="cardindex">
             <div class="cardindex-body">
-              <h5 class="cardindex-title">Prompt Injection/Jailbreak Detection</h5>
+              <h5 class="cardindex-title" data-translate="prompt_injection_detection">Prompt Injection/Jailbreak Detection</h5>
               <div class="chart">
-                <h6>Number of Prompt Injections Detected Each Day</h6>
+                <h6 data-translate="prompt_injections_detected_each_day">Number of Prompt Injections Detected Each Day</h6>
                 <canvas id="promptInjectionChart" style="max-height: 400px;"></canvas>
               </div>
               <div class="table-responsive mt-4">
-                <h6>Details of Each Prompt Injection 
-                  <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#promptInjectionTable" aria-expanded="false" aria-controls="promptInjectionTable">Show Info</button>
-                </h6>
+                <h6 data-translate="details_of_prompt_injection">Details of Each Prompt Injection</h6>
+                <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#promptInjectionTable" aria-expanded="false" aria-controls="promptInjectionTable" data-translate="show_info">Show Info</button>
                 <div class="collapse" id="promptInjectionTable">
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>N°</th>
-                        <th>Class</th>
-                        <th>Date</th>
-                        <th>Text</th>
+                        <th data-translate="number">N°</th>
+                        <th data-translate="class">Class</th>
+                        <th data-translate="date">Date</th>
+                        <th data-translate="text">Text</th>
                       </tr>
                     </thead>
                     <tbody id="promptInjectionData">
@@ -763,27 +769,26 @@
         <div id="dataExposureLineChar" class="col-12">
           <div class="cardindex">
             <div class="cardindex-body">
-              <h5 class="cardindex-title">Data Exposure (Leakage, Lineage, Observability, Privacy)</h5>
+              <h5 class="cardindex-title" data-translate="data_exposure_detection">Data Exposure (Leakage, Lineage, Observability, Privacy)</h5>
               <div class="chart">
-                <h6>Data Exposure Incidents Over Time</h6>
+                <h6 data-translate="data_exposure_incidents_over_time">Data Exposure Incidents Over Time</h6>
                 <canvas id="dataExposureLineChart" style="max-height: 400px;"></canvas>
               </div>
               <div class="chart mt-4">
-                <h6>Types of Data Exposed</h6>
+                <h6 data-translate="types_of_data_exposed">Types of Data Exposed</h6>
                 <canvas id="dataExposurePieChart" style="max-height: 400px;"></canvas>
               </div>
               <div class="table-responsive mt-4">
-                <h6>Details of Each Data Exposure Incident 
-                  <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#dataExposureTable" aria-expanded="false" aria-controls="dataExposureTable">Show Info</button>
-                </h6>
+                <h6 data-translate="details_of_data_exposure_incident">Details of Each Data Exposure Incident</h6>
+                <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#dataExposureTable" aria-expanded="false" aria-controls="dataExposureTable" data-translate="show_info">Show Info</button>
                 <div class="collapse" id="dataExposureTable">
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>Data Type</th>
-                        <th>User Input</th>
-                        <th>AI Response</th>
-                        <th>Date</th>
+                        <th data-translate="data_type">Data Type</th>
+                        <th data-translate="user_input">User Input</th>
+                        <th data-translate="ai_response">AI Response</th>
+                        <th data-translate="date">Date</th>
                       </tr>
                     </thead>
                     <tbody id="dataExposureData">
@@ -811,6 +816,8 @@
     <script src="assets/vendor/tinymce/tinymce.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/lenguaje.js"></script>
+
 
     <script>
 document.addEventListener('DOMContentLoaded', function () {

@@ -435,13 +435,9 @@ animation: gradientAnimation 3s ease infinite;
 
 .header-nav .notifications {
   inset: 8px -15px auto auto !important;
-  background: #f0f0f0; /* Cambia el color a un azul más claro */
+  background: #f0f0f0;
   color: #000;
-}
-
-.header-nav .notifications  a {
-  inset: 8px -15px auto auto !important;
-  color:#000;
+  width: 350px; /* Ajusta el ancho para evitar el corte */
 }
 
 .header-nav .notifications .notification-item {
@@ -449,61 +445,57 @@ animation: gradientAnimation 3s ease infinite;
   align-items: center;
   padding: 15px 10px;
   transition: 0.3s;
-  color:#000;
-
+  color: #000;
 }
 
 .header-nav .notifications .notification-item i {
   margin: 0 20px 0 10px;
   font-size: 24px;
-  color:#000;
-
+  color: #000;
 }
 
 .header-nav .notifications .notification-item h4 {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 5px;
-    color:#000;
-
+  color: #000;
 }
 
 .header-nav .notifications .notification-item p {
   font-size: 13px;
   margin-bottom: 3px;
-  color:#333;
+  color: #333;
 }
 
 .header-nav .notifications .notification-item:hover {
   background-color: #012a70e3;
   color: #fff !important;
 }
-.header-nav .notifications .notification-item:hover h4{
+
+.header-nav .notifications .notification-item:hover h4 {
   color: #fff !important;
 }
-.header-nav .notifications .notification-item:hover p{
+
+.header-nav .notifications .notification-item:hover p {
   color: #fff !important;
 }
 
 .header-nav .messages {
   inset: 8px -15px auto auto !important;
-  background: #f0f0f0; /* Cambia el color a un azul más claro */
-  color:#000;
+  background: #f0f0f0;
+  color: #000;
+  width: 350px; /* Ajusta el ancho para evitar el corte */
 }
 
 .header-nav .messages .message-item {
   padding: 15px 10px;
   transition: 0.3s;
-  color:#000;
-
-  
-  
+  color: #000;
 }
 
 .header-nav .messages .message-item a {
   display: flex;
-    color:#000;
-
+  color: #000;
 }
 
 .header-nav .messages .message-item img {
@@ -515,27 +507,25 @@ animation: gradientAnimation 3s ease infinite;
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 5px;
-  color:#000;
+  color: #000;
 }
 
 .header-nav .messages .message-item p {
   font-size: 13px;
   margin-bottom: 3px;
-  color:#333;
-}
-.header-nav .messages  a {
-  font-size: 13px;
-  margin-bottom: 3px;
-  color:#333;
+  color: #333;
 }
 
 .header-nav .messages .message-item:hover {
   background-color: #012970;
+  color: #fff !important;
 }
+
 .header-nav .messages .message-item:hover h4 {
-color: #fff;
+  color: #fff;
 }
-.header-nav .messages .message-item:hover p{
+
+.header-nav .messages .message-item:hover p {
   color: #fff;
 }
 

@@ -49,6 +49,8 @@
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
+    
+
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/favicon.png" alt="" class="logoheader">
@@ -81,13 +83,13 @@
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell bellnotification"></i>
-            <span class="badge bg-primary badge-number" style="color:#000  !important;" >4</span>
+            <span class="badge bg-primary badge-number" style="color: #000 !important;">4</span>
           </a><!-- End Notification Icon -->
     
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
+            <li class="dropdown-header" data-translate="notifications_header">
               You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2" data-translate="view_all">View all</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -96,9 +98,9 @@
             <li class="notification-item">
               <i class="bi bi-exclamation-circle text-warning"></i>
               <div>
-                <h4>Increased Blocked Requests</h4>
-                <p>Spike in blocked requests detected in the last hour.</p>
-                <p>30 min. ago</p>
+                <h4 data-translate="notification_blocked_requests">Increased Blocked Requests</h4>
+                <p data-translate="notification_blocked_requests_detail">Spike in blocked requests detected in the last hour.</p>
+                <p data-translate="notification-alert-1"> 30 min. ago</p>
               </div>
             </li>
     
@@ -109,9 +111,10 @@
             <li class="notification-item">
               <i class="bi bi-x-circle text-danger"></i>
               <div>
-                <h4>New Abusive User Detected</h4>
-                <p>User GUID 1234 flagged for potential abusive behavior.</p>
-                <p>1 hr. ago</p>
+                <h4 data-translate="notification_abusive_user">New Abusive User Detected</h4>
+                <p data-translate="notification_abusive_user_detail">User GUID 1234 flagged for potential abusive behavior.</p>
+
+                <p data-translate="notification-alert-2">1 hr. ago</p>
               </div>
             </li>
     
@@ -122,9 +125,9 @@
             <li class="notification-item">
               <i class="bi bi-check-circle text-success"></i>
               <div>
-                <h4>Hallucination Detection Update</h4>
-                <p>New algorithm for hallucination detection deployed.</p>
-                <p>2 hrs. ago</p>
+                <h4 data-translate="notification_hallucination">Hallucination Detection Update</h4>
+                <p data-translate="notification_hallucination_detail">New algorithm for hallucination detection deployed.</p>
+                <p data-translate="notification-alert-3">2 hrs. ago</p>
               </div>
             </li>
     
@@ -135,9 +138,9 @@
             <li class="notification-item">
               <i class="bi bi-info-circle text-primary"></i>
               <div>
-                <h4>Weekly Report Available</h4>
-                <p>The Safety Shield Ultra weekly summary is ready for review.</p>
-                <p>4 hrs. ago</p>
+                <h4 data-translate="notification_report">Weekly Report Available</h4>
+                <p data-translate="notification_report_detail">The Safety Shield Ultra weekly summary is ready for review.</p>
+                <p data-translate="notification-alert-4">4 hrs. ago</p>
               </div>
             </li>
     
@@ -145,7 +148,7 @@
               <hr class="dropdown-divider">
             </li>
             <li class="dropdown-footer text-center">
-              <a href="#">Show all notifications</a>
+              <a href="#" data-translate="show_all_notifications">Show all notifications</a>
             </li>
           </ul><!-- End Notification Dropdown Items -->
         </li><!-- End Notification Nav -->
@@ -153,13 +156,13 @@
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number" style="color:#000  !important;" >3</span>
+            <span class="badge bg-success badge-number" style="color: #000 !important;"">3</span>
           </a><!-- End Messages Icon -->
     
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-            <li class="dropdown-header">
+            <li class="dropdown-header" data-translate="dropdown_messages_header">
               You have 3 new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2" data-translate="dropdown_messages_view_all">View all</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -170,8 +173,8 @@
                 <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
                 <div>
                   <h4>Maria Hudson</h4>
-                  <p>The project files have been uploaded successfully.</p>
-                  <p>4 hrs. ago</p>
+                  <p data-translate="message_1_text">The project files have been uploaded successfully.</p>
+                  <p data-translate="message_1_time">4 hrs. ago</p>
                 </div>
               </a>
             </li>
@@ -184,8 +187,8 @@
                 <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
                 <div>
                   <h4>Anna Nelson</h4>
-                  <p>Meeting rescheduled to tomorrow at 10 AM.</p>
-                  <p>6 hrs. ago</p>
+                  <p data-translate="message_2_text">Meeting rescheduled to tomorrow at 10 AM.</p>
+                  <p data-translate="message_2_time">6 hrs. ago</p>
                 </div>
               </a>
             </li>
@@ -198,8 +201,8 @@
                 <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
                 <div>
                   <h4>David Muldon</h4>
-                  <p>Can you review the latest draft of the report?</p>
-                  <p>8 hrs. ago</p>
+                  <p data-translate="message_3_text">Can you review the latest draft of the report?</p>
+                  <p data-translate="message_3_time">8 hrs. ago</p>
                 </div>
               </a>
             </li>
@@ -208,7 +211,7 @@
             </li>
     
             <li class="dropdown-footer text-center">
-              <a href="#">Show all messages</a>
+              <a href="#" data-translate="dropdown_messages_show_all">Show all messages</a>
             </li>
           </ul><!-- End Messages Dropdown Items -->
         </li><!-- End Messages Nav -->
@@ -230,7 +233,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-person"></i>
-                <span>My Profile</span>
+                <span data-translate="profile">My Profile</span>
               </a>
             </li>
             <li>
@@ -240,7 +243,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
+                <span data-translate="account_settings">Account Settings</span>
               </a>
             </li>
             <li>
@@ -250,7 +253,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
                 <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
+                <span data-translate="need_help">Need Help?</span>
               </a>
             </li>
             <li>
@@ -260,15 +263,20 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#" onclick="signOut(event)">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+                <span data-translate="sign_out">Sign Out</span>
               </a>
             </li>
-    
+    <div>
+      <p>Select your lenguaje :</p>
+            <select id="languageSwitcher">
+              <option value="en">English</option>
+              <option value="es">Español</option>
+            </select>
+          </div>
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
       </ul>
     </nav><!-- End Icons Navigation -->
-    
     
     
     
@@ -280,7 +288,7 @@
 
   <a href="https://chat.ultradeep.tech/" class="whatsapp-float" target="_blank" data-aos="fade-up" id="chat-link">
     <i class="bi bi-robot whatsapp-icon"></i>
-    <span class="tooltip-text">Hi, how can I assist you today?</span>
+    <span class="tooltip-text" data-translate="robot">Hi, how can I assist you today?</span>
 </a>
 
 <audio id="popup-sound" src="/assets/sound/level-up-191997.mp3" preload="auto"></audio>
@@ -296,7 +304,7 @@
  <!-- ======= Sidebar ======= -->
  <aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
-      <li class="nav-heading">Department</li>
+    <li class="nav-heading" data-translate="sidebar_department">Department</li>
 
   <li class="">
       <!-- Mostrar el departamento y permitir cambiarlo -->
@@ -316,48 +324,48 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-chat-square-dots"></i><span class="redirect-span" data-href="/sentimentanalysis.html">Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
+      <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="/sentimentanalysis.html">
+        <i class="bi bi-chat-square-dots"></i><span data-translate="sidebar_interaction_analysis">Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
           <a href="sentimentanalysis.html#realtime">
-            <i class="bi bi-emoji-smile"></i><span>Sentiment Analysis</span>
+            <i class="bi bi-emoji-smile"></i><span data-translate="sidebar_sentiment_analysis">Sentiment Analysis</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#conversation">
-            <i class="bi bi-tags"></i><span>Conversation Categorization</span>
+            <i class="bi bi-tags"></i><span data-translate="sidebar_conversation_categorization">Conversation Categorization</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#engagement">
-            <i class="bi bi-bar-chart"></i><span>Engagement Quality Metrics</span>
+            <i class="bi bi-bar-chart"></i><span data-translate="sidebar_engagement_quality_metrics">Engagement Quality Metrics</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#keyword">
-            <i class="bi bi-search"></i><span>Keyword Tracking</span>
+            <i class="bi bi-search"></i><span data-translate="sidebar_keyword_tracking">Keyword Tracking</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#biasdetect">
-            <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
+            <i class="bi bi-slash-circle"></i><span data-translate="sidebar_bias_detection">Bias Detection</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#prediction">
-            <i class="bi bi-lightbulb"></i><span>User Behavior Prediction</span>
+            <i class="bi bi-lightbulb"></i><span data-translate="sidebar_user_behavior_prediction">User Behavior Prediction</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#realTimeAlertsSection">
-            <i class="bi bi-bell"></i><span>Real-Time Alerts</span>
+            <i class="bi bi-bell"></i><span data-translate="sidebar_real_time_alerts">Real-Time Alerts</span>
           </a>
         </li>
         <li>
           <a href="sentimentanalysis.html#customReportGenerationSection">
-            <i class="bi bi-file-earmark-text"></i><span>Custom Report Generation</span>
+            <i class="bi bi-file-earmark-text"></i><span data-translate="sidebar_custom_report_generation">Custom Report Generation</span>
           </a>
         </li>
       </ul>
@@ -367,128 +375,131 @@
 <!-- Thread Detection Nav -->
 <li class="nav-item">
   <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-    <i class="bi bi-exclamation-circle"></i><span class="redirect-span" data-href="/index.html">Thread Detection</span><i class="bi bi-chevron-down ms-auto"></i>
+    <i class="bi bi-exclamation-circle"></i><span data-translate="sidebar_thread_detection">Thread Detection</span><i class="bi bi-chevron-down ms-auto"></i>
   </a>
   <ul id="charts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
     <li>
       <a href="index.html#totalBlockedRequest">
-        <i class="bi bi-shield-lock"></i><span>Blocked Requests & Rate</span>
+        <i class="bi bi-shield-lock"></i><span data-translate="sidebar_blocked_requests_rate">Blocked Requests & Rate</span>
       </a>
     </li>
     <li>
       <a href="index.html#blockedRequestsByCategor">
-        <i class="bi bi-bar-chart"></i><span>Blocked Requests by Category</span>
+        <i class="bi bi-bar-chart"></i><span data-translate="sidebar_blocked_requests_by_category">Blocked Requests by Category</span>
       </a>
     </li>
     <li>
       <a href="index.html#blockRateOverTimeByCategor">
-        <i class="bi bi-graph-up-arrow"></i><span>Block Rate Over Time by Category</span>
+        <i class="bi bi-graph-up-arrow"></i><span data-translate="sidebar_block_rate_over_time_by_category">Block Rate Over Time by Category</span>
       </a>
     </li>
     <li>
       <a href="index.html#severit">
-        <i class="bi bi-exclamation-triangle"></i><span>Severity Distribution by Category</span>
+        <i class="bi bi-exclamation-triangle"></i><span data-translate="sidebar_severity_distribution_by_category">Severity Distribution by Category</span>
       </a>
     </li>
     <li>
       <a href="index.html#SeverityTim">
-        <i class="bi bi-clock-history"></i><span>Severity Over Time by Category</span>
+        <i class="bi bi-clock-history"></i><span data-translate="sidebar_severity_over_time_by_category">Severity Over Time by Category</span>
       </a>
     </li>
     <li>
       <a href="index.html#totalAbusiveUsersChar">
-        <i class="bi bi-person-x"></i><span>Abusive User Detection</span>
+        <i class="bi bi-person-x"></i><span data-translate="sidebar_abusive_user_detection">Abusive User Detection</span>
       </a>
     </li>
     <li>
       <a href="index.html#hallucinationChar">
-        <i class="bi bi-eye-slash"></i><span>Hallucination Detection</span>
+        <i class="bi bi-eye-slash"></i><span data-translate="sidebar_hallucination_detection">Hallucination Detection</span>
       </a>
     </li>
     <li>
       <a href="index.html#biasPieChar">
-        <i class="bi bi-slash-circle"></i><span>Bias Detection</span>
+        <i class="bi bi-slash-circle"></i><span data-translate="sidebar_bias_detection">Bias Detection</span>
       </a>
     </li>
     <li>
       <a href="index.html#promptInjectionChar">
-        <i class="bi bi-shield-exclamation"></i><span>Prompt Injection/Jailbreak Detection</span>
+        <i class="bi bi-shield-exclamation"></i><span data-translate="sidebar_prompt_injection_detection">Prompt Injection/Jailbreak Detection</span>
       </a>
     </li>
     <li>
       <a href="index.html#dataExposureLineChar">
-        <i class="bi bi-file-earmark-lock"></i><span>Data Exposure</span>
+        <i class="bi bi-file-earmark-lock"></i><span data-translate="sidebar_data_exposure_detection">Data Exposure</span>
       </a>
     </li>
   </ul>
 </li>
 
-<li class="nav-heading">Policies</li>
+<li class="nav-heading" data-translate="sidebar_policies">Policies</li>
 
 <!-- GRC Policies Nav -->
 <li class="nav-item">
   <a class="nav-link collapsed" data-bs-target="#grc-policies-nav" data-bs-toggle="collapse" href="#">
-    <i class="bi bi-file-earmark-lock"></i><span class="redirect-span" data-href="grc-policies.html">GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
+    <i class="bi bi-file-earmark-lock"></i><span data-translate="sidebar_grc_policies">GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
   </a>
   <ul id="grc-policies-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
     <li>
       <a href="grc-policies.html#existing-policies-tab">
-        <i class="bi bi-file-earmark-text"></i><span>Policies</span>
+        <i class="bi bi-file-earmark-text"></i><span data-translate="sidebar_existing_policies">Policies</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#add-policy-tab">
-        <i class="bi bi-plus-square"></i><span>Add Policies</span>
+        <i class="bi bi-plus-square"></i><span data-translate="sidebar_add_policies">Add Policies</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#export-policy-tab">
-        <i class="bi bi-upload"></i><span>Import Policies</span>
+        <i class="bi bi-upload"></i><span data-translate="sidebar_import_policies">Import Policies</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#generate-report-tab">
-        <i class="bi bi-file-earmark-bar-graph"></i><span>Generate Report</span>
+        <i class="bi bi-file-earmark-bar-graph"></i><span data-translate="sidebar_generate_report">Generate Report</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#alerts-tab">
-        <i class="bi bi-bell"></i><span>Notifications</span>
+        <i class="bi bi-bell"></i><span data-translate="sidebar_notifications">Notifications</span>
       </a>
     </li>
     <li>
       <a href="grc-policies.html#chartsPolicy">
-        <i class="bi bi-bar-chart"></i><span>Charts</span>
+        <i class="bi bi-bar-chart"></i><span data-translate="sidebar_charts">Charts</span>
       </a>
     </li>
   </ul>
 </li>
 
-    <li class="nav-heading">Pages</li>
+<li class="nav-heading" data-translate="sidebar_pages">Pages</li>
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="users-profile.html">
         <i class="bi bi-person"></i>
-        <span>Profile</span>
+        <span data-translate="sidebar_profile">Profile</span>
       </a>
     </li><!-- End Profile Page Nav -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="pages-faq.html">
         <i class="bi bi-question-circle"></i>
-        <span>F.A.Q</span>
+        <span data-translate="sidebar_faq">F.A.Q</span>
       </a>
     </li><!-- End F.A.Q Page Nav -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="pages-contact.html">
         <i class="bi bi-envelope"></i>
-        <span>Contact</span>
+        <span data-translate="sidebar_contact">Contact</span>
       </a>
     </li><!-- End Contact Page Nav -->
 
   </ul>
-
+  <div id="languageSwitcher" class="language-switcher2">
+    <img   src="assets/img/Flag_of_the_U.S..svg.png" alt="English" data-lang="en" class="language-flag2" style="cursor: pointer;" >
+    <img src="assets/img/Bandera_de_España.svg.png" alt="Español" data-lang="es" class="language-flag2" style="cursor: pointer;"  >
+  </div>
     <img src="/assets/img/logo.png" class="sidebar-bg">
 
 
@@ -510,7 +521,7 @@
       <div class="col-lg-6" id="realtime">
         <div class="cardindex">
           <div class="cardindex-body" id="sentimentAnalysis">
-            <h5 class="cardindex-title">Real-Time Emotion Tracker</h5>
+            <h5 class="cardindex-title" data-translate="real_time_emotion_tracker">Real-Time Emotion Tracker</h5>
             <canvas id="emotionTrackerChart" style="max-height: 400px;"></canvas>
           </div>
         </div>
@@ -519,7 +530,7 @@
       <div class="col-lg-6" id="emotion" >
         <div class="cardindex">
           <div class="cardindex-body">
-            <h5 class="cardindex-title">Emotion Trends Heatmap</h5>
+            <h5 class="cardindex-title" data-translate="emotion_trends_heatmap">Emotion Trends Heatmap</h5>
             <canvas id="emotionTrendsHeatmap" style="max-height: 400px;"></canvas>
           </div>
         </div>
@@ -528,13 +539,13 @@
       <div class="col-12" id="sentiment">
         <div class="cardindex">
           <div class="cardindex-body">
-            <h5 class="cardindex-title">Sentiment Categorization per Conversation</h5>
+            <h5 class="cardindex-title" data-translate="sentiment_categorization">Sentiment Categorization per Conversation</h5>
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>Conversation ID</th>
-                  <th>Sentiment</th>
-                  <th>Category</th>
+                  <th data-translate="conversation_id">Conversation ID</th>
+                  <th data-translate="sentiment">Sentiment</th>
+                  <th data-translate="category">Category</th>
                 </tr>
               </thead>
               <tbody id="sentimentCategorizationData">
@@ -550,13 +561,13 @@
       <div class="col-12" id="conversation"> 
         <div class="cardindex">
           <div class="cardindex-body" id="conversationCategorization">
-            <h5 class="cardindex-title">Conversation Categorization</h5>
+            <h5 class="cardindex-title" data-translate="conversation_categorization">Conversation Categorization</h5>
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>Conversation ID</th>
-                  <th>Category</th>
-                  <th>Urgency</th>
+                  <th data-translate="conversation_id">Conversation ID</th>
+                  <th data-translate="category">Category</th>
+                  <th data-translate="urgency">Urgency</th>
                 </tr>
               </thead>
               <tbody id="conversationCategorizationData">
@@ -572,7 +583,7 @@
       <div class="col-lg-12" id="engagement">
         <div class="cardindex">
           <div class="cardindex-body" id="engagementMetrics">
-            <h5 class="cardindex-title">Engagement Quality Metrics</h5>
+            <h5 class="cardindex-title" data-translate="engagement_quality_metrics">Engagement Quality Metrics</h5>
             <canvas id="engagementMetricsChart" style="max-height: 400px;"></canvas>
           </div>
         </div>
@@ -583,7 +594,7 @@
       <div class="col-lg-6" id="keyword">
         <div class="cardindex">
           <div class="cardindex-body" id="keywordTracking">
-            <h5 class="cardindex-title">Keyword Trend Word Cloud</h5>
+            <h5 class="cardindex-title" data-translate="keyword_trend_word_cloud">Keyword Trend Word Cloud</h5>
             <canvas id="keywordWordCloud" style="max-height: 400px;"></canvas>
           </div>
         </div>
@@ -592,7 +603,7 @@
       <div class="col-lg-6" id="keyword2">
         <div class="cardindex">
           <div class="cardindex-body">
-            <h5 class="cardindex-title">Keyword Trends Over Time</h5>
+            <h5 class="cardindex-title" data-translate="keyword_trends_over_time">Keyword Trends Over Time</h5>
             <canvas id="keywordTrendsChart" style="max-height: 400px;"></canvas>
           </div>
         </div>
@@ -603,7 +614,7 @@
       <div class="col-12" id="biasdetect">
         <div class="cardindex">
           <div class="cardindex-body" id="biasDetection">
-            <h5 class="cardindex-title">Bias Detection</h5>
+            <h5 class="cardindex-title" data-translate="bias_detection2">Bias Detection</h5>
             <canvas id="biasDetectionChart" style="max-height: 400px;"></canvas>
           </div>
         </div>
@@ -612,7 +623,7 @@
       <div class="col-12" id="biastrend">
         <div class="cardindex">
           <div class="cardindex-body">
-            <h5 class="cardindex-title">Bias Trends Over Time</h5>
+            <h5 class="cardindex-title" data-translate="bias_trends_over_time">Bias Trends Over Time</h5>
             <canvas id="biasTrendsChart" style="max-height: 400px;"></canvas>
           </div>
         </div>
@@ -623,7 +634,7 @@
       <div class="col-12" id="prediction">
         <div class="cardindex">
           <div class="cardindex-body" id="behaviorPrediction">
-            <h5 class="cardindex-title">User Behavior Prediction</h5>
+            <h5 class="cardindex-title" data-translate="user_behavior_prediction">User Behavior Prediction</h5>
             <canvas id="behaviorPredictionChart" style="max-height: 400px;"></canvas>
           </div>
         </div>
@@ -641,7 +652,7 @@
       <div class="col-12" id="realTimeAlertsSection">
         <div class="cardindex">
           <div class="cardindex-body">
-            <h5 class="cardindex-title">Real-Time Alerts</h5>
+            <h5 class="cardindex-title" data-translate="real_time_alerts">Real-Time Alerts</h5>
             <canvas id="realTimeAlertsChart" style="max-height: 400px;"></canvas>
           </div>
         </div>
@@ -652,9 +663,9 @@
       <div class="col-12" id="customReportGenerationSection">
         <div class="cardindex">
           <div class="cardindex-body">
-            <h5 class="cardindex-title">Custom Report Generation</h5>
+            <h5 class="cardindex-title" data-translate="custom_report_generation">Custom Report Generation</h5>
             <div>
-              <button class="btn btn-outline-primary">Generate Custom Report</button>
+              <button class="btn btn-outline-primary" data-translate="generate_custom_report">Generate Custom Report</button>
             </div>
           </div>
         </div>
@@ -948,6 +959,7 @@
 <script src="assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="assets/vendor/php-email-form/validate.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/lenguaje.js"></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

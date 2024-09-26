@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pages / Login - Safety Shield Ultra</title>
+  <title>Login - Safety Shield Ultra</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -38,6 +38,14 @@
 
   <main>
     <div class="container">
+      <div id="languageSwitcher" class="language-switcher">
+        <img   src="assets/img/Flag_of_the_U.S..svg.png" alt="English" data-lang="en" class="language-flag" style="cursor: pointer;" >
+        <img src="assets/img/Bandera_de_España.svg.png" alt="Español" data-lang="es" class="language-flag" style="cursor: pointer;"  >
+      </div>
+    </div>
+    
+
+    <div class="container">
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
@@ -45,66 +53,69 @@
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block nombrelogin">Safety Shield Ultra</span>
+                  <span class="d-none d-lg-block nombrelogin" >Safety Shield Ultra</span>
                 </a>
               </div>
               <div class="cardindexscore mb-3" id="login-card">
                 <div class="card-body">
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                    <p class="text-center small" style="color: #fff;">Enter your email & password to login</p>
-                    <p id="loginMessage" class="text-center small" style="color: red; display: none;"></p>
+                    <h5 class="card-title text-center pb-0 fs-4" data-translate="login_title">Login to Your Account</h5>
+                    <p class="text-center small" style="color: #fff;" data-translate="login_subtitle">Enter your email & password to login</p>
+                    <p id="loginMessage" class="text-center small" style="color: red; display: none;" data-translate="login_error_message"></p>
                   </div>
                   <form class="row g-3 needs-validation" novalidate onsubmit="login(event)">
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label" style="color: #fff;">Email</label>
+                      <label for="yourUsername" class="form-label" style="color: #fff;" data-translate="login_email_label">Email</label>
                       <div class="input-group has-validation">
                         <input type="text" name="username" class="form-control" id="yourUsername" required>
-                        <div class="invalid-feedback">Please enter your Email.</div>
+                        <div class="invalid-feedback" data-translate="login_email_invalid">Please enter your Email.</div>
                       </div>
                     </div>
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label" style="color: #fff;">Password</label>
+                      <label for="yourPassword" class="form-label" style="color: #fff;" data-translate="login_password_label">Password</label>
                       <input type="password" name="password" class="form-control" id="yourPassword" required>
-                      <div class="invalid-feedback">Please enter your password!</div>
+                      <div class="invalid-feedback" data-translate="login_password_invalid">Please enter your password!</div>
                     </div>
                     <div class="col-12">
-                      <label for="yourDepartment" class="form-label" style="color: #fff;">Select Department</label>
+                      <label for="yourDepartment" class="form-label" style="color: #fff;" data-translate="login_department_label">Select Department</label>
                       <select name="department" class="form-control" id="yourDepartment" required>
-                        <option value="">Choose...</option>
-                        <option value="Account Manager">Account Manager</option>
-                        <option value="Customer Service">Customer Service</option>
-                        <option value="Sales">Sales</option>
-                        <option value="Operations">Operations</option>
-                        <option value="Finance">Finance</option>
-                        <option value="IT Support">IT Support</option>
-                        <option value="Human Resources">Human Resources</option>
+                        <option value="" data-translate="login_department_choose">Choose...</option>
+                        <option value="Account Manager" data-translate="login_department_account_manager">Account Manager</option>
+                        <option value="Customer Service" data-translate="login_department_customer_service">Customer Service</option>
+                        <option value="Sales" data-translate="login_department_sales">Sales</option>
+                        <option value="Operations" data-translate="login_department_operations">Operations</option>
+                        <option value="Finance" data-translate="login_department_finance">Finance</option>
+                        <option value="IT Support" data-translate="login_department_it_support">IT Support</option>
+                        <option value="Human Resources" data-translate="login_department_hr">Human Resources</option>
                       </select>
-                      <div class="invalid-feedback">Please select your department.</div>
+                      <div class="invalid-feedback" data-translate="login_department_invalid">Please select your department.</div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Login</button>
+                      <button class="btn btn-primary w-100" type="submit" data-translate="login_button">Login</button>
                     </div>
                     <div class="col-12 text-center">
-                      <!-- Enlace a restablecer contraseña -->
-                      <p class="small mb-0 credits"><a href="/reset-password.html">Forgot your password?</a></p> 
+                      <p class="small mb-0 credits"><a href="/reset-password.html" data-translate="login_forgot_password">Forgot your password?</a></p>
                       <br>
-                      <p class="small mb-0 credits">Don't have an account? <a href="/pages-register.html">Register</a></p>
-
+                      <p class="small mb-0 credits" data-translate="login_register">Don't have an account? </p><a href="/pages-register.html" data-translate="login_register_link" class="small mb-0 credits" style="color: #4a87d8;">Register</a>
                     </div>
                   </form>
                 </div>
               </div>
-              <div class="credits creditslogin">
+
+              <div class="credits creditslogin" >
                 Designed by <a href="https://www.ultradeeptech.com/">Ultra Deep Tech</a>
               </div>
             </div>
           </div>
         </div>
+        
       </section>
     </div>
+    
   </main>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+  
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -118,13 +129,13 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/lenguaje.js"></script>
 
   <video autoplay muted loop class="loginvideo">
     <source src="assets/img/compressed_dashboard_background.mp4" type="video/mp4">
   </video>
 
 <script>
-// En tu archivo de script principal (por ejemplo, main.js)
 
 let currentDepartment = '';
 let authorizedDepartments = [];
