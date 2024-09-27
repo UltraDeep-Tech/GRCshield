@@ -819,9 +819,9 @@
     <script src="assets/js/lenguaje.js"></script>
 
 
-    <script>
+<script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Definir traducciones para los departamentos (centralizada en lenguaje.js)
+  // Definir traducciones para los departamentos
   const departmentTranslations = {
     en: {
       'Account Manager': 'Account Manager',
@@ -843,8 +843,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   };
 
-  // Obtener el idioma actual desde lenguaje.js (en lugar de volver a manejar el idioma aquí)
-  const currentLang = localStorage.getItem('selectedLanguage') || 'en'; // Idioma manejado por lenguaje.js
+  // Obtener el idioma actual desde localStorage (por defecto 'en')
+  const currentLang = localStorage.getItem('language') || 'en';
 
   const currentDepartment = localStorage.getItem('currentDepartment');
   const authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
@@ -852,59 +852,41 @@ document.addEventListener('DOMContentLoaded', function () {
   const departmentSelect = document.getElementById('department-select');
   const userDepartmentDiv = document.getElementById('user-department');
 
-  // Función para actualizar el departamento visible y el select con el idioma correcto
-  function updateDepartments(lang) {
-    // Limpiar el menú desplegable
-    departmentSelect.innerHTML = '';
-    
-    // Llenar el menú desplegable solo con los departamentos autorizados y traducidos
-    authorizedDepartments.forEach(dep => {
-      const option = document.createElement('option');
-      option.value = dep;
-      option.textContent = departmentTranslations[lang][dep]; // Traducir el departamento según el idioma actual
-      departmentSelect.appendChild(option);
-    });
+  // Llenar el menú desplegable solo con los departamentos autorizados
+  authorizedDepartments.forEach(dep => {
+    const option = document.createElement('option');
+    option.value = dep;
+    option.textContent = departmentTranslations[currentLang][dep]; // Traducir el departamento
+    departmentSelect.appendChild(option);
+  });
 
-    // Establecer el departamento actual en el div
-    if (currentDepartment && authorizedDepartments.includes(currentDepartment)) {
-      userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[lang][currentDepartment]}`;
-      departmentSelect.value = currentDepartment;
-    } else if (authorizedDepartments.length > 0) {
-      const firstDepartment = authorizedDepartments[0];
-      localStorage.setItem('currentDepartment', firstDepartment);
-      userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[lang][firstDepartment]}`;
-      departmentSelect.value = firstDepartment;
-    }
+  // Establecer el departamento seleccionado
+  if (currentDepartment && authorizedDepartments.includes(currentDepartment)) {
+    userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[currentLang][currentDepartment]}`; // Traducir el departamento
+    departmentSelect.value = currentDepartment;
+  } else if (authorizedDepartments.length > 0) {
+    const firstDepartment = authorizedDepartments[0];
+    localStorage.setItem('currentDepartment', firstDepartment);
+    userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[currentLang][firstDepartment]}`; // Traducir el departamento
+    departmentSelect.value = firstDepartment;
   }
 
-  // Llamar a la función de actualización al cargar la página
-  updateDepartments(currentLang);
-
-  // Manejar cambios de departamento sin recargar la página
+  // Manejar cambios de departamento
   departmentSelect.addEventListener('change', function () {
     const selectedDepartment = this.value;
     if (authorizedDepartments.includes(selectedDepartment)) {
       localStorage.setItem('currentDepartment', selectedDepartment);
       userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[currentLang][selectedDepartment]}`; // Traducir el departamento
+      // Recargar los datos para el nuevo departamento
+      location.reload();
     } else {
       console.error('Intento de seleccionar un departamento no autorizado');
       this.value = localStorage.getItem('currentDepartment');
     }
   });
-
-  // Actualizar departamentos cuando cambie el idioma (enlace con lenguaje.js)
-  document.addEventListener('languageChanged', function (event) {
-    const newLang = event.detail.language;
-    // Actualizar el idioma actual en localStorage
-    localStorage.setItem('selectedLanguage', newLang);
-    // Recargar la página para aplicar el nuevo idioma
-    location.reload();  // Recarga la página para actualizar el contenido en el nuevo idioma
-  });
 });
+</script>
 
-
-      </script>
-      
     
 
   <!-- ======= Footer ======= -->
