@@ -65,7 +65,45 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Función para actualizar el estado de una política
+// Función para cargar políticas
+function loadPolicies() {
+    const userDepartment = encodeURIComponent(localStorage.getItem('userDepartment'));
+    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies?userDepartment=${userDepartment}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const policiesTable = document.getElementById('policiesTable');
+            policiesTable.innerHTML = ''; // Limpiar la tabla antes de cargar
+
+            data.forEach(policy => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${policy.id}</td>
+                    <td>${policy.name}</td>
+                    <td>${policy.description}</td>
+                    <td>${policy.regulation}</td>
+                    <td>${policy.compliance_status}</td>
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm" onclick="updatePolicy(${policy.id}, 'Compliant')"> Compliant</button>
+                        <button class="btn btn-outline-primary btn-sm" style="color:red;" onclick="updatePolicy(${policy.id}, 'Non-compliant')"> Non-Compliant</button>
+                    </td>
+                    <td><button class="btn btn-info btn-sm" onclick="readPolicy(${policy.id})"><i class="bi bi-eye"></i></button></td>
+                    <td><button class="btn btn-primary btn-sm" onclick="editPolicy(${policy.id})"><i class="bi bi-pencil"></i></button></td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deletePolicy(${policy.id})"><i class="bi bi-trash"></i></button></td>
+                `;
+                policiesTable.appendChild(row);
+            });
+        })
+        .catch(error => {
+            showNotification('Failed to load policies.', 'error');
+            console.error('Error loading policies:', error.message);
+        });
+}
+
 function updatePolicy(policyId, status) {
     const userDepartment = localStorage.getItem('userDepartment'); // Obtener el departamento del usuario
     fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
@@ -91,7 +129,6 @@ function updatePolicy(policyId, status) {
         showNotification('Failed to update policy.', 'error');
     });
 }
-
 
 
 // Función para leer una política (usando el modal)
