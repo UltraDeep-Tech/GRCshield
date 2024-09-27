@@ -2131,7 +2131,7 @@ body.modal-open {
 .language-switcher2 {
   position: absolute;
   left: 10px; /* Ajusta según necesites */
-  margin-top: 50%;
+  margin-top: 38%;
   display: flex;
   gap: 8px;
 
