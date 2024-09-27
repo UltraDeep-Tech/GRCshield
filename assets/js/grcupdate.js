@@ -126,6 +126,9 @@ function updatePolicy(policyId, status) {
 
             // Verificar el estado de compliance después de la actualización
             checkCompliance();
+
+            // Recargar la página para reflejar los cambios
+            location.reload();  // Recarga la página después de la actualización exitosa
         } else {
             showNotification('Failed to update policy.', 'error');
         }
@@ -134,6 +137,7 @@ function updatePolicy(policyId, status) {
         showNotification('Failed to update policy.', 'error');
     });
 }
+
 
 // Función para leer una política (usando el modal)
 function readPolicy(policyId) {
