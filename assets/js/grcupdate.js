@@ -88,14 +88,23 @@ function loadPolicies() {
                     <td>${policy.regulation}</td>
                     <td>${policy.compliance_status}</td>
                     <td>
-                        <button class="btn btn-outline-primary btn-sm" onclick="updatePolicy(${policy.id}, 'Compliant')"> Compliant</button>
-                        <button class="btn btn-outline-primary btn-sm" style="color:red;" onclick="updatePolicy(${policy.id}, 'Non-compliant')"> Non-Compliant</button>
+                        <button class="btn btn-outline-primary btn-sm compliant-btn" data-id="${policy.id}" data-status="Compliant">Compliant</button>
+                        <button class="btn btn-outline-primary btn-sm non-compliant-btn" data-id="${policy.id}" data-status="Non-compliant" style="color:red;">Non-Compliant</button>
                     </td>
                     <td><button class="btn btn-info btn-sm" onclick="readPolicy(${policy.id})"><i class="bi bi-eye"></i></button></td>
                     <td><button class="btn btn-primary btn-sm" onclick="editPolicy(${policy.id})"><i class="bi bi-pencil"></i></button></td>
                     <td><button class="btn btn-danger btn-sm" onclick="deletePolicy(${policy.id})"><i class="bi bi-trash"></i></button></td>
                 `;
                 policiesTable.appendChild(row);
+            });
+
+            // Agregar eventos de clic para los botones "Compliant" y "Non-Compliant"
+            document.querySelectorAll('.compliant-btn, .non-compliant-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const policyId = this.getAttribute('data-id');
+                    const status = this.getAttribute('data-status');
+                    updatePolicy(policyId, status);
+                });
             });
         })
         .catch(error => {
@@ -104,8 +113,9 @@ function loadPolicies() {
         });
 }
 
+// Función para actualizar el estado de una política
 function updatePolicy(policyId, status) {
-    const userDepartment = localStorage.getItem('userDepartment'); // Obtener el departamento del usuario
+    const userDepartment = localStorage.getItem('userDepartment');
     fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
         method: 'PUT',
         headers: {
@@ -116,11 +126,10 @@ function updatePolicy(policyId, status) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            showNotification('Policy updated successfully!'); 
-            // Recargar la página después de la actualización exitosa
+            showNotification('Policy updated successfully!');
             setTimeout(() => {
-                location.reload();  // Recargar la página
-            }, 500); // Esperar medio segundo antes de recargar para mostrar la notificación
+                location.reload(); // Recargar la página después de actualizar la política
+            }, 500); // Espera medio segundo antes de recargar para mostrar la notificación
         } else {
             showNotification('Failed to update policy.', 'error');
         }
@@ -129,6 +138,7 @@ function updatePolicy(policyId, status) {
         showNotification('Failed to update policy.', 'error');
     });
 }
+
 
 
 // Función para leer una política (usando el modal)
