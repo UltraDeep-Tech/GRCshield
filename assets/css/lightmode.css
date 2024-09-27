@@ -2105,3 +2105,52 @@ body.modal-open {
 #biastrend {
   scroll-margin-top: 80px; /* Ajusta según la altura de tu navbar */
 }
+
+.language-switcher {
+  
+  position: absolute;
+  top: 10px; /* Ajusta según necesites */
+  right: 10px; /* Ajusta según necesites */
+  display: flex;
+  gap: 8px;
+}
+
+.language-flag {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 50%; /* Redondear las esquinas completamente */
+  transition: transform 0.3s ease; /* Añadir un pequeño efecto */
+  opacity: 0.30; /* Ajusta la opacidad para dar efecto de marca de agua */
+
+}
+
+.language-flag:hover {
+  transform: scale(1.1); /* Efecto de agrandar al pasar el mouse */
+}
+.language-switcher2 {
+  position: absolute;
+  left: 10px; /* Ajusta según necesites */
+  margin-top: 50%;
+  display: flex;
+  gap: 8px;
+
+}
+
+.language-flag2 {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 50%; /* Redondear las esquinas completamente */
+  transition: transform 0.3s ease; /* Añadir un pequeño efecto */
+  opacity: 0.20; /* Ajusta la opacidad para dar efecto de marca de agua */
+
+}
+
+.language-flag2:hover {
+  transform: scale(1.1); /* Efecto de agrandar al pasar el mouse */
+  opacity: 1; /* Ajusta la opacidad para dar efecto de marca de agua */
+
+}
+
+

@@ -1101,11 +1101,13 @@ body.modal-open {
 }
 
 .language-flag {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
   border-radius: 50%; /* Redondear las esquinas completamente */
   transition: transform 0.3s ease; /* Añadir un pequeño efecto */
+  opacity: 0.30; /* Ajusta la opacidad para dar efecto de marca de agua */
+
 }
 
 .language-flag:hover {
@@ -1126,7 +1128,7 @@ body.modal-open {
   cursor: pointer;
   border-radius: 50%; /* Redondear las esquinas completamente */
   transition: transform 0.3s ease; /* Añadir un pequeño efecto */
-  opacity: 0.50; /* Ajusta la opacidad para dar efecto de marca de agua */
+  opacity: 0.20; /* Ajusta la opacidad para dar efecto de marca de agua */
 
 }
 
