@@ -2,7 +2,10 @@
 function loadSpanish() {
   fetch('es.json')
     .then(response => response.json())
-    .then(data => applyTranslations(data))
+    .then(data => {
+      applyTranslations(data);
+      updateDepartmentsLanguage('es'); // Actualizar los departamentos
+    })
     .catch(error => console.error('Error loading Spanish language:', error));
 }
 
@@ -20,6 +23,7 @@ function resetToEnglish() {
     const key = element.getAttribute("data-translate");
     element.textContent = defaultTexts[key]; // Restore original text from default
   });
+  updateDepartmentsLanguage('en'); // Actualizar los departamentos
 }
 
 // Store default English texts before translation
@@ -53,55 +57,53 @@ languageSwitcher.addEventListener('change', function () {
   }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  const languageFlags = document.querySelectorAll('.language-flag');
+// Function to update department translations based on the selected language
+function updateDepartmentsLanguage(language) {
+  const departmentTranslations = {
+    en: {
+      'Account Manager': 'Account Manager',
+      'Customer Service': 'Customer Service',
+      'Sales': 'Sales',
+      'Operations': 'Operations',
+      'Finance': 'Finance',
+      'IT Support': 'IT Support',
+      'Human Resources': 'Human Resources'
+    },
+    es: {
+      'Account Manager': 'Gerente de Cuenta',
+      'Customer Service': 'Servicio al Cliente',
+      'Sales': 'Ventas',
+      'Operations': 'Operaciones',
+      'Finance': 'Finanzas',
+      'IT Support': 'Soporte TI',
+      'Human Resources': 'Recursos Humanos'
+    }
+  };
 
-  languageFlags.forEach(flag => {
-    flag.addEventListener('click', function() {
-      const selectedLanguage = this.getAttribute('data-lang');
-      if (selectedLanguage === 'es') {
-        loadSpanish(); // Cargar el archivo de español
-      } else {
-        resetToEnglish(); // Volver al inglés
-      }
+  const currentDepartment = localStorage.getItem('currentDepartment');
+  const authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
+  const departmentSelect = document.getElementById('department-select');
+  const userDepartmentDiv = document.getElementById('user-department');
 
-      // Guarda la selección de idioma en localStorage
-      localStorage.setItem('selectedLanguage', selectedLanguage);
-    });
+  // Limpiar el select antes de agregar las opciones traducidas
+  departmentSelect.innerHTML = '';
+
+  // Llenar el menú desplegable solo con los departamentos autorizados traducidos
+  authorizedDepartments.forEach(dep => {
+    const option = document.createElement('option');
+    option.value = dep;
+    option.textContent = departmentTranslations[language][dep];
+    departmentSelect.appendChild(option);
   });
 
-  // Cargar el idioma previamente seleccionado desde localStorage
-  const savedLanguage = localStorage.getItem('selectedLanguage');
-  if (savedLanguage === 'es') {
-    loadSpanish();
-  } else {
-    resetToEnglish();
+  // Establecer el departamento seleccionado con la traducción correcta
+  if (currentDepartment && authorizedDepartments.includes(currentDepartment)) {
+    userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[language][currentDepartment]}`;
+    departmentSelect.value = currentDepartment;
+  } else if (authorizedDepartments.length > 0) {
+    const firstDepartment = authorizedDepartments[0];
+    localStorage.setItem('currentDepartment', firstDepartment);
+    userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[language][firstDepartment]}`;
+    departmentSelect.value = firstDepartment;
   }
-});
-document.addEventListener('DOMContentLoaded', function() {
-  const languageFlags = document.querySelectorAll('.language-flag2');
-
-  languageFlags.forEach(flag => {
-    flag.addEventListener('click', function() {
-      const selectedLanguage = this.getAttribute('data-lang');
-      if (selectedLanguage === 'es') {
-        loadSpanish(); // Cargar el archivo de español
-      } else {
-        resetToEnglish(); // Volver al inglés
-      }
-
-      // Guarda la selección de idioma en localStorage
-      localStorage.setItem('selectedLanguage', selectedLanguage);
-    });
-  });
-
-  // Cargar el idioma previamente seleccionado desde localStorage
-  const savedLanguage = localStorage.getItem('selectedLanguage');
-  if (savedLanguage === 'es') {
-    loadSpanish();
-  } else {
-    resetToEnglish();
-  }
-});
-
-
+}

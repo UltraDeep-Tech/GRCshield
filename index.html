@@ -820,71 +820,90 @@
 
 
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // Definir traducciones para los departamentos
-        const departmentTranslations = {
-          en: {
-            'Account Manager': 'Account Manager',
-            'Customer Service': 'Customer Service',
-            'Sales': 'Sales',
-            'Operations': 'Operations',
-            'Finance': 'Finance',
-            'IT Support': 'IT Support',
-            'Human Resources': 'Human Resources'
-          },
-          es: {
-            'Account Manager': 'Gerente de Cuenta',
-            'Customer Service': 'Servicio al Cliente',
-            'Sales': 'Ventas',
-            'Operations': 'Operaciones',
-            'Finance': 'Finanzas',
-            'IT Support': 'Soporte TI',
-            'Human Resources': 'Recursos Humanos'
-          }
-        };
-      
-        // Obtener el idioma actual desde localStorage (por defecto 'en')
-        const currentLang = localStorage.getItem('language') || 'en';
-      
-        const currentDepartment = localStorage.getItem('currentDepartment');
-        const authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
-      
-        const departmentSelect = document.getElementById('department-select');
-        const userDepartmentDiv = document.getElementById('user-department');
-      
-        // Llenar el menú desplegable solo con los departamentos autorizados
-        authorizedDepartments.forEach(dep => {
-          const option = document.createElement('option');
-          option.value = dep;
-          option.textContent = departmentTranslations[currentLang][dep]; // Traducir el departamento
-          departmentSelect.appendChild(option);
-        });
-      
-        // Establecer el departamento seleccionado
-        if (currentDepartment && authorizedDepartments.includes(currentDepartment)) {
-          userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[currentLang][currentDepartment]}`; // Traducir el departamento
-          departmentSelect.value = currentDepartment;
-        } else if (authorizedDepartments.length > 0) {
-          const firstDepartment = authorizedDepartments[0];
-          localStorage.setItem('currentDepartment', firstDepartment);
-          userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[currentLang][firstDepartment]}`; // Traducir el departamento
-          departmentSelect.value = firstDepartment;
-        }
-      
-        // Manejar cambios de departamento
-        departmentSelect.addEventListener('change', function () {
-          const selectedDepartment = this.value;
-          if (authorizedDepartments.includes(selectedDepartment)) {
-            localStorage.setItem('currentDepartment', selectedDepartment);
-            userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[currentLang][selectedDepartment]}`; // Traducir el departamento
-            // Recargar los datos para el nuevo departamento
-            location.reload();
-          } else {
-            console.error('Intento de seleccionar un departamento no autorizado');
-            this.value = localStorage.getItem('currentDepartment');
-          }
-        });
-      });
+document.addEventListener('DOMContentLoaded', function () {
+  // Definir traducciones para los departamentos (centralizada en lenguaje.js)
+  const departmentTranslations = {
+    en: {
+      'Account Manager': 'Account Manager',
+      'Customer Service': 'Customer Service',
+      'Sales': 'Sales',
+      'Operations': 'Operations',
+      'Finance': 'Finance',
+      'IT Support': 'IT Support',
+      'Human Resources': 'Human Resources'
+    },
+    es: {
+      'Account Manager': 'Gerente de Cuenta',
+      'Customer Service': 'Servicio al Cliente',
+      'Sales': 'Ventas',
+      'Operations': 'Operaciones',
+      'Finance': 'Finanzas',
+      'IT Support': 'Soporte TI',
+      'Human Resources': 'Recursos Humanos'
+    }
+  };
+
+  // Obtener el idioma actual desde lenguaje.js (en lugar de volver a manejar el idioma aquí)
+  const currentLang = localStorage.getItem('selectedLanguage') || 'en'; // Idioma manejado por lenguaje.js
+
+  const currentDepartment = localStorage.getItem('currentDepartment');
+  const authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
+
+  const departmentSelect = document.getElementById('department-select');
+  const userDepartmentDiv = document.getElementById('user-department');
+
+  // Llenar el menú desplegable solo con los departamentos autorizados y traducidos
+  authorizedDepartments.forEach(dep => {
+    const option = document.createElement('option');
+    option.value = dep;
+    option.textContent = departmentTranslations[currentLang][dep]; // Traducir el departamento según el idioma actual
+    departmentSelect.appendChild(option);
+  });
+
+  // Establecer el departamento seleccionado
+  if (currentDepartment && authorizedDepartments.includes(currentDepartment)) {
+    userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[currentLang][currentDepartment]}`; // Traducir el departamento
+    departmentSelect.value = currentDepartment;
+  } else if (authorizedDepartments.length > 0) {
+    const firstDepartment = authorizedDepartments[0];
+    localStorage.setItem('currentDepartment', firstDepartment);
+    userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[currentLang][firstDepartment]}`; // Traducir el departamento
+    departmentSelect.value = firstDepartment;
+  }
+
+  // Manejar cambios de departamento
+  departmentSelect.addEventListener('change', function () {
+    const selectedDepartment = this.value;
+    if (authorizedDepartments.includes(selectedDepartment)) {
+      localStorage.setItem('currentDepartment', selectedDepartment);
+      userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[currentLang][selectedDepartment]}`; // Traducir el departamento
+      // Recargar los datos para el nuevo departamento
+      location.reload();
+    } else {
+      console.error('Intento de seleccionar un departamento no autorizado');
+      this.value = localStorage.getItem('currentDepartment');
+    }
+  });
+
+  // Actualizar departamentos cuando cambie el idioma (enlace con lenguaje.js)
+  document.addEventListener('languageChanged', function (event) {
+    const newLang = event.detail.language;
+    // Limpiar opciones antiguas
+    departmentSelect.innerHTML = '';
+    // Volver a llenar el select con el idioma actualizado
+    authorizedDepartments.forEach(dep => {
+      const option = document.createElement('option');
+      option.value = dep;
+      option.textContent = departmentTranslations[newLang][dep]; // Traducir el departamento según el nuevo idioma
+      departmentSelect.appendChild(option);
+    });
+    // Actualizar el texto del departamento actual
+    if (currentDepartment) {
+      userDepartmentDiv.textContent = `Current Department: ${departmentTranslations[newLang][currentDepartment]}`;
+    }
+  });
+});
+
       </script>
       
     
