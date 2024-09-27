@@ -81,6 +81,7 @@ function loadPolicies() {
 
             data.forEach(policy => {
                 const row = document.createElement('tr');
+                row.id = `policy-row-${policy.id}`; // Asegurar que cada fila tenga un id único
                 row.innerHTML = `
                     <td>${policy.id}</td>
                     <td>${policy.name}</td>
@@ -104,8 +105,9 @@ function loadPolicies() {
         });
 }
 
+// Función para actualizar el estado de una política
 function updatePolicy(policyId, status) {
-    const userDepartment = localStorage.getItem('userDepartment'); // Obtener el departamento del usuario
+    const userDepartment = localStorage.getItem('userDepartment');
     fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
         method: 'PUT',
         headers: {
@@ -117,18 +119,8 @@ function updatePolicy(policyId, status) {
     .then(data => {
         if (data.success) {
             showNotification('Policy updated successfully!');
-            // Actualiza la política en la tabla
-            const row = document.querySelector(`#policy-row-${policyId}`);
-            if (row) {
-                const complianceCell = row.querySelector('td:nth-child(5)');
-                complianceCell.textContent = status;
-            }
-
-            // Verificar el estado de compliance después de la actualización
-            checkCompliance();
-
-            // Recargar la página para reflejar los cambios
-            location.reload();  // Recarga la página después de la actualización exitosa
+            // Actualiza la tabla y recarga la página
+            location.reload();
         } else {
             showNotification('Failed to update policy.', 'error');
         }
@@ -137,6 +129,51 @@ function updatePolicy(policyId, status) {
         showNotification('Failed to update policy.', 'error');
     });
 }
+
+// Función para leer una política
+function readPolicy(policyId) {
+    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`)
+        .then(response => response.json())
+        .then(data => {
+            // Muestra los detalles de la política (puedes hacer algo más aquí)
+            console.log(data);
+
+            // Recargar la página después de leer la política
+            location.reload();
+        })
+        .catch(error => {
+            showNotification('Failed to load policy details.', 'error');
+        });
+}
+
+// Función para editar una política
+function editPolicy(policyId) {
+    // Lógica para editar la política aquí
+    // Luego de la edición:
+    location.reload(); // Recargar la página después de editar
+}
+
+// Función para eliminar una política
+function deletePolicy(policyId) {
+    if (confirm('Are you sure you want to delete this policy?')) {
+        fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('Policy deleted successfully!');
+                location.reload(); // Recargar la página después de eliminar
+            } else {
+                showNotification('Failed to delete policy.', 'error');
+            }
+        })
+        .catch(error => {
+            showNotification('Failed to delete policy.', 'error');
+        });
+    }
+}
+
 
 
 // Función para leer una política (usando el modal)
