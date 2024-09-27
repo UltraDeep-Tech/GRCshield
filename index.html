@@ -897,10 +897,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const newLang = event.detail.language;
     // Actualizar el idioma actual en localStorage
     localStorage.setItem('selectedLanguage', newLang);
-    // Actualizar el menú de departamentos y el texto en el idioma seleccionado
-    updateDepartments(newLang);
+    // Recargar la página para aplicar el nuevo idioma
+    location.reload();  // Recarga la página para actualizar el contenido en el nuevo idioma
   });
 });
+
 
       </script>
       
