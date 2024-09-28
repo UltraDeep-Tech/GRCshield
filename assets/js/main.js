@@ -438,7 +438,11 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function() {
   // Función para guardar el estado del menú en localStorage
   function saveMenuState(menuId, isOpen) {
-    localStorage.setItem(menuId, isOpen);
+    if (isOpen) {
+      localStorage.setItem(menuId, 'true');
+    } else {
+      localStorage.removeItem(menuId);
+    }
   }
 
   // Función para cargar el estado del menú desde localStorage
@@ -454,6 +458,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // Función para cargar el ID del menú activo
   function loadActiveMenu() {
     return localStorage.getItem('activeMenu');
+  }
+
+  // Función para limpiar el estado del menú activo
+  function clearActiveMenu() {
+    localStorage.removeItem('activeMenu');
   }
 
   // Obtener todos los menús desplegables
@@ -490,6 +499,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     menu.addEventListener('hidden.bs.collapse', function() {
       saveMenuState(menuId, false);
+      if (menuId === loadActiveMenu()) {
+        clearActiveMenu();
+      }
     });
 
     // Manejar el clic en el span del texto para redirigir y marcar como activo

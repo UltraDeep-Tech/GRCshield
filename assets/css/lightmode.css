@@ -1839,6 +1839,11 @@ body.modal-open {
 }
 
 /* Table Policy */
+.tablepolicy {
+  width: 100%;
+  border-collapse: collapse;
+}
+
 .tablepolicy thead th {
   vertical-align: bottom;
   background-color: #ffff;
@@ -1847,7 +1852,7 @@ body.modal-open {
   align-content: center;
   padding: 0.75rem;
   font-weight: bold;
-  color: #333333; 
+  color: #333333;
   text-transform: uppercase;
 }
 
@@ -1871,16 +1876,34 @@ body.modal-open {
 
 /* Responsive Table Policy */
 @media (max-width: 768px) {
-  .tablepolicy thead th, .tablepolicy tbody td {
-    font-size: 0.75rem;
-    padding: 0.5rem;
+  /* Hacer que la tabla sea de bloque en pantallas más pequeñas */
+  .tablepolicy, .tablepolicy tbody, .tablepolicy tr, .tablepolicy td {
+    display: block;
+    width: 100%;
+  }
+  
+  .tablepolicy thead {
+    display: none; /* Ocultar encabezados de tabla en móviles */
   }
   
   .tablepolicy tbody td {
     display: block;
     text-align: left;
+    padding: 0.5rem;
     border-bottom: 1px solid #ced4da;
-    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 50%;
+  }
+  
+  /* Mostrar el encabezado correspondiente como un pseudoelemento antes del contenido */
+  .tablepolicy tbody td::before {
+    content: attr(data-label); /* Usa los datos-label para mostrar el nombre de la columna */
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
   }
 }
 
@@ -1907,9 +1930,11 @@ body.modal-open {
 }
 
 .tablepolicy tbody td .btn-outline-primary {
-  color: #ffff;
+  color: #ffffff;
+  background-color: transparent;
+  border: 1px solid #0056b3;
   padding: 5px 10px;
-  margin:  5px;
+  margin: 5px;
   cursor: pointer;
 }
 
@@ -1927,11 +1952,27 @@ body.modal-open {
     width: 100%;
     text-align: center;
   }
-  
+
   .tablepolicy tbody td .btn-outline-primary {
     padding: 4px 8px;
     margin: 5px 0;
     width: 100%;
+  }
+}
+
+/* Extra Small Screens */
+@media (max-width: 576px) {
+  .tablepolicy tbody td {
+    padding-left: 40%;
+  }
+
+  .tablepolicy tbody td::before {
+    padding-left: 10px;
+  }
+
+  .tablepolicy tbody td .btn {
+    font-size: 0.7rem;
+    padding: 4px 6px;
   }
 }
 

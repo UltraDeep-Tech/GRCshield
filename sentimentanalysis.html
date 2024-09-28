@@ -1042,13 +1042,12 @@
   });
 
   // Custom Report Generation Button (Fictitious functionality)
-  document.getElementById('customReportGenerationSection').querySelector('button').addEventListener('click', function() {
-      alert('Custom Report Generated (Fictitious Data)');
-  });
+document.getElementById('customReportGenerationSection').querySelector('button').addEventListener('click', function() {
+    alert('Custom Report Generated (Fictitious Data)');
+});
 
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     var wordCloudCanvas = document.getElementById('keywordWordCloud');
-
 
     // Palabras clave con su frecuencia
     var keywords = [
@@ -1064,23 +1063,28 @@
         ['Satisfaction', 25]
     ];
 
-    // Genera la nube de palabras
+    // Genera la nube de palabras con un estilo más moderno
     WordCloud(wordCloudCanvas, {
         list: keywords,
-        gridSize: Math.round(16 * wordCloudCanvas.width / 400),
-        weightFactor: function (size) {
+        gridSize: Math.round(16 * wordCloudCanvas.width / 600),
+        weightFactor: function(size) {
             return size * wordCloudCanvas.width / 400;
         },
-        fontFamily: 'Times, serif',
-        color: 'random-dark',
-        backgroundColor: '#fff',
-        rotateRatio: 0.5,
-        rotationSteps: 2,
-        shape: 'circle',
+        fontFamily: 'Poppins, sans-serif',  // Tipografía moderna
+        color: function(word, weight) {
+            // Genera colores modernos y vibrantes
+            const colors = ['#ff6f61', '#6b5b95', '#88b04b', '#f7cac9', '#92a8d1', '#955251'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        },
+        backgroundColor: 'rgba(255, 255, 255, 0)',  // Fondo transparente
+        rotateRatio: 0.25,  // Menos rotación para una presentación más ordenada
+        rotationSteps: 3,  // Mejor control de las rotaciones
+        shape: 'circle',  // Mantener forma circular para un diseño limpio
         drawOutOfBound: false,
         shuffle: true
     });
 });
+
 
 </script>
 
