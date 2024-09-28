@@ -87,31 +87,14 @@ function loadPolicies() {
                     <td>${policy.regulation}</td>
                     <td>${policy.compliance_status}</td>
                     <td>
-                        <button class="btn btn-outline-primary btn-sm compliant-btn" data-id="${policy.id}" data-status="Compliant">Compliant</button>
-                        <button class="btn btn-outline-primary btn-sm non-compliant-btn" data-id="${policy.id}" data-status="non-compliant" style="color:red;">Non-Compliant</button>
+                        <button id="compliant-${policy.id}" class="btn btn-outline-primary btn-sm compliant-btn" data-id="${policy.id}" data-status="Compliant" onclick="updatePolicyAndReload(${policy.id}, 'Compliant')">Compliant</button>
+                        <button id="non-compliant-${policy.id}" class="btn btn-outline-primary btn-sm non-compliant-btn" data-id="${policy.id}" data-status="non-compliant" style="color:red;" onclick="updatePolicyAndReload(${policy.id}, 'non-compliant')">Non-Compliant</button>
                     </td>
                     <td><button class="btn btn-info btn-sm" onclick="readPolicy(${policy.id})"><i class="bi bi-eye"></i></button></td>
                     <td><button class="btn btn-primary btn-sm" onclick="editPolicy(${policy.id})"><i class="bi bi-pencil"></i></button></td>
                     <td><button class="btn btn-danger btn-sm" onclick="deletePolicy(${policy.id})"><i class="bi bi-trash"></i></button></td>
                 `;
                 policiesTable.appendChild(row);
-            });
-            
-            // Agregar eventos de clic para los botones "Compliant" y "Non-Compliant"
-            document.querySelectorAll('.compliant-btn, .non-compliant-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const policyId = this.getAttribute('data-id');
-                    const status = this.getAttribute('data-status');
-                    updatePolicy(policyId, status)
-                        .then(() => {
-                            // Recargar la página después de actualizar la política
-                            window.location.reload();
-                        })
-                        .catch(error => {
-                            showNotification('Failed to update policy status.', 'error');
-                            console.error('Error updating policy status:', error.message);
-                        });
-                });
             });
         })
         .catch(error => {
@@ -120,9 +103,9 @@ function loadPolicies() {
         });
 }
 
-// Función para actualizar la política
-function updatePolicy(policyId, status) {
-    return fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
+function updatePolicyAndReload(policyId, status) {
+    // Iniciar la actualización en segundo plano
+    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -131,10 +114,15 @@ function updatePolicy(policyId, status) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error(`Server error: ${response.status}`);
+            console.error(`Server error: ${response.status}`);
         }
-        return response.json();
+    })
+    .catch(error => {
+        console.error('Error updating policy status:', error.message);
     });
+
+    // Recargar la página inmediatamente
+    window.location.reload();
 }
 
 // Función para actualizar el estado de una política
