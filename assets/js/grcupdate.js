@@ -102,16 +102,8 @@ function loadPolicies() {
                 button.addEventListener('click', function () {
                     const policyId = this.getAttribute('data-id');
                     const status = this.getAttribute('data-status');
-                    updatePolicy(policyId, status)
-                        .then(() => {
-                            // Recargar la página inmediatamente después de actualizar la política
-                            showNotification('Policy status updated successfully.', 'success');
-                            setTimeout(() => window.location.reload(), 500);  // Espera medio segundo antes de recargar la página
-                        })
-                        .catch(error => {
-                            showNotification('Failed to update policy status.', 'error');
-                            console.error('Error updating policy status:', error.message);
-                        });
+                    updatePolicy(policyId, status);  // Envía la solicitud pero no espera la respuesta
+                    window.location.reload();  // Recargar la página inmediatamente
                 });
             });
         })
@@ -125,26 +117,15 @@ function loadPolicies() {
 function updatePolicy(policyId, status) {
     const userDepartment = localStorage.getItem('userDepartment');
     
-    // Retornar la promesa para que se pueda encadenar con .then() y .catch() desde donde se llame
-    return fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
+    fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ compliance_status: status, user_department: userDepartment })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to update policy'); // Manejar errores
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            return Promise.resolve(); // Resuelve si todo salió bien
-        } else {
-            return Promise.reject(new Error('Failed to update policy')); // Rechaza si no salió bien
-        }
+    .catch(error => {
+        console.error('Error updating policy:', error.message);
     });
 }
 
