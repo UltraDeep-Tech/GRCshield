@@ -301,8 +301,8 @@
   </div>
 </div>
 
- <!-- ======= Sidebar ======= -->
- <aside id="sidebar" class="sidebar">
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
     <li class="nav-heading" data-translate="sidebar_department">Department</li>
 
@@ -324,17 +324,17 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="/sentimentanalysis.html">
-        <i class="bi bi-chat-square-dots"></i><span data-translate="sidebar_interaction_analysis">Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
+      <a class="nav-link collapsed" href="#" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse">
+        <i class="bi bi-chat-square-dots"></i><span class="nav-link-text" data-translate="sidebar_interaction_analysis" data-href="/sentimentanalysis.html">Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
-          <a href="sentimentanalysis.html#realtime">
+          <a href="/sentimentanalysis.html#realtime">
             <i class="bi bi-emoji-smile"></i><span data-translate="sidebar_sentiment_analysis">Sentiment Analysis</span>
           </a>
         </li>
         <li>
-          <a href="sentimentanalysis.html#conversation">
+          <a href="/sentimentanalysis.html#conversation">
             <i class="bi bi-tags"></i><span data-translate="sidebar_conversation_categorization">Conversation Categorization</span>
           </a>
         </li>
@@ -369,17 +369,17 @@
           </a>
         </li>
       </ul>
-    </li>
+</li>
     <!-- End Interaction Analysis Nav -->
 
 <!-- Thread Detection Nav -->
 <li class="nav-item">
-  <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-    <i class="bi bi-exclamation-circle"></i><span data-translate="sidebar_thread_detection">Thread Detection</span><i class="bi bi-chevron-down ms-auto"></i>
+  <a class="nav-link collapsed" href="#" data-bs-target="#charts-nav" data-bs-toggle="collapse">
+    <i class="bi bi-exclamation-circle"></i><span class="nav-link-text" data-translate="sidebar_thread_detection" data-href="/index.html">Thread Detection</span><i class="bi bi-chevron-down ms-auto"></i>
   </a>
   <ul id="charts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
     <li>
-      <a href="index.html#totalBlockedRequest">
+      <a href="/index.html#totalBlockedRequest">
         <i class="bi bi-shield-lock"></i><span data-translate="sidebar_blocked_requests_rate">Blocked Requests & Rate</span>
       </a>
     </li>
@@ -435,12 +435,12 @@
 
 <!-- GRC Policies Nav -->
 <li class="nav-item">
-  <a class="nav-link collapsed" data-bs-target="#grc-policies-nav" data-bs-toggle="collapse" href="#">
-    <i class="bi bi-file-earmark-lock"></i><span data-translate="sidebar_grc_policies">GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
+  <a class="nav-link collapsed" href="#" data-bs-target="#grc-policies-nav" data-bs-toggle="collapse">
+    <i class="bi bi-file-earmark-lock"></i><span class="nav-link-text" data-translate="sidebar_grc_policies" data-href="/grc-policies.html">GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
   </a>
   <ul id="grc-policies-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
     <li>
-      <a href="grc-policies.html#existing-policies-tab">
+      <a href="/grc-policies.html#existing-policies-tab">
         <i class="bi bi-file-earmark-text"></i><span data-translate="sidebar_existing_policies">Policies</span>
       </a>
     </li>
@@ -496,10 +496,11 @@
     </li><!-- End Contact Page Nav -->
 
   </ul>
-  <div id="languageSwitcher" class="language-switcher2">
-    <img   src="assets/img/Flag_of_the_U.S..svg.png" alt="English" data-lang="en" class="language-flag2" style="cursor: pointer;" >
-    <img src="assets/img/Bandera_de_España.svg.png" alt="Español" data-lang="es" class="language-flag2" style="cursor: pointer;"  >
-  </div>
+  <div class="container">
+    <div id="languageSwitcher" class="language-switcher2">
+      <img   src="assets/img/Flag_of_the_U.S..svg.png" alt="English" data-lang="en" class="language-flag2" style="cursor: pointer;" >
+      <img src="assets/img/Bandera_de_España.svg.png" alt="Español" data-lang="es" class="language-flag2" style="cursor: pointer;"  >
+    </div>
     <img src="/assets/img/logo.png" class="sidebar-bg">
 
 
@@ -677,277 +678,420 @@
 
 </main><!-- End #main -->
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.0.6/wordcloud2.min.js"></script>
 
 <script>
-    // Real-Time Emotion Tracker
-    var ctx = document.getElementById('emotionTrackerChart').getContext('2d');
-    var emotionTrackerChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Joy', 'Sadness', 'Anger', 'Surprise', 'Disgust', 'Fear', 'Neutral'],
-            datasets: [{
-                label: 'Emotion Distribution',
-                data: [12, 19, 3, 5, 2, 3, 7],
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(201, 203, 207, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(201, 203, 207, 1)'
-                ],
-                borderWidth: 1
-            }]
+  // Real-Time Emotion Tracker
+  var ctx = document.getElementById('emotionTrackerChart').getContext('2d');
+  var emotionTrackerChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+          labels: ['Joy', 'Sadness', 'Anger', 'Surprise', 'Disgust', 'Fear', 'Neutral'],
+          datasets: [{
+              label: 'Emotion Distribution',
+              data: [12, 19, 3, 5, 2, 3, 7],
+              backgroundColor: [
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(201, 203, 207, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(201, 203, 207, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          responsive: true
+      }
+  });
+
+  // Emotion Trends Heatmap
+  var ctx = document.getElementById('emotionTrendsHeatmap').getContext('2d');
+  var emotionTrendsHeatmap = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          datasets: [{
+              label: 'Joy',
+              data: [3, 2, 2, 5, 4, 7, 8],
+              borderColor: 'rgba(75, 192, 192, 1)',
+              fill: false
+          }, {
+              label: 'Sadness',
+              data: [1, 1, 3, 2, 6, 3, 4],
+              borderColor: 'rgba(54, 162, 235, 1)',
+              fill: false
+          }]
+      },
+      options: {
+          responsive: true,
+          scales: {
+              x: {
+                  display: true,
+                  title: {
+                      display: true,
+                      text: 'Day of the Week'
+                  }
+              },
+              y: {
+                  display: true,
+                  title: {
+                      display: true,
+                      text: 'Frequency'
+                  }
+              }
+          }
+      }
+  });
+
+  // Sentiment Categorization per Conversation
+  document.getElementById('sentimentCategorizationData').innerHTML = `
+    <tr>
+      <td>12345</td>
+      <td>Joy</td>
+      <td>Positive Feedback</td>
+    </tr>
+    <tr>
+      <td>12346</td>
+      <td>Sadness</td>
+      <td>Complaint</td>
+    </tr>
+    <tr>
+      <td>12347</td>
+      <td>Anger</td>
+      <td>Escalation</td>
+    </tr>
+  `;
+
+  // Conversation Categorization
+  document.getElementById('conversationCategorizationData').innerHTML = `
+    <tr>
+      <td>54321</td>
+      <td>Support</td>
+      <td>High</td>
+    </tr>
+    <tr>
+      <td>54322</td>
+      <td>Inquiry</td>
+      <td>Medium</td>
+    </tr>
+    <tr>
+      <td>54323</td>
+      <td>Complaint</td>
+      <td>Urgent</td>
+    </tr>
+  `;
+
+  // Engagement Quality Metrics
+  var ctx = document.getElementById('engagementMetricsChart').getContext('2d');
+  var engagementMetricsChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: ['Conversation 1', 'Conversation 2', 'Conversation 3', 'Conversation 4'],
+          datasets: [{
+              label: 'Engagement (Low, Medium, High)',
+              data: [1, 3, 2, 4],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+
+  var ctx = document.getElementById('keywordTrendsChart').getContext('2d');
+  var keywordTrendsChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: ['January', 'February', 'March', 'April', 'May'],
+          datasets: [
+              {
+                  label: 'Pricing',
+                  data: [10, 12, 8, 15, 18], // Datos para 'Pricing'
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  fill: false
+              },
+              {
+                  label: 'Service',
+                  data: [5, 10, 5, 12, 9], // Datos para 'Service'
+                  borderColor: 'rgba(255, 99, 132, 1)',
+                  fill: false
+              },
+              {
+                  label: 'Support',
+                  data: [3, 6, 4, 9, 5], // Datos para 'Support'
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  fill: false
+              },
+              {
+                  label: 'Quality',
+                  data: [8, 9, 10, 12, 11], // Datos para 'Quality'
+                  borderColor: 'rgba(255, 206, 86, 1)',
+                  fill: false
+              },
+              {
+                  label: 'Delivery',
+                  data: [2, 4, 3, 6, 5], // Datos para 'Delivery'
+                  borderColor: 'rgba(153, 102, 255, 1)',
+                  fill: false
+              }
+          ]
+      },
+      options: {
+          responsive: true,
+          scales: {
+              x: {
+                  display: true,
+                  title: {
+                      display: true,
+                      text: 'Month'
+                  }
+              },
+              y: {
+                  display: true,
+                  title: {
+                      display: true,
+                      text: 'Frequency'
+                  }
+              }
+          }
+      }
+  });
+
+  // Bias Detection
+  var ctx = document.getElementById('biasDetectionChart').getContext('2d');
+  var biasDetectionChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: ['Gender Bias', 'Racial Bias', 'Age Bias', 'Cultural Bias', 'Occupational Bias'],
+          datasets: [{
+              data: [12, 19, 3, 5, 7],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+              legend: {
+                  position: 'right',
+              }
+          }
+      }
+  });
+
+  // Bias Trends Over Time
+  var ctx = document.getElementById('biasTrendsChart').getContext('2d');
+  var biasTrendsChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: ['January', 'February', 'March', 'April', 'May'],
+          datasets: [
+              {
+                  label: 'Gender Bias',
+                  data: [3, 2, 4, 1, 5],
+                  borderColor: 'rgba(255, 99, 132, 1)',
+              },
+              {
+                  label: 'Racial Bias',
+                  data: [2, 3, 2, 5, 6],
+                  borderColor: 'rgba(54, 162, 235, 1)',
+              },
+              {
+                  label: 'Age Bias',
+                  data: [1, 3, 2, 4, 3],
+                  borderColor: 'rgba(255, 206, 86, 1)',
+              },
+              {
+                  label: 'Cultural Bias',
+                  data: [4, 2, 5, 1, 2],
+                  borderColor: 'rgba(75, 192, 192, 1)',
+              },
+              {
+                  label: 'Occupational Bias',
+                  data: [3, 4, 1, 2, 3],
+                  borderColor: 'rgba(153, 102, 255, 1)',
+              }
+          ]
+      },
+      options: {
+          responsive: true,
+          scales: {
+              x: {
+                  display: true,
+                  title: {
+                      display: true,
+                      text: 'Month'
+                  }
+              },
+              y: {
+                  display: true,
+                  title: {
+                      display: true,
+                      text: 'Bias Incidents'
+                  }
+              }
+          }
+      }
+  });
+
+  // Real-Time Alerts
+  var ctx = document.getElementById('realTimeAlertsChart').getContext('2d');
+  var realTimeAlertsChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: ['12:00', '12:30', '13:00', '13:30', '14:00'],
+          datasets: [{
+              label: 'Alerts Triggered',
+              data: [1, 2, 1, 5, 2],
+              borderColor: 'rgba(255, 99, 132, 1)',
+              fill: false
+          }]
+      },
+      options: {
+          responsive: true
+      }
+  });
+
+  // User Behavior Prediction
+  var ctx = document.getElementById('behaviorPredictionChart').getContext('2d');
+  var behaviorPredictionChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: ['January', 'February', 'March', 'April', 'May'],
+          datasets: [
+              {
+                  label: 'Churn Risk',
+                  data: [2, 4, 6, 8, 10],
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  fill: false
+              },
+              {
+                  label: 'Likelihood',
+                  data: [3, 5, 2, 6, 8],
+                  borderColor: 'rgba(255, 99, 132, 1)',
+                  fill: false
+              },
+              {
+                  label: 'Satisfaction Probability',
+                  data: [7, 6, 9, 5, 3],
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  fill: false
+              },
+              {
+                  label: 'Future Inquiries',
+                  data: [1, 3, 4, 2, 5],
+                  borderColor: 'rgba(255, 206, 86, 1)',
+                  fill: false
+              }
+          ]
+      },
+      options: {
+          responsive: true,
+          scales: {
+              x: {
+                  display: true,
+                  title: {
+                      display: true,
+                      text: 'Month'
+                  }
+              },
+              y: {
+                  display: true,
+                  title: {
+                      display: true,
+                      text: 'Risk Score'
+                  }
+              }
+          }
+      }
+  });
+
+  // Custom Report Generation Button (Fictitious functionality)
+  document.getElementById('customReportGenerationSection').querySelector('button').addEventListener('click', function() {
+      alert('Custom Report Generated (Fictitious Data)');
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var wordCloudCanvas = document.getElementById('keywordWordCloud');
+
+
+    // Palabras clave con su frecuencia
+    var keywords = [
+        ['Pricing', 50],
+        ['Service', 30],
+        ['Support', 25],
+        ['Quality', 45],
+        ['Delivery', 20],
+        ['Product', 35],
+        ['Customer', 40],
+        ['Refund', 15],
+        ['Complaint', 10],
+        ['Satisfaction', 25]
+    ];
+
+    // Genera la nube de palabras
+    WordCloud(wordCloudCanvas, {
+        list: keywords,
+        gridSize: Math.round(16 * wordCloudCanvas.width / 400),
+        weightFactor: function (size) {
+            return size * wordCloudCanvas.width / 400;
         },
-        options: {
-            responsive: true
-        }
+        fontFamily: 'Times, serif',
+        color: 'random-dark',
+        backgroundColor: '#fff',
+        rotateRatio: 0.5,
+        rotationSteps: 2,
+        shape: 'circle',
+        drawOutOfBound: false,
+        shuffle: true
     });
+});
+
+</script>
+
   
-    // Emotion Trends Heatmap
-    var ctx = document.getElementById('emotionTrendsHeatmap').getContext('2d');
-    var emotionTrendsHeatmap = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-            datasets: [{
-                label: 'Joy',
-                data: [3, 2, 2, 5, 4, 7, 8],
-                borderColor: 'rgba(75, 192, 192, 1)',
-                fill: false
-            }, {
-                label: 'Sadness',
-                data: [1, 1, 3, 2, 6, 3, 4],
-                borderColor: 'rgba(54, 162, 235, 1)',
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    display: true,
-                    title: {
-                        display: true,
-                        text: 'Day of the Week'
-                    }
-                },
-                y: {
-                    display: true,
-                    title: {
-                        display: true,
-                        text: 'Frequency'
-                    }
-                }
-            }
-        }
-    });
-  
-    // Sentiment Categorization per Conversation
-    document.getElementById('sentimentCategorizationData').innerHTML = `
-      <tr>
-        <td>12345</td>
-        <td>Joy</td>
-        <td>Positive Feedback</td>
-      </tr>
-      <tr>
-        <td>12346</td>
-        <td>Sadness</td>
-        <td>Complaint</td>
-      </tr>
-      <tr>
-        <td>12347</td>
-        <td>Anger</td>
-        <td>Escalation</td>
-      </tr>
-    `;
-  
-    // Conversation Categorization
-    document.getElementById('conversationCategorizationData').innerHTML = `
-      <tr>
-        <td>54321</td>
-        <td>Support</td>
-        <td>High</td>
-      </tr>
-      <tr>
-        <td>54322</td>
-        <td>Inquiry</td>
-        <td>Medium</td>
-      </tr>
-      <tr>
-        <td>54323</td>
-        <td>Complaint</td>
-        <td>Urgent</td>
-      </tr>
-    `;
-  
-    // Engagement Quality Metrics
-    var ctx = document.getElementById('engagementMetricsChart').getContext('2d');
-    var engagementMetricsChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Conversation 1', 'Conversation 2', 'Conversation 3', 'Conversation 4'],
-            datasets: [{
-                label: 'Engagement (Low, Medium, High)',
-                data: [1, 3, 2, 4],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-  
-    // Keyword Trends Over Time
-    var ctx = document.getElementById('keywordTrendsChart').getContext('2d');
-    var keywordTrendsChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May'],
-            datasets: [{
-                label: 'Keyword Trend',
-                data: [10, 20, 15, 25, 30],
-                borderColor: 'rgba(54, 162, 235, 1)',
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-  
-    // Bias Detection
-    var ctx = document.getElementById('biasDetectionChart').getContext('2d');
-    var biasDetectionChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Gender Bias', 'Racial Bias', 'Age Bias', 'Cultural Bias'],
-            datasets: [{
-                data: [12, 19, 3, 5],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-  
-    // Bias Trends Over Time
-    var ctx = document.getElementById('biasTrendsChart').getContext('2d');
-    var biasTrendsChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May'],
-            datasets: [{
-                label: 'Bias Incidents',
-                data: [3, 2, 4, 1, 5],
-                borderColor: 'rgba(255, 99, 132, 1)',
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-  
-    // Real-Time Alerts
-    var ctx = document.getElementById('realTimeAlertsChart').getContext('2d');
-    var realTimeAlertsChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['12:00', '12:30', '13:00', '13:30', '14:00'],
-            datasets: [{
-                label: 'Alerts Triggered',
-                data: [1, 2, 1, 5, 2],
-                borderColor: 'rgba(255, 99, 132, 1)',
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-  
-    // User Behavior Prediction
-    var ctx = document.getElementById('behaviorPredictionChart').getContext('2d');
-    var behaviorPredictionChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May'],
-            datasets: [{
-                label: 'Churn Risk',
-                data: [2, 4, 6, 8, 10],
-                borderColor: 'rgba(54, 162, 235, 1)',
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    display: true,
-                    title: {
-                        display: true,
-                        text: 'Month'
-                    }
-                },
-                y: {
-                    display: true,
-                    title: {
-                        display: true,
-                        text: 'Risk Score'
-                    }
-                }
-            }
-        }
-    });
-  
-    // Custom Report Generation Button (Fictitious functionality)
-    document.getElementById('customReportGenerationSection').querySelector('button').addEventListener('click', function() {
-        alert('Custom Report Generated (Fictitious Data)');
-    });
-  
-  </script>
-  
-  
+
 
 <!-- Vendor JS Files -->
 <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>

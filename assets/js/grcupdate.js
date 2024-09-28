@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Función para cargar políticas
 function loadPolicies() {
     const userDepartment = encodeURIComponent(localStorage.getItem('userDepartment'));
     fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies?userDepartment=${userDepartment}`)
@@ -78,7 +77,7 @@ function loadPolicies() {
         .then(data => {
             const policiesTable = document.getElementById('policiesTable');
             policiesTable.innerHTML = ''; // Limpiar la tabla antes de cargar
-
+            
             data.forEach(policy => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -89,7 +88,7 @@ function loadPolicies() {
                     <td>${policy.compliance_status}</td>
                     <td>
                         <button class="btn btn-outline-primary btn-sm compliant-btn" data-id="${policy.id}" data-status="Compliant">Compliant</button>
-                        <button class="btn btn-outline-primary btn-sm non-compliant-btn" data-id="${policy.id}" data-status="Non-compliant" style="color:red;">Non-Compliant</button>
+                        <button class="btn btn-outline-primary btn-sm non-compliant-btn" data-id="${policy.id}" data-status="non-compliant" style="color:red;">Non-Compliant</button>
                     </td>
                     <td><button class="btn btn-info btn-sm" onclick="readPolicy(${policy.id})"><i class="bi bi-eye"></i></button></td>
                     <td><button class="btn btn-primary btn-sm" onclick="editPolicy(${policy.id})"><i class="bi bi-pencil"></i></button></td>
@@ -97,13 +96,21 @@ function loadPolicies() {
                 `;
                 policiesTable.appendChild(row);
             });
-
+            
             // Agregar eventos de clic para los botones "Compliant" y "Non-Compliant"
             document.querySelectorAll('.compliant-btn, .non-compliant-btn').forEach(button => {
                 button.addEventListener('click', function () {
                     const policyId = this.getAttribute('data-id');
                     const status = this.getAttribute('data-status');
-                    updatePolicy(policyId, status);
+                    updatePolicy(policyId, status)
+                        .then(() => {
+                            // Recargar la página después de actualizar la política
+                            window.location.reload();
+                        })
+                        .catch(error => {
+                            showNotification('Failed to update policy status.', 'error');
+                            console.error('Error updating policy status:', error.message);
+                        });
                 });
             });
         })
@@ -111,6 +118,23 @@ function loadPolicies() {
             showNotification('Failed to load policies.', 'error');
             console.error('Error loading policies:', error.message);
         });
+}
+
+// Función para actualizar la política
+function updatePolicy(policyId, status) {
+    return fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/grc/policies/${policyId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ compliance_status: status })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+        return response.json();
+    });
 }
 
 // Función para actualizar el estado de una política

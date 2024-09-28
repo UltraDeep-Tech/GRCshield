@@ -361,21 +361,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  const redirectSpans = document.querySelectorAll('.sidebar-nav .redirect-span');
-  
-  redirectSpans.forEach(span => {
-    span.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      const href = this.getAttribute('data-href');
-      if (href) {
-        window.location.href = href;
-      }
-    });
-  });
-});
 
 document.addEventListener('DOMContentLoaded', function () {
   const userID = localStorage.getItem('userID') || 'defaultUser'; // Obtén el ID del usuario o usa un valor predeterminado
@@ -449,3 +434,91 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Función para guardar el estado del menú en localStorage
+  function saveMenuState(menuId, isOpen) {
+    localStorage.setItem(menuId, isOpen);
+  }
+
+  // Función para cargar el estado del menú desde localStorage
+  function loadMenuState(menuId) {
+    return localStorage.getItem(menuId) === 'true';
+  }
+
+  // Función para guardar el ID del menú activo
+  function saveActiveMenu(menuId) {
+    localStorage.setItem('activeMenu', menuId);
+  }
+
+  // Función para cargar el ID del menú activo
+  function loadActiveMenu() {
+    return localStorage.getItem('activeMenu');
+  }
+
+  // Obtener todos los menús desplegables
+  var collapsibleMenus = document.querySelectorAll('.nav-content.collapse');
+
+  // Cargar y aplicar el estado del menú activo
+  var activeMenuId = loadActiveMenu();
+  if (activeMenuId) {
+    var activeMenu = document.getElementById(activeMenuId);
+    if (activeMenu) {
+      activeMenu.classList.add('show');
+      var activeMenuToggle = document.querySelector('[data-bs-target="#' + activeMenuId + '"]');
+      if (activeMenuToggle) {
+        activeMenuToggle.classList.remove('collapsed');
+      }
+    }
+  }
+
+  // Para cada menú desplegable
+  collapsibleMenus.forEach(function(menu) {
+    var menuId = menu.id;
+    var menuToggle = document.querySelector('[data-bs-target="#' + menuId + '"]');
+    var menuText = menuToggle.querySelector('.nav-link-text');
+
+    // Cargar el estado del menú si no es el activo
+    if (menuId !== activeMenuId && loadMenuState(menuId)) {
+      menu.classList.add('show');
+      menuToggle.classList.remove('collapsed');
+    }
+
+    // Agregar evento para guardar el estado del menú cuando cambia
+    menu.addEventListener('shown.bs.collapse', function() {
+      saveMenuState(menuId, true);
+    });
+    menu.addEventListener('hidden.bs.collapse', function() {
+      saveMenuState(menuId, false);
+    });
+
+    // Manejar el clic en el span del texto para redirigir y marcar como activo
+    menuText.addEventListener('click', function(e) {
+      e.stopPropagation(); // Evitar que el evento se propague al enlace principal
+      var href = this.getAttribute('data-href');
+      if (href) {
+        saveActiveMenu(menuId);
+        window.location.href = href;
+      }
+    });
+
+    // El clic en el resto del enlace principal solo abrirá/cerrará el menú
+    menuToggle.addEventListener('click', function(e) {
+      e.preventDefault(); // Prevenir la redirección por defecto
+      // El comportamiento de abrir/cerrar el menú es manejado por Bootstrap
+    });
+  });
+
+  // Manejar los clics en los enlaces del submenú
+  var submenuLinks = document.querySelectorAll('.nav-content a');
+  submenuLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var parentMenu = this.closest('.nav-content.collapse');
+      if (parentMenu) {
+        saveActiveMenu(parentMenu.id);
+      }
+      window.location.href = this.getAttribute('href');
+    });
+  });
+});

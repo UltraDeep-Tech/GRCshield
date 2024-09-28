@@ -307,17 +307,17 @@
     </li><!-- End Dashboard Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse" href="/sentimentanalysis.html">
-        <i class="bi bi-chat-square-dots"></i><span data-translate="sidebar_interaction_analysis">Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
+      <a class="nav-link collapsed" href="#" data-bs-target="#interaction-analysis-nav" data-bs-toggle="collapse">
+        <i class="bi bi-chat-square-dots"></i><span class="nav-link-text" data-translate="sidebar_interaction_analysis" data-href="/sentimentanalysis.html">Interaction Analysis</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="interaction-analysis-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
-          <a href="sentimentanalysis.html#realtime">
+          <a href="/sentimentanalysis.html#realtime">
             <i class="bi bi-emoji-smile"></i><span data-translate="sidebar_sentiment_analysis">Sentiment Analysis</span>
           </a>
         </li>
         <li>
-          <a href="sentimentanalysis.html#conversation">
+          <a href="/sentimentanalysis.html#conversation">
             <i class="bi bi-tags"></i><span data-translate="sidebar_conversation_categorization">Conversation Categorization</span>
           </a>
         </li>
@@ -352,17 +352,17 @@
           </a>
         </li>
       </ul>
-    </li>
+</li>
     <!-- End Interaction Analysis Nav -->
 
 <!-- Thread Detection Nav -->
 <li class="nav-item">
-  <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-    <i class="bi bi-exclamation-circle"></i><span data-translate="sidebar_thread_detection">Thread Detection</span><i class="bi bi-chevron-down ms-auto"></i>
+  <a class="nav-link collapsed" href="#" data-bs-target="#charts-nav" data-bs-toggle="collapse">
+    <i class="bi bi-exclamation-circle"></i><span class="nav-link-text" data-translate="sidebar_thread_detection" data-href="/index.html">Thread Detection</span><i class="bi bi-chevron-down ms-auto"></i>
   </a>
   <ul id="charts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
     <li>
-      <a href="index.html#totalBlockedRequest">
+      <a href="/index.html#totalBlockedRequest">
         <i class="bi bi-shield-lock"></i><span data-translate="sidebar_blocked_requests_rate">Blocked Requests & Rate</span>
       </a>
     </li>
@@ -418,12 +418,12 @@
 
 <!-- GRC Policies Nav -->
 <li class="nav-item">
-  <a class="nav-link collapsed" data-bs-target="#grc-policies-nav" data-bs-toggle="collapse" href="#">
-    <i class="bi bi-file-earmark-lock"></i><span data-translate="sidebar_grc_policies">GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
+  <a class="nav-link collapsed" href="#" data-bs-target="#grc-policies-nav" data-bs-toggle="collapse">
+    <i class="bi bi-file-earmark-lock"></i><span class="nav-link-text" data-translate="sidebar_grc_policies" data-href="/grc-policies.html">GRC Policies</span><i class="bi bi-chevron-down ms-auto"></i>
   </a>
   <ul id="grc-policies-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
     <li>
-      <a href="grc-policies.html#existing-policies-tab">
+      <a href="/grc-policies.html#existing-policies-tab">
         <i class="bi bi-file-earmark-text"></i><span data-translate="sidebar_existing_policies">Policies</span>
       </a>
     </li>
@@ -479,10 +479,11 @@
     </li><!-- End Contact Page Nav -->
 
   </ul>
-  <div id="languageSwitcher" class="language-switcher2">
-    <img   src="assets/img/Flag_of_the_U.S..svg.png" alt="English" data-lang="en" class="language-flag2" style="cursor: pointer;" >
-    <img src="assets/img/Bandera_de_España.svg.png" alt="Español" data-lang="es" class="language-flag2" style="cursor: pointer;"  >
-  </div>
+  <div class="container">
+    <div id="languageSwitcher" class="language-switcher2">
+      <img   src="assets/img/Flag_of_the_U.S..svg.png" alt="English" data-lang="en" class="language-flag2" style="cursor: pointer;" >
+      <img src="assets/img/Bandera_de_España.svg.png" alt="Español" data-lang="es" class="language-flag2" style="cursor: pointer;"  >
+    </div>
     <img src="/assets/img/logo.png" class="sidebar-bg">
 
 
@@ -730,51 +731,58 @@
   <script src="assets/js/lenguaje.js"></script>
 
   <script>
-    const toggleSwitch = document.getElementById('flexSwitchCheckChecked');
-    const lightModeLink = document.getElementById('lightmode');
-    const darkModeBaseLink = document.getElementById('darkmode-base');
-    const darkModeItemLink = document.getElementById('darkmode-item');
-    const body = document.body;
-  
-    // Verificar el tema guardado en localStorage
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme) {
-      if (currentTheme === 'dark-mode') {
-        lightModeLink.disabled = true;
-        darkModeBaseLink.disabled = false;
-        darkModeItemLink.disabled = false;
-        toggleSwitch.checked = true;
-      } else {
-        lightModeLink.disabled = false;
-        darkModeBaseLink.disabled = true;
-        darkModeItemLink.disabled = true;
-        toggleSwitch.checked = false;
+    (function() {
+      let globalIsDarkMode = false;
+    
+      function applyTheme(isDarkMode) {
+        globalIsDarkMode = isDarkMode;
+        document.body.classList.toggle('dark-mode', isDarkMode);
+        document.getElementById('lightmode').disabled = isDarkMode;
+        document.getElementById('darkmode-base').disabled = !isDarkMode;
+        document.getElementById('darkmode-item').disabled = !isDarkMode;
+        
+        const hackModeIcon = document.querySelector('.hack-mode-icon');
+        hackModeIcon.classList.toggle('active', isDarkMode);
+        hackModeIcon.classList.toggle('inactive', !isDarkMode);
+        hackModeIcon.classList.toggle('bi-moon', !isDarkMode);
+        hackModeIcon.classList.toggle('bi-sun', isDarkMode);
+        
+        document.querySelector('label[for="flexSwitchCheckChecked"]').textContent = isDarkMode ? 'Hack Mode' : 'Light Mode';
+        
+        localStorage.setItem('theme', isDarkMode ? 'dark-mode' : 'light-mode');
+        
+        // Llamar a la función de actualización de gráficos inmediatamente
+        if (typeof updateAllChartColors === 'function') {
+          updateAllChartColors(isDarkMode);
+        }
+        
+        // Disparar el evento themeChanged después de actualizar los gráficos
+        document.dispatchEvent(new CustomEvent('themeChanged', { detail: { isDarkMode } }));
       }
-      body.classList.add(currentTheme);
-    } else {
-      // Por defecto, activamos el modo oscuro
-      lightModeLink.disabled = true;
-      darkModeBaseLink.disabled = false;
-      darkModeItemLink.disabled = false;
-      toggleSwitch.checked = true;
-      localStorage.setItem('theme', 'dark-mode');
-    }
-  
-    toggleSwitch.addEventListener('change', () => {
-      if (toggleSwitch.checked) {
-        body.classList.add('dark-mode');
-        lightModeLink.disabled = true;
-        darkModeBaseLink.disabled = false;
-        darkModeItemLink.disabled = false;
-        localStorage.setItem('theme', 'dark-mode');
-      } else {
-        body.classList.remove('dark-mode');
-        lightModeLink.disabled = false;
-        darkModeBaseLink.disabled = true;
-        darkModeItemLink.disabled = true;
-        localStorage.setItem('theme', 'light-mode');
+    
+      function initializeTheme() {
+        const currentTheme = localStorage.getItem('theme');
+        const isDarkMode = currentTheme === 'dark-mode';
+        document.getElementById('flexSwitchCheckChecked').checked = isDarkMode;
+        applyTheme(isDarkMode);
       }
-    });
+    
+      document.addEventListener('DOMContentLoaded', function() {
+        initializeTheme();
+    
+        document.querySelector('.hack-mode-icon').addEventListener('click', function() {
+          applyTheme(!globalIsDarkMode);
+        });
+    
+        document.getElementById('flexSwitchCheckChecked').addEventListener('change', function(event) {
+          applyTheme(event.target.checked);
+        });
+      });
+    
+      window.isDatagraficosDarkMode = function() {
+        return globalIsDarkMode;
+      };
+    })();
   </script>
 
 <script>
