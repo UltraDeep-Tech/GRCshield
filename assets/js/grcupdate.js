@@ -88,7 +88,7 @@ function loadPolicies() {
                     <td>${policy.compliance_status}</td>
                     <td>
                         <button id="compliant-${policy.id}" class="btn btn-outline-primary btn-sm compliant-btn" data-id="${policy.id}" data-status="Compliant" onclick="updatePolicyAndReload(${policy.id}, 'Compliant')">Compliant</button>
-                        <button id="non-compliant-${policy.id}" class="btn btn-outline-primary btn-sm non-compliant-btn" data-id="${policy.id}" data-status="non-compliant" style="color:red;" onclick="updatePolicyAndReload(${policy.id}, 'non-compliant')">Non-Compliant</button>
+                        <button id="non-compliant-${policy.id}" class="btn btn-outline-primary btn-sm non-compliant-btn" data-id="${policy.id}" data-status="non-compliant" onclick="updatePolicyAndReload(${policy.id}, 'non-compliant')">Non-Compliant</button>
                     </td>
                     <td><button class="btn btn-info btn-sm" onclick="readPolicy(${policy.id})"><i class="bi bi-eye"></i></button></td>
                     <td><button class="btn btn-primary btn-sm" onclick="editPolicy(${policy.id})"><i class="bi bi-pencil"></i></button></td>
