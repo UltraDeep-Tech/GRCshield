@@ -676,48 +676,7 @@
     })();
   </script>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const currentDepartment = localStorage.getItem('currentDepartment');
-    const authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
-  
-    const departmentSelect = document.getElementById('department-select');
-    const userDepartmentDiv = document.getElementById('user-department');
-  
-    // Llenar el menú desplegable solo con los departamentos autorizados
-    authorizedDepartments.forEach(dep => {
-      const option = document.createElement('option');
-      option.value = dep;
-      option.textContent = dep;
-      departmentSelect.appendChild(option);
-    });
-  
-    // Establecer el departamento seleccionado
-    if (currentDepartment && authorizedDepartments.includes(currentDepartment)) {
-      userDepartmentDiv.textContent = `Current Department: ${currentDepartment}`;
-      departmentSelect.value = currentDepartment;
-    } else if (authorizedDepartments.length > 0) {
-      const firstDepartment = authorizedDepartments[0];
-      localStorage.setItem('currentDepartment', firstDepartment);
-      userDepartmentDiv.textContent = `Current Department: ${firstDepartment}`;
-      departmentSelect.value = firstDepartment;
-    }
-  
-    // Manejar cambios de departamento
-    departmentSelect.addEventListener('change', function () {
-      const selectedDepartment = this.value;
-      if (authorizedDepartments.includes(selectedDepartment)) {
-        localStorage.setItem('currentDepartment', selectedDepartment);
-        userDepartmentDiv.textContent = `Current Department: ${selectedDepartment}`;
-        // Recargar los datos para el nuevo departamento
-        location.reload();
-      } else {
-        console.error('Intento de seleccionar un departamento no autorizado');
-        this.value = localStorage.getItem('currentDepartment');
-      }
-    });
-  });
-  </script>
+
 
 </body>
 
