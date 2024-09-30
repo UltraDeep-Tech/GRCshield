@@ -465,6 +465,11 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.removeItem('activeMenu');
   }
 
+  // Función para verificar si la URL actual coincide con el enlace
+  function isCurrentPage(href) {
+    return window.location.pathname === href || window.location.href === href;
+  }
+
   // Obtener todos los menús desplegables
   var collapsibleMenus = document.querySelectorAll('.nav-content.collapse');
 
@@ -508,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function() {
     menuText.addEventListener('click', function(e) {
       e.stopPropagation(); // Evitar que el evento se propague al enlace principal
       var href = this.getAttribute('data-href');
-      if (href) {
+      if (href && !isCurrentPage(href)) {
         saveActiveMenu(menuId);
         window.location.href = href;
       }
@@ -526,11 +531,14 @@ document.addEventListener('DOMContentLoaded', function() {
   submenuLinks.forEach(function(link) {
     link.addEventListener('click', function(e) {
       e.preventDefault();
-      var parentMenu = this.closest('.nav-content.collapse');
-      if (parentMenu) {
-        saveActiveMenu(parentMenu.id);
+      var href = this.getAttribute('href');
+      if (!isCurrentPage(href)) {
+        var parentMenu = this.closest('.nav-content.collapse');
+        if (parentMenu) {
+          saveActiveMenu(parentMenu.id);
+        }
+        window.location.href = href;
       }
-      window.location.href = this.getAttribute('href');
     });
   });
 });
