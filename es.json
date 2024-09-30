@@ -46,6 +46,7 @@
     "hallucinations_detected_each_day": "Número de Alucinaciones Detectadas por Día",
     "details_of_hallucination": "Detalles de Cada Alucinación",
     "user_input": "Entrada del Usuario",
+    "type": "Tipo",
     "ai_response": "Respuesta de la IA",
     "date": "Fecha",
     "prompt": "Indicación",
