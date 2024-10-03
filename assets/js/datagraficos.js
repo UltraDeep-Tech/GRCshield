@@ -446,6 +446,14 @@ document.addEventListener("DOMContentLoaded", () => {
           borderColor: 'rgba(153, 102, 255, 1)',
           borderWidth: 1,
           borderRadius:10
+        },
+        {
+          label: 'Jailbreak',
+          data: data.categories?.jailbreak || [],
+          backgroundColor: 'rgba(255, 205, 86, 0.7)',
+          borderColor: 'rgba(255, 205, 86, 0.7)',
+          borderWidth: 1,
+          borderRadius:10
         }
       ]
     };
