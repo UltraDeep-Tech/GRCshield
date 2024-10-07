@@ -6,66 +6,38 @@ function updateAllChartColors(isDarkMode) {
 }
 
 
-import io from 'socket.io-client';
+function obtenerDatos(key, callback) {
+  let currentDepartment = localStorage.getItem('currentDepartment');
+  let authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
 
-let socket;
-
-function obtenerDatos(callback) {
-    const currentDepartment = localStorage.getItem('currentDepartment');
-    const authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
-
-    if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
-        console.error('Departamento actual no válido o no autorizado');
-        return;
+  if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
+    console.error('Departamento actual no válido o no autorizado');
+    // Si el departamento actual no es válido, intentamos usar el primer departamento autorizado
+    currentDepartment = authorizedDepartments[0];
+    if (!currentDepartment) {
+      console.error('No hay departamentos autorizados');
+      return;
     }
+    localStorage.setItem('currentDepartment', currentDepartment);
+  }
 
-    if (!socket || !socket.connected) {
-        socket = io('https://backend-grcshield-dlkgkgiuwa-uc.a.run.app');
-
-        socket.on('connect', () => {
-            console.log('Conectado al servidor WebSocket');
-            socket.emit('join', { department: currentDepartment });
-        });
-
-        socket.on('join_response', (data) => {
-            if (data.status === 'success') {
-                console.log(`Unido al departamento: ${data.department}`);
-                fetchInitialData();
-            }
-        });
-
-        socket.on('dashboard_update', (data) => {
-            callback(data);
-        });
-
-        socket.on('disconnect', () => {
-            console.log('Desconectado del servidor WebSocket');
-        });
-    } else {
-        fetchInitialData();
-    }
-
-    function fetchInitialData() {
-        fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/dashboard?department=${encodeURIComponent(currentDepartment)}&user_department=${encodeURIComponent(currentDepartment)}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(`Datos iniciales recuperados para el departamento ${currentDepartment}:`, data);
-                callback(data);
-            })
-            .catch(error => console.error('Error al obtener los datos iniciales:', error));
-    }
-
-    return () => {
-        if (socket) {
-            socket.emit('leave', { department: currentDepartment });
-            socket.disconnect();
-        }
-    };
+  console.log(`Solicitando datos para el departamento: ${currentDepartment}, userDepartment: ${currentDepartment}`);
+  fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/dashboard?department=${encodeURIComponent(currentDepartment)}&user_department=${encodeURIComponent(currentDepartment)}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(`Datos recuperados para el departamento ${currentDepartment}:`, data);
+      if (data[key]) {
+        callback(data[key]);
+      } else {
+        console.error(`La clave ${key} no se encontró en los datos.`);
+      }
+    })
+    .catch(error => console.error('Error al obtener los datos:', error));
 }
 
 
