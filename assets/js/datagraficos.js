@@ -6,13 +6,81 @@ function updateAllChartColors(isDarkMode) {
 }
 
 
+class WebSocketManager {
+  constructor() {
+    this.socket = null;
+    this.listeners = new Map();
+    this.reconnectAttempts = 0;
+    this.maxReconnectAttempts = 5;
+    this.reconnectDelay = 5000; // 5 segundos
+  }
+
+  connect(department) {
+    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+      console.log('WebSocket ya está conectado');
+      return;
+    }
+
+    const wsUrl = `wss://backend-grcshield-dlkgkgiuwa-uc.a.run.app/ws?department=${encodeURIComponent(department)}`;
+    this.socket = new WebSocket(wsUrl);
+
+    this.socket.onopen = () => {
+      console.log('Conexión WebSocket establecida');
+      this.reconnectAttempts = 0;
+    };
+
+    this.socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      this.listeners.forEach((callback, key) => {
+        if (data[key]) {
+          callback(data[key]);
+        }
+      });
+    };
+
+    this.socket.onclose = (event) => {
+      console.log('Conexión WebSocket cerrada:', event.reason);
+      this.attemptReconnect();
+    };
+
+    this.socket.onerror = (error) => {
+      console.error('Error en la conexión WebSocket:', error);
+    };
+  }
+
+  attemptReconnect() {
+    if (this.reconnectAttempts < this.maxReconnectAttempts) {
+      this.reconnectAttempts++;
+      console.log(`Intentando reconectar... Intento ${this.reconnectAttempts}`);
+      setTimeout(() => this.connect(localStorage.getItem('currentDepartment')), this.reconnectDelay);
+    } else {
+      console.error('Se alcanzó el número máximo de intentos de reconexión');
+    }
+  }
+
+  addListener(key, callback) {
+    this.listeners.set(key, callback);
+  }
+
+  removeListener(key) {
+    this.listeners.delete(key);
+  }
+
+  close() {
+    if (this.socket) {
+      this.socket.close();
+    }
+  }
+}
+
+const wsManager = new WebSocketManager();
+
 function obtenerDatos(key, callback) {
   let currentDepartment = localStorage.getItem('currentDepartment');
   let authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
 
   if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
     console.error('Departamento actual no válido o no autorizado');
-    // Si el departamento actual no es válido, intentamos usar el primer departamento autorizado
     currentDepartment = authorizedDepartments[0];
     if (!currentDepartment) {
       console.error('No hay departamentos autorizados');
@@ -21,23 +89,11 @@ function obtenerDatos(key, callback) {
     localStorage.setItem('currentDepartment', currentDepartment);
   }
 
-  console.log(`Solicitando datos para el departamento: ${currentDepartment}, userDepartment: ${currentDepartment}`);
-  fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/dashboard?department=${encodeURIComponent(currentDepartment)}&user_department=${encodeURIComponent(currentDepartment)}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(`Datos recuperados para el departamento ${currentDepartment}:`, data);
-      if (data[key]) {
-        callback(data[key]);
-      } else {
-        console.error(`La clave ${key} no se encontró en los datos.`);
-      }
-    })
-    .catch(error => console.error('Error al obtener los datos:', error));
+  wsManager.connect(currentDepartment);
+  wsManager.addListener(key, callback);
+
+  // Devolver una función para detener la escucha si es necesario
+  return () => wsManager.removeListener(key);
 }
 
 
