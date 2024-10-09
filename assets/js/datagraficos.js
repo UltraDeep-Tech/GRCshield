@@ -875,8 +875,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${item.incident}</td>
-          <td>${item.description}</td>
           <td>${item.date}</td>
+          <td>${item.user || 'N/A'}</td>
           <td>${item.prompt}</td>
           <td>${item.response}</td>
         `;
