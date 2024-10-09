@@ -756,134 +756,141 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+
   obtenerDatos('biasData', (data) => {
-    const chart = new Chart(document.querySelector('#biasPieChart'), {
-      type: 'pie',
-      data: {
-        labels: data.labels || [],
-        datasets: [{
-          label: 'Types of Bias Detected',
-          data: data.biasCount || [],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.7)',
-            'rgba(54, 162, 235, 0.7)',
-            'rgba(75, 192, 192, 0.7)',
-            'rgba(153, 102, 255, 0.7)',
-            'rgba(255, 205, 86, 0.7)',
-            'rgba(255, 159, 64, 0.7)',
-            'rgba(255, 99, 132, 0.7)',
-            'rgba(54, 162, 235, 0.7)',
-            'rgba(75, 192, 192, 0.7)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 205, 86, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(75, 192, 192, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            labels: {
-              color: '#fff',
-              usePointStyle: true,
-              pointStyle: 'circle',
-              borderRadius: 2,
-            }
-          },
-          tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            titleColor: '#fff',
-            bodyColor: '#fff',
-            borderColor: '#fff',
-            borderWidth: 1
-          }
-        }
-      }
-    });
-
-    updateChartColors(chart, window.isDatagraficosDarkMode()); // Aplicar los colores según el modo
-
-    const chartLine = new Chart(document.querySelector('#biasLineChart'), {
-      type: 'line',
-      data: {
-        labels: data.biasIncidents?.labels || [],
-        datasets: [{
-          label: 'Bias Incidents Over Time',
-          data: data.biasIncidents?.data || [],
-          backgroundColor: 'rgba(75, 192, 192, 0.7)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
-          fill: false,
-          tension: 0.4
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              color: '#fff'
-            },
-            grid: {
-              color: 'rgba(255, 255, 255, 0.1)'
-            }
-          },
-          x: {
-            ticks: {
-              color: '#fff'
-            },
-            grid: {
-              color: 'rgba(255, 255, 255, 0.1)'
-            }
-          }
+    // Gráfico de pastel para tipos de sesgo
+    const pieChart = new Chart(document.querySelector('#biasPieChart'), {
+        type: 'pie',
+        data: {
+            labels: data.labels || [],
+            datasets: [{
+                label: 'Types of Bias Detected',
+                data: data.biasCount || [],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 205, 86, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(75, 192, 192, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 205, 86, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
         },
-        plugins: {
-          legend: {
-            labels: {
-              color: '#fff',
-              usePointStyle: true,
-              pointStyle: 'circle',
-              borderRadius: 2,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#fff',
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        borderRadius: 2,
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }
             }
-          },
-          tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            titleColor: '#fff',
-            bodyColor: '#fff',
-            borderColor: '#fff',
-            borderWidth: 1
-          }
         }
-      }
     });
 
-    updateChartColors(chartLine, isLightMode()); // Aplicar los colores según el modo
+    updateChartColors(pieChart, window.isDatagraficosDarkMode());
 
+    // Gráfico de líneas para incidentes de sesgo a lo largo del tiempo
+    const lineChart = new Chart(document.querySelector('#biasLineChart'), {
+        type: 'line',
+        data: {
+            labels: data.biasIncidents?.labels || [],
+            datasets: [{
+                label: 'Bias Incidents Over Time',
+                data: data.biasIncidents?.data || [],
+                backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                fill: false,
+                tension: 0.4
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#fff'
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#fff'
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#fff',
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        borderRadius: 2,
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }
+            }
+        }
+    });
+
+    updateChartColors(lineChart, window.isDatagraficosDarkMode());
+
+    // Llenar la tabla de detalles
     const biasTbody = document.getElementById('biasData');
     if (Array.isArray(data.details)) {
-      data.details.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.incident}</td>
-          <td>${item.date}</td>
-          <td>${item.user || 'N/A'}</td>
-          <td>${item.prompt}</td>
-          <td>${item.response}</td>
-        `;
-        biasTbody.appendChild(row);
-      });
+        biasTbody.innerHTML = ''; // Limpiar la tabla antes de añadir nuevos datos
+        data.details.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.incident || 'N/A'}</td>
+                <td>${item.date || 'N/A'}</td>
+                <td>${item.user || 'N/A'}</td>
+                <td>${item.prompt || 'N/A'}</td>
+                <td>${item.response || 'N/A'}</td>
+            `;
+            biasTbody.appendChild(row);
+        });
     }
-  });
+
+    console.log('Datos de biasData procesados:', data);
+});
 
   obtenerDatos('promptInjectionData', (data) => {
     const chart = new Chart(document.querySelector('#promptInjectionChart'), {
