@@ -542,3 +542,79 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Conectar al servidor WebSocket
+  const socket = io('https://backend-grcshield-934866038204.us-central1.run.app');
+
+  socket.on('connect', function() {
+      console.log('Conectado al servidor WebSocket');
+  });
+
+  socket.on('notification', function(notification) {
+      console.log('Nueva notificación recibida:', notification);
+      addNotification(notification);
+  });
+
+  function addNotification(notification) {
+      // Actualizar el contador de notificaciones
+      updateNotificationCount();
+
+      // Crear el elemento de notificación
+      const notificationItem = createNotificationElement(notification);
+
+      // Añadir la notificación al menú desplegable
+      const notificationsList = document.querySelector('.notifications');
+      const firstDivider = notificationsList.querySelector('.dropdown-divider');
+      notificationsList.insertBefore(notificationItem, firstDivider.nextSibling);
+
+      // Actualizar el texto del encabezado
+      updateNotificationHeader();
+  }
+
+  function createNotificationElement(notification) {
+      const li = document.createElement('li');
+      li.className = 'notification-item';
+      
+      // Determinar el icono basado en el tipo de notificación
+      let iconClass = 'bi-info-circle text-primary';
+      switch(notification.type) {
+          case 'warning':
+              iconClass = 'bi-exclamation-circle text-warning';
+              break;
+          case 'danger':
+              iconClass = 'bi-x-circle text-danger';
+              break;
+          case 'success':
+              iconClass = 'bi-check-circle text-success';
+              break;
+      }
+
+      li.innerHTML = `
+          <i class="bi ${iconClass}"></i>
+          <div>
+              <h4>${notification.message}</h4>
+              <p>${notification.details.description || ''}</p>
+              <p>Just now</p>
+          </div>
+      `;
+
+      return li;
+  }
+
+  function updateNotificationCount() {
+      const badge = document.querySelector('.badge.bg-primary.badge-number');
+      if (badge) {
+          let count = parseInt(badge.textContent) || 0;
+          badge.textContent = count + 1;
+      }
+  }
+
+  function updateNotificationHeader() {
+      const header = document.querySelector('.notifications .dropdown-header');
+      const count = document.querySelectorAll('.notification-item').length;
+      if (header) {
+          header.firstChild.textContent = `You have ${count} new notifications`;
+      }
+  }
+});
