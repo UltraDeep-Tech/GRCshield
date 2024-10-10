@@ -543,6 +543,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+
 document.addEventListener('DOMContentLoaded', function() {
   // Conectar al servidor WebSocket
   const socket = io('https://backend-grcshield-934866038204.us-central1.run.app');
