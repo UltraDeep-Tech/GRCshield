@@ -543,79 +543,142 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+// URL base del backend
+const BASE_URL = 'https://backend-grcshield-934866038204.us-central1.run.app';
 
+// Función para obtener notificaciones del servidor
+async function fetchNotifications() {
+    try {
+        const response = await fetch(`${BASE_URL}/api/notifications`);
+        if (response.ok) {
+            const notifications = await response.json();
+            updateNotificationsUI(notifications);
+        } else {
+            console.error('Failed to fetch notifications');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Función para crear una nueva notificación
+async function createNotification(message, type) {
+    try {
+        const response = await fetch(`${BASE_URL}/api/notifications`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message, type }),
+        });
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result.message);
+            fetchNotifications(); // Actualizar la UI después de crear la notificación
+        } else {
+            console.error('Failed to create notification');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Función para actualizar la UI con las notificaciones
+function updateNotificationsUI(notifications) {
+    const notificationsList = document.querySelector('.notifications');
+    const notificationBadge = document.querySelector('.badge-number');
+    const notificationHeader = document.querySelector('.dropdown-header');
+
+    // Actualizar el número de notificaciones no leídas
+    const unreadCount = notifications.filter(n => !n.read).length;
+    notificationBadge.textContent = unreadCount;
+    notificationHeader.innerHTML = `
+        You have ${unreadCount} new notifications
+        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+    `;
+
+    // Limpiar la lista de notificaciones existente
+    notificationsList.innerHTML = '';
+
+    // Añadir el encabezado
+    notificationsList.innerHTML += `
+        <li class="dropdown-header">
+            You have ${unreadCount} new notifications
+            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+    `;
+
+    // Añadir cada notificación
+    notifications.forEach((notification, index) => {
+        notificationsList.innerHTML += `
+            <li class="notification-item" data-id="${notification.id}">
+                <i class="${getIconClass(notification.type)}"></i>
+                <div>
+                    <h4>${notification.type}</h4>
+                    <p>${notification.message}</p>
+                    <p>${new Date(notification.timestamp).toLocaleString()}</p>
+                </div>
+            </li>
+            ${index < notifications.length - 1 ? '<li><hr class="dropdown-divider"></li>' : ''}
+        `;
+    });
+
+    // Añadir el footer
+    notificationsList.innerHTML += `
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-footer text-center">
+            <a href="#">Show all notifications</a>
+        </li>
+    `;
+
+    // Añadir event listeners a las notificaciones
+    document.querySelectorAll('.notification-item').forEach(item => {
+        item.addEventListener('click', function() {
+            markNotificationAsRead(this.dataset.id);
+        });
+    });
+}
+
+// Función para obtener la clase de icono basada en el tipo de notificación
+function getIconClass(type) {
+    switch(type) {
+        case 'blocked_requests':
+            return 'bi bi-exclamation-circle text-warning';
+        case 'abusive_user':
+            return 'bi bi-x-circle text-danger';
+        case 'hallucination':
+            return 'bi bi-check-circle text-success';
+        case 'report':
+            return 'bi bi-info-circle text-primary';
+        default:
+            return 'bi bi-bell text-secondary';
+    }
+}
+
+// Función para marcar una notificación como leída
+async function markNotificationAsRead(id) {
+    try {
+        const response = await fetch(`${BASE_URL}/api/notifications/${id}/read`, {
+            method: 'PUT'
+        });
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result.message);
+            fetchNotifications(); // Actualizar la UI después de marcar como leída
+        } else {
+            console.error('Failed to mark notification as read');
+        }
+    } catch (error) {
+        console.error('Error marking notification as read:', error);
+    }
+}
+
+// Inicializar las notificaciones y configurar la actualización periódica
 document.addEventListener('DOMContentLoaded', function() {
-  // Conectar al servidor WebSocket
-  const socket = io('https://backend-grcshield-934866038204.us-central1.run.app');
-
-  socket.on('connect', function() {
-      console.log('Conectado al servidor WebSocket');
-  });
-
-  socket.on('notification', function(notification) {
-      console.log('Nueva notificación recibida:', notification);
-      addNotification(notification);
-  });
-
-  function addNotification(notification) {
-      // Actualizar el contador de notificaciones
-      updateNotificationCount();
-
-      // Crear el elemento de notificación
-      const notificationItem = createNotificationElement(notification);
-
-      // Añadir la notificación al menú desplegable
-      const notificationsList = document.querySelector('.notifications');
-      const firstDivider = notificationsList.querySelector('.dropdown-divider');
-      notificationsList.insertBefore(notificationItem, firstDivider.nextSibling);
-
-      // Actualizar el texto del encabezado
-      updateNotificationHeader();
-  }
-
-  function createNotificationElement(notification) {
-      const li = document.createElement('li');
-      li.className = 'notification-item';
-      
-      // Determinar el icono basado en el tipo de notificación
-      let iconClass = 'bi-info-circle text-primary';
-      switch(notification.type) {
-          case 'warning':
-              iconClass = 'bi-exclamation-circle text-warning';
-              break;
-          case 'danger':
-              iconClass = 'bi-x-circle text-danger';
-              break;
-          case 'success':
-              iconClass = 'bi-check-circle text-success';
-              break;
-      }
-
-      li.innerHTML = `
-          <i class="bi ${iconClass}"></i>
-          <div>
-              <h4>${notification.message}</h4>
-              <p>${notification.details.description || ''}</p>
-              <p>Just now</p>
-          </div>
-      `;
-
-      return li;
-  }
-
-  function updateNotificationCount() {
-      const badge = document.querySelector('.badge.bg-primary.badge-number');
-      if (badge) {
-          let count = parseInt(badge.textContent) || 0;
-          badge.textContent = count + 1;
-      }
-  }
-
-  function updateNotificationHeader() {
-      const header = document.querySelector('.notifications .dropdown-header');
-      const count = document.querySelectorAll('.notification-item').length;
-      if (header) {
-          header.firstChild.textContent = `You have ${count} new notifications`;
-      }
-  }
+    fetchNotifications();
+    setInterval(fetchNotifications, 30000); // Actualizar cada 30 segundos
 });
+
+// Ejemplo de cómo crear una nueva notificación (puedes llamar a esta función cuando sea necesario)
+// createNotification('Este es un mensaje de prueba', 'blocked_requests');
