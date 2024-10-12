@@ -509,6 +509,26 @@ async function createNotification(message, type) {
     }
 }
 
+// Nueva función para eliminar una notificación
+async function deleteNotification(id) {
+    try {
+        const response = await fetch(`${BASE_URL}/api/notifications/${id}`, {
+            method: 'DELETE'
+        });
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result.message);
+            return true;
+        } else {
+            console.error('Failed to delete notification');
+            return false;
+        }
+    } catch (error) {
+        console.error('Error deleting notification:', error);
+        return false;
+    }
+}
+
 // Función para actualizar la UI con las notificaciones
 function updateNotificationsUI(notifications) {
     const notificationsList = document.querySelector('.notifications');
@@ -516,7 +536,7 @@ function updateNotificationsUI(notifications) {
     const notificationHeader = document.querySelector('.dropdown-header');
 
     // Actualizar el número de notificaciones no leídas
-    const unreadCount = notifications.filter(n => !n.read).length;
+    const unreadCount = notifications.length;
     updateNotificationBadge(unreadCount);
 
     if (notificationHeader) {
@@ -563,11 +583,13 @@ function updateNotificationsUI(notifications) {
 
         // Añadir event listeners a las notificaciones
         document.querySelectorAll('.notification-item').forEach((item) => {
-            item.addEventListener('click', function() {
+            item.addEventListener('click', async function() {
                 const notificationId = this.dataset.id;
-                markNotificationAsRead(notificationId);
-                this.remove(); // Eliminar la notificación de la UI inmediatamente
-                updateUnreadCount();
+                const deleted = await deleteNotification(notificationId);
+                if (deleted) {
+                    this.remove(); // Eliminar la notificación de la UI inmediatamente
+                    updateUnreadCount();
+                }
             });
         });
     }
@@ -615,23 +637,6 @@ function getIconClass(type) {
     }
 }
 
-// Función para marcar una notificación como leída
-async function markNotificationAsRead(id) {
-    try {
-        const response = await fetch(`${BASE_URL}/api/notifications/${id}/read`, {
-            method: 'PUT'
-        });
-        if (response.ok) {
-            const result = await response.json();
-            console.log(result.message);
-        } else {
-            console.error('Failed to mark notification as read');
-        }
-    } catch (error) {
-        console.error('Error marking notification as read:', error);
-    }
-}
-
 // Inicializar las notificaciones y configurar la actualización periódica
 document.addEventListener('DOMContentLoaded', function() {
     const notificationDropdown = document.querySelector('.nav-item.dropdown .nav-link.nav-icon i.bi-bell');
@@ -649,6 +654,3 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchNotifications();
     setInterval(fetchNotifications, 30000); // Actualizar cada 30 segundos
 });
-
-// Ejemplo de cómo crear una nueva notificación (puedes llamar a esta función cuando sea necesario)
-// createNotification('Este es un mensaje de prueba', 'blocked_requests');
