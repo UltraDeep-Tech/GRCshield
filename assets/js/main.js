@@ -511,17 +511,13 @@ async function createNotification(message, type) {
 
 // Función para actualizar la UI con las notificaciones
 function updateNotificationsUI(notifications) {
-    const userID = localStorage.getItem('userID') || 'defaultUser';
     const notificationsList = document.querySelector('.notifications');
-    const notificationBadge = document.querySelector('.badge-number.bg-primary');
+    const notificationBadge = document.querySelector('.badge-number');
     const notificationHeader = document.querySelector('.dropdown-header');
 
     // Actualizar el número de notificaciones no leídas
     const unreadCount = notifications.filter(n => !n.read).length;
-    if (notificationBadge) {
-        notificationBadge.textContent = unreadCount;
-        notificationBadge.style.display = localStorage.getItem(`${userID}_notificationBadgeHidden`) === 'true' ? 'none' : 'inline-block';
-    }
+    updateNotificationBadge(unreadCount);
 
     if (notificationHeader) {
         notificationHeader.innerHTML = `
@@ -544,39 +540,62 @@ function updateNotificationsUI(notifications) {
         `;
 
         // Añadir cada notificación
-        notifications.forEach((notification, index) => {
-            const isHidden = localStorage.getItem(`${userID}_notificationHidden_${index}`) === 'true';
-            if (!isHidden) {
-                notificationsList.innerHTML += `
-                    <li class="notification-item" data-id="${notification.id}">
-                        <i class="${getIconClass(notification.type)}"></i>
-                        <div>
-                            <h4>${notification.type}</h4>
-                            <p>${notification.message}</p>
-                            <p>${new Date(notification.timestamp).toLocaleString()}</p>
-                        </div>
-                    </li>
-                    ${index < notifications.length - 1 ? '<li><hr class="dropdown-divider"></li>' : ''}
-                `;
-            }
+        notifications.forEach((notification) => {
+            notificationsList.innerHTML += `
+                <li class="notification-item" data-id="${notification.id}">
+                    <i class="${getIconClass(notification.type)}"></i>
+                    <div>
+                        <h4>${notification.type}</h4>
+                        <p>${notification.message}</p>
+                        <p>${new Date(notification.timestamp).toLocaleString()}</p>
+                    </div>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+            `;
         });
 
         // Añadir el footer
         notificationsList.innerHTML += `
-            <li><hr class="dropdown-divider"></li>
             <li class="dropdown-footer text-center">
                 <a href="#">Show all notifications</a>
             </li>
         `;
 
         // Añadir event listeners a las notificaciones
-        document.querySelectorAll('.notification-item').forEach((item, index) => {
+        document.querySelectorAll('.notification-item').forEach((item) => {
             item.addEventListener('click', function() {
-                markNotificationAsRead(this.dataset.id);
-                this.style.display = 'none';
-                localStorage.setItem(`${userID}_notificationHidden_${index}`, 'true');
+                const notificationId = this.dataset.id;
+                markNotificationAsRead(notificationId);
+                this.remove(); // Eliminar la notificación de la UI inmediatamente
+                updateUnreadCount();
             });
         });
+    }
+}
+
+// Función para actualizar el badge de notificaciones
+function updateNotificationBadge(count) {
+    const notificationBadge = document.querySelector('.badge-number');
+    if (notificationBadge) {
+        if (count > 0) {
+            notificationBadge.textContent = count;
+            notificationBadge.style.display = 'inline-block';
+        } else {
+            notificationBadge.style.display = 'none';
+        }
+    }
+}
+
+// Función para actualizar el conteo de notificaciones no leídas
+function updateUnreadCount() {
+    const unreadCount = document.querySelectorAll('.notification-item').length;
+    updateNotificationBadge(unreadCount);
+    const notificationHeader = document.querySelector('.dropdown-header');
+    if (notificationHeader) {
+        notificationHeader.innerHTML = `
+            You have ${unreadCount} new notifications
+            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+        `;
     }
 }
 
@@ -605,7 +624,6 @@ async function markNotificationAsRead(id) {
         if (response.ok) {
             const result = await response.json();
             console.log(result.message);
-            fetchNotifications(); // Actualizar la UI después de marcar como leída
         } else {
             console.error('Failed to mark notification as read');
         }
@@ -616,61 +634,21 @@ async function markNotificationAsRead(id) {
 
 // Inicializar las notificaciones y configurar la actualización periódica
 document.addEventListener('DOMContentLoaded', function() {
-    const userID = localStorage.getItem('userID') || 'defaultUser';
-    const notificationDropdown = document.querySelector('.nav-item.dropdown .nav-link.nav-icon i.bellnotification');
-    const messageDropdown = document.querySelector('.nav-item.dropdown .nav-link.nav-icon i.bi-chat-left-text');
-    const notificationBadge = document.querySelector('.badge-number.bg-primary');
-    const messageBadge = document.querySelector('.badge-number.bg-success');
-
-    // Función para ocultar el badge de notificaciones
-    function hideNotificationBadge() {
-        if (notificationBadge) {
-            notificationBadge.style.display = 'none';
-            localStorage.setItem(`${userID}_notificationBadgeHidden`, 'true');
-        }
-    }
-
-    // Función para ocultar el badge de mensajes
-    function hideMessageBadge() {
-        if (messageBadge) {
-            messageBadge.style.display = 'none';
-            localStorage.setItem(`${userID}_messageBadgeHidden`, 'true');
-        }
-    }
+    const notificationDropdown = document.querySelector('.nav-item.dropdown .nav-link.nav-icon i.bi-bell');
+    const notificationBadge = document.querySelector('.badge-number');
 
     // Detecta cuando se abre el menú de notificaciones
     if (notificationDropdown) {
-        notificationDropdown.closest('.dropdown').addEventListener('show.bs.dropdown', hideNotificationBadge);
-    }
-
-    // Detecta cuando se abre el menú de mensajes
-    if (messageDropdown) {
-        messageDropdown.closest('.dropdown').addEventListener('show.bs.dropdown', hideMessageBadge);
-    }
-
-    // Ocultar mensajes individuales
-    document.querySelectorAll('.message-item').forEach((item, index) => {
-        const isHidden = localStorage.getItem(`${userID}_messageHidden_${index}`) === 'true';
-        if (isHidden) {
-            item.style.display = 'none';
-        }
-
-        item.addEventListener('click', function () {
-            item.style.display = 'none';
-            localStorage.setItem(`${userID}_messageHidden_${index}`, 'true');
+        notificationDropdown.closest('.dropdown').addEventListener('show.bs.dropdown', function() {
+            if (notificationBadge) {
+                notificationBadge.style.display = 'none'; // Ocultar el badge cuando se abre el menú
+            }
         });
-    });
-
-    // Restaurar el estado de los badges desde localStorage
-    if (localStorage.getItem(`${userID}_notificationBadgeHidden`) === 'true' && notificationBadge) {
-        notificationBadge.style.display = 'none';
-    }
-
-    if (localStorage.getItem(`${userID}_messageBadgeHidden`) === 'true' && messageBadge) {
-        messageBadge.style.display = 'none';
     }
 
     fetchNotifications();
     setInterval(fetchNotifications, 30000); // Actualizar cada 30 segundos
 });
 
+// Ejemplo de cómo crear una nueva notificación (puedes llamar a esta función cuando sea necesario)
+// createNotification('Este es un mensaje de prueba', 'blocked_requests');
