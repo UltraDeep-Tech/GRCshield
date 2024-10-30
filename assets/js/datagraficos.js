@@ -12,7 +12,6 @@ function obtenerDatos(key, callback) {
 
   if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
     console.error('Departamento actual no válido o no autorizado');
-    // Si el departamento actual no es válido, intentamos usar el primer departamento autorizado
     currentDepartment = authorizedDepartments[0];
     if (!currentDepartment) {
       console.error('No hay departamentos autorizados');
@@ -21,8 +20,9 @@ function obtenerDatos(key, callback) {
     localStorage.setItem('currentDepartment', currentDepartment);
   }
 
-  console.log(`Solicitando datos para el departamento: ${currentDepartment}, userDepartment: ${currentDepartment}`);
-  fetch(`https://backend-grcshield-dlkgkgiuwa-uc.a.run.app/api/dashboard?department=${encodeURIComponent(currentDepartment)}&user_department=${encodeURIComponent(currentDepartment)}`)
+  console.log(`Solicitando datos para el departamento: ${currentDepartment}`);
+  
+  fetch(`https://ultradeeptech-default-rtdb.firebaseio.com/${currentDepartment}.json`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -31,7 +31,7 @@ function obtenerDatos(key, callback) {
     })
     .then(data => {
       console.log(`Datos recuperados para el departamento ${currentDepartment}:`, data);
-      if (data[key]) {
+      if (data && data[key]) {
         callback(data[key]);
       } else {
         console.error(`La clave ${key} no se encontró en los datos.`);
@@ -39,7 +39,6 @@ function obtenerDatos(key, callback) {
     })
     .catch(error => console.error('Error al obtener los datos:', error));
 }
-
 
 
 
