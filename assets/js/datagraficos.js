@@ -6,41 +6,62 @@ function updateAllChartColors(isDarkMode) {
 }
 
 
-function obtenerDatos(key, callback) {
-  let currentDepartment = localStorage.getItem('currentDepartment');
-  let authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
+async function obtenerDatos(key, callback) {
+  try {
+    let currentDepartment = localStorage.getItem('currentDepartment');
+    let authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
 
-  if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
-    console.error('Departamento actual no válido o no autorizado');
-    currentDepartment = authorizedDepartments[0];
-    if (!currentDepartment) {
-      console.error('No hay departamentos autorizados');
-      return;
+    if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
+      console.error('Departamento actual no válido o no autorizado');
+      currentDepartment = authorizedDepartments[0];
+      if (!currentDepartment) {
+        console.error('No hay departamentos autorizados');
+        return;
+      }
+      localStorage.setItem('currentDepartment', currentDepartment);
     }
-    localStorage.setItem('currentDepartment', currentDepartment);
-  }
 
-  console.log(`Solicitando datos para el departamento: ${currentDepartment}`);
-  
-  fetch(`https://ultradeeptech-default-rtdb.firebaseio.com/${currentDepartment}.json`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+    console.log(`Solicitando datos para el departamento: ${currentDepartment}`);
+
+    // Obtener el token del backend
+    const tokenResponse = await fetch('/api/get-firebase-token');
+    if (!tokenResponse.ok) {
+      throw new Error('No se pudo obtener el token de autorización');
+    }
+    const { token } = await tokenResponse.json();
+
+    // Hacer la solicitud a Firebase con el token
+    const response = await fetch(
+      `https://ultradeeptech-default-rtdb.firebaseio.com/${currentDepartment}.json?auth=${token}`,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-      return response.json();
-    })
-    .then(data => {
-      console.log(`Datos recuperados para el departamento ${currentDepartment}:`, data);
-      if (data && data[key]) {
-        callback(data[key]);
-      } else {
-        console.error(`La clave ${key} no se encontró en los datos.`);
-      }
-    })
-    .catch(error => console.error('Error al obtener los datos:', error));
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(`Datos recuperados para el departamento ${currentDepartment}:`, data);
+    
+    if (data && data[key]) {
+      callback(data[key]);
+    } else {
+      console.error(`La clave ${key} no se encontró en los datos.`);
+    }
+
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+  }
 }
 
-
+// Ejemplo de uso:
+obtenerDatos('usuarios', (datos) => {
+  console.log('Datos obtenidos:', datos);
+});
 
 
 
