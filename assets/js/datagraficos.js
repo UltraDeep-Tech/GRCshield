@@ -23,11 +23,20 @@ async function obtenerDatos(key, callback) {
 
     console.log(`Solicitando datos para el departamento: ${currentDepartment}`);
 
-    // Obtener el token del backend
-    const tokenResponse = await fetch('/api/get-firebase-token');
+    // Obtener el token del backend con headers apropiados
+    const tokenResponse = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-firebase-token', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      mode: 'cors' // Habilitar CORS
+    });
+
     if (!tokenResponse.ok) {
-      throw new Error('No se pudo obtener el token de autorización');
+      throw new Error(`Error al obtener token: ${tokenResponse.status}`);
     }
+
     const { token } = await tokenResponse.json();
 
     // Hacer la solicitud a Firebase con el token
@@ -55,6 +64,8 @@ async function obtenerDatos(key, callback) {
 
   } catch (error) {
     console.error('Error al obtener los datos:', error);
+    // Aquí podrías manejar el error de una manera más específica
+    // Por ejemplo, mostrando un mensaje al usuario
   }
 }
 
