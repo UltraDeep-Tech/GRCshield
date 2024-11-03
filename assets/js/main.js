@@ -468,189 +468,108 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+// Configuración de las notificaciones con SSE
+let notificationEventSource;
 
-// URL base del backend
-const BASE_URL = 'https://backend-grcshield-934866038204.us-central1.run.app';
-
-// Función para obtener notificaciones del servidor
-async function fetchNotifications() {
-    try {
-        const response = await fetch(`${BASE_URL}/api/notifications`);
-        if (response.ok) {
-            const notifications = await response.json();
-            updateNotificationsUI(notifications);
-        } else {
-            console.error('Failed to fetch notifications');
-        }
-    } catch (error) {
-        console.error('Error:', error);
+function initializeNotifications(department) {
+    // Cerrar conexión existente si hay una
+    if (notificationEventSource) {
+        notificationEventSource.close();
     }
+
+    // Crear nueva conexión SSE
+    notificationEventSource = new EventSource(`https://backend-grcshield-934866038204.us-central1.run.app/api/notifications/stream?department=${department}`);
+
+    // Manejar nuevas notificaciones
+    notificationEventSource.onmessage = function(event) {
+        const notification = JSON.parse(event.data);
+        handleNewNotification(notification);
+    };
+
+    notificationEventSource.onerror = function(error) {
+        console.error('SSE Error:', error);
+        notificationEventSource.close();
+        // Reintentar conexión después de 5 segundos
+        setTimeout(() => initializeNotifications(department), 5000);
+    };
 }
 
-// Función para crear una nueva notificación
-async function createNotification(message, type) {
-    try {
-        const response = await fetch(`${BASE_URL}/api/notifications`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message, type }),
-        });
-        if (response.ok) {
-            const result = await response.json();
-            console.log(result.message);
-            fetchNotifications(); // Actualizar la UI después de crear la notificación
-        } else {
-            console.error('Failed to create notification');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-// Nueva función para eliminar una notificación
-async function deleteNotification(id) {
-    try {
-        const response = await fetch(`${BASE_URL}/api/notifications/${id}`, {
-            method: 'DELETE'
-        });
-        if (response.ok) {
-            const result = await response.json();
-            console.log(result.message);
-            return true;
-        } else {
-            console.error('Failed to delete notification');
-            return false;
-        }
-    } catch (error) {
-        console.error('Error deleting notification:', error);
-        return false;
-    }
-}
-
-// Función para actualizar la UI con las notificaciones
-function updateNotificationsUI(notifications) {
+function handleNewNotification(notification) {
     const notificationsList = document.querySelector('.notifications');
-    const notificationBadge = document.querySelector('.badge-number');
-    const notificationHeader = document.querySelector('.dropdown-header');
+    const currentNotifications = Array.from(document.querySelectorAll('.notification-item'))
+        .map(item => item.dataset.id);
 
-    // Actualizar el número de notificaciones no leídas
-    const unreadCount = notifications.length;
-    updateNotificationBadge(unreadCount);
-
-    if (notificationHeader) {
-        notificationHeader.innerHTML = `
-            You have ${unreadCount} new notifications
-            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-        `;
+    // Evitar duplicados
+    if (currentNotifications.includes(notification.id)) {
+        return;
     }
 
-    if (notificationsList) {
-        // Limpiar la lista de notificaciones existente
-        notificationsList.innerHTML = '';
+    // Actualizar contador
+    updateNotificationBadge(currentNotifications.length + 1);
 
-        // Añadir el encabezado
-        notificationsList.innerHTML += `
-            <li class="dropdown-header">
-                You have ${unreadCount} new notifications
-                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+    // Agregar nueva notificación al principio de la lista
+    if (notificationsList) {
+        const severityClass = getSeverityClass(notification.severity);
+        const notificationHtml = `
+            <li class="notification-item ${severityClass}" data-id="${notification.id}">
+                <i class="${getIconClass(notification.type)}"></i>
+                <div>
+                    <h4>${notification.type}</h4>
+                    <p>${notification.message}</p>
+                    <p>${new Date(notification.timestamp).toLocaleString()}</p>
+                </div>
             </li>
             <li><hr class="dropdown-divider"></li>
         `;
 
-        // Añadir cada notificación
-        notifications.forEach((notification) => {
-            notificationsList.innerHTML += `
-                <li class="notification-item" data-id="${notification.id}">
-                    <i class="${getIconClass(notification.type)}"></i>
-                    <div>
-                        <h4>${notification.type}</h4>
-                        <p>${notification.message}</p>
-                        <p>${new Date(notification.timestamp).toLocaleString()}</p>
-                    </div>
-                </li>
-                <li><hr class="dropdown-divider"></li>
+        // Insertar después del header
+        const header = notificationsList.querySelector('.dropdown-header');
+        if (header) {
+            header.insertAdjacentHTML('afterend', notificationHtml);
+        }
+
+        // Actualizar el contador en el header
+        const headerText = notificationsList.querySelector('.dropdown-header');
+        if (headerText) {
+            headerText.innerHTML = `
+                You have ${currentNotifications.length + 1} new notifications
+                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             `;
-        });
+        }
 
-        // Añadir el footer
-        notificationsList.innerHTML += `
-            <li class="dropdown-footer text-center">
-                <a href="#">Show all notifications</a>
-            </li>
-        `;
-
-        // Añadir event listeners a las notificaciones
-        document.querySelectorAll('.notification-item').forEach((item) => {
-            item.addEventListener('click', async function() {
-                const notificationId = this.dataset.id;
-                const deleted = await deleteNotification(notificationId);
-                if (deleted) {
-                    this.remove(); // Eliminar la notificación de la UI inmediatamente
-                    updateUnreadCount();
-                }
+        // Agregar event listener a la nueva notificación
+        const newNotification = notificationsList.querySelector(`[data-id="${notification.id}"]`);
+        if (newNotification) {
+            newNotification.addEventListener('click', function() {
+                markNotificationAsRead(notification.id);
             });
-        });
-    }
-}
-
-// Función para actualizar el badge de notificaciones
-function updateNotificationBadge(count) {
-    const notificationBadge = document.querySelector('.badge-number');
-    if (notificationBadge) {
-        if (count > 0) {
-            notificationBadge.textContent = count;
-            notificationBadge.style.display = 'inline-block';
-        } else {
-            notificationBadge.style.display = 'none';
         }
     }
 }
 
-// Función para actualizar el conteo de notificaciones no leídas
-function updateUnreadCount() {
-    const unreadCount = document.querySelectorAll('.notification-item').length;
-    updateNotificationBadge(unreadCount);
-    const notificationHeader = document.querySelector('.dropdown-header');
-    if (notificationHeader) {
-        notificationHeader.innerHTML = `
-            You have ${unreadCount} new notifications
-            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-        `;
-    }
-}
-
-// Función para obtener la clase de icono basada en el tipo de notificación
-function getIconClass(type) {
-    switch(type) {
-        case 'blocked_requests':
-            return 'bi bi-exclamation-circle text-warning';
-        case 'abusive_user':
-            return 'bi bi-x-circle text-danger';
-        case 'hallucination':
-            return 'bi bi-check-circle text-success';
-        case 'report':
-            return 'bi bi-info-circle text-primary';
-        default:
-            return 'bi bi-bell text-secondary';
-    }
-}
-
-// Inicializar las notificaciones y configurar la actualización periódica
-document.addEventListener('DOMContentLoaded', function() {
-    const notificationDropdown = document.querySelector('.nav-item.dropdown .nav-link.nav-icon i.bi-bell');
-    const notificationBadge = document.querySelector('.badge-number');
-
-    // Detecta cuando se abre el menú de notificaciones
-    if (notificationDropdown) {
-        notificationDropdown.closest('.dropdown').addEventListener('show.bs.dropdown', function() {
-            if (notificationBadge) {
-                notificationBadge.style.display = 'none'; // Ocultar el badge cuando se abre el menú
-            }
+// Función para marcar como leída
+async function markNotificationAsRead(notificationId) {
+    try {
+        const response = await fetch(`${BASE_URL}/api/notifications/${notificationId}/read`, {
+            method: 'PUT'
         });
-    }
 
-    fetchNotifications();
-    setInterval(fetchNotifications, 30000); // Actualizar cada 30 segundos
+        if (response.ok) {
+            const notificationElement = document.querySelector(`[data-id="${notificationId}"]`);
+            if (notificationElement) {
+                notificationElement.remove();
+                updateUnreadCount();
+            }
+        }
+    } catch (error) {
+        console.error('Error marking notification as read:', error);
+    }
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    const department = localStorage.getItem('currentDepartment');
+    if (department) {
+        initializeNotifications(department);
+    }
 });
