@@ -485,17 +485,15 @@ class NotificationManager {
   }
 
   setupEventListeners() {
-      // Click en notificación para marcar como leída
       if (this.notificationsList) {
           this.notificationsList.addEventListener('click', (e) => {
               const item = e.target.closest('.notification-item');
-              if (item) {
+              if (item && item.dataset.id) {
                   this.markAsRead(item.dataset.id);
               }
           });
       }
 
-      // Click en campana para cargar/actualizar notificaciones
       if (this.bellIcon) {
           this.bellIcon.closest('.nav-link').addEventListener('click', (e) => {
               this.loadInitialNotifications();
@@ -506,12 +504,16 @@ class NotificationManager {
   async loadInitialNotifications() {
       try {
           const department = localStorage.getItem('currentDepartment');
-          if (!department) return;
+          if (!department) {
+              console.warn('No department specified');
+              return;
+          }
 
           const response = await fetch(`${this.baseUrl}/api/notifications?department=${department}`);
           if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
           
           const notifications = await response.json();
+          console.log('Received notifications:', notifications); // Para debugging
           this.updateNotifications(notifications);
       } catch (error) {
           console.error('Error loading notifications:', error);
@@ -520,18 +522,21 @@ class NotificationManager {
   }
 
   updateNotifications(notifications) {
-      this.notifications.clear();
-      this.notificationsList.innerHTML = '';
+      if (!Array.isArray(notifications)) {
+          console.error('Received invalid notifications data:', notifications);
+          return;
+      }
 
-      // Agregar header fijo
+      this.notifications.clear();
+      if (!this.notificationsList) return;
+
       this.notificationsList.innerHTML = `
           <li class="dropdown-header">
               Tienes <span class="notification-count">0</span> notificaciones nuevas
           </li>
       `;
 
-      // Filtrar y mostrar solo no leídas
-      const unreadNotifications = notifications.filter(n => !n.read);
+      const unreadNotifications = notifications.filter(n => !n.read && this.isValidNotification(n));
       
       if (unreadNotifications.length === 0) {
           this.showEmptyState();
@@ -545,19 +550,38 @@ class NotificationManager {
       this.updateNotificationCount();
   }
 
+  isValidNotification(notification) {
+      return notification && 
+             typeof notification === 'object' &&
+             notification.id &&
+             notification.message &&
+             notification.type &&
+             typeof notification.read === 'boolean';
+  }
+
   renderNotification(notification) {
+      if (!this.isValidNotification(notification)) {
+          console.error('Invalid notification:', notification);
+          return;
+      }
+
       const li = document.createElement('li');
       li.className = 'notification-item';
       li.dataset.id = notification.id;
       
+      // Usar valores por defecto si faltan propiedades
+      const severity = notification.severity || 'normal';
+      const type = notification.type || 'info';
+      const timestamp = notification.timestamp || new Date().toISOString();
+      
       li.innerHTML = `
-          <div class="${this.getSeverityClass(notification.severity)}">
+          <div class="${this.getSeverityClass(severity)}">
               <div>
-                  ${this.getIcon(notification.type)}
+                  ${this.getIcon(type)}
                   <div>
-                      <h4>${this.escapeHtml(notification.type)}</h4>
+                      <h4>${this.escapeHtml(type)}</h4>
                       <p>${this.escapeHtml(notification.message)}</p>
-                      <p>${this.formatTime(notification.timestamp)}</p>
+                      <p>${this.formatTime(timestamp)}</p>
                   </div>
               </div>
           </div>
@@ -568,8 +592,12 @@ class NotificationManager {
   }
 
   async markAsRead(notificationId) {
+      if (!notificationId) return;
+
       try {
           const department = localStorage.getItem('currentDepartment');
+          if (!department) return;
+
           const response = await fetch(
               `${this.baseUrl}/api/notifications/${notificationId}/read?department=${department}`,
               { method: 'PUT' }
@@ -583,7 +611,6 @@ class NotificationManager {
               }
               this.updateNotificationCount();
 
-              // Si no quedan notificaciones, mostrar estado vacío
               if (this.notifications.size === 0) {
                   this.showEmptyState();
               }
@@ -596,23 +623,21 @@ class NotificationManager {
   updateNotificationCount() {
       const count = this.notifications.size;
       
-      // Actualizar badge
       if (this.badge) {
           this.badge.textContent = count;
           this.badge.style.display = count > 0 ? '' : 'none';
       }
 
-      // Actualizar contador en el header
-      const countSpan = this.notificationsList.querySelector('.notification-count');
+      const countSpan = this.notificationsList?.querySelector('.notification-count');
       if (countSpan) {
           countSpan.textContent = count;
       }
   }
 
   showEmptyState() {
-      const header = this.notificationsList.querySelector('.dropdown-header');
+      const header = this.notificationsList?.querySelector('.dropdown-header');
       if (header) {
-          header.nextElementSibling?.remove(); // Remover contenido existente después del header
+          header.nextElementSibling?.remove();
       }
       
       const emptyLi = document.createElement('li');
@@ -621,11 +646,11 @@ class NotificationManager {
               <p class="text-center mb-0">No hay notificaciones nuevas</p>
           </div>
       `;
-      this.notificationsList.appendChild(emptyLi);
+      this.notificationsList?.appendChild(emptyLi);
   }
 
   showError(message) {
-      const header = this.notificationsList.querySelector('.dropdown-header');
+      const header = this.notificationsList?.querySelector('.dropdown-header');
       if (header) {
           header.nextElementSibling?.remove();
       }
@@ -636,10 +661,10 @@ class NotificationManager {
               <p class="text-center mb-0">${this.escapeHtml(message)}</p>
           </div>
       `;
-      this.notificationsList.appendChild(errorLi);
+      this.notificationsList?.appendChild(errorLi);
   }
 
-  getSeverityClass(severity) {
+  getSeverityClass(severity = 'normal') {
       const classes = {
           'normal': 'notification-normal',
           'alta': 'notification-high',
@@ -648,7 +673,7 @@ class NotificationManager {
       return classes[severity.toLowerCase()] || classes.normal;
   }
 
-  getIcon(type) {
+  getIcon(type = 'info') {
       const icons = {
           'alert': 'bi bi-exclamation-triangle-fill',
           'info': 'bi bi-info-circle-fill',
@@ -659,10 +684,15 @@ class NotificationManager {
   }
 
   formatTime(timestamp) {
-      return new Date(timestamp).toLocaleString();
+      try {
+          return new Date(timestamp).toLocaleString();
+      } catch (e) {
+          return new Date().toLocaleString();
+      }
   }
 
   escapeHtml(str) {
+      if (typeof str !== 'string') return '';
       const div = document.createElement('div');
       div.textContent = str;
       return div.innerHTML;
