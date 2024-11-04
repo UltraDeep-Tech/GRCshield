@@ -472,113 +472,106 @@ document.addEventListener('DOMContentLoaded', function() {
 
 class NotificationManager {
   constructor() {
-      this.eventSource = null;
+      this.baseUrl = 'https://backend-grcshield-934866038204.us-central1.run.app';
       this.notificationsList = document.querySelector('.notifications-list');
       this.notificationBadge = document.querySelector('.notification-badge');
-      this.notificationContainer = document.querySelector('.notifications-container');
-      this.baseUrl = 'https://backend-grcshield-934866038204.us-central1.run.app';
+      this.pollingInterval = null;
+      this.init();
+  }
+
+  init() {
       this.setupEventListeners();
+      this.startPolling();
   }
 
   setupEventListeners() {
-      document.addEventListener('DOMContentLoaded', () => {
-          this.initializeNotifications();
-      });
-
-      // Listener para marcar como leída al hacer click
       if (this.notificationsList) {
           this.notificationsList.addEventListener('click', (e) => {
-              const notificationItem = e.target.closest('.notification-item');
-              if (notificationItem) {
-                  const notificationId = notificationItem.dataset.id;
-                  this.markAsRead(notificationId);
+              const item = e.target.closest('.notification-item');
+              if (item) {
+                  this.markAsRead(item.dataset.id);
               }
           });
       }
   }
 
-  initializeNotifications() {
-      const department = localStorage.getItem('currentDepartment');
-      if (!department) {
-          console.error('No department specified');
-          return;
-      }
-
-      // Cerrar conexión existente si hay alguna
-      if (this.eventSource) {
-          this.eventSource.close();
-      }
-
-      // Iniciar nueva conexión SSE
-      const url = new URL(`${this.baseUrl}/api/notifications/stream`);
-      url.searchParams.append('department', department);
+  startPolling() {
+      // Cargar inmediatamente
+      this.fetchNotifications();
       
-      this.eventSource = new EventSource(url);
-
-      this.eventSource.onopen = () => {
-          console.log('Conexión SSE establecida');
-      };
-
-      this.eventSource.onmessage = (event) => {
-          const notification = JSON.parse(event.data);
-          this.handleNewNotification(notification);
-      };
-
-      this.eventSource.onerror = (error) => {
-          console.error('Error en conexión SSE:', error);
-          this.eventSource.close();
-          setTimeout(() => this.initializeNotifications(), 5000);
-      };
-
-      // Cargar notificaciones existentes
-      this.loadExistingNotifications(department);
+      // Configurar polling cada 30 segundos
+      this.pollingInterval = setInterval(() => {
+          this.fetchNotifications();
+      }, 30000);
   }
 
-  async loadExistingNotifications(department) {
+  stopPolling() {
+      if (this.pollingInterval) {
+          clearInterval(this.pollingInterval);
+          this.pollingInterval = null;
+      }
+  }
+
+  async fetchNotifications() {
       try {
+          const department = localStorage.getItem('currentDepartment');
+          if (!department) return;
+
           const response = await fetch(`${this.baseUrl}/api/notifications?department=${department}`);
           if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
           
           const notifications = await response.json();
-          notifications.forEach(notification => {
-              if (!notification.read) {
-                  this.renderNotification(notification);
-              }
-          });
-          
-          this.updateNotificationCount();
+          this.updateNotifications(notifications);
       } catch (error) {
-          console.error('Error al cargar notificaciones:', error);
+          console.error('Error fetching notifications:', error);
       }
   }
 
-  handleNewNotification(notification) {
-      const existingNotification = document.querySelector(`[data-id="${notification.id}"]`);
-      if (!existingNotification && !notification.read) {
-          this.renderNotification(notification);
-          this.showToast(notification);
-          this.updateNotificationCount();
+  updateNotifications(notifications) {
+      if (!this.notificationsList) return;
+
+      // Limpiar lista actual
+      this.notificationsList.innerHTML = '';
+
+      // Filtrar y mostrar solo notificaciones no leídas
+      const unreadNotifications = notifications.filter(n => !n.read);
+      
+      if (unreadNotifications.length === 0) {
+          this.notificationsList.innerHTML = `
+              <div class="no-notifications">
+                  No hay notificaciones nuevas
+              </div>
+          `;
+      } else {
+          unreadNotifications.forEach(notification => {
+              this.renderNotification(notification);
+          });
       }
+
+      this.updateNotificationCount(unreadNotifications.length);
   }
 
   renderNotification(notification) {
-      if (!this.notificationsList) return;
-
-      const notificationElement = document.createElement('div');
-      notificationElement.className = `notification-item ${this.getSeverityClass(notification.severity)}`;
-      notificationElement.dataset.id = notification.id;
+      const element = document.createElement('div');
+      element.className = `notification-item ${this.getSeverityClass(notification.severity)}`;
+      element.dataset.id = notification.id;
       
-      notificationElement.innerHTML = `
+      element.innerHTML = `
           <div class="notification-header">
-              <span class="notification-type">${this.getIcon(notification.type)} ${this.escapeHtml(notification.type)}</span>
-              <span class="notification-time">${this.formatTime(notification.timestamp)}</span>
+              <span class="notification-type">
+                  ${this.getIcon(notification.type)} 
+                  ${this.escapeHtml(notification.type)}
+              </span>
+              <span class="notification-time">
+                  ${this.formatTime(notification.timestamp)}
+              </span>
           </div>
           <div class="notification-body">
               <p>${this.escapeHtml(notification.message)}</p>
           </div>
       `;
 
-      this.notificationsList.insertBefore(notificationElement, this.notificationsList.firstChild);
+      this.notificationsList.appendChild(element);
   }
 
   async markAsRead(notificationId) {
@@ -590,81 +583,37 @@ class NotificationManager {
           );
 
           if (response.ok) {
-              const notification = document.querySelector(`[data-id="${notificationId}"]`);
-              if (notification) {
-                  notification.remove();
-                  this.updateNotificationCount();
-              }
+              this.fetchNotifications(); // Recargar notificaciones
           }
       } catch (error) {
-          console.error('Error al marcar como leída:', error);
+          console.error('Error marking notification as read:', error);
       }
   }
 
-  updateNotificationCount() {
-      const count = this.notificationsList.querySelectorAll('.notification-item').length;
-      
+  updateNotificationCount(count) {
       if (this.notificationBadge) {
           this.notificationBadge.textContent = count;
           this.notificationBadge.style.display = count > 0 ? 'block' : 'none';
       }
-
-      // Actualizar texto del header
-      const header = document.querySelector('.notifications-header');
-      if (header) {
-          header.textContent = count > 0 
-              ? `Tienes ${count} notificación${count !== 1 ? 'es' : ''} nueva${count !== 1 ? 's' : ''}`
-              : 'No hay notificaciones nuevas';
-      }
-  }
-
-  showToast(notification) {
-      const toastElement = document.createElement('div');
-      toastElement.className = `toast ${this.getSeverityClass(notification.severity)}`;
-      toastElement.setAttribute('role', 'alert');
-      toastElement.setAttribute('aria-live', 'assertive');
-      toastElement.setAttribute('aria-atomic', 'true');
-      
-      toastElement.innerHTML = `
-          <div class="toast-header">
-              <strong class="me-auto">${this.getIcon(notification.type)} ${this.escapeHtml(notification.type)}</strong>
-              <small>${this.formatTime(notification.timestamp)}</small>
-              <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-          </div>
-          <div class="toast-body">
-              ${this.escapeHtml(notification.message)}
-          </div>
-      `;
-
-      const toastContainer = document.querySelector('.toast-container');
-      if (toastContainer) {
-          toastContainer.appendChild(toastElement);
-          const toast = new bootstrap.Toast(toastElement, { autohide: true, delay: 5000 });
-          toast.show();
-      }
   }
 
   getSeverityClass(severity) {
-      const classes = {
-          'normal': 'severity-normal',
-          'alta': 'severity-high',
-          'crítica': 'severity-critical'
-      };
-      return classes[severity] || classes.normal;
+      return `severity-${severity.toLowerCase()}`;
   }
 
   getIcon(type) {
       const icons = {
-          'alert': '<i class="bi bi-exclamation-triangle-fill"></i>',
-          'info': '<i class="bi bi-info-circle-fill"></i>',
-          'warning': '<i class="bi bi-exclamation-circle-fill"></i>',
-          'success': '<i class="bi bi-check-circle-fill"></i>'
+          'alert': 'bi-exclamation-triangle-fill',
+          'info': 'bi-info-circle-fill',
+          'warning': 'bi-exclamation-circle-fill',
+          'success': 'bi-check-circle-fill'
       };
-      return icons[type] || icons.info;
+      const iconClass = icons[type.toLowerCase()] || icons.info;
+      return `<i class="bi ${iconClass}"></i>`;
   }
 
   formatTime(timestamp) {
-      return new Date(timestamp).toLocaleTimeString();
+      return new Date(timestamp).toLocaleString();
   }
 
   escapeHtml(str) {
@@ -674,5 +623,7 @@ class NotificationManager {
   }
 }
 
-// Inicializar el manejador de notificaciones
-const notificationManager = new NotificationManager();
+// Crear instancia cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+  window.notificationManager = new NotificationManager();
+});
