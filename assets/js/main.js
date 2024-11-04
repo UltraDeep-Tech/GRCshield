@@ -468,20 +468,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
-// notifications.js
 
 class NotificationManager {
   constructor() {
       this.baseUrl = 'https://backend-grcshield-934866038204.us-central1.run.app';
       this.notificationsList = document.querySelector('.notifications-list');
       this.notificationBadge = document.querySelector('.notification-badge');
-      this.pollingInterval = null;
+      this.lastCheck = new Date().toISOString();
+      this.notifications = [];
       this.init();
   }
 
   init() {
       this.setupEventListeners();
-      this.startPolling();
+      this.listenForNotifications();
   }
 
   setupEventListeners() {
@@ -493,62 +493,56 @@ class NotificationManager {
               }
           });
       }
+
+      // Escuchar eventos de notificaciones del backend
+      window.addEventListener('message', (event) => {
+          if (event.origin === this.baseUrl && event.data.type === 'notification') {
+              this.handleNewNotifications(event.data.notifications);
+          }
+      });
   }
 
-  startPolling() {
-      // Cargar inmediatamente
-      this.fetchNotifications();
-      
-      // Configurar polling cada 30 segundos
-      this.pollingInterval = setInterval(() => {
-          this.fetchNotifications();
-      }, 30000);
-  }
+  async listenForNotifications() {
+      const department = localStorage.getItem('currentDepartment');
+      if (!department) return;
 
-  stopPolling() {
-      if (this.pollingInterval) {
-          clearInterval(this.pollingInterval);
-          this.pollingInterval = null;
-      }
-  }
-
-  async fetchNotifications() {
       try {
-          const department = localStorage.getItem('currentDepartment');
-          if (!department) return;
+          const response = await fetch(`${this.baseUrl}/api/notifications/poll`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  department,
+                  lastCheck: this.lastCheck
+              })
+          });
 
-          const response = await fetch(`${this.baseUrl}/api/notifications?department=${department}`);
           if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
           
-          const notifications = await response.json();
-          this.updateNotifications(notifications);
+          const data = await response.json();
+          if (data.notifications && data.notifications.length > 0) {
+              this.handleNewNotifications(data.notifications);
+          }
+          
+          // Actualizar timestamp de última verificación
+          this.lastCheck = data.timestamp;
       } catch (error) {
-          console.error('Error fetching notifications:', error);
+          console.error('Error receiving notifications:', error);
       }
   }
 
-  updateNotifications(notifications) {
-      if (!this.notificationsList) return;
-
-      // Limpiar lista actual
-      this.notificationsList.innerHTML = '';
-
-      // Filtrar y mostrar solo notificaciones no leídas
-      const unreadNotifications = notifications.filter(n => !n.read);
-      
-      if (unreadNotifications.length === 0) {
-          this.notificationsList.innerHTML = `
-              <div class="no-notifications">
-                  No hay notificaciones nuevas
-              </div>
-          `;
-      } else {
-          unreadNotifications.forEach(notification => {
+  handleNewNotifications(newNotifications) {
+      newNotifications.forEach(notification => {
+          // Evitar duplicados
+          if (!this.notifications.some(n => n.id === notification.id)) {
+              this.notifications.push(notification);
               this.renderNotification(notification);
-          });
-      }
+              this.showToast(notification);
+          }
+      });
 
-      this.updateNotificationCount(unreadNotifications.length);
+      this.updateNotificationCount();
   }
 
   renderNotification(notification) {
@@ -571,7 +565,29 @@ class NotificationManager {
           </div>
       `;
 
-      this.notificationsList.appendChild(element);
+      this.notificationsList.insertBefore(element, this.notificationsList.firstChild);
+  }
+
+  showToast(notification) {
+      const toast = document.createElement('div');
+      toast.className = `toast ${this.getSeverityClass(notification.severity)}`;
+      toast.setAttribute('role', 'alert');
+      toast.innerHTML = `
+          <div class="toast-header">
+              <strong class="me-auto">${this.getIcon(notification.type)} Nueva notificación</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+          </div>
+          <div class="toast-body">
+              ${this.escapeHtml(notification.message)}
+          </div>
+      `;
+
+      const toastContainer = document.querySelector('.toast-container');
+      if (toastContainer) {
+          toastContainer.appendChild(toast);
+          const bsToast = new bootstrap.Toast(toast, { delay: 5000 });
+          bsToast.show();
+      }
   }
 
   async markAsRead(notificationId) {
@@ -583,17 +599,33 @@ class NotificationManager {
           );
 
           if (response.ok) {
-              this.fetchNotifications(); // Recargar notificaciones
+              // Remover de la lista local y actualizar UI
+              this.notifications = this.notifications.filter(n => n.id !== notificationId);
+              const element = document.querySelector(`[data-id="${notificationId}"]`);
+              if (element) {
+                  element.remove();
+                  this.updateNotificationCount();
+              }
           }
       } catch (error) {
           console.error('Error marking notification as read:', error);
       }
   }
 
-  updateNotificationCount(count) {
+  updateNotificationCount() {
+      const count = this.notifications.filter(n => !n.read).length;
       if (this.notificationBadge) {
           this.notificationBadge.textContent = count;
           this.notificationBadge.style.display = count > 0 ? 'block' : 'none';
+      }
+
+      // Actualizar texto si no hay notificaciones
+      if (count === 0 && this.notificationsList) {
+          this.notificationsList.innerHTML = `
+              <div class="no-notifications">
+                  No hay notificaciones nuevas
+              </div>
+          `;
       }
   }
 
@@ -623,7 +655,7 @@ class NotificationManager {
   }
 }
 
-// Crear instancia cuando el DOM esté listo
+// Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
   window.notificationManager = new NotificationManager();
 });
