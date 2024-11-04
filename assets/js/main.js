@@ -472,17 +472,16 @@ document.addEventListener('DOMContentLoaded', function() {
 class NotificationManager {
   constructor() {
       this.baseUrl = 'https://backend-grcshield-934866038204.us-central1.run.app';
-      this.notificationsList = document.querySelector('.notifications-list');
-      this.notificationBadge = document.querySelector('.notification-badge');
-      this.notificationButton = document.querySelector('.notification-button');
-      this.notifications = new Map(); // Para almacenar notificaciones
+      this.bellIcon = document.querySelector('.bellnotification');
+      this.badge = document.querySelector('.badge-number');
+      this.notificationsList = document.querySelector('.notifications');
+      this.notifications = new Map();
       this.init();
   }
 
   init() {
       this.setupEventListeners();
       this.loadInitialNotifications();
-      this.setupNotificationChannel();
   }
 
   setupEventListeners() {
@@ -496,23 +495,12 @@ class NotificationManager {
           });
       }
 
-      // Click en botón para cargar/actualizar notificaciones
-      if (this.notificationButton) {
-          this.notificationButton.addEventListener('click', () => {
+      // Click en campana para cargar/actualizar notificaciones
+      if (this.bellIcon) {
+          this.bellIcon.closest('.nav-link').addEventListener('click', (e) => {
               this.loadInitialNotifications();
           });
       }
-  }
-
-  setupNotificationChannel() {
-      // Crear un canal de eventos personalizado
-      this.notificationChannel = new BroadcastChannel('notifications');
-      
-      this.notificationChannel.onmessage = (event) => {
-          if (event.data.type === 'newNotification') {
-              this.handleNewNotification(event.data.notification);
-          }
-      };
   }
 
   async loadInitialNotifications() {
@@ -532,9 +520,15 @@ class NotificationManager {
   }
 
   updateNotifications(notifications) {
-      // Limpiar notificaciones actuales
       this.notifications.clear();
       this.notificationsList.innerHTML = '';
+
+      // Agregar header fijo
+      this.notificationsList.innerHTML = `
+          <li class="dropdown-header">
+              Tienes <span class="notification-count">0</span> notificaciones nuevas
+          </li>
+      `;
 
       // Filtrar y mostrar solo no leídas
       const unreadNotifications = notifications.filter(n => !n.read);
@@ -551,36 +545,26 @@ class NotificationManager {
       this.updateNotificationCount();
   }
 
-  handleNewNotification(notification) {
-      if (!this.notifications.has(notification.id) && !notification.read) {
-          this.notifications.set(notification.id, notification);
-          this.renderNotification(notification);
-          this.showToast(notification);
-          this.updateNotificationCount();
-      }
-  }
-
   renderNotification(notification) {
-      const element = document.createElement('div');
-      element.className = `notification-item ${this.getSeverityClass(notification.severity)}`;
-      element.dataset.id = notification.id;
+      const li = document.createElement('li');
+      li.className = 'notification-item';
+      li.dataset.id = notification.id;
       
-      element.innerHTML = `
-          <div class="notification-header">
-              <span class="notification-type">
-                  ${this.getIcon(notification.type)} 
-                  ${this.escapeHtml(notification.type)}
-              </span>
-              <span class="notification-time">
-                  ${this.formatTime(notification.timestamp)}
-              </span>
+      li.innerHTML = `
+          <div class="${this.getSeverityClass(notification.severity)}">
+              <div>
+                  ${this.getIcon(notification.type)}
+                  <div>
+                      <h4>${this.escapeHtml(notification.type)}</h4>
+                      <p>${this.escapeHtml(notification.message)}</p>
+                      <p>${this.formatTime(notification.timestamp)}</p>
+                  </div>
+              </div>
           </div>
-          <div class="notification-body">
-              <p>${this.escapeHtml(notification.message)}</p>
-          </div>
+          <hr class="dropdown-divider">
       `;
 
-      this.notificationsList.insertBefore(element, this.notificationsList.firstChild);
+      this.notificationsList.appendChild(li);
   }
 
   async markAsRead(notificationId) {
@@ -598,6 +582,11 @@ class NotificationManager {
                   element.remove();
               }
               this.updateNotificationCount();
+
+              // Si no quedan notificaciones, mostrar estado vacío
+              if (this.notifications.size === 0) {
+                  this.showEmptyState();
+              }
           }
       } catch (error) {
           console.error('Error marking notification as read:', error);
@@ -606,72 +595,67 @@ class NotificationManager {
 
   updateNotificationCount() {
       const count = this.notifications.size;
-      if (this.notificationBadge) {
-          this.notificationBadge.textContent = count;
-          this.notificationBadge.style.display = count > 0 ? 'block' : 'none';
+      
+      // Actualizar badge
+      if (this.badge) {
+          this.badge.textContent = count;
+          this.badge.style.display = count > 0 ? '' : 'none';
       }
 
-      if (count === 0) {
-          this.showEmptyState();
+      // Actualizar contador en el header
+      const countSpan = this.notificationsList.querySelector('.notification-count');
+      if (countSpan) {
+          countSpan.textContent = count;
       }
   }
 
   showEmptyState() {
-      if (this.notificationsList) {
-          this.notificationsList.innerHTML = `
-              <div class="no-notifications">
-                  No hay notificaciones nuevas
-              </div>
-          `;
+      const header = this.notificationsList.querySelector('.dropdown-header');
+      if (header) {
+          header.nextElementSibling?.remove(); // Remover contenido existente después del header
       }
+      
+      const emptyLi = document.createElement('li');
+      emptyLi.innerHTML = `
+          <div class="notification-item">
+              <p class="text-center mb-0">No hay notificaciones nuevas</p>
+          </div>
+      `;
+      this.notificationsList.appendChild(emptyLi);
   }
 
   showError(message) {
-      if (this.notificationsList) {
-          this.notificationsList.innerHTML = `
-              <div class="notification-error">
-                  ${this.escapeHtml(message)}
-              </div>
-          `;
+      const header = this.notificationsList.querySelector('.dropdown-header');
+      if (header) {
+          header.nextElementSibling?.remove();
       }
-  }
-
-  showToast(notification) {
-      const toast = document.createElement('div');
-      toast.className = `toast ${this.getSeverityClass(notification.severity)}`;
-      toast.setAttribute('role', 'alert');
-      toast.innerHTML = `
-          <div class="toast-header">
-              <strong class="me-auto">${this.getIcon(notification.type)} Nueva notificación</strong>
-              <small>${this.formatTime(notification.timestamp)}</small>
-              <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-          </div>
-          <div class="toast-body">
-              ${this.escapeHtml(notification.message)}
+      
+      const errorLi = document.createElement('li');
+      errorLi.innerHTML = `
+          <div class="notification-item text-danger">
+              <p class="text-center mb-0">${this.escapeHtml(message)}</p>
           </div>
       `;
-
-      const toastContainer = document.querySelector('.toast-container');
-      if (toastContainer) {
-          toastContainer.appendChild(toast);
-          const bsToast = new bootstrap.Toast(toast, { delay: 5000 });
-          bsToast.show();
-      }
+      this.notificationsList.appendChild(errorLi);
   }
 
   getSeverityClass(severity) {
-      return `severity-${severity.toLowerCase()}`;
+      const classes = {
+          'normal': 'notification-normal',
+          'alta': 'notification-high',
+          'crítica': 'notification-critical'
+      };
+      return classes[severity.toLowerCase()] || classes.normal;
   }
 
   getIcon(type) {
       const icons = {
-          'alert': 'bi-exclamation-triangle-fill',
-          'info': 'bi-info-circle-fill',
-          'warning': 'bi-exclamation-circle-fill',
-          'success': 'bi-check-circle-fill'
+          'alert': 'bi bi-exclamation-triangle-fill',
+          'info': 'bi bi-info-circle-fill',
+          'warning': 'bi bi-exclamation-circle-fill',
+          'success': 'bi bi-check-circle-fill'
       };
-      const iconClass = icons[type.toLowerCase()] || icons.info;
-      return `<i class="bi ${iconClass}"></i>`;
+      return `<i class="${icons[type.toLowerCase()] || icons.info}"></i>`;
   }
 
   formatTime(timestamp) {
