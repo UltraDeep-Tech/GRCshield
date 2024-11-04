@@ -468,108 +468,211 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
-// Configuración de las notificaciones con SSE
-let notificationEventSource;
+// notifications.js
 
-function initializeNotifications(department) {
-    // Cerrar conexión existente si hay una
-    if (notificationEventSource) {
-        notificationEventSource.close();
-    }
+class NotificationManager {
+  constructor() {
+      this.eventSource = null;
+      this.notificationsList = document.querySelector('.notifications-list');
+      this.notificationBadge = document.querySelector('.notification-badge');
+      this.notificationContainer = document.querySelector('.notifications-container');
+      this.baseUrl = 'https://backend-grcshield-934866038204.us-central1.run.app';
+      this.setupEventListeners();
+  }
 
-    // Crear nueva conexión SSE
-    notificationEventSource = new EventSource(`https://backend-grcshield-934866038204.us-central1.run.app/api/notifications/stream?department=${department}`);
+  setupEventListeners() {
+      document.addEventListener('DOMContentLoaded', () => {
+          this.initializeNotifications();
+      });
 
-    // Manejar nuevas notificaciones
-    notificationEventSource.onmessage = function(event) {
-        const notification = JSON.parse(event.data);
-        handleNewNotification(notification);
-    };
+      // Listener para marcar como leída al hacer click
+      if (this.notificationsList) {
+          this.notificationsList.addEventListener('click', (e) => {
+              const notificationItem = e.target.closest('.notification-item');
+              if (notificationItem) {
+                  const notificationId = notificationItem.dataset.id;
+                  this.markAsRead(notificationId);
+              }
+          });
+      }
+  }
 
-    notificationEventSource.onerror = function(error) {
-        console.error('SSE Error:', error);
-        notificationEventSource.close();
-        // Reintentar conexión después de 5 segundos
-        setTimeout(() => initializeNotifications(department), 5000);
-    };
+  initializeNotifications() {
+      const department = localStorage.getItem('currentDepartment');
+      if (!department) {
+          console.error('No department specified');
+          return;
+      }
+
+      // Cerrar conexión existente si hay alguna
+      if (this.eventSource) {
+          this.eventSource.close();
+      }
+
+      // Iniciar nueva conexión SSE
+      const url = new URL(`${this.baseUrl}/api/notifications/stream`);
+      url.searchParams.append('department', department);
+      
+      this.eventSource = new EventSource(url);
+
+      this.eventSource.onopen = () => {
+          console.log('Conexión SSE establecida');
+      };
+
+      this.eventSource.onmessage = (event) => {
+          const notification = JSON.parse(event.data);
+          this.handleNewNotification(notification);
+      };
+
+      this.eventSource.onerror = (error) => {
+          console.error('Error en conexión SSE:', error);
+          this.eventSource.close();
+          setTimeout(() => this.initializeNotifications(), 5000);
+      };
+
+      // Cargar notificaciones existentes
+      this.loadExistingNotifications(department);
+  }
+
+  async loadExistingNotifications(department) {
+      try {
+          const response = await fetch(`${this.baseUrl}/api/notifications?department=${department}`);
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          
+          const notifications = await response.json();
+          notifications.forEach(notification => {
+              if (!notification.read) {
+                  this.renderNotification(notification);
+              }
+          });
+          
+          this.updateNotificationCount();
+      } catch (error) {
+          console.error('Error al cargar notificaciones:', error);
+      }
+  }
+
+  handleNewNotification(notification) {
+      const existingNotification = document.querySelector(`[data-id="${notification.id}"]`);
+      if (!existingNotification && !notification.read) {
+          this.renderNotification(notification);
+          this.showToast(notification);
+          this.updateNotificationCount();
+      }
+  }
+
+  renderNotification(notification) {
+      if (!this.notificationsList) return;
+
+      const notificationElement = document.createElement('div');
+      notificationElement.className = `notification-item ${this.getSeverityClass(notification.severity)}`;
+      notificationElement.dataset.id = notification.id;
+      
+      notificationElement.innerHTML = `
+          <div class="notification-header">
+              <span class="notification-type">${this.getIcon(notification.type)} ${this.escapeHtml(notification.type)}</span>
+              <span class="notification-time">${this.formatTime(notification.timestamp)}</span>
+          </div>
+          <div class="notification-body">
+              <p>${this.escapeHtml(notification.message)}</p>
+          </div>
+      `;
+
+      this.notificationsList.insertBefore(notificationElement, this.notificationsList.firstChild);
+  }
+
+  async markAsRead(notificationId) {
+      try {
+          const department = localStorage.getItem('currentDepartment');
+          const response = await fetch(
+              `${this.baseUrl}/api/notifications/${notificationId}/read?department=${department}`,
+              { method: 'PUT' }
+          );
+
+          if (response.ok) {
+              const notification = document.querySelector(`[data-id="${notificationId}"]`);
+              if (notification) {
+                  notification.remove();
+                  this.updateNotificationCount();
+              }
+          }
+      } catch (error) {
+          console.error('Error al marcar como leída:', error);
+      }
+  }
+
+  updateNotificationCount() {
+      const count = this.notificationsList.querySelectorAll('.notification-item').length;
+      
+      if (this.notificationBadge) {
+          this.notificationBadge.textContent = count;
+          this.notificationBadge.style.display = count > 0 ? 'block' : 'none';
+      }
+
+      // Actualizar texto del header
+      const header = document.querySelector('.notifications-header');
+      if (header) {
+          header.textContent = count > 0 
+              ? `Tienes ${count} notificación${count !== 1 ? 'es' : ''} nueva${count !== 1 ? 's' : ''}`
+              : 'No hay notificaciones nuevas';
+      }
+  }
+
+  showToast(notification) {
+      const toastElement = document.createElement('div');
+      toastElement.className = `toast ${this.getSeverityClass(notification.severity)}`;
+      toastElement.setAttribute('role', 'alert');
+      toastElement.setAttribute('aria-live', 'assertive');
+      toastElement.setAttribute('aria-atomic', 'true');
+      
+      toastElement.innerHTML = `
+          <div class="toast-header">
+              <strong class="me-auto">${this.getIcon(notification.type)} ${this.escapeHtml(notification.type)}</strong>
+              <small>${this.formatTime(notification.timestamp)}</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+          </div>
+          <div class="toast-body">
+              ${this.escapeHtml(notification.message)}
+          </div>
+      `;
+
+      const toastContainer = document.querySelector('.toast-container');
+      if (toastContainer) {
+          toastContainer.appendChild(toastElement);
+          const toast = new bootstrap.Toast(toastElement, { autohide: true, delay: 5000 });
+          toast.show();
+      }
+  }
+
+  getSeverityClass(severity) {
+      const classes = {
+          'normal': 'severity-normal',
+          'alta': 'severity-high',
+          'crítica': 'severity-critical'
+      };
+      return classes[severity] || classes.normal;
+  }
+
+  getIcon(type) {
+      const icons = {
+          'alert': '<i class="bi bi-exclamation-triangle-fill"></i>',
+          'info': '<i class="bi bi-info-circle-fill"></i>',
+          'warning': '<i class="bi bi-exclamation-circle-fill"></i>',
+          'success': '<i class="bi bi-check-circle-fill"></i>'
+      };
+      return icons[type] || icons.info;
+  }
+
+  formatTime(timestamp) {
+      return new Date(timestamp).toLocaleTimeString();
+  }
+
+  escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+  }
 }
 
-function handleNewNotification(notification) {
-    const notificationsList = document.querySelector('.notifications');
-    const currentNotifications = Array.from(document.querySelectorAll('.notification-item'))
-        .map(item => item.dataset.id);
-
-    // Evitar duplicados
-    if (currentNotifications.includes(notification.id)) {
-        return;
-    }
-
-    // Actualizar contador
-    updateNotificationBadge(currentNotifications.length + 1);
-
-    // Agregar nueva notificación al principio de la lista
-    if (notificationsList) {
-        const severityClass = getSeverityClass(notification.severity);
-        const notificationHtml = `
-            <li class="notification-item ${severityClass}" data-id="${notification.id}">
-                <i class="${getIconClass(notification.type)}"></i>
-                <div>
-                    <h4>${notification.type}</h4>
-                    <p>${notification.message}</p>
-                    <p>${new Date(notification.timestamp).toLocaleString()}</p>
-                </div>
-            </li>
-            <li><hr class="dropdown-divider"></li>
-        `;
-
-        // Insertar después del header
-        const header = notificationsList.querySelector('.dropdown-header');
-        if (header) {
-            header.insertAdjacentHTML('afterend', notificationHtml);
-        }
-
-        // Actualizar el contador en el header
-        const headerText = notificationsList.querySelector('.dropdown-header');
-        if (headerText) {
-            headerText.innerHTML = `
-                You have ${currentNotifications.length + 1} new notifications
-                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            `;
-        }
-
-        // Agregar event listener a la nueva notificación
-        const newNotification = notificationsList.querySelector(`[data-id="${notification.id}"]`);
-        if (newNotification) {
-            newNotification.addEventListener('click', function() {
-                markNotificationAsRead(notification.id);
-            });
-        }
-    }
-}
-
-// Función para marcar como leída
-async function markNotificationAsRead(notificationId) {
-    try {
-        const response = await fetch(`${BASE_URL}/api/notifications/${notificationId}/read`, {
-            method: 'PUT'
-        });
-
-        if (response.ok) {
-            const notificationElement = document.querySelector(`[data-id="${notificationId}"]`);
-            if (notificationElement) {
-                notificationElement.remove();
-                updateUnreadCount();
-            }
-        }
-    } catch (error) {
-        console.error('Error marking notification as read:', error);
-    }
-}
-
-// Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
-    const department = localStorage.getItem('currentDepartment');
-    if (department) {
-        initializeNotifications(department);
-    }
-});
+// Inicializar el manejador de notificaciones
+const notificationManager = new NotificationManager();
