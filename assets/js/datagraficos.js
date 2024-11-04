@@ -21,35 +21,50 @@ async function obtenerDatos(key, callback) {
       localStorage.setItem('currentDepartment', currentDepartment);
     }
 
-    console.log(`Solicitando datos para el departamento: ${currentDepartment}`);
+    // Obtener el token o renovarlo si ha expirado
+    let firebaseToken = localStorage.getItem('firebaseToken');
+    let tokenExpiry = localStorage.getItem('firebaseTokenExpiry');
+    
+    if (!firebaseToken || !tokenExpiry || Date.now() > parseInt(tokenExpiry)) {
+      const tokenResponse = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-firebase-token', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        credentials: 'include'
+      });
 
-    // Obtener el token del backend con headers apropiados
-    const tokenResponse = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-firebase-token', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      mode: 'cors' // Habilitar CORS
-    });
+      if (!tokenResponse.ok) {
+        throw new Error(`Error al obtener token: ${tokenResponse.status}`);
+      }
 
-    if (!tokenResponse.ok) {
-      throw new Error(`Error al obtener token: ${tokenResponse.status}`);
+      const tokenData = await tokenResponse.json();
+      firebaseToken = tokenData.token;
+      
+      // Guardar el token y su tiempo de expiración
+      localStorage.setItem('firebaseToken', firebaseToken);
+      localStorage.setItem('firebaseTokenExpiry', Date.now() + (tokenData.expires_in * 1000));
     }
-
-    const { token } = await tokenResponse.json();
 
     // Hacer la solicitud a Firebase con el token
     const response = await fetch(
-      `https://ultradeeptech-default-rtdb.firebaseio.com/${currentDepartment}.json?auth=${token}`,
+      `https://ultradeeptech-default-rtdb.firebaseio.com/${currentDepartment}.json?auth=${firebaseToken}`,
       {
         headers: {
+          'Authorization': `Bearer ${firebaseToken}`,
           'Content-Type': 'application/json'
         }
       }
     );
 
     if (!response.ok) {
+      if (response.status === 401) {
+        // Token expirado o inválido, eliminar token y reintentar
+        localStorage.removeItem('firebaseToken');
+        localStorage.removeItem('firebaseTokenExpiry');
+        return obtenerDatos(key, callback); // Recursión para reintentar
+      }
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
@@ -64,15 +79,47 @@ async function obtenerDatos(key, callback) {
 
   } catch (error) {
     console.error('Error al obtener los datos:', error);
-    // Aquí podrías manejar el error de una manera más específica
-    // Por ejemplo, mostrando un mensaje al usuario
+    // Implementar retry con backoff exponencial
+    if (!window.retryCount) {
+      window.retryCount = 0;
+    }
+    if (window.retryCount < 3) {
+      window.retryCount++;
+      const delay = Math.pow(2, window.retryCount) * 1000;
+      console.log(`Reintentando en ${delay/1000} segundos...`);
+      setTimeout(() => obtenerDatos(key, callback), delay);
+    }
   }
 }
 
-// Ejemplo de uso:
-obtenerDatos('usuarios', (datos) => {
-  console.log('Datos obtenidos:', datos);
-});
+// Función para renovar el token periódicamente
+function initTokenRenewal() {
+  setInterval(async () => {
+    const tokenExpiry = localStorage.getItem('firebaseTokenExpiry');
+    if (tokenExpiry && Date.now() > (parseInt(tokenExpiry) - 300000)) { // 5 minutos antes de expirar
+      try {
+        const tokenResponse = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-firebase-token', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include'
+        });
+
+        if (tokenResponse.ok) {
+          const tokenData = await tokenResponse.json();
+          localStorage.setItem('firebaseToken', tokenData.token);
+          localStorage.setItem('firebaseTokenExpiry', Date.now() + (tokenData.expires_in * 1000));
+        }
+      } catch (error) {
+        console.error('Error renovando token:', error);
+      }
+    }
+  }, 60000); // Verificar cada minuto
+}
+
+// Iniciar renovación de token cuando se carga la página
+document.addEventListener('DOMContentLoaded', initTokenRenewal);
 
 
 
