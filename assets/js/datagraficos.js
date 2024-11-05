@@ -5,7 +5,6 @@ function updateAllChartColors(isDarkMode) {
   });
 }
 
-// Función principal para obtener datos
 async function obtenerDatos(key, callback) {
   try {
     let currentDepartment = localStorage.getItem('currentDepartment');
@@ -21,7 +20,7 @@ async function obtenerDatos(key, callback) {
       localStorage.setItem('currentDepartment', currentDepartment);
     }
 
-    // Hacer la solicitud al backend usando el nuevo endpoint
+    // Hacer la solicitud al backend
     const url = new URL('https://backend-grcshield-934866038204.us-central1.run.app/api/firebase-data');
     url.searchParams.append('department', currentDepartment);
     url.searchParams.append('user_department', currentDepartment);
@@ -42,10 +41,16 @@ async function obtenerDatos(key, callback) {
 
     const result = await response.json();
     
-    if (result.data && result.data[key]) {
-      callback(result.data[key]);
+    // Verifica si los datos existen en la estructura específica de Firebase
+    if (result.data) {
+      const firebaseData = result.data;
+      if (key in firebaseData) {
+        callback(firebaseData[key]);
+      } else {
+        console.warn(`La clave ${key} no se encontró en los datos de Firebase`);
+      }
     } else {
-      console.warn(`La clave ${key} no se encontró en los datos.`);
+      console.warn('No se encontraron datos en Firebase');
     }
 
   } catch (error) {
@@ -75,8 +80,7 @@ async function obtenerDatos(key, callback) {
 // Hacer la función disponible globalmente
 window.obtenerDatos = obtenerDatos;
 
-// Si estás usando módulos, también puedes exportarla
-export { obtenerDatos };
+
 
 function updateAllChartColors(isDarkMode) {
   Object.values(Chart.instances).forEach(chart => {
