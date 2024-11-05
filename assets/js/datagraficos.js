@@ -5,22 +5,27 @@ function updateAllChartColors(isDarkMode) {
   });
 }
 
-// Función principal para obtener datos de Firebase
-async function obtenerDatosFirebase(key) {
+// Función principal para obtener datos
+async function obtenerDatos(key, callback) {
   try {
-    // Obtener el departamento actual del localStorage
-    const currentDepartment = localStorage.getItem('currentDepartment');
-    
-    if (!currentDepartment) {
-      throw new Error('No hay departamento seleccionado');
+    let currentDepartment = localStorage.getItem('currentDepartment');
+    let authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
+
+    if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
+      console.warn('Departamento actual no válido o no autorizado');
+      currentDepartment = authorizedDepartments[0];
+      if (!currentDepartment) {
+        console.error('No hay departamentos autorizados');
+        return;
+      }
+      localStorage.setItem('currentDepartment', currentDepartment);
     }
 
-    // Construir la URL con los parámetros necesarios
+    // Hacer la solicitud al backend usando el nuevo endpoint
     const url = new URL('https://backend-grcshield-934866038204.us-central1.run.app/api/firebase-data');
     url.searchParams.append('department', currentDepartment);
     url.searchParams.append('user_department', currentDepartment);
 
-    // Realizar la petición
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -36,81 +41,42 @@ async function obtenerDatosFirebase(key) {
     }
 
     const result = await response.json();
-
-    // Verificar si los datos existen y devolver los datos específicos si se proporciona una key
-    if (result.data) {
-      return key ? result.data[key] : result.data;
+    
+    if (result.data && result.data[key]) {
+      callback(result.data[key]);
     } else {
-      console.warn('No se encontraron datos en la respuesta');
-      return null;
+      console.warn(`La clave ${key} no se encontró en los datos.`);
     }
 
   } catch (error) {
-    console.error('Error al obtener datos:', error);
-    return await manejarError(error, key);
-  }
-}
-
-// Función para manejar errores y reintentos
-async function manejarError(error, key) {
-  // Contador de reintentos almacenado en el localStorage
-  let retryCount = parseInt(localStorage.getItem('retryCount') || '0');
-  
-  if (retryCount < 3) {
-    retryCount++;
-    localStorage.setItem('retryCount', retryCount.toString());
+    console.error('Error al obtener los datos:', error);
     
-    const delay = Math.pow(2, retryCount) * 1000;
-    console.log(`Reintentando en ${delay/1000} segundos... (intento ${retryCount}/3)`);
-    
-    // Esperar y reintentar
-    await new Promise(resolve => setTimeout(resolve, delay));
-    return obtenerDatosFirebase(key);
-  } else {
-    // Resetear el contador después de agotar los reintentos
-    localStorage.removeItem('retryCount');
-    throw new Error('Máximo número de reintentos alcanzado');
-  }
-}
-
-// Función para verificar la conexión
-async function verificarConexion() {
-  try {
-    const response = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/health', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Origin': 'https://grcshield.ultradeep.tech'
-      },
-      credentials: 'include'
-    });
-    return response.ok;
-  } catch {
-    return false;
-  }
-}
-
-// Ejemplo de uso con callback
-async function obtenerDatos(key, callback) {
-  try {
-    const data = await obtenerDatosFirebase(key);
-    if (data && callback) {
-      callback(data);
+    if (!window.retryCount) {
+      window.retryCount = 0;
     }
-    return data;
-  } catch (error) {
-    console.error('Error en obtenerDatos:', error);
-    throw error;
+    
+    if (window.retryCount < 3) {
+      window.retryCount++;
+      const delay = Math.pow(2, window.retryCount) * 1000;
+      console.log(`Reintentando en ${delay/1000} segundos... (intento ${window.retryCount}/3)`);
+      
+      return new Promise(resolve => {
+        setTimeout(() => {
+          obtenerDatos(key, callback).then(resolve);
+        }, delay);
+      });
+    } else {
+      window.retryCount = 0;
+      throw new Error('Máximo número de reintentos alcanzado');
+    }
   }
 }
 
-// Hacer las funciones disponibles globalmente
+// Hacer la función disponible globalmente
 window.obtenerDatos = obtenerDatos;
-window.verificarConexion = verificarConexion;
 
-// Exportar las funciones si se usa como módulo
-export { obtenerDatos, verificarConexion, obtenerDatosFirebase };
-
+// Si estás usando módulos, también puedes exportarla
+export { obtenerDatos };
 
 function updateAllChartColors(isDarkMode) {
   Object.values(Chart.instances).forEach(chart => {
