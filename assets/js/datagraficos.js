@@ -6,168 +6,74 @@ function updateAllChartColors(isDarkMode) {
 }
 
 
-// Configuración y constantes
 const CONFIG = {
   API_URL: 'https://backend-grcshield-934866038204.us-central1.run.app',
-  FIREBASE_URL: 'https://ultradeeptech-default-rtdb.firebaseio.com',
-  TOKEN_REFRESH_MARGIN: 300000, // 5 minutos en ms
-  MAX_RETRIES: 3,
-  RETRY_INTERVAL: 1000, // Intervalo base para backoff exponencial
-  TOKEN_CHECK_INTERVAL: 60000 // 1 minuto en ms
+  RETRY_ATTEMPTS: 3,
+  RETRY_DELAY: 1000
 };
 
-class FirebaseDataService {
-  constructor() {
-    this.retryCount = 0;
-    this.initTokenRenewal();
-  }
+// Utilidad para logging
+const Logger = {
+  error: (message, error) => console.error(`[Data Service] ${message}:`, error),
+  info: (message) => console.log(`[Data Service] ${message}`)
+};
 
-  // Gestión de departamentos
-  getDepartment() {
-    const currentDepartment = localStorage.getItem('currentDepartment');
-    const authorizedDepartments = this.getAuthorizedDepartments();
-
-    if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
-      const defaultDepartment = authorizedDepartments[0];
-      if (!defaultDepartment) {
-        throw new Error('No hay departamentos autorizados');
-      }
-      this.setDepartment(defaultDepartment);
-      return defaultDepartment;
-    }
-    return currentDepartment;
-  }
-
-  getAuthorizedDepartments() {
-    return JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
-  }
-
-  setDepartment(department) {
-    localStorage.setItem('currentDepartment', department);
-  }
-
-  // Gestión de tokens
-  async ensureValidToken() {
-    const token = localStorage.getItem('firebaseToken');
-    const expiry = localStorage.getItem('firebaseTokenExpiry');
-
-    if (!token || !expiry || Date.now() > parseInt(expiry) - CONFIG.TOKEN_REFRESH_MARGIN) {
-      await this.refreshToken();
-    }
-    return localStorage.getItem('firebaseToken');
-  }
-
-  async refreshToken() {
+async function obtenerDatos(key, callback) {
+  let retryCount = 0;
+  
+  async function attempt() {
     try {
-      const response = await fetch(`${CONFIG.API_URL}/api/get-firebase-token`, {
+      const currentDepartment = localStorage.getItem('currentDepartment');
+      if (!currentDepartment) {
+        throw new Error('No hay departamento seleccionado');
+      }
+
+      // Construir URL con query params si hay key
+      const url = new URL(`${CONFIG.API_URL}/api/department-data/${currentDepartment}`);
+      if (key) {
+        url.searchParams.append('key', key);
+      }
+
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
         credentials: 'include'
       });
 
       if (!response.ok) {
-        throw new Error(`Error al obtener token: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const { token, expires_in } = await response.json();
-      this.saveToken(token, expires_in);
+      const responseData = await response.json();
+      
+      if (responseData.data) {
+        Logger.info(`Datos recuperados para ${currentDepartment}`);
+        callback(key ? responseData.data : responseData.data[key]);
+        return true;
+      } else {
+        throw new Error('Datos no encontrados');
+      }
+
     } catch (error) {
-      console.error('Error al renovar token:', error);
+      Logger.error('Error al obtener datos', error);
+
+      if (retryCount < CONFIG.RETRY_ATTEMPTS) {
+        retryCount++;
+        const delay = CONFIG.RETRY_DELAY * retryCount;
+        
+        Logger.info(`Reintentando en ${delay}ms... (intento ${retryCount})`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        return attempt();
+      }
+      
       throw error;
     }
   }
 
-  saveToken(token, expiresIn) {
-    localStorage.setItem('firebaseToken', token);
-    localStorage.setItem('firebaseTokenExpiry', Date.now() + (expiresIn * 1000));
-  }
-
-  // Obtención de datos
-  async getData(key, callback) {
-    try {
-      const department = this.getDepartment();
-      const token = await this.ensureValidToken();
-      
-      const response = await fetch(
-        `${CONFIG.FIREBASE_URL}/${department}.json?auth=${token}`,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      );
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          localStorage.removeItem('firebaseToken');
-          localStorage.removeItem('firebaseTokenExpiry');
-          return this.retryWithBackoff(() => this.getData(key, callback));
-        }
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      if (data && data[key]) {
-        callback(data[key]);
-        this.retryCount = 0; // Resetear contador de reintentos tras éxito
-      } else {
-        console.warn(`La clave ${key} no se encontró en los datos del departamento ${department}`);
-      }
-
-    } catch (error) {
-      console.error('Error al obtener datos:', error);
-      return this.retryWithBackoff(() => this.getData(key, callback));
-    }
-  }
-
-  // Gestión de reintentos
-  async retryWithBackoff(operation) {
-    if (this.retryCount >= CONFIG.MAX_RETRIES) {
-      this.retryCount = 0;
-      throw new Error('Máximo número de reintentos alcanzado');
-    }
-
-    const delay = Math.pow(2, this.retryCount) * CONFIG.RETRY_INTERVAL;
-    console.log(`Reintentando en ${delay/1000} segundos...`);
-    
-    this.retryCount++;
-    await new Promise(resolve => setTimeout(resolve, delay));
-    return operation();
-  }
-
-  // Renovación automática de token
-  initTokenRenewal() {
-    setInterval(async () => {
-      try {
-        const expiry = localStorage.getItem('firebaseTokenExpiry');
-        if (expiry && Date.now() > parseInt(expiry) - CONFIG.TOKEN_REFRESH_MARGIN) {
-          await this.refreshToken();
-        }
-      } catch (error) {
-        console.error('Error en renovación automática del token:', error);
-      }
-    }, CONFIG.TOKEN_CHECK_INTERVAL);
-  }
+  return attempt();
 }
-
-// Exportar instancia única del servicio
-const firebaseService = new FirebaseDataService();
-
-// Mantener compatibilidad con código existente
-async function obtenerDatos(key, callback) {
-  return firebaseService.getData(key, callback);
-}
-
-// Iniciar renovación de token cuando se carga la página
-document.addEventListener('DOMContentLoaded', () => {
-  // La renovación ya se inicia en el constructor del servicio
-});
-
-export { firebaseService, obtenerDatos };
 
 function updateAllChartColors(isDarkMode) {
   Object.values(Chart.instances).forEach(chart => {
