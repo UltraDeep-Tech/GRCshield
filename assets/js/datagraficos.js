@@ -6,27 +6,60 @@ function updateAllChartColors(isDarkMode) {
 }
 
 
-async function obtenerDatos(key, callback) {
-  try {
-    let currentDepartment = localStorage.getItem('currentDepartment');
-    let authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
+// Configuración y constantes
+const CONFIG = {
+  API_URL: 'https://backend-grcshield-934866038204.us-central1.run.app',
+  FIREBASE_URL: 'https://ultradeeptech-default-rtdb.firebaseio.com',
+  TOKEN_REFRESH_MARGIN: 300000, // 5 minutos en ms
+  MAX_RETRIES: 3,
+  RETRY_INTERVAL: 1000, // Intervalo base para backoff exponencial
+  TOKEN_CHECK_INTERVAL: 60000 // 1 minuto en ms
+};
+
+class FirebaseDataService {
+  constructor() {
+    this.retryCount = 0;
+    this.initTokenRenewal();
+  }
+
+  // Gestión de departamentos
+  getDepartment() {
+    const currentDepartment = localStorage.getItem('currentDepartment');
+    const authorizedDepartments = this.getAuthorizedDepartments();
 
     if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
-      console.error('Departamento actual no válido o no autorizado');
-      currentDepartment = authorizedDepartments[0];
-      if (!currentDepartment) {
-        console.error('No hay departamentos autorizados');
-        return;
+      const defaultDepartment = authorizedDepartments[0];
+      if (!defaultDepartment) {
+        throw new Error('No hay departamentos autorizados');
       }
-      localStorage.setItem('currentDepartment', currentDepartment);
+      this.setDepartment(defaultDepartment);
+      return defaultDepartment;
     }
+    return currentDepartment;
+  }
 
-    // Obtener el token o renovarlo si ha expirado
-    let firebaseToken = localStorage.getItem('firebaseToken');
-    let tokenExpiry = localStorage.getItem('firebaseTokenExpiry');
-    
-    if (!firebaseToken || !tokenExpiry || Date.now() > parseInt(tokenExpiry)) {
-      const tokenResponse = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-firebase-token', {
+  getAuthorizedDepartments() {
+    return JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
+  }
+
+  setDepartment(department) {
+    localStorage.setItem('currentDepartment', department);
+  }
+
+  // Gestión de tokens
+  async ensureValidToken() {
+    const token = localStorage.getItem('firebaseToken');
+    const expiry = localStorage.getItem('firebaseTokenExpiry');
+
+    if (!token || !expiry || Date.now() > parseInt(expiry) - CONFIG.TOKEN_REFRESH_MARGIN) {
+      await this.refreshToken();
+    }
+    return localStorage.getItem('firebaseToken');
+  }
+
+  async refreshToken() {
+    try {
+      const response = await fetch(`${CONFIG.API_URL}/api/get-firebase-token`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -35,93 +68,106 @@ async function obtenerDatos(key, callback) {
         credentials: 'include'
       });
 
-      if (!tokenResponse.ok) {
-        throw new Error(`Error al obtener token: ${tokenResponse.status}`);
+      if (!response.ok) {
+        throw new Error(`Error al obtener token: ${response.status}`);
       }
 
-      const tokenData = await tokenResponse.json();
-      firebaseToken = tokenData.token;
+      const { token, expires_in } = await response.json();
+      this.saveToken(token, expires_in);
+    } catch (error) {
+      console.error('Error al renovar token:', error);
+      throw error;
+    }
+  }
+
+  saveToken(token, expiresIn) {
+    localStorage.setItem('firebaseToken', token);
+    localStorage.setItem('firebaseTokenExpiry', Date.now() + (expiresIn * 1000));
+  }
+
+  // Obtención de datos
+  async getData(key, callback) {
+    try {
+      const department = this.getDepartment();
+      const token = await this.ensureValidToken();
       
-      // Guardar el token y su tiempo de expiración
-      localStorage.setItem('firebaseToken', firebaseToken);
-      localStorage.setItem('firebaseTokenExpiry', Date.now() + (tokenData.expires_in * 1000));
-    }
-
-    // Hacer la solicitud a Firebase con el token
-    const response = await fetch(
-      `https://ultradeeptech-default-rtdb.firebaseio.com/${currentDepartment}.json?auth=${firebaseToken}`,
-      {
-        headers: {
-          'Authorization': `Bearer ${firebaseToken}`,
-          'Content-Type': 'application/json'
+      const response = await fetch(
+        `${CONFIG.FIREBASE_URL}/${department}.json?auth=${token}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
         }
-      }
-    );
+      );
 
-    if (!response.ok) {
-      if (response.status === 401) {
-        // Token expirado o inválido, eliminar token y reintentar
-        localStorage.removeItem('firebaseToken');
-        localStorage.removeItem('firebaseTokenExpiry');
-        return obtenerDatos(key, callback); // Recursión para reintentar
+      if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem('firebaseToken');
+          localStorage.removeItem('firebaseTokenExpiry');
+          return this.retryWithBackoff(() => this.getData(key, callback));
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-      throw new Error(`HTTP error! status: ${response.status}`);
+
+      const data = await response.json();
+      if (data && data[key]) {
+        callback(data[key]);
+        this.retryCount = 0; // Resetear contador de reintentos tras éxito
+      } else {
+        console.warn(`La clave ${key} no se encontró en los datos del departamento ${department}`);
+      }
+
+    } catch (error) {
+      console.error('Error al obtener datos:', error);
+      return this.retryWithBackoff(() => this.getData(key, callback));
+    }
+  }
+
+  // Gestión de reintentos
+  async retryWithBackoff(operation) {
+    if (this.retryCount >= CONFIG.MAX_RETRIES) {
+      this.retryCount = 0;
+      throw new Error('Máximo número de reintentos alcanzado');
     }
 
-    const data = await response.json();
-    console.log(`Datos recuperados para el departamento ${currentDepartment}:`, data);
+    const delay = Math.pow(2, this.retryCount) * CONFIG.RETRY_INTERVAL;
+    console.log(`Reintentando en ${delay/1000} segundos...`);
     
-    if (data && data[key]) {
-      callback(data[key]);
-    } else {
-      console.error(`La clave ${key} no se encontró en los datos.`);
-    }
+    this.retryCount++;
+    await new Promise(resolve => setTimeout(resolve, delay));
+    return operation();
+  }
 
-  } catch (error) {
-    console.error('Error al obtener los datos:', error);
-    // Implementar retry con backoff exponencial
-    if (!window.retryCount) {
-      window.retryCount = 0;
-    }
-    if (window.retryCount < 3) {
-      window.retryCount++;
-      const delay = Math.pow(2, window.retryCount) * 1000;
-      console.log(`Reintentando en ${delay/1000} segundos...`);
-      setTimeout(() => obtenerDatos(key, callback), delay);
-    }
+  // Renovación automática de token
+  initTokenRenewal() {
+    setInterval(async () => {
+      try {
+        const expiry = localStorage.getItem('firebaseTokenExpiry');
+        if (expiry && Date.now() > parseInt(expiry) - CONFIG.TOKEN_REFRESH_MARGIN) {
+          await this.refreshToken();
+        }
+      } catch (error) {
+        console.error('Error en renovación automática del token:', error);
+      }
+    }, CONFIG.TOKEN_CHECK_INTERVAL);
   }
 }
 
-// Función para renovar el token periódicamente
-function initTokenRenewal() {
-  setInterval(async () => {
-    const tokenExpiry = localStorage.getItem('firebaseTokenExpiry');
-    if (tokenExpiry && Date.now() > (parseInt(tokenExpiry) - 300000)) { // 5 minutos antes de expirar
-      try {
-        const tokenResponse = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-firebase-token', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include'
-        });
+// Exportar instancia única del servicio
+const firebaseService = new FirebaseDataService();
 
-        if (tokenResponse.ok) {
-          const tokenData = await tokenResponse.json();
-          localStorage.setItem('firebaseToken', tokenData.token);
-          localStorage.setItem('firebaseTokenExpiry', Date.now() + (tokenData.expires_in * 1000));
-        }
-      } catch (error) {
-        console.error('Error renovando token:', error);
-      }
-    }
-  }, 60000); // Verificar cada minuto
+// Mantener compatibilidad con código existente
+async function obtenerDatos(key, callback) {
+  return firebaseService.getData(key, callback);
 }
 
 // Iniciar renovación de token cuando se carga la página
-document.addEventListener('DOMContentLoaded', initTokenRenewal);
+document.addEventListener('DOMContentLoaded', () => {
+  // La renovación ya se inicia en el constructor del servicio
+});
 
-
+export { firebaseService, obtenerDatos };
 
 function updateAllChartColors(isDarkMode) {
   Object.values(Chart.instances).forEach(chart => {
