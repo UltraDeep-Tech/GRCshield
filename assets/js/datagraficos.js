@@ -6,74 +6,60 @@ function updateAllChartColors(isDarkMode) {
 }
 
 
-const CONFIG = {
-  API_URL: 'https://backend-grcshield-934866038204.us-central1.run.app',
-  RETRY_ATTEMPTS: 3,
-  RETRY_DELAY: 1000
-};
-
-// Utilidad para logging
-const Logger = {
-  error: (message, error) => console.error(`[Data Service] ${message}:`, error),
-  info: (message) => console.log(`[Data Service] ${message}`)
-};
-
 async function obtenerDatos(key, callback) {
-  let retryCount = 0;
-  
-  async function attempt() {
-    try {
-      const currentDepartment = localStorage.getItem('currentDepartment');
+  try {
+    let currentDepartment = localStorage.getItem('currentDepartment');
+    let authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
+
+    if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
+      console.error('Departamento actual no válido o no autorizado');
+      currentDepartment = authorizedDepartments[0];
       if (!currentDepartment) {
-        throw new Error('No hay departamento seleccionado');
+        console.error('No hay departamentos autorizados');
+        return;
       }
+      localStorage.setItem('currentDepartment', currentDepartment);
+    }
 
-      // Construir URL con query params si hay key
-      const url = new URL(`${CONFIG.API_URL}/api/department-data/${currentDepartment}`);
-      if (key) {
-        url.searchParams.append('key', key);
-      }
+    // Hacer la solicitud directamente al backend
+    const response = await fetch(`https://backend-grcshield-934866038204.us-central1.run.app/api/dashboard?department=${currentDepartment}&user_department=${currentDepartment}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      credentials: 'include'
+    });
 
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json'
-        },
-        credentials: 'include'
-      });
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+    const data = await response.json();
+    
+    if (data && data.data && data.data[key]) {
+      callback(data.data[key]);
+    } else {
+      console.error(`La clave ${key} no se encontró en los datos.`);
+    }
 
-      const responseData = await response.json();
-      
-      if (responseData.data) {
-        Logger.info(`Datos recuperados para ${currentDepartment}`);
-        callback(key ? responseData.data : responseData.data[key]);
-        return true;
-      } else {
-        throw new Error('Datos no encontrados');
-      }
-
-    } catch (error) {
-      Logger.error('Error al obtener datos', error);
-
-      if (retryCount < CONFIG.RETRY_ATTEMPTS) {
-        retryCount++;
-        const delay = CONFIG.RETRY_DELAY * retryCount;
-        
-        Logger.info(`Reintentando en ${delay}ms... (intento ${retryCount})`);
-        await new Promise(resolve => setTimeout(resolve, delay));
-        return attempt();
-      }
-      
-      throw error;
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+    // Implementar retry con backoff exponencial
+    if (!window.retryCount) {
+      window.retryCount = 0;
+    }
+    if (window.retryCount < 3) {
+      window.retryCount++;
+      const delay = Math.pow(2, window.retryCount) * 1000;
+      console.log(`Reintentando en ${delay/1000} segundos...`);
+      setTimeout(() => obtenerDatos(key, callback), delay);
     }
   }
-
-  return attempt();
 }
+
+// Exportar la función
+export { obtenerDatos };
 
 function updateAllChartColors(isDarkMode) {
   Object.values(Chart.instances).forEach(chart => {
