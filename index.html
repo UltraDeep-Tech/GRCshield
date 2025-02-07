@@ -563,44 +563,63 @@
         <div id="totalAbusiveUsersChar" class="col-12">
           <div class="cardindex">
             <div class="cardindex-body">
-              <h5 class="cardindex-title" data-translate="abusive_user_detection">Abusive User Detection</h5>
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="cardindex-title" data-translate="abusive_user_detection">Abusive User Detection</h5>
+                <!-- Nuevo botón para el modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#usersModal">
+                  Total Users
+                </button>
+              </div>
+        
+              <!-- Resto del contenido original -->
               <div class="chart">
                 <h6 data-translate="total_abusive_users_over_time">Total Potential Abusive Users Over Time</h6>
                 <canvas id="totalAbusiveUsersChart" style="max-height: 400px;"></canvas>
               </div>
-    
-              <div class="table-responsive mt-4">
-                <h6 data-translate="detailed_analysis_abusive_users">Detailed Analysis of Potentially Abusive Users</h6>
-                <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#abusiveUsersTable" aria-expanded="false" aria-controls="abusiveUsersTable" data-translate="show_info">Show info</button>
-              </h6>
-                <div class="collapse" id="abusiveUsersTable">
-                  <table class="table table-bordered">
+        
+              <!-- ... resto del código original ... -->
+            </div>
+          </div>
+        </div>
+        
+        <!-- Modal de Usuarios -->
+        <div class="modal fade" id="usersModal" tabindex="-1" aria-labelledby="usersModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="usersModalLabel">Total Users</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- Barra de búsqueda -->
+                <div class="mb-3">
+                  <input type="text" class="form-control" id="userSearchInput" placeholder="Search users...">
+                </div>
+                
+                <!-- Tabla de usuarios -->
+                <div class="table-responsive">
+                  <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th data-translate="user_guid">User GUID</th>
-                        <th data-translate="user">User</th>
-                        <th data-translate="text">Text</th>
-                        <th data-translate="response">Response</th>
-                        <th data-translate="abuse_score">Abuse Score</th>
-                        <th data-translate="abuse_score_trend">Abuse Score Trend</th>
-                        <th data-translate="evaluate_date">Evaluate Date</th>
-                        <th data-translate="total_abuse_ratio">Total Abuse Request Ratio/Count</th>
-                        <th data-translate="violence_abuse_ratio">Abuse Ratio/Count for Violence</th>
-                        <th data-translate="hate_abuse_ratio">Abuse Ratio/Count for Hate</th>
-                        <th data-translate="sexual_abuse_ratio">Abuse Ratio/Count for Sexual</th>
-                        <th data-translate="self_harm_abuse_ratio">Abuse Ratio/Count for Self-harm</th>
+                        <th>User</th>
+                        <th>Total Incidents</th>
+                        <th>Last Detection</th>
+                        <th>Risk Level</th>
+                        <th>Actions</th>
                       </tr>
                     </thead>
-                    <tbody id="abusiveUsersData">
-                      <!-- Data will be populated here -->
+                    <tbody id="usersList">
+                      <!-- Los usuarios se cargarán aquí dinámicamente -->
                     </tbody>
                   </table>
                 </div>
               </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
             </div>
           </div>
         </div>
-        <!-- End Abusive User Detection Section -->
     
         <div id="hallucinationChar" class="col-12">
           <div class="cardindex">
@@ -612,7 +631,7 @@
               </div>
               <div class="table-responsive mt-4">
                 <h6 data-translate="details_of_hallucination">Details of Each Hallucination</h6>
-                <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#hallucinationTable" aria-expanded="false" aria-controls="hallucinationTable" data-translate="show_info">Show Info</button>
+                <button class="btn btn-sm ms-2 btn-outline-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#hallucinationTable" aria-expanded="false" aria-controls="hallucinationTable" data-translate="show_info">Show Info</button>
               </h6>
                 <div class="collapse" id="hallucinationTable">
                   <table class="table table-bordered">
@@ -649,7 +668,7 @@
               </div>
               <div class="table-responsive mt-4">
                 <h6 data-translate="details_of_bias_incident">Details of Each Bias Incident</h6>
-                <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#biasTable" aria-expanded="false" aria-controls="biasTable" data-translate="show_info">Show Info</button>
+                <button class="btn btn-sm ms-2 btn-outline-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#biasTable" aria-expanded="false" aria-controls="biasTable" data-translate="show_info">Show Info</button>
                 <div class="collapse" id="biasTable">
                   <table class="table table-bordered">
                     <thead>
@@ -681,7 +700,7 @@
               </div>
               <div class="table-responsive mt-4">
                 <h6 data-translate="details_of_prompt_injection">Details of Each Prompt Injection</h6>
-                <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#promptInjectionTable" aria-expanded="false" aria-controls="promptInjectionTable" data-translate="show_info">Show Info</button>
+                <button class="btn btn-sm ms-2 btn-outline-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#promptInjectionTable" aria-expanded="false" aria-controls="promptInjectionTable" data-translate="show_info">Show Info</button>
                 <div class="collapse" id="promptInjectionTable">
                   <table class="table table-bordered">
                     <thead>
@@ -716,7 +735,7 @@
               </div>
               <div class="table-responsive mt-4">
                 <h6 data-translate="details_of_data_exposure_incident">Details of Each Data Exposure Incident</h6>
-                <button class="btn btn-sm ms-2 btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#dataExposureTable" aria-expanded="false" aria-controls="dataExposureTable" data-translate="show_info">Show Info</button>
+                <button class="btn btn-sm ms-2 btn-outline-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#dataExposureTable" aria-expanded="false" aria-controls="dataExposureTable" data-translate="show_info">Show Info</button>
                 <div class="collapse" id="dataExposureTable">
                   <table class="table table-bordered">
                     <thead>

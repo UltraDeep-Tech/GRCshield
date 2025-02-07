@@ -1261,3 +1261,22 @@ animation: gradientAnimation 3s ease infinite;
 #biastrend {
   scroll-margin-top: 80px; /* Ajusta según la altura de tu navbar */
 }
+
+.modal-lg {
+  max-width: 900px;
+}
+
+#userSearchInput {
+  padding: 8px;
+  margin-bottom: 15px;
+}
+
+.badge {
+  padding: 6px 12px;
+  font-size: 0.9em;
+}
+
+.table-responsive {
+  max-height: 500px;
+  overflow-y: auto;
+}

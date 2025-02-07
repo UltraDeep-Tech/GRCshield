@@ -1133,4 +1133,71 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Función para cargar y mostrar los usuarios
+function loadUsers() {
+  const usersList = document.getElementById('usersList');
+  const searchInput = document.getElementById('userSearchInput');
+  
+  // Asumiendo que tienes los datos en alguna parte de tu aplicación
+  // Esto debería adaptarse a tu estructura de datos real
+  const users = abusiveUsersData.data;
+  
+  function displayUsers(filteredUsers) {
+    usersList.innerHTML = '';
+    
+    filteredUsers.forEach(user => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${user.user}</td>
+        <td>${user.incidents}</td>
+        <td>${user.date}</td>
+        <td>
+          <span class="badge ${getRiskBadgeClass(user.score)}">
+            ${getRiskLevel(user.score)}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-info" onclick="viewUserDetails('${user.guid}')">
+            View Details
+          </button>
+        </td>
+      `;
+      usersList.appendChild(row);
+    });
+  }
+  
+  // Función para obtener la clase del badge según el score
+  function getRiskBadgeClass(score) {
+    if (score >= 75) return 'bg-danger';
+    if (score >= 50) return 'bg-warning';
+    return 'bg-success';
+  }
+  
+  // Función para obtener el nivel de riesgo según el score
+  function getRiskLevel(score) {
+    if (score >= 75) return 'High';
+    if (score >= 50) return 'Medium';
+    return 'Low';
+  }
+  
+  // Manejar la búsqueda
+  searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const filteredUsers = users.filter(user => 
+      user.user.toLowerCase().includes(searchTerm)
+    );
+    displayUsers(filteredUsers);
+  });
+  
+  // Mostrar todos los usuarios inicialmente
+  displayUsers(users);
+}
 
+// Función para ver detalles de un usuario específico
+function viewUserDetails(userId) {
+  // Implementar la lógica para mostrar más detalles del usuario
+  console.log('Viewing details for user:', userId);
+}
+
+// Cargar usuarios cuando se abre el modal
+document.getElementById('usersModal').addEventListener('show.bs.modal', loadUsers);
