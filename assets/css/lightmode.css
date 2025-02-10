@@ -2267,3 +2267,52 @@ body.modal-open {
 .notification-error {
   color: #dc3545;
 }
+
+.modal-lg {
+  max-width: 900px;
+}
+
+#userSearchInput {
+  padding: 8px;
+  margin-bottom: 15px;
+}
+
+.badge {
+  padding: 6px 12px;
+  font-size: 0.9em;
+}
+
+.table-responsive {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Aseguramos que el contenedor .chart sea relativo para que el botón se posicione respecto a él */
+.chart {
+  position: relative;
+}
+
+/* Estilos para el botón posicionado en la esquina superior derecha */
+.top-right-button {
+  position: absolute;
+  top: 15px;    /* Ajusta el valor según lo necesites */
+  right: 15px;  /* Ajusta el valor según lo necesites */
+  z-index: 10;  /* Para asegurarte que el botón quede por encima de otros elementos, si es necesario */
+}
+
+.modal .modal-header {
+  background-color: #0056b3 !important;
+  color: #fff !important;
+  border-bottom: 2px solid #0056b3;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.modal .modal-body {
+  padding: 20px;
+  background-color: #fff !important;
+}
+.modal .modal-footer {
+  padding: 20px;
+  background-color: #fff !important;
+}

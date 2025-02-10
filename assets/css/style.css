@@ -1293,3 +1293,20 @@ animation: gradientAnimation 3s ease infinite;
   right: 15px;  /* Ajusta el valor según lo necesites */
   z-index: 10;  /* Para asegurarte que el botón quede por encima de otros elementos, si es necesario */
 }
+
+.modal .modal-header {
+  background-color: #0d1b30 !important;
+  color: #fff !important;
+  border-bottom: 2px solid #0056b3;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.modal .modal-body {
+  padding: 20px;
+  background-color: #0d1b30 !important;
+}
+.modal .modal-footer {
+  padding: 20px;
+  background-color: #0d1b30 !important;
+}
