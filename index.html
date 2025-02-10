@@ -563,64 +563,139 @@
         <div id="totalAbusiveUsersChar" class="col-12">
           <div class="cardindex">
             <div class="cardindex-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <h5 class="cardindex-title" data-translate="abusive_user_detection">Abusive User Detection</h5>
-                <!-- Nuevo botón para el modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#usersModal">
-                  Total Users
-                </button>
-              </div>
-        
-              <!-- Resto del contenido original -->
+              <h5 class="cardindex-title" data-translate="abusive_user_detection">
+                Abusive User Detection
+              </h5>
+              <button type="button" class="btn btn-outline-primary top-right-button" data-bs-toggle="modal" data-bs-target="#usersModal">
+                Total Users
+              </button>
+              
+              <!-- Contenedor donde se posicionará el botón -->
               <div class="chart">
-                <h6 data-translate="total_abusive_users_over_time">Total Potential Abusive Users Over Time</h6>
+
+                <h6 data-translate="total_abusive_users_over_time">
+                  Total Potential Abusive Users Over Time
+                </h6>
                 <canvas id="totalAbusiveUsersChart" style="max-height: 400px;"></canvas>
               </div>
         
-              <!-- ... resto del código original ... -->
-            </div>
-          </div>
-        </div>
-        
-        <!-- Modal de Usuarios -->
-        <div class="modal fade" id="usersModal" tabindex="-1" aria-labelledby="usersModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="usersModalLabel">Total Users</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <!-- Barra de búsqueda -->
-                <div class="mb-3">
-                  <input type="text" class="form-control" id="userSearchInput" placeholder="Search users...">
-                </div>
-                
-                <!-- Tabla de usuarios -->
-                <div class="table-responsive">
-                  <table class="table table-striped">
+              <div class="table-responsive mt-4">
+                <h6 data-translate="detailed_analysis_abusive_users">
+                  Detailed Analysis of Potentially Abusive Users
+                </h6>
+                <button class="btn btn-sm ms-2 btn-outline-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#abusiveUsersTable" aria-expanded="false" aria-controls="abusiveUsersTable" data-translate="show_info">
+                  Show info
+                </button>
+                <div class="collapse" id="abusiveUsersTable">
+                  <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>User</th>
-                        <th>Total Incidents</th>
-                        <th>Last Detection</th>
-                        <th>Risk Level</th>
-                        <th>Actions</th>
+                        <th data-translate="user_guid">User GUID</th>
+                        <th data-translate="user">User</th>
+                        <th data-translate="text">Text</th>
+                        <th data-translate="response">Response</th>
+                        <th data-translate="abuse_score">Abuse Score</th>
+                        <th data-translate="abuse_score_trend">Abuse Score Trend</th>
+                        <th data-translate="evaluate_date">Evaluate Date</th>
+                        <th data-translate="total_abuse_ratio">Total Abuse Request Ratio/Count</th>
+                        <th data-translate="violence_abuse_ratio">Abuse Ratio/Count for Violence</th>
+                        <th data-translate="hate_abuse_ratio">Abuse Ratio/Count for Hate</th>
+                        <th data-translate="sexual_abuse_ratio">Abuse Ratio/Count for Sexual</th>
+                        <th data-translate="self_harm_abuse_ratio">Abuse Ratio/Count for Self-harm</th>
                       </tr>
                     </thead>
-                    <tbody id="usersList">
-                      <!-- Los usuarios se cargarán aquí dinámicamente -->
+                    <tbody id="abusiveUsersData">
+                      <!-- Data will be populated here -->
                     </tbody>
                   </table>
                 </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
             </div>
           </div>
+        </div>        
+
+
+<!-- Modal que contiene las pestañas "Total Users" y "History" -->
+<div class="modal fade" id="usersModal" tabindex="-1" aria-labelledby="usersModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- Pestañas en el encabezado -->
+        <ul class="nav nav-tabs" id="usersModalTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#usersTabContent" type="button" role="tab" aria-controls="usersTabContent" aria-selected="true">
+              Total Users
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#historyTabContent" type="button" role="tab" aria-controls="historyTabContent" aria-selected="false">
+              History
+            </button>
+          </li>
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="tab-content" id="usersModalTabsContent">
+          <!-- Pestaña "Total Users": Lista de usuarios -->
+          <div class="tab-pane fade show active" id="usersTabContent" role="tabpanel" aria-labelledby="users-tab">
+            <!-- Barra de búsqueda -->
+            <div class="mb-3">
+              <input type="text" class="form-control" id="userSearchInput" placeholder="Search users...">
+            </div>
+            <!-- Tabla de usuarios -->
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Total Incidents</th>
+                    <th>Last Detection</th>
+                    <th>History</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="usersList">
+                  <!-- Se cargarán los usuarios dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <!-- Pestaña "History": Historial de incidentes del usuario seleccionado -->
+          <div class="tab-pane fade" id="historyTabContent" role="tabpanel" aria-labelledby="history-tab">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Incident ID</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="userHistoryList">
+                  <!-- Se cargarán los incidentes dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+            <!-- Botón para volver a la pestaña "Total Users" -->
+            <button class="btn btn-secondary mt-3" id="backToUsersTab">Back to Users</button>
+          </div>
         </div>
-    
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
         <div id="hallucinationChar" class="col-12">
           <div class="cardindex">
             <div class="cardindex-body">

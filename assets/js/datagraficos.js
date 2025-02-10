@@ -1133,13 +1133,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Función para cargar y mostrar los usuarios
+// Función para cargar y mostrar los usuarios en la pestaña "Total Users"
 function loadUsers() {
   const usersList = document.getElementById('usersList');
   const searchInput = document.getElementById('userSearchInput');
   
-  // Asumiendo que tienes los datos en alguna parte de tu aplicación
-  // Esto debería adaptarse a tu estructura de datos real
+  // Se asume que tienes los datos en abusiveUsersData.data (puede ser de una API o variable global)
   const users = abusiveUsersData.data;
   
   function displayUsers(filteredUsers) {
@@ -1152,13 +1151,13 @@ function loadUsers() {
         <td>${user.incidents}</td>
         <td>${user.date}</td>
         <td>
-          <span class="badge ${getRiskBadgeClass(user.score)}">
-            ${getRiskLevel(user.score)}
-          </span>
+          <button class="btn btn-sm btn-secondary" onclick="viewUserHistory('${user.guid}')">
+            History
+          </button>
         </td>
         <td>
           <button class="btn btn-sm btn-info" onclick="viewUserDetails('${user.guid}')">
-            View Details
+            Actions
           </button>
         </td>
       `;
@@ -1166,24 +1165,10 @@ function loadUsers() {
     });
   }
   
-  // Función para obtener la clase del badge según el score
-  function getRiskBadgeClass(score) {
-    if (score >= 75) return 'bg-danger';
-    if (score >= 50) return 'bg-warning';
-    return 'bg-success';
-  }
-  
-  // Función para obtener el nivel de riesgo según el score
-  function getRiskLevel(score) {
-    if (score >= 75) return 'High';
-    if (score >= 50) return 'Medium';
-    return 'Low';
-  }
-  
-  // Manejar la búsqueda
+  // Manejar la búsqueda en la lista de usuarios
   searchInput.addEventListener('input', (e) => {
     const searchTerm = e.target.value.toLowerCase();
-    const filteredUsers = users.filter(user => 
+    const filteredUsers = users.filter(user =>
       user.user.toLowerCase().includes(searchTerm)
     );
     displayUsers(filteredUsers);
@@ -1193,11 +1178,38 @@ function loadUsers() {
   displayUsers(users);
 }
 
-// Función para ver detalles de un usuario específico
-function viewUserDetails(userId) {
-  // Implementar la lógica para mostrar más detalles del usuario
-  console.log('Viewing details for user:', userId);
-}
 
-// Cargar usuarios cuando se abre el modal
-document.getElementById('usersModal').addEventListener('show.bs.modal', loadUsers);
+// Función para ver la historia de incidentes de un usuario
+function viewUserHistory(userId) {
+  fetch(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error fetching user history');
+      }
+      return response.json();
+    })
+    .then(history => {
+      // Limpiar el contenido anterior de la tabla de historial
+      const historyList = document.getElementById('userHistoryList');
+      historyList.innerHTML = '';
+
+      // Insertar cada incidente en la tabla
+      history.forEach(incident => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${incident.incidentId}</td>
+          <td>${incident.description}</td>
+          <td>${incident.date}</td>
+        `;
+        historyList.appendChild(row);
+      });
+
+      // Cambiar a la pestaña "History" (si usas tabs de Bootstrap)
+      const historyTabTrigger = document.querySelector('#history-tab');
+      const tabInstance = new bootstrap.Tab(historyTabTrigger);
+      tabInstance.show();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}

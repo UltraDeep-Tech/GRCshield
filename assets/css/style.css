@@ -1280,3 +1280,16 @@ animation: gradientAnimation 3s ease infinite;
   max-height: 500px;
   overflow-y: auto;
 }
+
+/* Aseguramos que el contenedor .chart sea relativo para que el botón se posicione respecto a él */
+.chart {
+  position: relative;
+}
+
+/* Estilos para el botón posicionado en la esquina superior derecha */
+.top-right-button {
+  position: absolute;
+  top: 15px;    /* Ajusta el valor según lo necesites */
+  right: 15px;  /* Ajusta el valor según lo necesites */
+  z-index: 10;  /* Para asegurarte que el botón quede por encima de otros elementos, si es necesario */
+}
