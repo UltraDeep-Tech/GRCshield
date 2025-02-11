@@ -1253,23 +1253,28 @@ function viewUserHistory(userId) {
       return response.json();
     })
     .then(history => {
+      console.log('Historial recibido:', history);  // Para depuración
       const historyList = document.getElementById('userHistoryList');
       historyList.innerHTML = '';
 
-      // Iterar sobre cada incidente y crear una fila para cada uno
       history.forEach(incident => {
+        // Si se guardó prompt y response, se usan; de lo contrario, se usa description.
+        const promptText = incident.prompt ? incident.prompt : (incident.description ? incident.description : 'N/A');
+        const responseText = incident.response ? incident.response : (incident.description ? incident.description : 'N/A');
+        const severity = incident.severity ? incident.severity : 'N/A';
+
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${incident.incidentId}</td>
-          <td>${incident.severity || 'N/A'}</td>
-          <td>${incident.prompt || 'N/A'}</td>
-          <td>${incident.response || 'N/A'}</td>
+          <td>${severity}</td>
+          <td>${promptText}</td>
+          <td>${responseText}</td>
           <td>${incident.date}</td>
         `;
         historyList.appendChild(row);
       });
 
-      // Cambiar a la pestaña "History" utilizando Bootstrap Tabs
+      // Cambiar a la pestaña "History" usando Bootstrap Tabs
       const historyTabTrigger = document.querySelector('#history-tab');
       const tabInstance = new bootstrap.Tab(historyTabTrigger);
       tabInstance.show();
@@ -1278,6 +1283,8 @@ function viewUserHistory(userId) {
       console.error('Error fetching history:', error);
     });
 }
+
+
 
 /**
  * Función placeholder para "viewUserDetails".
