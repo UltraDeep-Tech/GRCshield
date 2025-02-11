@@ -1133,55 +1133,119 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Función para cargar y mostrar los usuarios en la pestaña "Total Users"
+// Variable global para almacenar los datos de usuarios abusivos
+let abusiveUsersData = { data: [] };
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Agrega el listener para que, al abrir el modal, se llame a loadUsers()
+  const usersModal = document.getElementById('usersModal');
+  if (usersModal) {
+    usersModal.addEventListener('shown.bs.modal', () => {
+      loadUsers();
+    });
+  }
+});
+
+/**
+ * Función para cargar y mostrar los usuarios en la pestaña "Total Users"
+ */
 function loadUsers() {
   const usersList = document.getElementById('usersList');
   const searchInput = document.getElementById('userSearchInput');
-  
-  // Se asume que tienes los datos en abusiveUsersData.data (puede ser de una API o variable global)
-  const users = abusiveUsersData.data;
-  
-  function displayUsers(filteredUsers) {
-    usersList.innerHTML = '';
-    
-    filteredUsers.forEach(user => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${user.user}</td>
-        <td>${user.incidents}</td>
-        <td>${user.date}</td>
-        <td>
-          <button class="btn btn-sm btn-secondary" onclick="viewUserHistory('${user.guid}')">
-            History
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-sm btn-info" onclick="viewUserDetails('${user.guid}')">
-            Actions
-          </button>
-        </td>
-      `;
-      usersList.appendChild(row);
-    });
+
+  // Obtener el departamento actual desde localStorage
+  let currentDepartment = localStorage.getItem('currentDepartment');
+  let authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
+  if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
+    console.warn('Departamento actual no válido o no autorizado');
+    if (authorizedDepartments.length > 0) {
+      currentDepartment = authorizedDepartments[0];
+      localStorage.setItem('currentDepartment', currentDepartment);
+    } else {
+      console.error('No hay departamentos autorizados');
+      return;
+    }
   }
-  
-  // Manejar la búsqueda en la lista de usuarios
-  searchInput.addEventListener('input', (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    const filteredUsers = users.filter(user =>
-      user.user.toLowerCase().includes(searchTerm)
-    );
-    displayUsers(filteredUsers);
-  });
-  
-  // Mostrar todos los usuarios inicialmente
-  displayUsers(users);
+
+  // Construir la URL con el parámetro department
+  const url = new URL('https://backend-grcshield-934866038204.us-central1.run.app/api/abusive_users');
+  url.searchParams.append('department', currentDepartment);
+
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      // El header Origin se establece en el back si se requiere para CORS
+    },
+    credentials: 'include'
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error fetching abusive users data');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Asignar la data obtenida a la variable global
+      abusiveUsersData = data;
+      const users = abusiveUsersData.data;
+
+      // Función interna para renderizar la tabla de usuarios
+      function displayUsers(filteredUsers) {
+        usersList.innerHTML = '';
+        filteredUsers.forEach(user => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${user.user}</td>
+            <td>${user.incidents}</td>
+            <td>${user.date}</td>
+            <td>
+              <button class="btn btn-sm btn-secondary" onclick="viewUserHistory('${user.guid}')">
+                History
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-info" onclick="viewUserDetails('${user.guid}')">
+                Actions
+              </button>
+            </td>
+          `;
+          usersList.appendChild(row);
+        });
+      }
+
+      // Configurar la búsqueda en la lista de usuarios
+      searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const filteredUsers = users.filter(user =>
+          user.user.toLowerCase().includes(searchTerm)
+        );
+        displayUsers(filteredUsers);
+      });
+
+      // Mostrar todos los usuarios inicialmente
+      displayUsers(users);
+    })
+    .catch(error => {
+      console.error('Error loading users:', error);
+    });
 }
 
-
-// Función para ver la historia de incidentes de un usuario
+/**
+ * Función para ver el historial de incidentes de un usuario.
+ * Hace la petición al back-end y muestra los resultados en la pestaña "History".
+ */
 function viewUserHistory(userId) {
-  fetch(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`)
+  const url = `https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`;
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    credentials: 'include'
+  })
     .then(response => {
       if (!response.ok) {
         throw new Error('Error fetching user history');
@@ -1189,11 +1253,10 @@ function viewUserHistory(userId) {
       return response.json();
     })
     .then(history => {
-      // Limpiar el contenido anterior de la tabla de historial
       const historyList = document.getElementById('userHistoryList');
       historyList.innerHTML = '';
 
-      // Insertar cada incidente en la tabla
+      // Renderizar cada incidente en la tabla del historial
       history.forEach(incident => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -1204,12 +1267,21 @@ function viewUserHistory(userId) {
         historyList.appendChild(row);
       });
 
-      // Cambiar a la pestaña "History" (si usas tabs de Bootstrap)
+      // Cambiar a la pestaña "History" usando Bootstrap Tabs
       const historyTabTrigger = document.querySelector('#history-tab');
       const tabInstance = new bootstrap.Tab(historyTabTrigger);
       tabInstance.show();
     })
     .catch(error => {
-      console.error('Error:', error);
+      console.error('Error fetching history:', error);
     });
+}
+
+/**
+ * Función placeholder para "viewUserDetails".
+ * Aquí podrías abrir otro modal o redireccionar a otra sección para ver más detalles.
+ */
+function viewUserDetails(userId) {
+  console.log('Acción para ver detalles del usuario con GUID:', userId);
+  // Implementa la acción deseada.
 }
