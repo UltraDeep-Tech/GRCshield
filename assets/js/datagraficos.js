@@ -1288,12 +1288,6 @@ function viewUserHistory(userId) {
 }
 
 
-
-
-/**
- * Función placeholder para "viewUserDetails".
- * Aquí podrías abrir otro modal o redireccionar a otra sección para ver más detalles.
- */
 function viewUserDetails(userId) {
   console.log('Acción para ver detalles del usuario con GUID:', userId);
   // Implementa la acción deseada.
