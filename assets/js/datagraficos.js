@@ -1237,8 +1237,11 @@ function loadUsers() {
  * Hace la petición al back-end y muestra los resultados en la pestaña "History".
  */
 function viewUserHistory(userId) {
-  // Realiza la petición al endpoint del historial del usuario
-  fetch(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`, {
+  // Construir la URL incluyendo el parámetro department con valor "Account Manager"
+  const url = new URL(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`);
+  url.searchParams.append('department', 'Account Manager');
+
+  fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -1253,12 +1256,12 @@ function viewUserHistory(userId) {
       return response.json();
     })
     .then(history => {
-      console.log('Historial recibido:', history);  // Para depuración
+      console.log('Historial recibido:', history);  // Verifica la data en consola
       const historyList = document.getElementById('userHistoryList');
       historyList.innerHTML = '';
 
       history.forEach(incident => {
-        // Si se guardó prompt y response, se usan; de lo contrario, se usa description.
+        // Si el incidente tiene "prompt" y "response", se usan; de lo contrario, se usa "description"
         const promptText = incident.prompt ? incident.prompt : (incident.description ? incident.description : 'N/A');
         const responseText = incident.response ? incident.response : (incident.description ? incident.description : 'N/A');
         const severity = incident.severity ? incident.severity : 'N/A';
@@ -1283,6 +1286,7 @@ function viewUserHistory(userId) {
       console.error('Error fetching history:', error);
     });
 }
+
 
 
 
