@@ -1237,8 +1237,8 @@ function loadUsers() {
  * Hace la petición al back-end y muestra los resultados en la pestaña "History".
  */
 function viewUserHistory(userId) {
-  const url = `https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`;
-  fetch(url, {
+  // Realiza la petición al endpoint del historial del usuario
+  fetch(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -1256,18 +1256,20 @@ function viewUserHistory(userId) {
       const historyList = document.getElementById('userHistoryList');
       historyList.innerHTML = '';
 
-      // Renderizar cada incidente en la tabla del historial
+      // Iterar sobre cada incidente y crear una fila para cada uno
       history.forEach(incident => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${incident.incidentId}</td>
-          <td>${incident.description}</td>
+          <td>${incident.severity || 'N/A'}</td>
+          <td>${incident.prompt || 'N/A'}</td>
+          <td>${incident.response || 'N/A'}</td>
           <td>${incident.date}</td>
         `;
         historyList.appendChild(row);
       });
 
-      // Cambiar a la pestaña "History" usando Bootstrap Tabs
+      // Cambiar a la pestaña "History" utilizando Bootstrap Tabs
       const historyTabTrigger = document.querySelector('#history-tab');
       const tabInstance = new bootstrap.Tab(historyTabTrigger);
       tabInstance.show();
