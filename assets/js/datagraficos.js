@@ -1233,169 +1233,130 @@ function loadUsers() {
 }
 
 
+   // Función para parsear la descripción (si es necesario)
+   function parseDescription(description) {
+    const severityMarker = "Severity:";
+    const promptMarker = "Prompt:";
+    const responseMarker = "Response:";
 
-function parseDescription(description) {
-  const severityMarker = "Severity:";
-  const promptMarker = "Prompt:";
-  const responseMarker = "Response:";
+    const severityIndex = description.indexOf(severityMarker);
+    const promptIndex = description.indexOf(promptMarker);
+    const responseIndex = description.indexOf(responseMarker);
 
-  // Buscar las posiciones de las etiquetas
-  const severityIndex = description.indexOf(severityMarker);
-  const promptIndex = description.indexOf(promptMarker);
-  const responseIndex = description.indexOf(responseMarker);
+    if (severityIndex === -1 || promptIndex === -1 || responseIndex === -1) {
+      return {
+        severity: 'N/A',
+        prompt: description,
+        response: 'N/A'
+      };
+    }
 
-  // Si alguna etiqueta no se encuentra, devolvemos la descripción completa en prompt
-  if (severityIndex === -1 || promptIndex === -1 || responseIndex === -1) {
+    const severityText = description.substring(severityIndex + severityMarker.length, promptIndex).trim().replace(/\.$/, '');
+    const promptText = description.substring(promptIndex + promptMarker.length, responseIndex).trim().replace(/\.$/, '');
+    const responseText = description.substring(responseIndex + responseMarker.length).trim();
+
     return {
-      severity: 'N/A',
-      prompt: description,
-      response: 'N/A'
+      severity: severityText,
+      prompt: promptText,
+      response: responseText
     };
   }
 
-  // Extraer los textos correspondientes
-  const severityText = description
-    .substring(severityIndex + severityMarker.length, promptIndex)
-    .trim()
-    .replace(/\.$/, ''); // quitar el punto final si lo tiene
+  // Función para cargar el historial del usuario y renderizarlo
+  function viewUserHistory(userId) {
+    const url = new URL(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`);
+    url.searchParams.append('department', 'Account Manager');
 
-  const promptText = description
-    .substring(promptIndex + promptMarker.length, responseIndex)
-    .trim()
-    .replace(/\.$/, '');
-
-  const responseText = description
-    .substring(responseIndex + responseMarker.length)
-    .trim();
-
-  return {
-    severity: severityText,
-    prompt: promptText,
-    response: responseText
-  };
-}
-
-
-
-// Función para parsear la descripción y extraer severity, prompt y response
-function parseDescription(description) {
-  const severityMarker = "Severity:";
-  const promptMarker = "Prompt:";
-  const responseMarker = "Response:";
-
-  const severityIndex = description.indexOf(severityMarker);
-  const promptIndex = description.indexOf(promptMarker);
-  const responseIndex = description.indexOf(responseMarker);
-
-  // Si alguna etiqueta no se encuentra, devolvemos la descripción completa en prompt
-  if (severityIndex === -1 || promptIndex === -1 || responseIndex === -1) {
-    return {
-      severity: 'N/A',
-      prompt: description,
-      response: 'N/A'
-    };
-  }
-
-  const severityText = description.substring(severityIndex + severityMarker.length, promptIndex).trim().replace(/\.$/, '');
-  const promptText = description.substring(promptIndex + promptMarker.length, responseIndex).trim().replace(/\.$/, '');
-  const responseText = description.substring(responseIndex + responseMarker.length).trim();
-
-  return {
-    severity: severityText,
-    prompt: promptText,
-    response: responseText
-  };
-}
-
-// Función para cargar y mostrar el historial de incidentes de un usuario
-function viewUserHistory(userId) {
-  // Construir la URL con el parámetro department="Account Manager"
-  const url = new URL(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`);
-  url.searchParams.append('department', 'Account Manager');
-
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    credentials: 'include'
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error fetching user history');
-      }
-      return response.json();
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      credentials: 'include'
     })
-    .then(history => {
-      console.log('Historial recibido:', history);
-      const historyList = document.getElementById('userHistoryList');
-      historyList.innerHTML = '';
-
-      history.forEach(incident => {
-        let parsed = null;
-        // Si no están definidos prompt o response pero existe description, intentamos parsearla
-        if ((incident.prompt === undefined || incident.response === undefined) && incident.description) {
-          parsed = parseDescription(incident.description);
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error fetching user history');
         }
-        
-        // Usamos los valores parseados si están disponibles; de lo contrario, usamos los campos originales
-        const promptText = parsed ? parsed.prompt : (incident.prompt || 'N/A');
-        const responseText = parsed ? parsed.response : (incident.response || 'N/A');
-        const severity = parsed ? parsed.severity : (incident.severity || 'N/A');
+        return response.json();
+      })
+      .then(history => {
+        console.log('Historial recibido:', history);
+        const historyList = document.getElementById('userHistoryList');
+        historyList.innerHTML = '';
 
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${incident.incidentId}</td>
-          <td>${severity}</td>
-          <td>${promptText}</td>
-          <td>${responseText}</td>
-          <td>${incident.date}</td>
-        `;
-        historyList.appendChild(row);
+        history.forEach(incident => {
+          let parsed = null;
+          if ((incident.prompt === undefined || incident.response === undefined) && incident.description) {
+            parsed = parseDescription(incident.description);
+          }
+          
+          const promptText = parsed ? parsed.prompt : (incident.prompt || 'N/A');
+          const responseText = parsed ? parsed.response : (incident.response || 'N/A');
+          const severity = parsed ? parsed.severity : (incident.severity || 'N/A');
+
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${incident.incidentId}</td>
+            <td>${severity}</td>
+            <td>${promptText}</td>
+            <td>${responseText}</td>
+            <td>${incident.date}</td>
+          `;
+          historyList.appendChild(row);
+        });
+
+        // Copiar el contenido del historial del modal al contenedor del reporte
+        const modalHistoryHTML = document.getElementById('userHistoryList').innerHTML;
+        document.getElementById('reportUserHistoryList').innerHTML = modalHistoryHTML;
+
+        // Cambiar a la pestaña "History" usando Bootstrap Tabs
+        const historyTabTrigger = document.querySelector('#history-tab');
+        const tabInstance = new bootstrap.Tab(historyTabTrigger);
+        tabInstance.show();
+      })
+      .catch(error => {
+        console.error('Error fetching history:', error);
       });
+  }
 
-      // Copiar el contenido del historial del modal al contenedor del reporte (IDs únicos)
-      const modalHistoryHTML = document.getElementById('userHistoryList').innerHTML;
-      document.getElementById('reportUserHistoryList').innerHTML = modalHistoryHTML;
+  // Función placeholder para ver detalles del usuario
+  function viewUserDetails(userId) {
+    console.log('Acción para ver detalles del usuario con GUID:', userId);
+    // Implementa la acción deseada
+  }
 
-      // Cambiar a la pestaña "History" usando Bootstrap Tabs
-      const historyTabTrigger = document.querySelector('#history-tab');
-      const tabInstance = new bootstrap.Tab(historyTabTrigger);
-      tabInstance.show();
-    })
-    .catch(error => {
-      console.error('Error fetching history:', error);
+  // Configuración para descargar el reporte en PDF
+  document.addEventListener('DOMContentLoaded', () => {
+    const downloadBtn = document.getElementById('downloadPdfBtn');
+    if (!downloadBtn) {
+      console.error('No se encontró el botón de descarga PDF');
+      return;
+    }
+    downloadBtn.addEventListener('click', () => {
+      console.log("Botón de descarga presionado");
+      // Actualizar la fecha en el reporte
+      document.getElementById('reportDate').textContent = new Date().toLocaleDateString();
+
+      // Seleccionar el contenedor del reporte
+      const element = document.getElementById('reportContent');
+      if (!element) {
+        console.error('No se encontró el contenedor del reporte');
+        return;
+      }
+      
+      const opt = {
+        margin:       0.5,
+        filename:     'reporte-historial-usuario.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        console.log('PDF generado y descargado');
+      });
     });
-}
-
-// Función placeholder para ver detalles de usuario (implementa según necesites)
-function viewUserDetails(userId) {
-  console.log('Acción para ver detalles del usuario con GUID:', userId);
-  // Implementa la acción deseada, como abrir otro modal o redireccionar.
-}
-
-// Configuración para descargar el reporte en PDF
-document.addEventListener('DOMContentLoaded', () => {
-  const downloadBtn = document.getElementById('downloadPdfBtn');
-  downloadBtn.addEventListener('click', () => {
-    // Actualizar la fecha en el reporte
-    document.getElementById('reportDate').textContent = new Date().toLocaleDateString();
-
-    // Seleccionar el contenedor del reporte (oculto fuera de la vista)
-    const element = document.getElementById('reportContent');
-    
-    // Opciones de configuración para el PDF
-    const opt = {
-      margin:       0.5,
-      filename:     'reporte-historial-usuario.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2 },
-      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-
-    // Genera y descarga el PDF
-    html2pdf().set(opt).from(element).save();
   });
-});
 
