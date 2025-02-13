@@ -1341,3 +1341,27 @@ function viewUserDetails(userId) {
   console.log('Acción para ver detalles del usuario con GUID:', userId);
   // Implementa la acción deseada.
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const downloadBtn = document.getElementById('downloadPdfBtn');
+  downloadBtn.addEventListener('click', () => {
+    // Actualizar la fecha en el reporte
+    document.getElementById('reportDate').textContent = new Date().toLocaleDateString();
+
+    // Seleccionar el contenedor del reporte
+    const element = document.getElementById('reportContent');
+    
+    // Opciones de configuración para el PDF
+    const opt = {
+      margin:       0.5,
+      filename:     'reporte-historial-usuario.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    // Genera y descarga el PDF
+    html2pdf().set(opt).from(element).save();
+  });
+});
+

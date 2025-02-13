@@ -682,6 +682,8 @@
               </table>
             </div>
             <!-- Botón para volver a la pestaña "Total Users" -->
+            <button id="downloadPdfBtn" class="btn btn-primary">Descargar Reporte PDF</button>
+            <br>
             <button class="btn btn-secondary mt-3" id="backToUsersTab">Back to Users</button>
           </div>
         </div>
@@ -694,6 +696,33 @@
   </div>
 </div>
 
+<!-- Contenedor del reporte, oculto desplazándolo fuera de la pantalla -->
+<div id="reportContent" style="position: absolute; left: -9999px; padding: 20px; font-family: 'Arial', sans-serif; background: #fff; color: #000;">
+  <!-- Encabezado del reporte -->
+  <div style="text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px;">
+    <h1>Reporte de Historial de Usuario</h1>
+    <p>Fecha: <span id="reportDate"></span></p>
+    <!-- Puedes agregar aquí tu logo -->
+    <!-- <img src="logo.png" alt="Logo" style="max-width: 100px;"> -->
+  </div>
+  <!-- Contenido del historial, por ejemplo la tabla de History -->
+  <div id="historyTabContent">
+    <table class="table table-striped" style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr style="background-color: #f0f0f0;">
+          <th style="padding: 8px; border: 1px solid #ddd;">Incident ID</th>
+          <th style="padding: 8px; border: 1px solid #ddd;">Severity</th>
+          <th style="padding: 8px; border: 1px solid #ddd;">Prompt / Description</th>
+          <th style="padding: 8px; border: 1px solid #ddd;">Response</th>
+          <th style="padding: 8px; border: 1px solid #ddd;">Date</th>
+        </tr>
+      </thead>
+      <tbody id="userHistoryList">
+        <!-- Aquí se llenará dinámicamente el historial -->
+      </tbody>
+    </table>
+  </div>
+</div>
 
 
 
@@ -849,6 +878,7 @@
     <script src="assets/vendor/php-email-form/validate.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/lenguaje.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 
 
