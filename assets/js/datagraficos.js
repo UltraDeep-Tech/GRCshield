@@ -1232,10 +1232,30 @@ function loadUsers() {
     });
 }
 
-/**
- * Función para ver el historial de incidentes de un usuario.
- * Hace la petición al back-end y muestra los resultados en la pestaña "History".
- */
+
+
+function parseDescription(description) {
+  // Expresión regular para extraer severity, prompt y response.
+  // La usamos con grupos de captura. Asegúrate de que el formato sea consistente.
+  const regex = /Severity:\s*(?<severity>[^.]+)\.\s*Prompt:\s*(?<prompt>[^.]+)\.\s*Response:\s*(?<response>.+)/i;
+  const match = description.match(regex);
+  if (match && match.groups) {
+    return {
+      severity: match.groups.severity.trim(),
+      prompt: match.groups.prompt.trim(),
+      response: match.groups.response.trim()
+    };
+  }
+  // Si no se cumple el formato, devolvemos la descripción completa en prompt y 'N/A' para response y severity
+  return {
+    severity: 'N/A',
+    prompt: description,
+    response: 'N/A'
+  };
+}
+
+
+
 function viewUserHistory(userId) {
   // Construir la URL incluyendo el parámetro department con valor "Account Manager"
   const url = new URL(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`);
@@ -1256,15 +1276,31 @@ function viewUserHistory(userId) {
       return response.json();
     })
     .then(history => {
-      console.log('Historial recibido:', history);  // Verifica la data en consola
+      console.log('Historial recibido:', history);
       const historyList = document.getElementById('userHistoryList');
       historyList.innerHTML = '';
 
       history.forEach(incident => {
-        // Si el incidente tiene "prompt" y "response", se usan; de lo contrario, se usa "description"
-        const promptText = incident.prompt ? incident.prompt : (incident.description ? incident.description : 'N/A');
-        const responseText = incident.response ? incident.response : (incident.description ? incident.description : 'N/A');
-        const severity = incident.severity ? incident.severity : 'N/A';
+        // Si existen prompt y response, los usamos directamente;
+        // de lo contrario, intentamos parsear la descripción.
+        let promptText = '';
+        let responseText = '';
+        let severity = '';
+
+        if (incident.prompt !== undefined && incident.response !== undefined) {
+          promptText = incident.prompt;
+          responseText = incident.response;
+          severity = incident.severity || 'N/A';
+        } else if (incident.description) {
+          const parsed = parseDescription(incident.description);
+          promptText = parsed.prompt;
+          responseText = parsed.response;
+          severity = parsed.severity;
+        } else {
+          promptText = 'N/A';
+          responseText = 'N/A';
+          severity = 'N/A';
+        }
 
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -1286,6 +1322,8 @@ function viewUserHistory(userId) {
       console.error('Error fetching history:', error);
     });
 }
+
+
 
 
 function viewUserDetails(userId) {
