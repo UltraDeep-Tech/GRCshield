@@ -615,12 +615,12 @@
         </div>        
 
 
-<!-- Modal para Total Users & History -->
+<!-- Modal para Total Users & History (única instancia) -->
 <div class="modal fade" id="usersModal" tabindex="-1" aria-labelledby="usersModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <!-- Pestañas en el encabezado -->
+        <!-- Pestañas -->
         <ul class="nav nav-tabs" id="usersModalTabs" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#usersTabContent" type="button" role="tab" aria-controls="usersTabContent" aria-selected="true">
@@ -635,9 +635,10 @@
         </ul>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      
       <div class="modal-body">
         <div class="tab-content" id="usersModalTabsContent">
-          <!-- Pestaña "Total Users" -->
+          <!-- Total Users -->
           <div class="tab-pane fade show active" id="usersTabContent" role="tabpanel" aria-labelledby="users-tab">
             <div class="mb-3">
               <input type="text" class="form-control" id="userSearchInput" placeholder="Search users...">
@@ -654,12 +655,12 @@
                   </tr>
                 </thead>
                 <tbody id="usersList">
-                  <!-- Usuarios se cargarán dinámicamente -->
+                  <!-- Usuarios -->
                 </tbody>
               </table>
             </div>
           </div>
-          <!-- Pestaña "History" -->
+          <!-- History -->
           <div class="tab-pane fade" id="historyTabContent" role="tabpanel" aria-labelledby="history-tab">
             <div class="table-responsive">
               <table class="table table-striped">
@@ -673,17 +674,18 @@
                   </tr>
                 </thead>
                 <tbody id="userHistoryList">
-                  <!-- Historial se cargará dinámicamente -->
+                  <!-- Historial -->
                 </tbody>
               </table>
             </div>
-            <!-- Botón para descargar PDF y volver a "Total Users" -->
+            <!-- Botón para descargar PDF -->
             <button id="downloadPdfBtn" class="btn btn-primary">Descargar Reporte PDF</button>
             <br>
             <button class="btn btn-secondary mt-3" id="backToUsersTab">Back to Users</button>
           </div>
         </div>
       </div>
+      
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
@@ -691,15 +693,12 @@
   </div>
 </div>
 
-<!-- Contenedor para el Reporte PDF (oculto, con IDs únicos) -->
+<!-- Contenedor del reporte (oculto) -->
 <div id="reportContent" style="position: absolute; left: -9999px; padding: 20px; font-family: Arial, sans-serif; background: #fff; color: #000;">
-  <!-- Encabezado del reporte -->
   <div style="text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px;">
     <h1>Reporte de Historial de Usuario</h1>
     <p>Fecha: <span id="reportDate"></span></p>
-    <!-- Aquí puedes insertar un logo -->
   </div>
-  <!-- Contenido del historial para el reporte -->
   <div id="reportHistoryContent">
     <table class="table table-striped" style="width: 100%; border-collapse: collapse;">
       <thead>
@@ -712,11 +711,12 @@
         </tr>
       </thead>
       <tbody id="reportUserHistoryList">
-        <!-- Se llenará dinámicamente -->
+        <!-- Historial para PDF -->
       </tbody>
     </table>
   </div>
 </div>
+
 
 
 
