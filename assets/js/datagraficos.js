@@ -1235,29 +1235,49 @@ function loadUsers() {
 
 
 function parseDescription(description) {
-  // Expresión regular para extraer severity, prompt y response.
-  // La usamos con grupos de captura. Asegúrate de que el formato sea consistente.
-  const regex = /Severity:\s*(?<severity>[^.]+)\.\s*Prompt:\s*(?<prompt>[^.]+)\.\s*Response:\s*(?<response>.+)/i;
-  const match = description.match(regex);
-  if (match && match.groups) {
+  const severityMarker = "Severity:";
+  const promptMarker = "Prompt:";
+  const responseMarker = "Response:";
+
+  // Buscar las posiciones de las etiquetas
+  const severityIndex = description.indexOf(severityMarker);
+  const promptIndex = description.indexOf(promptMarker);
+  const responseIndex = description.indexOf(responseMarker);
+
+  // Si alguna etiqueta no se encuentra, devolvemos la descripción completa en prompt
+  if (severityIndex === -1 || promptIndex === -1 || responseIndex === -1) {
     return {
-      severity: match.groups.severity.trim(),
-      prompt: match.groups.prompt.trim(),
-      response: match.groups.response.trim()
+      severity: 'N/A',
+      prompt: description,
+      response: 'N/A'
     };
   }
-  // Si no se cumple el formato, devolvemos la descripción completa en prompt y 'N/A' para response y severity
+
+  // Extraer los textos correspondientes
+  const severityText = description
+    .substring(severityIndex + severityMarker.length, promptIndex)
+    .trim()
+    .replace(/\.$/, ''); // quitar el punto final si lo tiene
+
+  const promptText = description
+    .substring(promptIndex + promptMarker.length, responseIndex)
+    .trim()
+    .replace(/\.$/, '');
+
+  const responseText = description
+    .substring(responseIndex + responseMarker.length)
+    .trim();
+
   return {
-    severity: 'N/A',
-    prompt: description,
-    response: 'N/A'
+    severity: severityText,
+    prompt: promptText,
+    response: responseText
   };
 }
 
 
 
 function viewUserHistory(userId) {
-  // Construir la URL incluyendo el parámetro department con valor "Account Manager"
   const url = new URL(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`);
   url.searchParams.append('department', 'Account Manager');
 
@@ -1281,26 +1301,16 @@ function viewUserHistory(userId) {
       historyList.innerHTML = '';
 
       history.forEach(incident => {
-        // Si existen prompt y response, los usamos directamente;
-        // de lo contrario, intentamos parsear la descripción.
-        let promptText = '';
-        let responseText = '';
-        let severity = '';
-
-        if (incident.prompt !== undefined && incident.response !== undefined) {
-          promptText = incident.prompt;
-          responseText = incident.response;
-          severity = incident.severity || 'N/A';
-        } else if (incident.description) {
-          const parsed = parseDescription(incident.description);
-          promptText = parsed.prompt;
-          responseText = parsed.response;
-          severity = parsed.severity;
-        } else {
-          promptText = 'N/A';
-          responseText = 'N/A';
-          severity = 'N/A';
+        let parsed = null;
+        // Si no se tienen los campos separados, intenta parsear la descripción
+        if ((incident.prompt === undefined || incident.response === undefined) && incident.description) {
+          parsed = parseDescription(incident.description);
         }
+        
+        // Usa los valores separados si se pudieron obtener, de lo contrario usa los que ya vienen
+        const promptText = parsed ? parsed.prompt : (incident.prompt || 'N/A');
+        const responseText = parsed ? parsed.response : (incident.response || 'N/A');
+        const severity = parsed ? parsed.severity : (incident.severity || 'N/A');
 
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -1313,7 +1323,7 @@ function viewUserHistory(userId) {
         historyList.appendChild(row);
       });
 
-      // Cambiar a la pestaña "History" usando Bootstrap Tabs
+      // Mostrar la pestaña "History"
       const historyTabTrigger = document.querySelector('#history-tab');
       const tabInstance = new bootstrap.Tab(historyTabTrigger);
       tabInstance.show();
@@ -1322,6 +1332,7 @@ function viewUserHistory(userId) {
       console.error('Error fetching history:', error);
     });
 }
+
 
 
 
