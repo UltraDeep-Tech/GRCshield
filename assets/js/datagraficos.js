@@ -1277,7 +1277,39 @@ function parseDescription(description) {
 
 
 
+// Función para parsear la descripción y extraer severity, prompt y response
+function parseDescription(description) {
+  const severityMarker = "Severity:";
+  const promptMarker = "Prompt:";
+  const responseMarker = "Response:";
+
+  const severityIndex = description.indexOf(severityMarker);
+  const promptIndex = description.indexOf(promptMarker);
+  const responseIndex = description.indexOf(responseMarker);
+
+  // Si alguna etiqueta no se encuentra, devolvemos la descripción completa en prompt
+  if (severityIndex === -1 || promptIndex === -1 || responseIndex === -1) {
+    return {
+      severity: 'N/A',
+      prompt: description,
+      response: 'N/A'
+    };
+  }
+
+  const severityText = description.substring(severityIndex + severityMarker.length, promptIndex).trim().replace(/\.$/, '');
+  const promptText = description.substring(promptIndex + promptMarker.length, responseIndex).trim().replace(/\.$/, '');
+  const responseText = description.substring(responseIndex + responseMarker.length).trim();
+
+  return {
+    severity: severityText,
+    prompt: promptText,
+    response: responseText
+  };
+}
+
+// Función para cargar y mostrar el historial de incidentes de un usuario
 function viewUserHistory(userId) {
+  // Construir la URL con el parámetro department="Account Manager"
   const url = new URL(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`);
   url.searchParams.append('department', 'Account Manager');
 
@@ -1302,12 +1334,12 @@ function viewUserHistory(userId) {
 
       history.forEach(incident => {
         let parsed = null;
-        // Si no se tienen los campos separados, intenta parsear la descripción
+        // Si no están definidos prompt o response pero existe description, intentamos parsearla
         if ((incident.prompt === undefined || incident.response === undefined) && incident.description) {
           parsed = parseDescription(incident.description);
         }
         
-        // Usa los valores separados si se pudieron obtener, de lo contrario usa los que ya vienen
+        // Usamos los valores parseados si están disponibles; de lo contrario, usamos los campos originales
         const promptText = parsed ? parsed.prompt : (incident.prompt || 'N/A');
         const responseText = parsed ? parsed.response : (incident.response || 'N/A');
         const severity = parsed ? parsed.severity : (incident.severity || 'N/A');
@@ -1323,7 +1355,11 @@ function viewUserHistory(userId) {
         historyList.appendChild(row);
       });
 
-      // Mostrar la pestaña "History"
+      // Copiar el contenido del historial del modal al contenedor del reporte (IDs únicos)
+      const modalHistoryHTML = document.getElementById('userHistoryList').innerHTML;
+      document.getElementById('reportUserHistoryList').innerHTML = modalHistoryHTML;
+
+      // Cambiar a la pestaña "History" usando Bootstrap Tabs
       const historyTabTrigger = document.querySelector('#history-tab');
       const tabInstance = new bootstrap.Tab(historyTabTrigger);
       tabInstance.show();
@@ -1333,22 +1369,20 @@ function viewUserHistory(userId) {
     });
 }
 
-
-
-
-
+// Función placeholder para ver detalles de usuario (implementa según necesites)
 function viewUserDetails(userId) {
   console.log('Acción para ver detalles del usuario con GUID:', userId);
-  // Implementa la acción deseada.
+  // Implementa la acción deseada, como abrir otro modal o redireccionar.
 }
 
+// Configuración para descargar el reporte en PDF
 document.addEventListener('DOMContentLoaded', () => {
   const downloadBtn = document.getElementById('downloadPdfBtn');
   downloadBtn.addEventListener('click', () => {
     // Actualizar la fecha en el reporte
     document.getElementById('reportDate').textContent = new Date().toLocaleDateString();
 
-    // Seleccionar el contenedor del reporte
+    // Seleccionar el contenedor del reporte (oculto fuera de la vista)
     const element = document.getElementById('reportContent');
     
     // Opciones de configuración para el PDF
