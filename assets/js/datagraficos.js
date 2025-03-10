@@ -1172,6 +1172,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const historyList = document.getElementById('userHistoryList');
       const reportList = document.getElementById('reportUserHistoryList');
       if (historyList && reportList) {
+        if (!historyList.innerHTML.trim()) {
+          console.error("El historial de usuario está vacío. No se generará el PDF.");
+          return;
+        }
         reportList.innerHTML = historyList.innerHTML;
       } else {
         console.error("Error: No se encontraron los elementos de historial de usuario para el reporte.");
@@ -1184,11 +1188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Verificar si hay contenido antes de generar el PDF
-      if (!reportList.innerHTML.trim()) {
-        console.error("El historial de usuario está vacío. No se generará el PDF.");
-        return;
-      }
+      element.style.display = 'block'; // Asegurar que el contenido es visible antes de capturarlo
 
       setTimeout(() => {
         const opt = {
@@ -1201,10 +1201,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         html2pdf().set(opt).from(element).save().then(() => {
           console.log('PDF generado y descargado');
+          element.style.display = 'none'; // Restaurar la visibilidad después de la generación
         }).catch(err => {
           console.error('Error generando PDF:', err);
         });
-      }, 500); // Pequeña espera para asegurar que el DOM se actualizó
+      }, 500);
     });
   });
 });
@@ -1312,6 +1313,7 @@ function parseDescription(description) {
     response: responseText
   };
 }
+
 
 
 
