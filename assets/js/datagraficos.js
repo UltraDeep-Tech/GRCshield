@@ -1404,11 +1404,18 @@ function parseDescription(description) {
   
       if (!historyList.innerHTML.trim()) {
         console.error("El historial de usuario está vacío. No se generará el PDF.");
+        alert("El historial de usuario está vacío. Asegúrate de que se haya cargado antes de descargar el PDF.");
         return;
       }
   
       // Copiamos el historial al contenedor del reporte
       reportList.innerHTML = historyList.innerHTML;
+  
+      // Verificamos que se haya copiado correctamente
+      if (!reportList.innerHTML.trim()) {
+        console.error("Error: El historial de usuario no se copió correctamente.");
+        return;
+      }
   
       // Esperar un momento antes de generar el PDF (para asegurarnos de que se copie)
       setTimeout(() => {
@@ -1435,9 +1442,10 @@ function parseDescription(description) {
           }).catch(err => {
             console.error('Error generando PDF:', err);
           });
-        }, 500); // Esperar 500ms antes de capturar el PDF
+        }, 1000); // Esperar 1 segundo antes de capturar el PDF para asegurar renderización
       }, 500); // Esperar 500ms antes de copiar el historial
     });
   });
+  
   
 
