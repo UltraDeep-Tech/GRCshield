@@ -1390,56 +1390,53 @@ function parseDescription(description) {
       return;
     }
   
-    downloadBtn.addEventListener('click', async () => {
+    downloadBtn.addEventListener('click', () => {
       console.log("Botón de descarga presionado");
   
-      // Actualizar la fecha en el reporte
-      document.getElementById('reportDate').textContent = new Date().toLocaleDateString();
-  
-      // Obtener las listas de historial de usuario
+      // Asegurar que el historial de usuario está listo antes de capturar el PDF
       const historyList = document.getElementById('userHistoryList');
       const reportList = document.getElementById('reportUserHistoryList');
   
       if (!historyList || !reportList) {
-        console.error("Error: No se encontraron los elementos de historial de usuario para el reporte.");
+        console.error("Error: No se encontraron los elementos del historial.");
         return;
       }
   
-      // Verificar si el historial tiene contenido antes de copiarlo
       if (!historyList.innerHTML.trim()) {
         console.error("El historial de usuario está vacío. No se generará el PDF.");
         return;
       }
   
-      // Copiar la data del historial visible al reporte
+      // Copiamos el historial al contenedor del reporte
       reportList.innerHTML = historyList.innerHTML;
   
-      // Asegurar que el contenedor es visible antes de la captura
-      const element = document.getElementById('reportContent');
-      if (!element) {
-        console.error('No se encontró el contenedor del reporte');
-        return;
-      }
+      // Esperar un momento antes de generar el PDF (para asegurarnos de que se copie)
+      setTimeout(() => {
+        const element = document.getElementById('reportContent');
+        if (!element) {
+          console.error('No se encontró el contenedor del reporte');
+          return;
+        }
   
-      element.style.display = 'block';
+        element.style.display = 'block'; // Asegurar que el contenido sea visible antes de capturar
   
-      // Esperar un pequeño tiempo para asegurar que el DOM se actualizó
-      await new Promise(resolve => setTimeout(resolve, 500));
+        setTimeout(() => {
+          const opt = {
+            margin: 0.5,
+            filename: 'reporte-historial-usuario.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, logging: false },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+          };
   
-      const opt = {
-        margin: 0.5,
-        filename: 'reporte-historial-usuario.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
-  
-      html2pdf().set(opt).from(element).save().then(() => {
-        console.log('PDF generado y descargado');
-        element.style.display = 'none'; // Restaurar visibilidad después de la captura
-      }).catch(err => {
-        console.error('Error generando PDF:', err);
-      });
+          html2pdf().set(opt).from(element).save().then(() => {
+            console.log('PDF generado y descargado');
+            element.style.display = 'none'; // Ocultar el contenido después de capturar
+          }).catch(err => {
+            console.error('Error generando PDF:', err);
+          });
+        }, 500); // Esperar 500ms antes de capturar el PDF
+      }, 500); // Esperar 500ms antes de copiar el historial
     });
   });
   
