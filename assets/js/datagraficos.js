@@ -1137,7 +1137,6 @@ document.addEventListener("DOMContentLoaded", () => {
 let abusiveUsersData = { data: [] };
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Agrega el listener para que, al abrir el modal, se llame a loadUsers()
   const usersModal = document.getElementById('usersModal');
   if (usersModal) {
     usersModal.addEventListener('shown.bs.modal', () => {
@@ -1145,7 +1144,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-
+  function ensureHtml2PdfLoaded(callback) {
+    let attempt = 0;
+    const interval = setInterval(() => {
+      if (typeof html2pdf !== "undefined") {
+        clearInterval(interval);
+        callback();
+      } else if (attempt > 10) {
+        clearInterval(interval);
+        console.error("Error: html2pdf no está definido. Verifica que la librería esté cargada antes de este script.");
+      }
+      attempt++;
+    }, 500);
+  }
 
   ensureHtml2PdfLoaded(() => {
     const downloadBtn = document.getElementById('downloadPdfBtn');
@@ -1158,25 +1169,42 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("Botón de descarga presionado");
       document.getElementById('reportDate').textContent = new Date().toLocaleDateString();
 
+      const historyList = document.getElementById('userHistoryList');
+      const reportList = document.getElementById('reportUserHistoryList');
+      if (historyList && reportList) {
+        reportList.innerHTML = historyList.innerHTML;
+      } else {
+        console.error("Error: No se encontraron los elementos de historial de usuario para el reporte.");
+        return;
+      }
+
       const element = document.getElementById('reportContent');
       if (!element) {
         console.error('No se encontró el contenedor del reporte');
         return;
       }
 
-      const opt = {
-        margin: 0.5,
-        filename: 'reporte-historial-usuario.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, logging: false },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
+      // Verificar si hay contenido antes de generar el PDF
+      if (!reportList.innerHTML.trim()) {
+        console.error("El historial de usuario está vacío. No se generará el PDF.");
+        return;
+      }
 
-      html2pdf().set(opt).from(element).save().then(() => {
-        console.log('PDF generado y descargado');
-      }).catch(err => {
-        console.error('Error generando PDF:', err);
-      });
+      setTimeout(() => {
+        const opt = {
+          margin: 0.5,
+          filename: 'reporte-historial-usuario.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, logging: false },
+          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save().then(() => {
+          console.log('PDF generado y descargado');
+        }).catch(err => {
+          console.error('Error generando PDF:', err);
+        });
+      }, 500); // Pequeña espera para asegurar que el DOM se actualizó
     });
   });
 });
@@ -1284,6 +1312,7 @@ function parseDescription(description) {
     response: responseText
   };
 }
+
 
 
 
