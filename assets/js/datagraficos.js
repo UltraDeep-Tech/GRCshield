@@ -1145,20 +1145,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Verifica si html2pdf está disponible antes de ejecutar
-  function ensureHtml2PdfLoaded(callback) {
-    let attempt = 0;
-    const interval = setInterval(() => {
-      if (typeof html2pdf !== "undefined") {
-        clearInterval(interval);
-        callback();
-      } else if (attempt > 10) {
-        clearInterval(interval);
-        console.error("Error: html2pdf no está definido. Verifica que la librería esté cargada antes de este script.");
-      }
-      attempt++;
-    }, 500);
-  }
+
 
   ensureHtml2PdfLoaded(() => {
     const downloadBtn = document.getElementById('downloadPdfBtn');
