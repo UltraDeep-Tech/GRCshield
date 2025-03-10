@@ -1133,230 +1133,183 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Variable global para almacenar los datos de usuarios abusivos
-let abusiveUsersData = { data: [] };
+// Construir la URL con el parámetro department
+const url = new URL('https://backend-grcshield-934866038204.us-central1.run.app/api/abusive_users');
+url.searchParams.append('department', currentDepartment);
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Agrega el listener para que, al abrir el modal, se llame a loadUsers()
-  const usersModal = document.getElementById('usersModal');
-  if (usersModal) {
-    usersModal.addEventListener('shown.bs.modal', () => {
-      loadUsers();
+fetch(url, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
+  credentials: 'include'
+})
+.then(response => {
+  if (!response.ok) {
+    throw new Error('Error fetching abusive users data');
+  }
+  return response.json();
+})
+.then(data => {
+  abusiveUsersData = data;
+  const users = abusiveUsersData.data;
+
+  function displayUsers(filteredUsers) {
+    usersList.innerHTML = '';
+    filteredUsers.forEach(user => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${user.user}</td>
+        <td>${user.incidents}</td>
+        <td>${user.date}</td>
+        <td><button class="btn btn-sm btn-secondary" onclick="viewUserHistory('${user.guid}')">History</button></td>
+        <td><button class="btn btn-sm btn-info" onclick="viewUserDetails('${user.guid}')">Actions</button></td>
+      `;
+      usersList.appendChild(row);
     });
   }
+
+  searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const filteredUsers = users.filter(user =>
+      user.user.toLowerCase().includes(searchTerm)
+    );
+    displayUsers(filteredUsers);
+  });
+
+  displayUsers(users);
+})
+.catch(error => {
+  console.error('Error loading users:', error);
 });
 
-/**
- * Función para cargar y mostrar los usuarios en la pestaña "Total Users"
- */
-function loadUsers() {
-  const usersList = document.getElementById('usersList');
-  const searchInput = document.getElementById('userSearchInput');
+// Función para parsear la descripción
+function parseDescription(description) {
+  const severityMarker = "Severity:";
+  const promptMarker = "Prompt:";
+  const responseMarker = "Response:";
 
-  // Obtener el departamento actual desde localStorage
-  let currentDepartment = localStorage.getItem('currentDepartment');
-  let authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
-  if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
-    console.warn('Departamento actual no válido o no autorizado');
-    if (authorizedDepartments.length > 0) {
-      currentDepartment = authorizedDepartments[0];
-      localStorage.setItem('currentDepartment', currentDepartment);
-    } else {
-      console.error('No hay departamentos autorizados');
-      return;
-    }
+  const severityIndex = description.indexOf(severityMarker);
+  const promptIndex = description.indexOf(promptMarker);
+  const responseIndex = description.indexOf(responseMarker);
+
+  if (severityIndex === -1 || promptIndex === -1 || responseIndex === -1) {
+    return {
+      severity: 'N/A',
+      prompt: description,
+      response: 'N/A'
+    };
   }
 
-  // Construir la URL con el parámetro department
-  const url = new URL('https://backend-grcshield-934866038204.us-central1.run.app/api/abusive_users');
-  url.searchParams.append('department', currentDepartment);
+  const severityText = description.substring(severityIndex + severityMarker.length, promptIndex).trim().replace(/\.$/, '');
+  const promptText = description.substring(promptIndex + promptMarker.length, responseIndex).trim().replace(/\.$/, '');
+  const responseText = description.substring(responseIndex + responseMarker.length).trim();
+
+  return {
+    severity: severityText,
+    prompt: promptText,
+    response: responseText
+  };
+}
+
+// Función para cargar historial del usuario
+function viewUserHistory(userId) {
+  const url = new URL(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`);
+  url.searchParams.append('department', 'Account Manager');
 
   fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      // El header Origin se establece en el back si se requiere para CORS
+      'Accept': 'application/json'
     },
     credentials: 'include'
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error fetching abusive users data');
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error fetching user history');
+    }
+    return response.json();
+  })
+  .then(history => {
+    console.log('Historial recibido:', history);
+    const historyList = document.getElementById('userHistoryList');
+    historyList.innerHTML = '';
+
+    history.forEach(incident => {
+      let parsed = null;
+      if ((incident.prompt === undefined || incident.response === undefined) && incident.description) {
+        parsed = parseDescription(incident.description);
       }
-      return response.json();
-    })
-    .then(data => {
-      // Asignar la data obtenida a la variable global
-      abusiveUsersData = data;
-      const users = abusiveUsersData.data;
+      
+      const promptText = parsed ? parsed.prompt : (incident.prompt || 'N/A');
+      const responseText = parsed ? parsed.response : (incident.response || 'N/A');
+      const severity = parsed ? parsed.severity : (incident.severity || 'N/A');
 
-      // Función interna para renderizar la tabla de usuarios
-      function displayUsers(filteredUsers) {
-        usersList.innerHTML = '';
-        filteredUsers.forEach(user => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${user.user}</td>
-            <td>${user.incidents}</td>
-            <td>${user.date}</td>
-            <td>
-              <button class="btn btn-sm btn-secondary" onclick="viewUserHistory('${user.guid}')">
-                History
-              </button>
-            </td>
-            <td>
-              <button class="btn btn-sm btn-info" onclick="viewUserDetails('${user.guid}')">
-                Actions
-              </button>
-            </td>
-          `;
-          usersList.appendChild(row);
-        });
-      }
-
-      // Configurar la búsqueda en la lista de usuarios
-      searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        const filteredUsers = users.filter(user =>
-          user.user.toLowerCase().includes(searchTerm)
-        );
-        displayUsers(filteredUsers);
-      });
-
-      // Mostrar todos los usuarios inicialmente
-      displayUsers(users);
-    })
-    .catch(error => {
-      console.error('Error loading users:', error);
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${incident.incidentId}</td>
+        <td>${severity}</td>
+        <td>${promptText}</td>
+        <td>${responseText}</td>
+        <td>${incident.date}</td>
+      `;
+      historyList.appendChild(row);
     });
+
+    document.getElementById('reportUserHistoryList').innerHTML = historyList.innerHTML;
+    
+    const historyTabTrigger = document.querySelector('#history-tab');
+    const tabInstance = new bootstrap.Tab(historyTabTrigger);
+    tabInstance.show();
+  })
+  .catch(error => {
+    console.error('Error fetching history:', error);
+  });
 }
 
+// Función para ver detalles del usuario
+function viewUserDetails(userId) {
+  console.log('Acción para ver detalles del usuario con GUID:', userId);
+}
 
-   // Función para parsear la descripción (si es necesario)
-   function parseDescription(description) {
-    const severityMarker = "Severity:";
-    const promptMarker = "Prompt:";
-    const responseMarker = "Response:";
-
-    const severityIndex = description.indexOf(severityMarker);
-    const promptIndex = description.indexOf(promptMarker);
-    const responseIndex = description.indexOf(responseMarker);
-
-    if (severityIndex === -1 || promptIndex === -1 || responseIndex === -1) {
-      return {
-        severity: 'N/A',
-        prompt: description,
-        response: 'N/A'
-      };
-    }
-
-    const severityText = description.substring(severityIndex + severityMarker.length, promptIndex).trim().replace(/\.$/, '');
-    const promptText = description.substring(promptIndex + promptMarker.length, responseIndex).trim().replace(/\.$/, '');
-    const responseText = description.substring(responseIndex + responseMarker.length).trim();
-
-    return {
-      severity: severityText,
-      prompt: promptText,
-      response: responseText
-    };
+// Configuración para descargar el reporte en PDF
+document.addEventListener('DOMContentLoaded', () => {
+  const downloadBtn = document.getElementById('downloadPdfBtn');
+  if (!downloadBtn) {
+    console.error('No se encontró el botón de descarga PDF');
+    return;
   }
+  downloadBtn.addEventListener('click', () => {
+    console.log("Botón de descarga presionado");
+    document.getElementById('reportDate').textContent = new Date().toLocaleDateString();
 
-  // Función para cargar el historial del usuario y renderizarlo
-  function viewUserHistory(userId) {
-    const url = new URL(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`);
-    url.searchParams.append('department', 'Account Manager');
-
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      credentials: 'include'
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Error fetching user history');
-        }
-        return response.json();
-      })
-      .then(history => {
-        console.log('Historial recibido:', history);
-        const historyList = document.getElementById('userHistoryList');
-        historyList.innerHTML = '';
-
-        history.forEach(incident => {
-          let parsed = null;
-          if ((incident.prompt === undefined || incident.response === undefined) && incident.description) {
-            parsed = parseDescription(incident.description);
-          }
-          
-          const promptText = parsed ? parsed.prompt : (incident.prompt || 'N/A');
-          const responseText = parsed ? parsed.response : (incident.response || 'N/A');
-          const severity = parsed ? parsed.severity : (incident.severity || 'N/A');
-
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${incident.incidentId}</td>
-            <td>${severity}</td>
-            <td>${promptText}</td>
-            <td>${responseText}</td>
-            <td>${incident.date}</td>
-          `;
-          historyList.appendChild(row);
-        });
-
-        // Copiar el contenido del historial del modal al contenedor del reporte
-        const modalHistoryHTML = document.getElementById('userHistoryList').innerHTML;
-        document.getElementById('reportUserHistoryList').innerHTML = modalHistoryHTML;
-
-        // Cambiar a la pestaña "History" usando Bootstrap Tabs
-        const historyTabTrigger = document.querySelector('#history-tab');
-        const tabInstance = new bootstrap.Tab(historyTabTrigger);
-        tabInstance.show();
-      })
-      .catch(error => {
-        console.error('Error fetching history:', error);
-      });
-  }
-
-  // Función placeholder para ver detalles del usuario
-  function viewUserDetails(userId) {
-    console.log('Acción para ver detalles del usuario con GUID:', userId);
-    // Implementa la acción deseada
-  }
-
-  // Configuración para descargar el reporte en PDF
-  document.addEventListener('DOMContentLoaded', () => {
-    const downloadBtn = document.getElementById('downloadPdfBtn');
-    if (!downloadBtn) {
-      console.error('No se encontró el botón de descarga PDF');
+    const element = document.getElementById('reportContent');
+    if (!element) {
+      console.error('No se encontró el contenedor del reporte');
       return;
     }
-    downloadBtn.addEventListener('click', () => {
-      console.log("Botón de descarga presionado");
-      // Actualizar la fecha en el reporte
-      document.getElementById('reportDate').textContent = new Date().toLocaleDateString();
 
-      // Seleccionar el contenedor del reporte
-      const element = document.getElementById('reportContent');
-      if (!element) {
-        console.error('No se encontró el contenedor del reporte');
+    setTimeout(() => {
+      if (element.offsetHeight === 0) {
+        console.error('Error: El contenedor tiene altura 0, no se generará correctamente');
         return;
       }
       
       const opt = {
-        margin:       0.5,
-        filename:     'reporte-historial-usuario.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        margin: 0.5,
+        filename: 'reporte-historial-usuario.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
       };
 
       html2pdf().set(opt).from(element).save().then(() => {
         console.log('PDF generado y descargado');
+      }).catch(err => {
+        console.error('Error generando PDF:', err);
       });
-    });
+    }, 500);
   });
-
+});
