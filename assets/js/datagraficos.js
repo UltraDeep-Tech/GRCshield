@@ -1145,12 +1145,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  setTimeout(() => {
-    if (typeof html2pdf === "undefined") {
-      console.error("Error: html2pdf no está definido. Verifica que la librería esté cargada.");
-      return;
-    }
+  // Verifica si html2pdf está disponible antes de ejecutar
+  function ensureHtml2PdfLoaded(callback) {
+    let attempt = 0;
+    const interval = setInterval(() => {
+      if (typeof html2pdf !== "undefined") {
+        clearInterval(interval);
+        callback();
+      } else if (attempt > 10) {
+        clearInterval(interval);
+        console.error("Error: html2pdf no está definido. Verifica que la librería esté cargada antes de este script.");
+      }
+      attempt++;
+    }, 500);
+  }
 
+  ensureHtml2PdfLoaded(() => {
     const downloadBtn = document.getElementById('downloadPdfBtn');
     if (!downloadBtn) {
       console.error('No se encontró el botón de descarga PDF');
@@ -1181,7 +1191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error generando PDF:', err);
       });
     });
-  }, 500);
+  });
 });
 
 function loadUsers() {
@@ -1287,6 +1297,7 @@ function parseDescription(description) {
     response: responseText
   };
 }
+
 
 
   // Función para cargar el historial del usuario y renderizarlo
