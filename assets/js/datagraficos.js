@@ -1144,16 +1144,50 @@ document.addEventListener('DOMContentLoaded', () => {
       loadUsers();
     });
   }
+
+  setTimeout(() => {
+    if (typeof html2pdf === "undefined") {
+      console.error("Error: html2pdf no está definido. Verifica que la librería esté cargada.");
+      return;
+    }
+
+    const downloadBtn = document.getElementById('downloadPdfBtn');
+    if (!downloadBtn) {
+      console.error('No se encontró el botón de descarga PDF');
+      return;
+    }
+
+    downloadBtn.addEventListener('click', () => {
+      console.log("Botón de descarga presionado");
+      document.getElementById('reportDate').textContent = new Date().toLocaleDateString();
+
+      const element = document.getElementById('reportContent');
+      if (!element) {
+        console.error('No se encontró el contenedor del reporte');
+        return;
+      }
+
+      const opt = {
+        margin: 0.5,
+        filename: 'reporte-historial-usuario.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        console.log('PDF generado y descargado');
+      }).catch(err => {
+        console.error('Error generando PDF:', err);
+      });
+    });
+  }, 500);
 });
 
-/**
- * Función para cargar y mostrar los usuarios en la pestaña "Total Users"
- */
 function loadUsers() {
   const usersList = document.getElementById('usersList');
   const searchInput = document.getElementById('userSearchInput');
 
-  // Obtener el departamento actual desde localStorage
   let currentDepartment = localStorage.getItem('currentDepartment');
   let authorizedDepartments = JSON.parse(localStorage.getItem('authorizedDepartments')) || [];
   if (!currentDepartment || !authorizedDepartments.includes(currentDepartment)) {
@@ -1167,7 +1201,6 @@ function loadUsers() {
     }
   }
 
-  // Construir la URL con el parámetro department
   const url = new URL('https://backend-grcshield-934866038204.us-central1.run.app/api/abusive_users');
   url.searchParams.append('department', currentDepartment);
 
@@ -1176,91 +1209,85 @@ function loadUsers() {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      // El header Origin se establece en el back si se requiere para CORS
     },
     credentials: 'include'
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error fetching abusive users data');
-      }
-      return response.json();
-    })
-    .then(data => {
-      // Asignar la data obtenida a la variable global
-      abusiveUsersData = data;
-      const users = abusiveUsersData.data;
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error fetching abusive users data');
+    }
+    return response.json();
+  })
+  .then(data => {
+    abusiveUsersData = data;
+    const users = abusiveUsersData.data;
 
-      // Función interna para renderizar la tabla de usuarios
-      function displayUsers(filteredUsers) {
-        usersList.innerHTML = '';
-        filteredUsers.forEach(user => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${user.user}</td>
-            <td>${user.incidents}</td>
-            <td>${user.date}</td>
-            <td>
-              <button class="btn btn-sm btn-secondary" onclick="viewUserHistory('${user.guid}')">
-                History
-              </button>
-            </td>
-            <td>
-              <button class="btn btn-sm btn-info" onclick="viewUserDetails('${user.guid}')">
-                Actions
-              </button>
-            </td>
-          `;
-          usersList.appendChild(row);
-        });
-      }
-
-      // Configurar la búsqueda en la lista de usuarios
-      searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        const filteredUsers = users.filter(user =>
-          user.user.toLowerCase().includes(searchTerm)
-        );
-        displayUsers(filteredUsers);
+    function displayUsers(filteredUsers) {
+      usersList.innerHTML = '';
+      filteredUsers.forEach(user => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${user.user}</td>
+          <td>${user.incidents}</td>
+          <td>${user.date}</td>
+          <td>
+            <button class="btn btn-sm btn-secondary" onclick="viewUserHistory('${user.guid}')">
+              History
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-info" onclick="viewUserDetails('${user.guid}')">
+              Actions
+            </button>
+          </td>
+        `;
+        usersList.appendChild(row);
       });
-
-      // Mostrar todos los usuarios inicialmente
-      displayUsers(users);
-    })
-    .catch(error => {
-      console.error('Error loading users:', error);
-    });
-}
-
-
-   // Función para parsear la descripción (si es necesario)
-   function parseDescription(description) {
-    const severityMarker = "Severity:";
-    const promptMarker = "Prompt:";
-    const responseMarker = "Response:";
-
-    const severityIndex = description.indexOf(severityMarker);
-    const promptIndex = description.indexOf(promptMarker);
-    const responseIndex = description.indexOf(responseMarker);
-
-    if (severityIndex === -1 || promptIndex === -1 || responseIndex === -1) {
-      return {
-        severity: 'N/A',
-        prompt: description,
-        response: 'N/A'
-      };
     }
 
-    const severityText = description.substring(severityIndex + severityMarker.length, promptIndex).trim().replace(/\.$/, '');
-    const promptText = description.substring(promptIndex + promptMarker.length, responseIndex).trim().replace(/\.$/, '');
-    const responseText = description.substring(responseIndex + responseMarker.length).trim();
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      const filteredUsers = users.filter(user =>
+        user.user.toLowerCase().includes(searchTerm)
+      );
+      displayUsers(filteredUsers);
+    });
 
+    displayUsers(users);
+  })
+  .catch(error => {
+    console.error('Error loading users:', error);
+  });
+}
+
+function parseDescription(description) {
+  const severityMarker = "Severity:";
+  const promptMarker = "Prompt:";
+  const responseMarker = "Response:";
+
+  const severityIndex = description.indexOf(severityMarker);
+  const promptIndex = description.indexOf(promptMarker);
+  const responseIndex = description.indexOf(responseMarker);
+
+  if (severityIndex === -1 || promptIndex === -1 || responseIndex === -1) {
     return {
-      severity: severityText,
-      prompt: promptText,
-      response: responseText
+      severity: 'N/A',
+      prompt: description,
+      response: 'N/A'
     };
   }
+
+  const severityText = description.substring(severityIndex + severityMarker.length, promptIndex).trim().replace(/\.$/, '');
+  const promptText = description.substring(promptIndex + promptMarker.length, responseIndex).trim().replace(/\.$/, '');
+  const responseText = description.substring(responseIndex + responseMarker.length).trim();
+
+  return {
+    severity: severityText,
+    prompt: promptText,
+    response: responseText
+  };
+}
+
 
   // Función para cargar el historial del usuario y renderizarlo
   function viewUserHistory(userId) {
