@@ -1383,36 +1383,64 @@ function parseDescription(description) {
     // Implementa la acción deseada
   }
 
-  // Configuración para descargar el reporte en PDF
   document.addEventListener('DOMContentLoaded', () => {
     const downloadBtn = document.getElementById('downloadPdfBtn');
     if (!downloadBtn) {
       console.error('No se encontró el botón de descarga PDF');
       return;
     }
-    downloadBtn.addEventListener('click', () => {
+  
+    downloadBtn.addEventListener('click', async () => {
       console.log("Botón de descarga presionado");
+  
       // Actualizar la fecha en el reporte
       document.getElementById('reportDate').textContent = new Date().toLocaleDateString();
-
-      // Seleccionar el contenedor del reporte
+  
+      // Obtener las listas de historial de usuario
+      const historyList = document.getElementById('userHistoryList');
+      const reportList = document.getElementById('reportUserHistoryList');
+  
+      if (!historyList || !reportList) {
+        console.error("Error: No se encontraron los elementos de historial de usuario para el reporte.");
+        return;
+      }
+  
+      // Verificar si el historial tiene contenido antes de copiarlo
+      if (!historyList.innerHTML.trim()) {
+        console.error("El historial de usuario está vacío. No se generará el PDF.");
+        return;
+      }
+  
+      // Copiar la data del historial visible al reporte
+      reportList.innerHTML = historyList.innerHTML;
+  
+      // Asegurar que el contenedor es visible antes de la captura
       const element = document.getElementById('reportContent');
       if (!element) {
         console.error('No se encontró el contenedor del reporte');
         return;
       }
-      
+  
+      element.style.display = 'block';
+  
+      // Esperar un pequeño tiempo para asegurar que el DOM se actualizó
+      await new Promise(resolve => setTimeout(resolve, 500));
+  
       const opt = {
-        margin:       0.5,
-        filename:     'reporte-historial-usuario.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        margin: 0.5,
+        filename: 'reporte-historial-usuario.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
       };
-
+  
       html2pdf().set(opt).from(element).save().then(() => {
         console.log('PDF generado y descargado');
+        element.style.display = 'none'; // Restaurar visibilidad después de la captura
+      }).catch(err => {
+        console.error('Error generando PDF:', err);
       });
     });
   });
+  
 
