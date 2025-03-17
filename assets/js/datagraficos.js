@@ -1316,66 +1316,66 @@ function parseDescription(description) {
 
 
 
+function viewUserHistory(userId) {
+  // Obtiene el departamento actual del localStorage (o de otra fuente)
+  const currentDepartment = localStorage.getItem('currentDepartment') || 'Account Manager';
+  const url = new URL(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`);
+  url.searchParams.append('department', currentDepartment);
 
-
-  // Función para cargar el historial del usuario y renderizarlo
-  function viewUserHistory(userId) {
-    const url = new URL(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`);
-    url.searchParams.append('department', 'Account Manager');
-
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      credentials: 'include'
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    credentials: 'include'
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error fetching user history');
+      }
+      return response.json();
     })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Error fetching user history');
+    .then(history => {
+      console.log('Historial recibido:', history);
+      const historyList = document.getElementById('userHistoryList');
+      historyList.innerHTML = '';
+
+      history.forEach(incident => {
+        let parsed = null;
+        if ((incident.prompt === undefined || incident.response === undefined) && incident.description) {
+          parsed = parseDescription(incident.description);
         }
-        return response.json();
-      })
-      .then(history => {
-        console.log('Historial recibido:', history);
-        const historyList = document.getElementById('userHistoryList');
-        historyList.innerHTML = '';
+        
+        const promptText = parsed ? parsed.prompt : (incident.prompt || 'N/A');
+        const responseText = parsed ? parsed.response : (incident.response || 'N/A');
+        const severity = parsed ? parsed.severity : (incident.severity || 'N/A');
 
-        history.forEach(incident => {
-          let parsed = null;
-          if ((incident.prompt === undefined || incident.response === undefined) && incident.description) {
-            parsed = parseDescription(incident.description);
-          }
-          
-          const promptText = parsed ? parsed.prompt : (incident.prompt || 'N/A');
-          const responseText = parsed ? parsed.response : (incident.response || 'N/A');
-          const severity = parsed ? parsed.severity : (incident.severity || 'N/A');
-
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${incident.incidentId}</td>
-            <td>${severity}</td>
-            <td>${promptText}</td>
-            <td>${responseText}</td>
-            <td>${incident.date}</td>
-          `;
-          historyList.appendChild(row);
-        });
-
-        // Copiar el contenido del historial del modal al contenedor del reporte
-        const modalHistoryHTML = document.getElementById('userHistoryList').innerHTML;
-        document.getElementById('reportUserHistoryList').innerHTML = modalHistoryHTML;
-
-        // Cambiar a la pestaña "History" usando Bootstrap Tabs
-        const historyTabTrigger = document.querySelector('#history-tab');
-        const tabInstance = new bootstrap.Tab(historyTabTrigger);
-        tabInstance.show();
-      })
-      .catch(error => {
-        console.error('Error fetching history:', error);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${incident.incidentId}</td>
+          <td>${severity}</td>
+          <td>${promptText}</td>
+          <td>${responseText}</td>
+          <td>${incident.date}</td>
+        `;
+        historyList.appendChild(row);
       });
-  }
+
+      // Copiar el contenido del historial del modal al contenedor del reporte
+      const modalHistoryHTML = document.getElementById('userHistoryList').innerHTML;
+      document.getElementById('reportUserHistoryList').innerHTML = modalHistoryHTML;
+
+      // Cambiar a la pestaña "History" usando Bootstrap Tabs
+      const historyTabTrigger = document.querySelector('#history-tab');
+      const tabInstance = new bootstrap.Tab(historyTabTrigger);
+      tabInstance.show();
+    })
+    .catch(error => {
+      console.error('Error fetching history:', error);
+    });
+}
+
 
   // Función placeholder para ver detalles del usuario
   function viewUserDetails(userId) {
