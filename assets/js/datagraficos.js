@@ -1317,10 +1317,11 @@ function parseDescription(description) {
 
 
 function viewUserHistory(userId) {
-  // Obtiene el departamento actual del localStorage (debe coincidir con el que usan los gráficos)
   const currentDepartment = localStorage.getItem('currentDepartment');
   const url = new URL(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`);
+  // Envía ambos parámetros para mayor consistencia
   url.searchParams.append('department', currentDepartment);
+  url.searchParams.append('user_department', currentDepartment);
 
   fetch(url, {
     method: 'GET',
