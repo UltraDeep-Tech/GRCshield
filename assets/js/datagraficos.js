@@ -386,7 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           {
             label: 'Self-harm',
-            data: data.categories?.selfHarm || [],
+            data: data.categories?.self_harm|| [],
             fill: false,
             borderColor: 'rgba(153, 102, 255, 0.7)',
             tension: 0.4
@@ -478,7 +478,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
           label: 'Self-harm',
-          data: data.categories?.selfHarm || [],
+          data: data.categories?.self_harm|| [],
           backgroundColor: 'rgba(153, 102, 255, 0.7)',
           borderColor: 'rgba(153, 102, 255, 1)',
           borderWidth: 1,
@@ -575,7 +575,7 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           {
             label: 'Self-harm',
-            data: data.categories?.selfHarm || [],
+            data: data.categories?.self_harm|| [],
             fill: false,
             borderColor: 'rgba(153, 102, 255, 0.7)',
             tension: 0.4
@@ -712,7 +712,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <td>${item.violence}</td>
           <td>${item.hate}</td>
           <td>${item.sexual}</td>
-          <td>${item.selfHarm}</td>
+          <td>${item.self_harm}</td>
         `;
         tbody.appendChild(row);
       });
