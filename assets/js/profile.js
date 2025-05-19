@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Hacer la petición al servidor para obtener datos actualizados
-        fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/get-profile', {
+        fetch('https://backendaporia-safetyshield-934866038204-934866038204.us-central1.run.app/api/get-profile', {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('profileImage', profileImage);
         }
     
-        fetch('https://backend-grcshield-934866038204.us-central1.run.app/api/update-profile', {
+        fetch('https://backendaporia-safetyshield-934866038204-934866038204.us-central1.run.app/api/update-profile', {
             method: 'POST',
             body: formData,
             credentials: 'include',
@@ -235,7 +235,7 @@ async function signOut(event) {
     event.preventDefault();
 
     try {
-        const response = await fetch('https://backend-grcshield-934866038204.us-central1.run.app/logout', {
+        const response = await fetch('https://backendaporia-safetyshield-934866038204-934866038204.us-central1.run.app/logout', {
             method: 'POST',
             credentials: 'include'
         }); 
