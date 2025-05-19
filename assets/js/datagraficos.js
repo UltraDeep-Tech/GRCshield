@@ -21,7 +21,7 @@ async function obtenerDatos(key, callback) {
     }
 
     // Hacer la solicitud al backend
-    const url = new URL('https://backend-grcshield-934866038204.us-central1.run.app/api/firebase-data');
+    const url = new URL('https://backendaporia-safetyshield-934866038204-934866038204.us-central1.run.app/api/firebase-data');
     url.searchParams.append('department', currentDepartment);
     url.searchParams.append('user_department', currentDepartment);
 
@@ -1227,7 +1227,7 @@ function loadUsers() {
     }
   }
 
-  const url = new URL('https://backend-grcshield-934866038204.us-central1.run.app/api/abusive_users');
+  const url = new URL('https://backendaporia-safetyshield-934866038204-934866038204.us-central1.run.app/api/abusive_users');
   url.searchParams.append('department', currentDepartment);
 
   fetch(url, {
@@ -1318,7 +1318,7 @@ function parseDescription(description) {
 
 function viewUserHistory(userId) {
   const currentDepartment = localStorage.getItem('currentDepartment');
-  const url = new URL(`https://backend-grcshield-934866038204.us-central1.run.app/api/users/${userId}/history`);
+  const url = new URL(`https://backendaporia-safetyshield-934866038204-934866038204.us-central1.run.app/api/users/${userId}/history`);
   // Envía ambos parámetros para mayor consistencia
   url.searchParams.append('department', currentDepartment);
   url.searchParams.append('user_department', currentDepartment);
